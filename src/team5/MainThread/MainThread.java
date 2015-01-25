@@ -11,6 +11,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import team5.Client.ClientJList;
 import team5.PlayerObject.Pair;
@@ -22,23 +23,31 @@ public class MainThread extends Thread {
 
 	public void run() {
 		Player actualPlayer;
-
-		final JPanel titleBar = new JPanel();
-		JLabel titleLabel = new JLabel("Game Map");
-		titleBar.add(titleLabel);
+		JPanel gameBoard;
+		JFrame frame;
+		JComponent playersList;
+		final JTextField titleBar;
 
 		initializePlayers();
 
 		actualPlayer = playerList.get(1);
-		JFrame frame = new JFrame("ClientJList");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JComponent playersList = new ClientJList(playerList, actualPlayer);
+		gameBoard = new JPanel();
+		
+	    titleBar = new JTextField();
+		titleBar.setText("Game Map");
+		titleBar.setHorizontalAlignment(JTextField.CENTER);
+		titleBar.setEditable(false);
+		playersList = new ClientJList(playerList, actualPlayer);
 
 		playersList.setOpaque(true);
+		
+		frame = new JFrame("ClientJList");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Turn Tanks");
 		frame.add(titleBar, BorderLayout.NORTH);
 		frame.add(playersList, BorderLayout.SOUTH);
+		frame.add(gameBoard, BorderLayout.CENTER);
 		frame.setLocationRelativeTo(null);
 		frame.pack();
 		frame.setVisible(true);

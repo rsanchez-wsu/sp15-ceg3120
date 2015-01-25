@@ -26,11 +26,12 @@ public class ClientJList extends JPanel {
 	}
 
 	public ClientJList(Vector<Player> playerList, Player actualPlayer) {
-		// super(new BorderLayout());
+		JScrollPane listScrollPane;
+		
 		int playerIndex = 0;
-		final JPanel statusBar = new JPanel();
-		JLabel statusLabel = new JLabel("Status");
-		statusBar.add(statusLabel);
+		final JTextField statusBar = new JTextField();
+		statusBar.setText("Status");
+		statusBar.setEditable(false);
 
 		listModel = new DefaultListModel<Player>();
 		for (Player player : playerList) {
@@ -46,7 +47,7 @@ public class ClientJList extends JPanel {
 		// list.setSelectedIndex(playerIndex);
 		list.setVisibleRowCount(1);
 		list.ensureIndexIsVisible(playerIndex);
-		JScrollPane listScrollPane = new JScrollPane(list);
+	    listScrollPane = new JScrollPane(list);
 
 		list.ensureIndexIsVisible(playerIndex);
 		add(statusBar, BorderLayout.WEST);
