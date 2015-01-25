@@ -10,7 +10,6 @@ import java.util.Vector;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -22,37 +21,43 @@ public class MainThread extends Thread {
 
 	Vector<Player> playerList = new Vector<Player>();
 
+	/**
+	 * Runs Main Thread
+	 */
 	public void run() {
+		// Run Variables
 		Player actualPlayer;
 		JPanel gameBoard;
 		JFrame frame;
-		JComponent playersList;
+		JComponent statusBar;
 		final JTextField titleBar;
-		JPanel background;
 
+		// Method to create dummy players
 		initializePlayers();
 
+		// Get the client player
 		actualPlayer = playerList.get(1);
 
+		// Create the gameBoard Panel 
 		gameBoard = new JPanel();
+		gameBoard.setBackground(Color.BLACK);
 		
+		// Create the Title Bar
 	    titleBar = new JTextField();
 		titleBar.setText("Game Map");
 		titleBar.setHorizontalAlignment(JTextField.CENTER);
 		titleBar.setEditable(false);
-		playersList = new ClientJList(playerList, actualPlayer);
-
-		playersList.setOpaque(true);
 		
-		//Black panel for background
-		background = new JPanel();
-		background.setBackground(Color.BLACK);
+		// Create JList for Status Implementation
+		statusBar = new ClientJList(playerList, actualPlayer);
+		statusBar.setOpaque(true);
 		
+		// Add Objects to Frame, Frame properties and open Frame.
 		frame = new JFrame("ClientJList");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Turn Tanks");
 		frame.add(titleBar, BorderLayout.NORTH);
-		frame.add(playersList, BorderLayout.SOUTH);
+		frame.add(statusBar, BorderLayout.SOUTH);
 		frame.add(gameBoard, BorderLayout.CENTER);
 		frame.setLocationRelativeTo(null);
 		frame.pack();

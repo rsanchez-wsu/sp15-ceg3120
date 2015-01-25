@@ -5,19 +5,22 @@
 package team5.PlayerObject;
 
 public class Pair {
-
+	// Pair Variables
 	private int xPos;
 	private int yPos;
 
+	// Defualt Constructor
 	public Pair() {
 
 	}
 
+	// Position Constructor
 	public Pair(int xPos, int yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}
 
+	// getters and setters
 	public int getxPos() {
 		return xPos;
 	}

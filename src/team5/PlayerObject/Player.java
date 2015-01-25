@@ -4,8 +4,10 @@
  */
 package team5.PlayerObject;
 
+
 public class Player {
 
+	// Player Variables
 	final int totalHealth = 50;
 	private String serverIP;
 	private String status;
@@ -20,6 +22,7 @@ public class Player {
 
 	}
 
+	// Player Constructor
 	public Player(String serverIP, String status, int playersLeft,
 			int playerNumber, int health, Pair position, String state) {
 

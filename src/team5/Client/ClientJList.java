@@ -12,27 +12,37 @@ import javax.swing.*;
 
 import team5.PlayerObject.Player;
 
-/* ListDemo.java requires no other files. */
 public class ClientJList extends JPanel {
 	/**
-	 * 
+	 * ClientJList Variables
 	 */
 	private static final long serialVersionUID = 1L;
 	private JList<Player> list;
 	private DefaultListModel<Player> listModel;
 
+	/**
+	 * Default Constructor
+	 */
+	
 	public ClientJList() {
 
 	}
 
+	/**
+	 * Status Bar Constructor
+	 */
 	public ClientJList(Vector<Player> playerList, Player actualPlayer) {
-		JScrollPane listScrollPane;
-		
+		// ClientJList Variables
+		JScrollPane statusBarScrollPane;
 		int playerIndex = 0;
-		final JTextField statusBar = new JTextField();
-		statusBar.setText("Status");
-		statusBar.setEditable(false);
+		final JTextField statusBarTextField;
+		
+		// Create Status Bar TextField
+		statusBarTextField = new JTextField();
+		statusBarTextField.setText("Status");
+		statusBarTextField.setEditable(false);
 
+		// Create and initialize listModel 
 		listModel = new DefaultListModel<Player>();
 		for (Player player : playerList) {
 			listModel.addElement(player);
@@ -44,14 +54,14 @@ public class ClientJList extends JPanel {
 		// Create the list and put it in a scroll pane.
 		list = new JList<Player>(listModel);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		// list.setSelectedIndex(playerIndex);
 		list.setVisibleRowCount(1);
 		list.ensureIndexIsVisible(playerIndex);
-	    listScrollPane = new JScrollPane(list);
-
-		list.ensureIndexIsVisible(playerIndex);
-		add(statusBar, BorderLayout.WEST);
-		add(listScrollPane, BorderLayout.EAST);
+	    statusBarScrollPane = new JScrollPane(list);
+	    list.ensureIndexIsVisible(playerIndex);
+	    
+	    // Add statusBar and ListScrollPane to 
+		add(statusBarTextField, BorderLayout.WEST);
+		add(statusBarScrollPane, BorderLayout.EAST);
 	}
 
 }
