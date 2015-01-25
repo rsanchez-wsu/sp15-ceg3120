@@ -5,6 +5,7 @@
 package team5.MainThread;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.Vector;
 
 import javax.swing.JComponent;
@@ -27,6 +28,7 @@ public class MainThread extends Thread {
 		JFrame frame;
 		JComponent playersList;
 		final JTextField titleBar;
+		JPanel background;
 
 		initializePlayers();
 
@@ -41,6 +43,10 @@ public class MainThread extends Thread {
 		playersList = new ClientJList(playerList, actualPlayer);
 
 		playersList.setOpaque(true);
+		
+		//Black panel for background
+		background = new JPanel();
+		background.setBackground(Color.BLACK);
 		
 		frame = new JFrame("ClientJList");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
