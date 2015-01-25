@@ -2,7 +2,7 @@
  * License tbd
  * @author hitchens6
  */
-package team5.Player;
+package team5.PlayerObject;
 
 public class Player {
 

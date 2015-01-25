@@ -13,8 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import team5.Client.ClientJList;
-import team5.Player.Pair;
-import team5.Player.Player;
+import team5.PlayerObject.Pair;
+import team5.PlayerObject.Player;
 
 public class MainThread extends Thread {
 

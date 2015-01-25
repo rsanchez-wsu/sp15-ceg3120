@@ -10,7 +10,7 @@ import java.util.Vector;
 
 import javax.swing.*;
 
-import team5.Player.Player;
+import team5.PlayerObject.Player;
 
 /* ListDemo.java requires no other files. */
 public class ClientJList extends JPanel {
