@@ -10,9 +10,10 @@ public class Player {
 	// Player Variables
 	final int totalHealth = 50;
 	private String serverIP;
-	private String status;
+	public enum Status {IN_PROGRESS, COMPLETED};
+	private Status status;
 	public enum State {DEAD, ALIVE, WAITING};
-	State state;
+	private State state;
 	private int health;
 	private int playersLeft;
 	private int playerNumber;
@@ -24,11 +25,11 @@ public class Player {
 	}
 
 	// Player Constructor
-	public Player(String serverIP, String status, int playersLeft,
+	public Player(String serverIP, Status status, int playersLeft,
 			int playerNumber, int health, Pair position, State state) {
 
 		this.serverIP = serverIP;
-		this.status = status;
+		this.status = Status.IN_PROGRESS;
 		this.playersLeft = playersLeft;
 		this.setPlayerNumber(playerNumber);
 		this.health = health;
@@ -60,11 +61,11 @@ public class Player {
 		this.serverIP = serverIP;
 	}
 
-	public String getStatus() {
-		return status;
+	public Status getStatus() {
+		return this.status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
