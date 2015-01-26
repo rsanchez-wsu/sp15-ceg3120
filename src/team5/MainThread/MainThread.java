@@ -72,24 +72,24 @@ public class MainThread extends Thread {
 		int y = 1;
 		Pair position = new Pair(x, y);
 		Player player = new Player("1.1.1.1", "In Progress", 3, 0, 25,
-				position, "wait");
+				position, Player.State.WAITING);
 		playerList.addElement(player);
 		x = 10;
 		y = 10;
 		position = new Pair(x, y);
-		player = new Player("1.1.1.1", "In Progress", 3, 1, 20, position,
-				"Active");
+		player = new Player("1.1.1.1", "In Progress", 3, 1, 20, position, 		
+				Player.State.ALIVE);
 		playerList.addElement(player);
 		x = 15;
 		y = 15;
 		position = new Pair(x, y);
 		player = new Player("1.1.1.1", "In Progress", 3, 2, 50, position,
-				"Wait");
+				Player.State.WAITING);
 		playerList.addElement(player);
 		x = 11;
 		y = 41;
 		position = new Pair(x, y);
-		player = new Player("1.1.1.1", "In Progress", 3, 3, 0, position, "Dead");
+		player = new Player("1.1.1.1", "In Progress", 3, 3, 0, position, Player.State.DEAD);
 		playerList.addElement(player);
 	}
 

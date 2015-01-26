@@ -11,7 +11,8 @@ public class Player {
 	final int totalHealth = 50;
 	private String serverIP;
 	private String status;
-	private String state;
+	public enum State {DEAD, ALIVE, WAITING};
+	State state;
 	private int health;
 	private int playersLeft;
 	private int playerNumber;
@@ -24,7 +25,7 @@ public class Player {
 
 	// Player Constructor
 	public Player(String serverIP, String status, int playersLeft,
-			int playerNumber, int health, Pair position, String state) {
+			int playerNumber, int health, Pair position, State state) {
 
 		this.serverIP = serverIP;
 		this.status = status;
@@ -32,7 +33,7 @@ public class Player {
 		this.setPlayerNumber(playerNumber);
 		this.health = health;
 		this.position = position;
-		this.state = state;
+		this.state = State.WAITING;
 	}
 
 	@Override
@@ -67,12 +68,12 @@ public class Player {
 		this.status = status;
 	}
 
-	public String getState() {
-		return state;
+	public State getState() {
+		return this.state;
 	}
 
-	public void setState(String state) {
-		this.state = state;
+	public void setState(State state) {
+		this.state = State.DEAD;
 	}
 
 	public int getHealth() {
