@@ -25,9 +25,17 @@ public class Player {
 	// Player Variables
 	final int totalHealth = 50;
 	private String serverIP;
-	public enum Status {IN_PROGRESS, COMPLETED};
+
+	public enum Status {
+		IN_PROGRESS, COMPLETED, WAITING
+	};
+
 	private Status status;
-	public enum State {DEAD, ALIVE, WAITING};
+
+	public enum State {
+		DEAD, ALIVE, WAITING
+	};
+
 	private State state;
 	private int health;
 	private int playersLeft;
@@ -54,11 +62,38 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return "Game Info - Status: " + getStatus() + " | Server: "
-				+ getServerIP() + " | Players left: " + getPlayersLeft()
-				+ "\n " + "My Info - #: " + getPlayerNumber() + " | Health: "
+		String state = "";
+		String status = "";
+
+		switch (getState()) {
+		case DEAD:
+			state = "Dead";
+			break;
+		case ALIVE:
+			state = "Alive";
+			break;
+		case WAITING:
+			state = "Waiting";
+			break;
+		}
+
+		switch (getStatus()) {
+		case IN_PROGRESS:
+			status = "In Progress";
+			break;
+		case COMPLETED:
+			status = "Completed";
+			break;
+		case WAITING:
+			status = "Waiting";
+			break;
+		}
+
+		return "Game Info - Status: " + status + " | Server: " + getServerIP()
+				+ " | Players left: " + getPlayersLeft() + "\n "
+				+ "My Info - #: " + getPlayerNumber() + " | Health: "
 				+ getHealth() + "/" + getTotalHealth() + " | Position: "
-				+ getPosition().toString() + " | State: " + getState();
+				+ getPosition().toString() + " | State: " + state;
 
 	}
 
