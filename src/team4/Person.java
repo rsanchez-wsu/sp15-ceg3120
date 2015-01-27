@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) <year>  <name of author>
+ *  Copyright (C) <2015>  <Team 4>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -85,7 +85,9 @@ public class Person {
 	public Point getIngamePosition() {
 		return ingamePosition;
 	}
-
+	public String getLocationString(){
+		return "(" + ingamePosition.x + ", " + ingamePosition.y + ")";
+	}
 	public void setIngamePosition(Point ingamePosition) {
 		this.ingamePosition = ingamePosition;
 	}
