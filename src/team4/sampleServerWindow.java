@@ -119,7 +119,9 @@ public class sampleServerWindow {
 		// table by benjamin
 		JTable playerTable = new JTable(personList, headings);
 		JScrollPane scrollPane = new JScrollPane(playerTable);
-
+		playerTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+		playerTable.setEnabled(false);
+		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 
