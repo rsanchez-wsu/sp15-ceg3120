@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) <year>  <name of author>
+ *  Copyright (C) <2015>  <Joshua Hitchens, Lori Simmons, Ryan Lane, Tyler Parker>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 package team5.PlayerObject;
 
 /**
- * @author hitchens6
+ * @author Joshua Hitchens, Lori Simmons, Ryan Lane, Tyler Parker
  */
 public class Player {
 
@@ -44,12 +44,12 @@ public class Player {
 			int playerNumber, int health, Pair position, State state) {
 
 		this.serverIP = serverIP;
-		this.status = Status.IN_PROGRESS;
+		this.status = status;
 		this.playersLeft = playersLeft;
 		this.setPlayerNumber(playerNumber);
 		this.health = health;
 		this.position = position;
-		this.state = State.WAITING;
+		this.state = state;
 	}
 
 	@Override

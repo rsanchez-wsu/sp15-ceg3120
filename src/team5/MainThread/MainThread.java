@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) <year>  <name of author>
+ *  Copyright (C) <2015>  <Joshua Hitchens, Lori Simmons, Ryan Lane, Tyler Parker>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ import team5.PlayerObject.Pair;
 import team5.PlayerObject.Player;
 
 /**
- * @author hitchens6
+ * @author Joshua Hitchens, Lori Simmons, Ryan Lane, Tyler Parker
  */
 public class MainThread extends Thread {
 
@@ -86,30 +86,34 @@ public class MainThread extends Thread {
 	protected void initializePlayers() {
 		int x = 1;
 		int y = 1;
+		Player.State state = Player.State.WAITING;
 		Pair position = new Pair(x, y);
 		Player.Status playerStatus = Player.Status.IN_PROGRESS;
 		
 		Player player = new Player("1.1.1.1", playerStatus, 3, 0, 25,
-				position, Player.State.WAITING);
+				position, state);
 		playerList.addElement(player);
 		x = 10;
 		y = 10;
 		position = new Pair(x, y);
+		state = Player.State.ALIVE;
 		player = new Player("1.1.1.1", playerStatus, 3, 1, 20, position, 		
-				Player.State.ALIVE);
+				state);
 		playerList.addElement(player);
 		
 		x = 15;
 		y = 15;
+		state = Player.State.WAITING;
 		position = new Pair(x, y);
 		player = new Player("1.1.1.1", playerStatus, 3, 2, 50, position,
-				Player.State.WAITING);
+				state);
 		
 		playerList.addElement(player);
 		x = 11;
 		y = 41;
+		state = Player.State.DEAD;
 		position = new Pair(x, y);
-		player = new Player("1.1.1.1", playerStatus, 3, 3, 0, position, Player.State.DEAD);
+		player = new Player("1.1.1.1", playerStatus, 3, 3, 0, position, state);
 		playerList.addElement(player);
 	}
 
