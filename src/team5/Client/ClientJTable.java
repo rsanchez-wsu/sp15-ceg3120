@@ -22,6 +22,7 @@ import java.util.Vector;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import team5.PlayerObject.Player;
 
@@ -34,13 +35,11 @@ public class ClientJTable extends JPanel {
 	 * ClientJList Variables
 	 */
 	private static final long serialVersionUID = 1L;
-	private JList<Player> list;
-	private DefaultListModel<Player> listModel;
 
 	/**
 	 * Default Constructor
 	 */
-	
+
 	public ClientJTable() {
 
 	}
@@ -49,53 +48,59 @@ public class ClientJTable extends JPanel {
 	 * Status Bar Constructor
 	 */
 	public ClientJTable(Vector<Player> playerList, Player actualPlayer) {
-		super(new GridLayout(1,0));
+		super(new GridLayout(1, 0));
 		JTable table;
 		table = new JTable(new PlayersTable(playerList, actualPlayer));
-		
+
 		JScrollPane scrollPanel = new JScrollPane(table);
+
+		for (int i = 0; i < 4; i++) {
+			table.getColumnModel().getColumn(i)
+					.setCellRenderer(new ImageRenderer());
+		}
+
 		add(scrollPanel, BorderLayout.SOUTH);
 	}
 
-	class PlayersTable extends AbstractTableModel{
+	class PlayersTable extends AbstractTableModel {
+
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		
+
 		private String[] columnNames;
-		private Image[][] playerList;
-		
-		public PlayersTable(){
-			
+		private String[][] playerList;
+
+		public PlayersTable() {
+
 		}
-		
-		public PlayersTable(Vector<Player> playerList, Player actualPlayer){
+
+		public PlayersTable(Vector<Player> playerList, Player actualPlayer) {
 			int size = playerList.size();
 			columnNames = new String[size];
-			
-			for(int i = 0; i < size; i++){
-				columnNames[i] = "";
+
+			for (int i = 0; i < size; i++) {
+				columnNames[i] = null;
 			}
-			
-			this.playerList = new Image[1][size];
-			
+
+			this.playerList = new String[1][size];
+
 			int i = 0;
-			for(Player player : playerList){
+			for (Player player : playerList) {
 				setValueAt(player, 0, i);
 				i++;
 			}
 		}
-		
-		
-		public void setValueAt(Player player, int row, int column, Player actualPlayer){
-		//	if(this.playerList[row][column].contains(actualPlayer.getPlayerNumber())){
-		//		
-		//	}
-			this.playerList[row][column] = player.getPlayerImage();
+
+		public void setValueAt(Player player, int row, int column) {
+			// if(this.playerList[row][column].contains(actualPlayer.getPlayerNumber())){
+			//
+			// }
+			playerList[row][column] = player.toString();
 			fireTableCellUpdated(row, column);
 		}
-		
+
 		@Override
 		public int getColumnCount() {
 			return columnNames.length;
@@ -103,20 +108,44 @@ public class ClientJTable extends JPanel {
 
 		@Override
 		public int getRowCount() {
-			return playerList.length;
+			return 1;
 		}
 
 		@Override
 		public Object getValueAt(int row, int column) {
-			return this.playerList[row][column];
+			return playerList[row][column];
 		}
-		
-		public boolean isCellEditable(int row, int column){
+
+		public boolean isCellEditable(int row, int column) {
 			return false;
 		}
+
+		public String getColumnName(int column) {
+			return this.columnNames[column];
+		}
+
+	}
+
+	class ImageRenderer extends DefaultTableCellRenderer {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		JLabel lbl = new JLabel();
+
 		
-		public String getColumnName(int column){
-			return this.columnNames[column].toString();
+		
+
+		public Component getTableCellRendererComponent(JTable table,
+				Object value, boolean isSelected, boolean hasFocus, int row,
+				int column) {
+			ImageIcon icon = null;
+			icon = new ImageIcon(getClass().getResource("/team5/worldwartank.png"));
+			lbl.setText((String) value);
+			lbl.setIcon(icon);
+			return lbl;
 		}
 	}
+
 }

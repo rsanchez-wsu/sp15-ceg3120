@@ -17,12 +17,6 @@
  */
 package team5.PlayerObject;
 
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 /**
  * @author Joshua Hitchens, Lori Simmons, Ryan Lane, Tyler Parker
  */
@@ -47,8 +41,6 @@ public class Player {
 	private int playersLeft;
 	private int playerNumber;
 	private Pair position;
-    private Image playerImage;
-    
 
 	// Default Constructor
 	public Player() {
@@ -58,12 +50,7 @@ public class Player {
 	// Player Constructor
 	public Player(String serverIP, Status status, int playersLeft,
 			int playerNumber, int health, Pair position, State state) {
-		try {
-			this.setPlayerImage(ImageIO.read(new File("docs/spec/images/worldwartank.png")));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		this.serverIP = serverIP;
 		this.status = status;
 		this.playersLeft = playersLeft;
@@ -170,13 +157,5 @@ public class Player {
 
 	public void setPlayerNumber(int playerNumber) {
 		this.playerNumber = playerNumber;
-	}
-
-	public Image getPlayerImage() {
-		return playerImage;
-	}
-
-	public void setPlayerImage(Image playerImage) {
-		this.playerImage = playerImage;
 	}
 }
