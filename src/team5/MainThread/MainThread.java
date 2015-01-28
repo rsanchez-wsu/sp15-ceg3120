@@ -24,9 +24,10 @@ import java.util.Vector;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import team5.Client.ClientJList;
+import team5.Client.ClientJTable;
 import team5.PlayerObject.Pair;
 import team5.PlayerObject.Player;
 
@@ -45,9 +46,12 @@ public class MainThread extends Thread {
 		Player actualPlayer;
 		JPanel gameBoard;
 		JFrame frame;
-		JComponent statusBar;
+		JPanel statusBar;
+		JTextField status;
+		JTextArea info;
 		final JTextField titleBar;
-
+		ClientJTable playerTable;
+		
 		// Method to create dummy players
 		initializePlayers();
 
@@ -58,6 +62,7 @@ public class MainThread extends Thread {
 		gameBoard = new JPanel();
 		gameBoard.setBackground(Color.BLACK);
 		
+		
 		// Create the Title Bar
 	    titleBar = new JTextField();
 		titleBar.setText("Game Map");
@@ -65,19 +70,36 @@ public class MainThread extends Thread {
 		titleBar.setEditable(false);
 		
 		// Create JList for Status Implementation
-		statusBar = new ClientJList(playerList, actualPlayer);
+		statusBar = new JPanel();
 		statusBar.setOpaque(true);
+		
+		status = new JTextField();
+		status.setText("Status");
+		status.setHorizontalAlignment(JTextField.CENTER);
+		status.setEditable(false);
+		
+		info = new JTextArea();
+		actualPlayer = playerList.get(0);
+		info.setText(actualPlayer.toString());
+		info.setEditable(false);
+		
+		statusBar.add(status);
+		statusBar.add(info);
+		
+		playerTable = new ClientJTable(playerList, actualPlayer);
 		
 		// Add Objects to Frame, Frame properties and open Frame.
 		frame = new JFrame("ClientJList");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Turn Tanks");
 		frame.add(titleBar, BorderLayout.NORTH);
-		frame.add(statusBar, BorderLayout.SOUTH);
-		frame.add(gameBoard, BorderLayout.CENTER);
+		frame.add(statusBar, BorderLayout.CENTER);
+		//frame.add(gameBoard, BorderLayout.CENTER);
+		frame.add(playerTable, BorderLayout.SOUTH);
 		frame.setLocationRelativeTo(null);
 		frame.pack();
 		frame.setVisible(true);
+		
 	}
 
 	/**
