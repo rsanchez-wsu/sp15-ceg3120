@@ -141,7 +141,7 @@ public class ClientJTable extends JPanel {
 				Object value, boolean isSelected, boolean hasFocus, int row,
 				int column) {
 			ImageIcon icon = null;
-			icon = new ImageIcon(getClass().getResource("/team5/worldwartank.png"));
+			icon = new ImageIcon(getClass().getResource("/team5/Client/worldwartank.png"));
 			lbl.setText((String) value);
 			lbl.setIcon(icon);
 			return lbl;
