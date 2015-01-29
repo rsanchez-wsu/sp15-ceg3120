@@ -58,7 +58,7 @@ public class ClientJTable extends JPanel {
 
 		
 		
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < playerList.size(); i++) {
 			table.getColumnModel().getColumn(i)
 					.setCellRenderer(new ImageRenderer());
 		}

@@ -49,7 +49,6 @@ public class Player {
 	@Override
 	public String toString() {
 		String state = "";
-		String status = "";
 
 		switch (getState()) {
 		case DEAD:
@@ -63,21 +62,8 @@ public class Player {
 			break;
 		}
 
-		switch (getStatus()) {
-		case IN_PROGRESS:
-			status = "In Progress";
-			break;
-		case COMPLETED:
-			status = "Completed";
-			break;
-		case WAITING:
-			status = "Waiting";
-			break;
-		}
 
-		return "Game Info - Status: " + status + " | Server: " + getServerIP()
-				+ " | Players left: " + getPlayersLeft() + "\n "
-				+ "My Info - #: " + getPlayerNumber() + " | Health: "
+		return "My Info - #: " + getPlayerNumber() + " | Health: "
 				+ getHealth() + "/" + getTotalHealth() + " | Position: "
 				+ getPosition().toString() + " | State: " + state;
 
@@ -87,22 +73,6 @@ public class Player {
 
 	public int getTotalHealth() {
 		return totalHealth;
-	}
-
-	public String getServerIP() {
-		return serverIP;
-	}
-
-	public void setServerIP(String serverIP) {
-		this.serverIP = serverIP;
-	}
-
-	public Status getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
 	}
 
 	public State getState() {
@@ -119,14 +89,6 @@ public class Player {
 
 	public void setHealth(int health) {
 		this.health = health;
-	}
-
-	public int getPlayersLeft() {
-		return playersLeft;
-	}
-
-	public void setPlayersLeft(int playersLeft) {
-		this.playersLeft = playersLeft;
 	}
 
 	public Pair getPosition() {

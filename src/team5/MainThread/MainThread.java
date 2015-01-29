@@ -19,11 +19,13 @@ package team5.MainThread;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.util.Vector;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
 import team5.Client.ClientJTable;
@@ -45,9 +47,12 @@ public class MainThread extends Thread {
 		Player actualPlayer;
 		JPanel gameBoard;
 		JFrame frame;
-		JPanel statusBar;
-		JTextField status;
-		JTextArea info;
+		JPanel gamePanel;
+		JPanel statusPanel;
+		JLabel status;
+		JLabel info;
+		JSplitPane splitPane;
+		JSplitPane splitFrame;
 		final JTextField titleBar;
 		ClientJTable playerTable;
 		
@@ -56,45 +61,56 @@ public class MainThread extends Thread {
 
 		// Get the client player
 		actualPlayer = playerList.get(1);
-
-		// Create the gameBoard Panel 
-		gameBoard = new JPanel();
-		gameBoard.setBackground(Color.BLACK);
-		
 		
 		// Create the Title Bar
 	    titleBar = new JTextField();
 		titleBar.setText("Game Map");
 		titleBar.setHorizontalAlignment(JTextField.CENTER);
 		titleBar.setEditable(false);
+
+		// Create the gameBoard Panel 
+		gameBoard = new JPanel();
+		gameBoard.setBackground(Color.BLACK);
+		gameBoard.add(titleBar, BorderLayout.NORTH);
 		
 		// Create JList for Status Implementation
-		statusBar = new JPanel();
-		statusBar.setOpaque(true);
+		gamePanel = new JPanel();
+		gamePanel.setOpaque(true);
+		gamePanel.setLayout(new GridLayout(1,0));
 		
-		status = new JTextField();
+		statusPanel = new JPanel();
+		statusPanel.setLayout(new GridLayout(1,0));
+		
+		status = new JLabel();
 		status.setText("Status");
-		status.setHorizontalAlignment(JTextField.CENTER);
-		status.setEditable(false);
+		status.setHorizontalAlignment(JLabel.CENTER);
 		
-		info = new JTextArea();
+		info = new JLabel();
 		actualPlayer = playerList.get(0);
 		info.setText(actualPlayer.toString());
-		info.setEditable(false);
-		
-		statusBar.add(status);
-		statusBar.add(info);
+		info.setHorizontalAlignment(JLabel.CENTER);
 		
 		playerTable = new ClientJTable(playerList, actualPlayer);
+	
+		gamePanel.add(gameBoard);
+		
+		statusPanel.add(status, BorderLayout.WEST);
+		statusPanel.add(info, BorderLayout.EAST);
+		
+		splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		splitPane.add(statusPanel, JSplitPane.TOP);
+		splitPane.add(playerTable, JSplitPane.BOTTOM);
+		
+		splitFrame = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		splitFrame.add(gamePanel, JSplitPane.TOP);
+		splitFrame.add(splitPane, JSplitPane.BOTTOM);
 		
 		// Add Objects to Frame, Frame properties and open Frame.
 		frame = new JFrame("ClientJList");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLayout(new GridLayout(1,0));
 		frame.setTitle("Turn Tanks");
-		frame.add(titleBar, BorderLayout.NORTH);
-		frame.add(statusBar, BorderLayout.CENTER);
-		//frame.add(gameBoard, BorderLayout.CENTER);
-		frame.add(playerTable, BorderLayout.SOUTH);
+		frame.add(splitFrame);
 		frame.setLocationRelativeTo(null);
 		frame.pack();
 		frame.setVisible(true);
@@ -132,6 +148,32 @@ public class MainThread extends Thread {
 		position = new Pair(x, y);
 		player = new Player(3, 0, position, state);
 		playerList.addElement(player);
+		
+		x = 15;
+		y = 15;
+		state = Player.State.WAITING;
+		position = new Pair(x, y);
+		player = new Player(2, 50, position, state);
+		
+		playerList.addElement(player);
+		x = 11;
+		y = 41;
+		state = Player.State.DEAD;
+		position = new Pair(x, y);
+		player = new Player(3, 0, position, state);
+		playerList.addElement(player);
+		
+		x = 15;
+		y = 15;
+		state = Player.State.WAITING;
+		position = new Pair(x, y);
+		player = new Player(2, 50, position, state);
+		
+		x = 15;
+		y = 15;
+		state = Player.State.WAITING;
+		position = new Pair(x, y);
+		player = new Player(2, 50, position, state);
 	}
 
 	// Creates and starts the main thread
