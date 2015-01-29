@@ -23,6 +23,7 @@ import java.util.Vector;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 
 import team5.PlayerObject.Player;
 
@@ -50,10 +51,13 @@ public class ClientJTable extends JPanel {
 	public ClientJTable(Vector<Player> playerList, Player actualPlayer) {
 		super(new GridLayout(1, 0));
 		JTable table;
+		
 		table = new JTable(new PlayersTable(playerList, actualPlayer));
 
 		JScrollPane scrollPanel = new JScrollPane(table);
 
+		
+		
 		for (int i = 0; i < 4; i++) {
 			table.getColumnModel().getColumn(i)
 					.setCellRenderer(new ImageRenderer());
@@ -76,6 +80,8 @@ public class ClientJTable extends JPanel {
 
 		}
 
+		
+		
 		public PlayersTable(Vector<Player> playerList, Player actualPlayer) {
 			int size = playerList.size();
 			columnNames = new String[size];
@@ -134,16 +140,25 @@ public class ClientJTable extends JPanel {
 
 		JLabel lbl = new JLabel();
 
+		public void setRow(JTable table){
+			table.setRowHeight(95);
+			
+		}
 		
 		
 
 		public Component getTableCellRendererComponent(JTable table,
 				Object value, boolean isSelected, boolean hasFocus, int row,
 				int column) {
+			
+			setRow(table);
+			
+			
 			ImageIcon icon = null;
 			icon = new ImageIcon(getClass().getResource("/team5/Client/worldwartank.png"));
 			lbl.setText((String) value);
 			lbl.setIcon(icon);
+			
 			return lbl;
 		}
 	}
