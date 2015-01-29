@@ -1,39 +1,45 @@
 /*
 Team 9
-Matthew Lents
 */
 package team9;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
 
 
 
 class Client extends JFrame {
     
+    /*
+    Builds and fills the Frame with different tables for each area of the game
+    */
     public Client(){
+        //Table for each player stats
         JTable playerTable = new JTable(new playerTableModel());
-        JTable gameTable = new JTable(new gameTableModel());
-        JTable mapTable = new JTable(new mapTableModel());
         playerTable.setRowHeight(75);
         for(int i =0; i < playerTable.getColumnCount();i++){
             playerTable.getColumnModel().getColumn(i).setCellRenderer(new TextAreaCellRenderer());
         }
-        mapTable.setRowHeight(23);
-        for(int i =0; i<mapTable.getColumnCount();i++){
-            mapTable.getColumnModel().getColumn(i).setPreferredWidth(23);
-        }
+        //Table for game stats
+        JTable gameTable = new JTable(new gameTableModel());
         gameTable.setRowHeight(50);
         gameTable.getColumnModel().getColumn(1).setCellRenderer(new TextAreaCellRenderer());
         gameTable.getColumnModel().getColumn(0).setMinWidth(100);
         gameTable.getColumnModel().getColumn(1).setPreferredWidth(1000);
+        //Table to show the positions of each player on the map
+        JTable mapTable = new JTable(new mapTableModel());
+        mapTable.setRowHeight(23);
+        for(int i =0; i<mapTable.getColumnCount();i++){
+            mapTable.getColumnModel().getColumn(i).setPreferredWidth(23);
+        }
+        //Add each table to the JFrame in the appropriate locations
         add(mapTable, BorderLayout.NORTH);
         add(gameTable, BorderLayout.CENTER);
         add(playerTable,BorderLayout.SOUTH);
     }
-
+    //Place holder for the model of the mapTable
+    //More work needed to refine 
     class mapTableModel extends AbstractTableModel {
 
         @Override
@@ -50,16 +56,17 @@ class Client extends JFrame {
         public Object getValueAt(int rowIndex, int columnIndex) {
             return null;
         }
-
-        
     }
 
-    
+    //Model used to create the playerTable 
+    //Work needed to refine
     class playerTableModel extends AbstractTableModel{
+        //Placed data for ease of creation
         Player[] players = {
             new Player(1),new Player(2),new Player(3),new Player(4),
             new Player(5),new Player(6),new Player(7),new Player(8),
         };
+        
         @Override
         public int getColumnCount(){
             return players.length;
@@ -69,7 +76,7 @@ class Client extends JFrame {
         public int getRowCount(){
             return 1;
         }
-    
+        //Shows the data inside each cell
         @Override
         public Object getValueAt(int x, int y){
             return ("Player "+ players[y].getPlayerNum()+"\n"+
@@ -77,6 +84,9 @@ class Client extends JFrame {
                 players[y].getLastLoc().toString());
         }
     }
+    
+    //Model to be used in the gameTable
+    //Work needed
     class gameTableModel extends AbstractTableModel {
 
         @Override
@@ -88,7 +98,7 @@ class Client extends JFrame {
         public int getColumnCount() {
             return 2;
         }
-
+        //Work needed to correctly show the correct data instead of a String
         @Override
         public Object getValueAt(int row, int col) {
             if(col == 0){return "Status";}
@@ -102,6 +112,8 @@ class Client extends JFrame {
         }
     
     } 
+    
+    //CellRenderer to enable the textWrap in certain cells
     private static class TextAreaCellRenderer extends JTextArea implements TableCellRenderer {
        
         public TextAreaCellRenderer() {

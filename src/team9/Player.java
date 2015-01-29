@@ -1,9 +1,10 @@
 /*
 Team 9
-Matthew Lents
 */
 package team9;
-
+/*
+Set up the Object for each player and their stats
+*/
 public class Player {
     
     final private int playerNum;
