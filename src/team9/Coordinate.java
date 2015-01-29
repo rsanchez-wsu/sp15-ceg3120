@@ -1,9 +1,10 @@
 /*
 Team 9
-Matthew Lents
 */
 package team9;
-
+/*
+Coordinate used for the locations on the game map
+*/
 public class Coordinate extends java.awt.Point {
     public Coordinate(int x, int y){
         super(x,y);
