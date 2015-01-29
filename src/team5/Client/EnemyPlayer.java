@@ -26,5 +26,9 @@ public class EnemyPlayer extends Player{
 			this.position = position;
 		}
 		
+		@Override
+		public String toString(){
+			return "Player: " + getPlayerNumber() + " " + getPosition();
+		}
 		
 }

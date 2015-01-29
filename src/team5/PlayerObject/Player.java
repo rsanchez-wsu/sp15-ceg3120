@@ -38,34 +38,31 @@ public class Player {
 	}
 
 	// Player Constructor
-	public Player(int playerNumber, int health, Pair position, State state) {
+	public Player(int playerNumber, int health, Pair position ,State state) {
 
+		this.position = position;
 		this.setPlayerNumber(playerNumber);
 		this.health = health;
-		this.position = position;
 		this.state = state;
 	}
 
 	@Override
 	public String toString() {
-		String state = "";
+//		String state = "";
+//
+//		switch (getState()) {
+//		case DEAD:
+//			state = "Dead";
+//			break;
+//		case ALIVE:
+//			state = "Alive";
+//			break;
+//		case WAITING:
+//			state = "Waiting";
+//			break;
+//		}
 
-		switch (getState()) {
-		case DEAD:
-			state = "Dead";
-			break;
-		case ALIVE:
-			state = "Alive";
-			break;
-		case WAITING:
-			state = "Waiting";
-			break;
-		}
-
-
-		return "My Info - #: " + getPlayerNumber() + " | Health: "
-				+ getHealth() + "/" + getTotalHealth() + " | Position: "
-				+ getPosition().toString() + " | State: " + state;
+		return "My info - #: " + getPlayerNumber() + " | Health: " + getHealth() + "/50 | Position " + getPosition() + "| State:" + getState();
 
 	}
 

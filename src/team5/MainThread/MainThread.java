@@ -29,6 +29,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
 import team5.Client.ClientJTable;
+import team5.Client.EnemyPlayer;
 import team5.PlayerObject.Pair;
 import team5.PlayerObject.Player;
 
@@ -60,7 +61,7 @@ public class MainThread extends Thread {
 		initializePlayers();
 
 		// Get the client player
-		actualPlayer = playerList.get(1);
+		actualPlayer = playerList.get(2);
 		
 		// Create the Title Bar
 	    titleBar = new JTextField();
@@ -86,7 +87,6 @@ public class MainThread extends Thread {
 		status.setHorizontalAlignment(JLabel.CENTER);
 		
 		info = new JLabel();
-		actualPlayer = playerList.get(0);
 		info.setText(actualPlayer.toString());
 		info.setHorizontalAlignment(JLabel.CENTER);
 		
@@ -126,54 +126,55 @@ public class MainThread extends Thread {
 		Player.State state = Player.State.WAITING;
 		Pair position = new Pair(x, y);
 		
-		Player player = new Player( 0, 25,position, state);
+		Player player = new EnemyPlayer( 0, 25, position, state);
 		playerList.addElement(player);
 		x = 10;
 		y = 10;
 		position = new Pair(x, y);
 		state = Player.State.ALIVE;
-		player = new Player(1, 20, position, state);
+		player = new EnemyPlayer(1, 20, position, state);
 		playerList.addElement(player);
 		
-		x = 15;
-		y = 15;
+		x = 10;
+		y = 10;
 		state = Player.State.WAITING;
-		position = new Pair(x, y);
+		position = new Pair(x,y);
 		player = new Player(2, 50, position, state);
-		
 		playerList.addElement(player);
+		
 		x = 11;
 		y = 41;
 		state = Player.State.DEAD;
 		position = new Pair(x, y);
-		player = new Player(3, 0, position, state);
+		player = new EnemyPlayer(3, 0, position, state);
 		playerList.addElement(player);
-		
-		x = 15;
-		y = 15;
-		state = Player.State.WAITING;
-		position = new Pair(x, y);
-		player = new Player(2, 50, position, state);
-		
-		playerList.addElement(player);
-		x = 11;
-		y = 41;
-		state = Player.State.DEAD;
-		position = new Pair(x, y);
-		player = new Player(3, 0, position, state);
-		playerList.addElement(player);
-		
-		x = 15;
-		y = 15;
-		state = Player.State.WAITING;
-		position = new Pair(x, y);
-		player = new Player(2, 50, position, state);
-		
-		x = 15;
-		y = 15;
-		state = Player.State.WAITING;
-		position = new Pair(x, y);
-		player = new Player(2, 50, position, state);
+//		
+//		x = 15;
+//		y = 15;
+//		state = Player.State.WAITING;
+//		position = new Pair(x, y);
+//		player = new EnemyPlayer(4, 50, position, state);
+//		
+//		playerList.addElement(player);
+//		x = 11;
+//		y = 41;
+//		state = Player.State.DEAD;
+//		position = new Pair(x, y);
+//		player = new EnemyPlayer(5, 0, position, state);
+//		playerList.addElement(player);
+//		
+//		x = 30;
+//		y = 15;
+//		state = Player.State.WAITING;
+//		position = new Pair(x, y);
+//		player = new EnemyPlayer(6, 50, position, state);
+//		
+//		x = 40;
+//		y = 15;
+//		state = Player.State.WAITING;
+//		position = new Pair(x, y);
+//		player = new EnemyPlayer(7, 50, position, state);
+//		
 	}
 
 	// Creates and starts the main thread
