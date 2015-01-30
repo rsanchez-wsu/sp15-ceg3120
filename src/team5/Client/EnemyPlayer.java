@@ -28,7 +28,12 @@ public class EnemyPlayer extends Player{
 		
 		@Override
 		public String toString(){
-			return "Player: " + getPlayerNumber() + " " + getPosition();
+			if (getPosition() == null)
+			{
+				return "Player " + getPlayerNumber() + " Last Seen: NEVER ";
+
+			}
+			return "Player " + getPlayerNumber() + " Last Seen: " + getPosition();
 		}
 		
 }
