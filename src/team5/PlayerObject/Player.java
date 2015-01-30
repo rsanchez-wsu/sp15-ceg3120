@@ -62,7 +62,8 @@ public class Player {
 //			break;
 //		}
 
-		return "My info - #: " + getPlayerNumber() + " | Health: " + getHealth() + "/50 | Position " + getPosition() + "| State:" + getState();
+		return "My info - #: " + getPlayerNumber() + " | Health: " + getHealth() + "/50 | Position "
+		+ getPosition() + " | State: " + getState();
 
 	}
 

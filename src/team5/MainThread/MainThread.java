@@ -30,6 +30,7 @@ import javax.swing.JTextField;
 
 import team5.Client.ClientJTable;
 import team5.Client.EnemyPlayer;
+import team5.Client.GameStatus;
 import team5.PlayerObject.Pair;
 import team5.PlayerObject.Player;
 
@@ -56,9 +57,16 @@ public class MainThread extends Thread {
 		JSplitPane splitFrame;
 		final JTextField titleBar;
 		ClientJTable playerTable;
+		GameStatus gameStatus;
+	    GameStatus.StatusEnum actualStatus; 
+		
 		
 		// Method to create dummy players
 		initializePlayers();
+		
+	
+		actualStatus = GameStatus.StatusEnum.IN_PROGRESS;
+		gameStatus = new GameStatus("1.1.1.1", 3,  actualStatus);
 
 		// Get the client player
 		actualPlayer = playerList.get(2);
@@ -87,7 +95,7 @@ public class MainThread extends Thread {
 		status.setHorizontalAlignment(JLabel.CENTER);
 		
 		info = new JLabel();
-		info.setText(actualPlayer.toString());
+		info.setText(gameStatus.toString() +  " " +  actualPlayer.toString());
 		info.setHorizontalAlignment(JLabel.CENTER);
 		
 		playerTable = new ClientJTable(playerList, actualPlayer);
@@ -125,14 +133,14 @@ public class MainThread extends Thread {
 		int y = 1;
 		Player.State state = Player.State.WAITING;
 		Pair position = new Pair(x, y);
-		
 		Player player = new EnemyPlayer( 0, 25, position, state);
 		playerList.addElement(player);
+		
 		x = 10;
 		y = 10;
 		position = new Pair(x, y);
 		state = Player.State.ALIVE;
-		player = new EnemyPlayer(1, 20, position, state);
+		player = new EnemyPlayer(1, 20, null, state);
 		playerList.addElement(player);
 		
 		x = 10;
@@ -146,7 +154,7 @@ public class MainThread extends Thread {
 		y = 41;
 		state = Player.State.DEAD;
 		position = new Pair(x, y);
-		player = new EnemyPlayer(3, 0, position, state);
+		player = new EnemyPlayer(3, 0, null, state);
 		playerList.addElement(player);
 //		
 //		x = 15;

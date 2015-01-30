@@ -21,8 +21,7 @@ package team5.Client;
  * @author Joshua Hitchens, Lori Simmons, Ryan Lane, Tyler Parker
  */
 public class GameStatus {
-	
-	
+
 	public enum StatusEnum {
 		IN_PROGRESS, COMPLETED, WAITING
 	}
@@ -30,28 +29,21 @@ public class GameStatus {
 	private int playersLeft;
 
 	private String serverIP;
-	
+
 	private StatusEnum status;
-	
-	// GameStatus  Constructor
-	public GameStatus()
-	{
-		
-	}
-		public GameStatus(String serverIP, int playersLeft, StatusEnum status) {
 
-			this.serverIP = serverIP;
-			this.playersLeft = playersLeft;
-			this.status = status;
-		}
-	
-	public StatusEnum getStatus() {
-		return this.status;
+	// GameStatus Constructor
+	public GameStatus() {
+
 	}
 
-	public void setStatus(StatusEnum status) {
+	public GameStatus(String serverIP, int playersLeft, StatusEnum status) {
+
+		this.serverIP = serverIP;
+		this.playersLeft = playersLeft;
 		this.status = status;
 	}
+
 	
 	@Override
 	public String toString() {
@@ -73,20 +65,28 @@ public class GameStatus {
 				+ " | Players left: " + getPlayersLeft() + "\n ";
 	}
 	
-		public String getServerIP() {
-			return serverIP;
-		}
+	public StatusEnum getStatus() {
+		return this.status;
+	}
 
-		public void setServerIP(String serverIP) {
-			this.serverIP = serverIP;
-			
-		}
-		
-		public int getPlayersLeft() {
-			return playersLeft;
-		}
+	public void setStatus(StatusEnum status) {
+		this.status = status;
+	}
 
-		public void setPlayersLeft(int playersLeft) {
-			this.playersLeft = playersLeft;
+	public String getServerIP() {
+		return serverIP;
+	}
+
+	public void setServerIP(String serverIP) {
+		this.serverIP = serverIP;
+
+	}
+
+	public int getPlayersLeft() {
+		return playersLeft;
+	}
+
+	public void setPlayersLeft(int playersLeft) {
+		this.playersLeft = playersLeft;
 	}
 }
