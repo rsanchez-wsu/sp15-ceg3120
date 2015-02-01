@@ -25,6 +25,8 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
 
+
+
 import team5.PlayerObject.Player;
 
 /**
@@ -94,16 +96,24 @@ public class ClientJTable extends JPanel {
 
 			int i = 0;
 			for (Player player : playerList) {
-				setValueAt(player, 0, i);
-				i++;
-			}
+				 String playerInfo = "";
+
+				 if(player == actualPlayer){
+					 playerInfo = "Player " + actualPlayer.getPlayerNumber() + " Me";
+					 setValueAt(playerInfo, 0, i);
+				 }
+				 else{
+					 setValueAt(player.toString(), 0, i);
+				 }
+				 i++;
+				 } 
 		}
 
-		public void setValueAt(Player player, int row, int column) {
+		public void setValueAt(String playerInfo, int row, int column) {
 			// if(this.playerList[row][column].contains(actualPlayer.getPlayerNumber())){
 			//
 			// }
-			playerList[row][column] = player.toString();
+			playerList[row][column] = playerInfo;
 			fireTableCellUpdated(row, column);
 		}
 
@@ -157,6 +167,7 @@ public class ClientJTable extends JPanel {
 			ImageIcon icon = null;
 			icon = new ImageIcon(getClass().getResource("/team5/Client/worldwartank.png"));
 			lbl.setText((String) value);
+			lbl.setHorizontalAlignment(JLabel.CENTER);
 			lbl.setIcon(icon);
 			
 			return lbl;
