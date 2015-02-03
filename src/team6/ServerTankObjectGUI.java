@@ -10,7 +10,7 @@
  * For liscense information see <http://www.gnu.org/licenses/>.
  */
 
-package cs3120_27jan15;
+package team6;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;

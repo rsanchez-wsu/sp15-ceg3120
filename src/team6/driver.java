@@ -10,7 +10,7 @@
  * For liscense information see <http://www.gnu.org/licenses/>.
  */
 
-package cs3120_27jan15;
+package team6;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -21,7 +21,7 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Cs3120_27jan15 {
+public class driver {
 
     public static void main(String[] args) {
       
