@@ -18,6 +18,8 @@
 package team5.Client;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -37,7 +39,7 @@ public class ClientStatusTable extends JPanel {
 	 * ClientJList Variables
 	 */
 	private static final long serialVersionUID = 1L;
-
+	Thread tabThread = new Thread();
 	/**
 	 * Default Constructor
 	 */
@@ -52,17 +54,20 @@ public class ClientStatusTable extends JPanel {
 	public ClientStatusTable(Vector<Player> playerList, Player actualPlayer) {
 		super(new GridLayout(1, 0));
 		final JTable table;
-
-		table = new JTable(new PlayersTable(playerList, actualPlayer));
 		final Vector<Player> playerModel = playerList;
-		final JFrame playerTabs = new JFrame();
+		final JFrame playerTabsFrame = new JFrame();
 		final PlayerTabs tabs = new PlayerTabs(playerModel);
-		playerTabs.add(tabs);
 		
-		playerTabs.setSize(300, 300);
-		playerTabs.setAlwaysOnTop(true);
-		playerTabs.setLocationRelativeTo(null);
-
+	
+		
+		playerTabsFrame.add(tabs);
+	
+		table = new JTable(new PlayersTable(playerList, actualPlayer));
+		playerTabsFrame.setSize(300, 300);
+		playerTabsFrame.setAlwaysOnTop(true);
+		playerTabsFrame.setLocationRelativeTo(null);
+		
+		
 		//Set up mouse listener for PlayerTabs
 		table.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
@@ -71,9 +76,12 @@ public class ClientStatusTable extends JPanel {
 				int column = table.columnAtPoint(e.getPoint());
 
 				if (row >= 0 && column >= 0) {
+					if(tabThread.isAlive()){
+						tabs.setSelectedIndex(column);
+					}else{
+					tabThread.start();
 					System.out.println(column);
-					playerTabs.setVisible(true);
-					int i = 0;
+					playerTabsFrame.setVisible(true);
 					for(Player player : playerModel){
 						Player temp = player;
 						String tabTitle = "Player " + temp.getPlayerNumber();
@@ -83,7 +91,8 @@ public class ClientStatusTable extends JPanel {
 						aLabel.setText(temp.toString());
 						
 						tabs.addTab(tabTitle, aLabel);
-						i++;
+						tabs.setSelectedIndex(column);
+					}
 					}
 					
 					
