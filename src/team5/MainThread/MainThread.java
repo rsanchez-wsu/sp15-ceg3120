@@ -28,7 +28,8 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
-import team5.Client.ClientJTable;
+
+import team5.Client.ClientStatusTable;
 import team5.Client.EnemyPlayer;
 import team5.Client.GameStatus;
 import team5.PlayerObject.Pair;
@@ -56,7 +57,7 @@ public class MainThread extends Thread {
 		JSplitPane splitPane;
 		JSplitPane splitFrame;
 		final JTextField titleBar;
-		ClientJTable playerTable;
+		ClientStatusTable playerTable;
 		GameStatus gameStatus;
 	    GameStatus.StatusEnum actualStatus; 
 		
@@ -98,7 +99,7 @@ public class MainThread extends Thread {
 		info.setText(gameStatus.toString() +  " " +  actualPlayer.toString());
 		info.setHorizontalAlignment(JLabel.CENTER);
 		
-		playerTable = new ClientJTable(playerList, actualPlayer);
+		playerTable = new ClientStatusTable(playerList, actualPlayer);
 	
 		gamePanel.add(gameBoard);
 		

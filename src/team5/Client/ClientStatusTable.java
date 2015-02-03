@@ -33,7 +33,7 @@ import team5.PlayerObject.Player;
  * @author Joshua Hitchens, Lori Simmons, Ryan Lane, Tyler Parker
  */
 
-public class ClientJTable extends JPanel {
+public class ClientStatusTable extends JPanel {
 	/**
 	 * ClientJList Variables
 	 */
@@ -43,14 +43,14 @@ public class ClientJTable extends JPanel {
 	 * Default Constructor
 	 */
 
-	public ClientJTable() {
+	public ClientStatusTable() {
 
 	}
 
 	/**
 	 * Status Bar Constructor
 	 */
-	public ClientJTable(Vector<Player> playerList, Player actualPlayer) {
+	public ClientStatusTable(Vector<Player> playerList, Player actualPlayer) {
 		super(new GridLayout(1, 0));
 		JTable table;
 		
