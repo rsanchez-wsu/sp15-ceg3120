@@ -18,15 +18,11 @@
 package team5.Client;
 
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Vector;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
-
-import com.sun.org.apache.xml.internal.security.encryption.Reference;
 
 import team5.PlayerObject.Player;
 
@@ -74,7 +70,8 @@ public class ClientStatusTable extends JPanel {
 			public void mouseClicked(java.awt.event.MouseEvent e) {
 				int row = table.rowAtPoint(e.getPoint());
 				int column = table.columnAtPoint(e.getPoint());
-
+				String infoString = "";
+				
 				if (row >= 0 && column >= 0) {
 					if(tabThread.isAlive()){
 						tabs.setSelectedIndex(column);
@@ -85,12 +82,12 @@ public class ClientStatusTable extends JPanel {
 					for(Player player : playerModel){
 						Player temp = player;
 						String tabTitle = "Player " + temp.getPlayerNumber();
-						JLabel aLabel = new JLabel();
+						JLabel playerInfo = new JLabel();
 						
-						//To modify tab info player
-						aLabel.setText(temp.toString());
+						infoString = temp.toString();
+						playerInfo.setText(infoString);
 						
-						tabs.addTab(tabTitle, aLabel);
+						tabs.addTab(tabTitle, playerInfo);
 						tabs.setSelectedIndex(column);
 					}
 					}
@@ -143,10 +140,11 @@ public class ClientStatusTable extends JPanel {
 
 				if (player == actualPlayer) {
 					playerInfo = "Player " + actualPlayer.getPlayerNumber()
-							+ " Me";
+							+ ": Me";
 					setValueAt(playerInfo, 0, i);
 				} else {
-					setValueAt(player.toString(), 0, i);
+					setValueAt(((EnemyPlayer) player).printPosition(), 0, i);
+					
 				}
 				i++;
 			}
