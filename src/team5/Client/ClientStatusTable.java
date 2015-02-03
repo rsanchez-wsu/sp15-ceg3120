@@ -24,8 +24,6 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import com.sun.org.apache.xml.internal.security.encryption.Reference;
-
 import team5.PlayerObject.Player;
 
 /**
@@ -37,7 +35,7 @@ public class ClientStatusTable extends JPanel {
 	 * ClientJList Variables
 	 */
 	private static final long serialVersionUID = 1L;
-
+	Thread tabThread = new Thread();
 	/**
 	 * Default Constructor
 	 */
@@ -52,38 +50,46 @@ public class ClientStatusTable extends JPanel {
 	public ClientStatusTable(Vector<Player> playerList, Player actualPlayer) {
 		super(new GridLayout(1, 0));
 		final JTable table;
-
-		table = new JTable(new PlayersTable(playerList, actualPlayer));
 		final Vector<Player> playerModel = playerList;
-		final JFrame playerTabs = new JFrame();
+		final JFrame playerTabsFrame = new JFrame();
 		final PlayerTabs tabs = new PlayerTabs(playerModel);
-		playerTabs.add(tabs);
 		
-		playerTabs.setSize(300, 300);
-		playerTabs.setAlwaysOnTop(true);
-		playerTabs.setLocationRelativeTo(null);
-
+	
+		
+		playerTabsFrame.add(tabs);
+	
+		table = new JTable(new PlayersTable(playerList, actualPlayer));
+		playerTabsFrame.setSize(300, 300);
+		playerTabsFrame.setAlwaysOnTop(true);
+		playerTabsFrame.setLocationRelativeTo(null);
+		
+		
 		//Set up mouse listener for PlayerTabs
 		table.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent e) {
 				int row = table.rowAtPoint(e.getPoint());
 				int column = table.columnAtPoint(e.getPoint());
-
+				String infoString = "";
+				
 				if (row >= 0 && column >= 0) {
+					if(tabThread.isAlive()){
+						tabs.setSelectedIndex(column);
+					}else{
+					tabThread.start();
 					System.out.println(column);
-					playerTabs.setVisible(true);
-					int i = 0;
+					playerTabsFrame.setVisible(true);
 					for(Player player : playerModel){
 						Player temp = player;
 						String tabTitle = "Player " + temp.getPlayerNumber();
-						JLabel aLabel = new JLabel();
+						JLabel playerInfo = new JLabel();
 						
-						//To modify tab info player
-						aLabel.setText(temp.toString());
+						infoString = temp.toString();
+						playerInfo.setText(infoString);
 						
-						tabs.addTab(tabTitle, aLabel);
-						i++;
+						tabs.addTab(tabTitle, playerInfo);
+						tabs.setSelectedIndex(column);
+					}
 					}
 					
 					
@@ -134,10 +140,11 @@ public class ClientStatusTable extends JPanel {
 
 				if (player == actualPlayer) {
 					playerInfo = "Player " + actualPlayer.getPlayerNumber()
-							+ " Me";
+							+ ": Me";
 					setValueAt(playerInfo, 0, i);
 				} else {
-					setValueAt(player.toString(), 0, i);
+					setValueAt(((EnemyPlayer) player).printPosition(), 0, i);
+					
 				}
 				i++;
 			}
