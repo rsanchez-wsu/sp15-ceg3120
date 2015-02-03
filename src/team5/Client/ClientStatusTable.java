@@ -24,8 +24,7 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
-
-
+import com.sun.org.apache.xml.internal.security.encryption.Reference;
 
 import team5.PlayerObject.Player;
 
@@ -52,14 +51,49 @@ public class ClientStatusTable extends JPanel {
 	 */
 	public ClientStatusTable(Vector<Player> playerList, Player actualPlayer) {
 		super(new GridLayout(1, 0));
-		JTable table;
-		
+		final JTable table;
+
 		table = new JTable(new PlayersTable(playerList, actualPlayer));
+		final Vector<Player> playerModel = playerList;
+		final JFrame playerTabs = new JFrame();
+		final PlayerTabs tabs = new PlayerTabs(playerModel);
+		playerTabs.add(tabs);
+		
+		playerTabs.setSize(300, 300);
+		playerTabs.setAlwaysOnTop(true);
+		playerTabs.setLocationRelativeTo(null);
+
+		//Set up mouse listener for PlayerTabs
+		table.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				int row = table.rowAtPoint(e.getPoint());
+				int column = table.columnAtPoint(e.getPoint());
+
+				if (row >= 0 && column >= 0) {
+					System.out.println(column);
+					playerTabs.setVisible(true);
+					int i = 0;
+					for(Player player : playerModel){
+						Player temp = player;
+						String tabTitle = "Player " + temp.getPlayerNumber();
+						JLabel aLabel = new JLabel();
+						
+						//To modify tab info player
+						aLabel.setText(temp.toString());
+						
+						tabs.addTab(tabTitle, aLabel);
+						i++;
+					}
+					
+					
+					
+				}
+			} 
+		});
 
 		JScrollPane scrollPanel = new JScrollPane(table);
 
-		
-		
 		for (int i = 0; i < playerList.size(); i++) {
 			table.getColumnModel().getColumn(i)
 					.setCellRenderer(new ImageRenderer());
@@ -67,6 +101,8 @@ public class ClientStatusTable extends JPanel {
 
 		add(scrollPanel, BorderLayout.SOUTH);
 	}
+	
+	
 
 	class PlayersTable extends AbstractTableModel {
 
@@ -82,8 +118,6 @@ public class ClientStatusTable extends JPanel {
 
 		}
 
-		
-		
 		public PlayersTable(Vector<Player> playerList, Player actualPlayer) {
 			int size = playerList.size();
 			columnNames = new String[size];
@@ -96,17 +130,17 @@ public class ClientStatusTable extends JPanel {
 
 			int i = 0;
 			for (Player player : playerList) {
-				 String playerInfo = "";
+				String playerInfo = "";
 
-				 if(player == actualPlayer){
-					 playerInfo = "Player " + actualPlayer.getPlayerNumber() + " Me";
-					 setValueAt(playerInfo, 0, i);
-				 }
-				 else{
-					 setValueAt(player.toString(), 0, i);
-				 }
-				 i++;
-				 } 
+				if (player == actualPlayer) {
+					playerInfo = "Player " + actualPlayer.getPlayerNumber()
+							+ " Me";
+					setValueAt(playerInfo, 0, i);
+				} else {
+					setValueAt(player.toString(), 0, i);
+				}
+				i++;
+			}
 		}
 
 		public void setValueAt(String playerInfo, int row, int column) {
@@ -150,26 +184,24 @@ public class ClientStatusTable extends JPanel {
 
 		JLabel lbl = new JLabel();
 
-		public void setRow(JTable table){
+		public void setRow(JTable table) {
 			table.setRowHeight(95);
-			
+
 		}
-		
-		
 
 		public Component getTableCellRendererComponent(JTable table,
 				Object value, boolean isSelected, boolean hasFocus, int row,
 				int column) {
-			
+
 			setRow(table);
-			
-			
+
 			ImageIcon icon = null;
-			icon = new ImageIcon(getClass().getResource("/team5/Client/worldwartank.png"));
+			icon = new ImageIcon(getClass().getResource(
+					"/team5/Client/worldwartank.png"));
 			lbl.setText((String) value);
 			lbl.setHorizontalAlignment(JLabel.CENTER);
 			lbl.setIcon(icon);
-			
+
 			return lbl;
 		}
 	}
