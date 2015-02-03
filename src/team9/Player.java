@@ -11,7 +11,8 @@ public class Player {
     private int health;
     private Coordinate loc;
     private Coordinate lastLoc = new Coordinate(-1,-1);
-    
+    private String IPAddress;
+    private String status;
     public Player(int playerNum){
         this.health = 50;
         this.playerNum=playerNum;
@@ -39,5 +40,15 @@ public class Player {
     public void setLastSeen(Coordinate foundLoc){
         this.lastLoc=foundLoc;
     }
-    
+    public String getStatus(Player activePlayer){
+        if(this.health==0){
+            return "Dead";
+        }
+        else if(this == activePlayer){
+            return "Play";
+        }
+        else{
+            return "Wait";
+        }
+    }
 }
