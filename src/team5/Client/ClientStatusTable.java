@@ -69,18 +69,17 @@ public class ClientStatusTable extends JPanel {
 				tabThread = new Thread();
 				
 
-						if(playerTabsFrame == null){
-							playerTabsFrame = new JFrame();
-
-							tabs = new PlayerTabs(playerModel);
-	    					tabs.setColumns(playerModel.size());
-							playerTabsFrame.add(tabs);
-							playerTabsFrame.setSize(300, 300);
-							playerTabsFrame.setAlwaysOnTop(true);
-							playerTabsFrame.setLocationRelativeTo(null);
-						}
+					if(playerTabsFrame == null){
+						playerTabsFrame = new JFrame();
+						tabs = new PlayerTabs(playerModel);
+	    				tabs.setColumns(playerModel.size());
+						playerTabsFrame.add(tabs);
+						playerTabsFrame.setSize(300, 300);
+						playerTabsFrame.setAlwaysOnTop(true);
+						playerTabsFrame.setLocationRelativeTo(null);
+					}
 						
-					if(tabs.getColumns() > 0){	
+					if(tabs.getTabCount() != 0){	
 						tabs.setSelectedIndex(column);
 					}else{
 					
@@ -98,9 +97,9 @@ public class ClientStatusTable extends JPanel {
 						playerInfo.setText(infoString);
 						
 						tabs.addTab(tabTitle, playerInfo);
-						tabs.setSelectedIndex(column);
+						
 					}
-
+					tabs.setSelectedIndex(column);
 				}
 					playerTabsFrame.addWindowListener(new java.awt.event.WindowAdapter(){
 						@Override
