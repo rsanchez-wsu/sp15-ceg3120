@@ -1,20 +1,37 @@
 package team1;
 
-import java.math.*;
 import java.awt.*;
-import java.beans.*;
+import java.awt.event.*;
+
 import javax.swing.*;
 
 
-public class TurnTanks {
+public class TurnTanks extends JPanel implements ActionListener {
+	
+	public TurnTanks() {
+		
+		JPanel PlayerList = new JPanel();
+		GridBagLayout PlayerListLayout = new GridBagLayout();
+		GridBagConstraints GBConstraint = new GridBagConstraints();
+		
+		PlayerList.setLayout(PlayerListLayout);
+		
+		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	} 
 	
 	// Create the frame
-	private static void createClientWindow(){
+	private static void createClientWindow() {
 		
 		JFrame frame = new JFrame("TURN TANKS!!ONE!11!");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		
-		
+		frame.add(new TurnTanks());		
 		
 		frame.pack();
 		frame.setVisible(true);
@@ -32,5 +49,7 @@ public class TurnTanks {
 		
 		
 	}//end of main
+
+	
 	
 }
