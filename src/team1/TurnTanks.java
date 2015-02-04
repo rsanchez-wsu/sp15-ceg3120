@@ -16,7 +16,9 @@ public class TurnTanks extends JPanel implements ActionListener {
 		
 		PlayerList.setLayout(PlayerListLayout);
 		
+		JLabel title = new JLabel("TURN TANKS");
 		
+		PlayerList.add(title);
 	}
 	
 	@Override
@@ -32,8 +34,8 @@ public class TurnTanks extends JPanel implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		
 		frame.add(new TurnTanks());		
-		
-		frame.pack();
+		frame.setSize(600, 600);
+		//frame.pack();
 		frame.setVisible(true);
 		
 	}
