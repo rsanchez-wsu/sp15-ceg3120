@@ -1,5 +1,6 @@
 /*
- *  Copyright (C) <2015>  <Team 4>
+ *  Copyright (C) <2015>  <Brad Reynolds> - reynolds.0345@gmail.com
+ *  					 ADD names/emails here
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -65,14 +66,17 @@ public class sampleServerWindow {
 	 * Initialize the contents of the frame. Modify here.
 	 */
 	private void initialize() {
-		// Changed to array
-
 		// r0345
 		// Generate 8 random games with random information and generated
 		// players.
 		// Use this information to have a gameList which is shown in the JTree.
 		// when one of the games is chosen within the tree the player list from
 		// that game is displayed.
+
+		// as of 2/3/2015 I've gotten to the point of generating all the
+		// necesarry information however the treemodel needs to be implemented.
+		// Haven't planned that out yet.
+
 		Game[] gameList = new Game[8];
 		for (int i = 0; i < 8; i++) { // Generate 8 games
 			Person[] personList = new Person[8];
@@ -120,8 +124,6 @@ public class sampleServerWindow {
 					dateStart, dateEnd, winningPlayer);
 			gameList[i] = newGame;
 		}
-
-		// Table view from benjamin
 
 		String[] headings = { "IP Address", "Game Id", "Player #", "Health",
 				"Position", "State" };

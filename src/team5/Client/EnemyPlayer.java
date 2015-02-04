@@ -45,7 +45,8 @@ public class EnemyPlayer extends Player{
 		
 		@Override
 		public String toString(){
-			return super.toString();
+			return "Enemy - #: " + getPlayerNumber() + " | Health: " + getHealth() + "/50 | Position "
+					+ getPosition() + " | State: " + getState();
 		}
 		
 		public String printPosition(){

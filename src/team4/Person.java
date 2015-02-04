@@ -1,5 +1,6 @@
 /*
- *  Copyright (C) <2015>  <Team 4>
+ *  Copyright (C) <2015>  <Brad Reynolds> - reynolds.0345@gmail.com
+ *  					 ADD names/emails here
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -104,7 +105,7 @@ public class Person {
 		this.ingameState = ingameState;
 	}
 
-	public Object[] getModelPlayerObject() {
+	public Object[] getModelPlayerObject() { //Returns the object array of values useful for JTable.
 		Object[] returnThis = { this.getIpAdress(), this.getGameID(),
 				this.getPlayerNumber(), this.getHealth(),
 				this.getLocationString(), this.getIngameState() };
