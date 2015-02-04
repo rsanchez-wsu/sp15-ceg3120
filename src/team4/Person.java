@@ -18,11 +18,13 @@
 package team4;
 
 import java.awt.Point;
-	/**
-	 * Basic outline for person class. edit as needed
-	 * @author Brad
-	 *
-	 */
+
+/**
+ * Basic outline for person class. edit as needed
+ * 
+ * @author Brad
+ *
+ */
 public class Person {
 	public enum State {
 		Waiting, Active, Dead
@@ -85,9 +87,11 @@ public class Person {
 	public Point getIngamePosition() {
 		return ingamePosition;
 	}
-	public String getLocationString(){
+
+	public String getLocationString() {
 		return "(" + ingamePosition.x + ", " + ingamePosition.y + ")";
 	}
+
 	public void setIngamePosition(Point ingamePosition) {
 		this.ingamePosition = ingamePosition;
 	}
@@ -100,10 +104,17 @@ public class Person {
 		this.ingameState = ingameState;
 	}
 
+	public Object[] getModelPlayerObject() {
+		Object[] returnThis = { this.getIpAdress(), this.getGameID(),
+				this.getPlayerNumber(), this.getHealth(),
+				this.getLocationString(), this.getIngameState() };
+		return returnThis;
+	}
+
 	@Override
 	public String toString() {
 		return "Player " + playerNumber + " [IP=" + ipAdress + " ] Health : "
-				+ health + "/50"+ " | Position=" + ingamePosition.toString()
+				+ health + "/50" + " | Position=" + ingamePosition.toString()
 				+ " | State : " + ingameState;
 	}
 

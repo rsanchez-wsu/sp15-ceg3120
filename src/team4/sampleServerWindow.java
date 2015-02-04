@@ -22,16 +22,17 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.ListModel;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.Point;
-import java.util.ArrayList;
+import java.util.Date;
 
-import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
 
 public class sampleServerWindow {
 
@@ -66,49 +67,62 @@ public class sampleServerWindow {
 	private void initialize() {
 		// Changed to array
 
-		Person player1 = new Person("10.131.22.8", 1, 1, 22, new Point(7, 2),
-				Person.State.Waiting);
-		Person player2 = new Person("10.131.22.3", 1, 2, 50, new Point(1, 3),
-				Person.State.Waiting);
-		Person player3 = new Person("10.131.22.4", 1, 3, 12, new Point(25, 52),
-				Person.State.Waiting);
-		Person player4 = new Person("10.131.22.5", 1, 4, 23, new Point(25, 44),
-				Person.State.Active);
-		Person player5 = new Person("10.131.22.66", 1, 5, 0, new Point(44, 52),
-				Person.State.Dead);
-		Person player6 = new Person("10.131.22.250", 1, 6, 16,
-				new Point(44, 23), Person.State.Waiting);
-		Person player7 = new Person("10.131.22.230", 1, 7, 50,
-				new Point(55, 13), Person.State.Waiting);
-		Person player8 = new Person("10.131.22.150", 1, 8, 42,
-				new Point(66, 1), Person.State.Waiting);
+		// r0345
+		// Generate 8 random games with random information and generated
+		// players.
+		// Use this information to have a gameList which is shown in the JTree.
+		// when one of the games is chosen within the tree the player list from
+		// that game is displayed.
+		Game[] gameList = new Game[8];
+		for (int i = 0; i < 8; i++) { // Generate 8 games
+			Person[] personList = new Person[8];
+			int gameNumber = (int) (Math.random() * 500);
+			int playersTurn = (int) (Math.random() * 8);
+			for (int j = 0; j < 8; j++) {// Generate 8 players per game
+
+				Point ingamePosition = new Point((int) (Math.random() * 50),
+						(int) (Math.random() * 50));
+				int health = (int) (Math.random() * 50);
+				String ipAdress = (int) (Math.random() * 255) + "."
+						+ (int) (Math.random() * 255) + "."
+						+ (int) (Math.random() * 255) + "."
+						+ (int) (Math.random() * 255);
+				Person.State ingameState;
+
+				if (health > 0) {
+					ingameState = Person.State.Waiting;
+				} else {
+					ingameState = Person.State.Dead;
+				}
+				if (j == playersTurn) {
+					ingameState = Person.State.Active;
+				}
+				Person toAdd = new Person(ipAdress, gameNumber, j, health,
+						ingamePosition, ingameState);
+				personList[j] = toAdd;
+			}
+
+			Game.State gameStatus;
+			if (Math.random() * 2 > 1) {// Determine game state
+				gameStatus = Game.State.Active;
+			} else {
+				gameStatus = Game.State.Inactive;
+			}
+			Person winningPlayer = (personList[((int) (Math.random() * 7))]);
+
+			Date dateStart = new Date((long) Math.abs(System
+					.currentTimeMillis() - Math.random() * 500000));
+
+			Date dateEnd = new Date((long) Math.abs(System.currentTimeMillis()
+					- Math.random() * 500000));
+
+			Game newGame = new Game(gameNumber, gameStatus, personList,
+					dateStart, dateEnd, winningPlayer);
+			gameList[i] = newGame;
+		}
 
 		// Table view from benjamin
-		Object[][] personList = {
-				{ player1.getIpAdress(), player1.getGameID(),
-						player1.getPlayerNumber(), player1.getHealth(),
-						player1.getLocationString(), player1.getIngameState() },
-				{ player2.getIpAdress(), player2.getGameID(),
-						player2.getPlayerNumber(), player2.getHealth(),
-						player2.getLocationString(), player2.getIngameState() },
-				{ player3.getIpAdress(), player3.getGameID(),
-						player3.getPlayerNumber(), player3.getHealth(),
-						player3.getLocationString(), player3.getIngameState() },
-				{ player4.getIpAdress(), player4.getGameID(),
-						player4.getPlayerNumber(), player4.getHealth(),
-						player4.getLocationString(), player4.getIngameState() },
-				{ player5.getIpAdress(), player5.getGameID(),
-						player5.getPlayerNumber(), player5.getHealth(),
-						player5.getLocationString(), player5.getIngameState() },
-				{ player6.getIpAdress(), player6.getGameID(),
-						player6.getPlayerNumber(), player6.getHealth(),
-						player6.getLocationString(), player6.getIngameState() },
-				{ player7.getIpAdress(), player7.getGameID(),
-						player7.getPlayerNumber(), player7.getHealth(),
-						player7.getLocationString(), player7.getIngameState() },
-				{ player8.getIpAdress(), player8.getGameID(),
-						player8.getPlayerNumber(), player8.getHealth(),
-						player8.getLocationString(), player8.getIngameState() } };
+
 		String[] headings = { "IP Address", "Game Id", "Player #", "Health",
 				"Position", "State" };
 
@@ -117,16 +131,50 @@ public class sampleServerWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// table by benjamin
-		JTable playerTable = new JTable(personList, headings);
+		JTable playerTable = new JTable(gameList[5].getObjectPlayerData(),
+				headings);
 		JScrollPane scrollPane = new JScrollPane(playerTable);
+		scrollPane.setBounds(387, 11, 514, 486);
 		playerTable.getColumnModel().getColumn(0).setPreferredWidth(100);
 		playerTable.setEnabled(false);
-		
+
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
+
+		JTree tree = new JTree();
+		tree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("JTree") {
+			{
+				DefaultMutableTreeNode node_1;
+				node_1 = new DefaultMutableTreeNode("colors");
+				node_1.add(new DefaultMutableTreeNode("blue"));
+				node_1.add(new DefaultMutableTreeNode("violet"));
+				node_1.add(new DefaultMutableTreeNode("red"));
+				node_1.add(new DefaultMutableTreeNode("yellow"));
+				add(node_1);
+				node_1 = new DefaultMutableTreeNode("sports");
+				node_1.add(new DefaultMutableTreeNode("basketball"));
+				node_1.add(new DefaultMutableTreeNode("soccer"));
+				node_1.add(new DefaultMutableTreeNode("football"));
+				node_1.add(new DefaultMutableTreeNode("hockey"));
+				add(node_1);
+				node_1 = new DefaultMutableTreeNode("food");
+				node_1.add(new DefaultMutableTreeNode("hot dogs"));
+				node_1.add(new DefaultMutableTreeNode("pizza"));
+				node_1.add(new DefaultMutableTreeNode("ravioli"));
+				node_1.add(new DefaultMutableTreeNode("bananas"));
+				add(node_1);
+			}
+		}));
+		tree.getSelectionModel().setSelectionMode(
+				TreeSelectionModel.SINGLE_TREE_SELECTION);
+		tree.putClientProperty("JTree.lineStyle", "None");
+		tree.setRootVisible(false);
+		JScrollPane scrollPane_1 = new JScrollPane(tree);
+		scrollPane_1.setBounds(10, 11, 367, 486);
+		panel.add(scrollPane_1);
 
 		// add scrollPane to panel
 		panel.add(scrollPane);
 	}
-
 }
