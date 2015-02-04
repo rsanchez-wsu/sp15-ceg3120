@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) <2015>  <Joshua Hitchens, Lori Simmons, Ryan Lane, Tyler Parker>
+ *  Copyright (C) <2015>  Marie Hucke, Kristen Schwaiger, Kyle Wintermute, Kyle Wood
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,43 +16,53 @@
  *
  */
 
-package team5.Client;
+package team1;
 
-import java.util.Vector;
-
-import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
-
-import team5.PlayerObject.Player;
-
-public class PlayerTabs extends JTabbedPane {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private int rows;
-	private int columns;
-	JFrame playerTabsFrame;
+public class Player
+{
 	
-	public int getColumns() {
-		return columns;
-	}
-
-	public void setColumns(int columns) {
-		this.columns = columns;
-	}
-
-	public int getRows() {
-		return rows;
-	}
-
-	public void setRows(int rows) {
-		this.rows = rows;
+	private int health;
+	private int[] position;
+	
+	public Player()
+	{
+		health = 50;
+		position = new int[2];
 	}
 	
-	public PlayerTabs(Vector<Player> playerList){
-		this.columns = 0;
+	public void attack()
+	{
+		
 	}
 
+	public void move()
+	{
+		
+	}
+	
+	public void pass()
+	{
+		
+	}
+	
+	public int getHealth()
+	{
+		return health;
+	}
+	
+	public int[] getPosition()
+	{
+		return position;
+	}
+	
+	public void setHealth(int newHealth)
+	{
+		health = newHealth;
+	}
+	
+	public void setPosition(int[] newPosition)
+	{
+		position = newPosition;
+	}
+	
 }

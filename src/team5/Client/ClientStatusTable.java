@@ -18,15 +18,11 @@
 package team5.Client;
 
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Vector;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
-
-import com.sun.org.apache.xml.internal.security.encryption.Reference;
 
 import team5.PlayerObject.Player;
 
@@ -39,7 +35,12 @@ public class ClientStatusTable extends JPanel {
 	 * ClientJList Variables
 	 */
 	private static final long serialVersionUID = 1L;
-	Thread tabThread = new Thread();
+	Thread tabThread;
+	PlayerTabs tabs = null;
+	JTable table;
+    Vector<Player> playerModel;
+    JFrame playerTabsFrame;
+	 
 	/**
 	 * Default Constructor
 	 */
@@ -53,51 +54,60 @@ public class ClientStatusTable extends JPanel {
 	 */
 	public ClientStatusTable(Vector<Player> playerList, Player actualPlayer) {
 		super(new GridLayout(1, 0));
-		final JTable table;
-		final Vector<Player> playerModel = playerList;
-		final JFrame playerTabsFrame = new JFrame();
-		final PlayerTabs tabs = new PlayerTabs(playerModel);
 		
-	
-		
-		playerTabsFrame.add(tabs);
-	
 		table = new JTable(new PlayersTable(playerList, actualPlayer));
-		playerTabsFrame.setSize(300, 300);
-		playerTabsFrame.setAlwaysOnTop(true);
-		playerTabsFrame.setLocationRelativeTo(null);
+		playerModel = playerList;
 		
+	    
 		
 		//Set up mouse listener for PlayerTabs
 		table.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent e) {
-				int row = table.rowAtPoint(e.getPoint());
 				int column = table.columnAtPoint(e.getPoint());
+				String infoString = "";
+				tabThread = new Thread();
+				
 
-				if (row >= 0 && column >= 0) {
-					if(tabThread.isAlive()){
+					if(playerTabsFrame == null){
+						playerTabsFrame = new JFrame();
+						tabs = new PlayerTabs(playerModel);
+	    				tabs.setColumns(playerModel.size());
+						playerTabsFrame.add(tabs);
+						playerTabsFrame.setSize(300, 300);
+						playerTabsFrame.setAlwaysOnTop(true);
+						playerTabsFrame.setLocationRelativeTo(null);
+					}
+						
+					if(tabs.getTabCount() != 0){	
 						tabs.setSelectedIndex(column);
 					}else{
-					tabThread.start();
+					
+					tabThread.run();
+					tabThread.setName("Tab Thread");
+					
 					System.out.println(column);
 					playerTabsFrame.setVisible(true);
 					for(Player player : playerModel){
 						Player temp = player;
 						String tabTitle = "Player " + temp.getPlayerNumber();
-						JLabel aLabel = new JLabel();
+						JLabel playerInfo = new JLabel();
 						
-						//To modify tab info player
-						aLabel.setText(temp.toString());
+						infoString = temp.toString();
+						playerInfo.setText(infoString);
 						
-						tabs.addTab(tabTitle, aLabel);
-						tabs.setSelectedIndex(column);
+						tabs.addTab(tabTitle, playerInfo);
+						
 					}
-					}
-					
-					
-					
+					tabs.setSelectedIndex(column);
 				}
+					playerTabsFrame.addWindowListener(new java.awt.event.WindowAdapter(){
+						@Override
+						public void windowClosing(java.awt.event.WindowEvent windowEvent){
+							tabs = null;
+							playerTabsFrame = null;
+						}
+					});
 			} 
 		});
 
@@ -110,8 +120,6 @@ public class ClientStatusTable extends JPanel {
 
 		add(scrollPanel, BorderLayout.SOUTH);
 	}
-	
-	
 
 	class PlayersTable extends AbstractTableModel {
 
@@ -143,10 +151,11 @@ public class ClientStatusTable extends JPanel {
 
 				if (player == actualPlayer) {
 					playerInfo = "Player " + actualPlayer.getPlayerNumber()
-							+ " Me";
+							+ ": Me";
 					setValueAt(playerInfo, 0, i);
 				} else {
-					setValueAt(player.toString(), 0, i);
+					setValueAt(((EnemyPlayer) player).printPosition(), 0, i);
+
 				}
 				i++;
 			}
