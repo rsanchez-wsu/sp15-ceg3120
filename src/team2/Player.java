@@ -68,7 +68,7 @@ public class Player {
 
     @Override
     public String toString() {
-        if (status.equals("Active")){
+        if (status.equals(PlayerState.ACTIVE)){
             return ("Player" + HANDLE + " (IP: " + IP_ADDRESS + ") | State: " + status
                     +  " | Health: " + lifeAmount + "%" + " | Position: (" + positionX + 
                     ", " + positionY + ") | Time: " + time + "s");
@@ -127,7 +127,7 @@ public class Player {
 		@Override 
 		public String toString () {
 	        String result = super.toString();
-	        result = result.substring (0, 1).toUpperCase() + result.substring(1).toLowerCase();;
+	        result = result.substring (0, 1).toUpperCase() + result.substring(1).toLowerCase();
 	        return result;
 	    }
 	}
