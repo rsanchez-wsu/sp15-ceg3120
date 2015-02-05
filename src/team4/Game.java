@@ -18,6 +18,7 @@
  */
 package team4;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Game {
@@ -102,6 +103,18 @@ public class Game {
 			playerObjectModel[i] = playerList[i].getModelPlayerObject();
 		}
 		return playerObjectModel;
+	}
+
+	@Override
+	public String toString() {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(dateEnd);
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH);
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+
+		return "[" + gameStatus + "][" + day + "/" + month + "/" + year
+				+ "][Game " + gameNumber + "]";
 	}
 
 }

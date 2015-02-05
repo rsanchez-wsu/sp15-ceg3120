@@ -76,13 +76,16 @@ public class sampleServerWindow {
 		// as of 2/3/2015 I've gotten to the point of generating all the
 		// necesarry information however the treemodel needs to be implemented.
 		// Haven't planned that out yet.
+		int numGames = 10;
+		int numPlayersInGame = 25;
 
-		Game[] gameList = new Game[8];
+		Game[] gameList = new Game[numGames];
 		for (int i = 0; i < 8; i++) { // Generate 8 games
-			Person[] personList = new Person[8];
+			Person[] personList = new Person[numPlayersInGame];
 			int gameNumber = (int) (Math.random() * 500);
-			int playersTurn = (int) (Math.random() * 8);
-			for (int j = 0; j < 8; j++) {// Generate 8 players per game
+			int playersTurn = (int) (Math.random() * numPlayersInGame);
+			for (int j = 0; j < numPlayersInGame; j++) {// Generate 8 players
+														// per game
 
 				Point ingamePosition = new Point((int) (Math.random() * 50),
 						(int) (Math.random() * 50));
@@ -113,12 +116,12 @@ public class sampleServerWindow {
 				gameStatus = Game.State.Inactive;
 			}
 			Person winningPlayer = (personList[((int) (Math.random() * 7))]);
+			long dateStarted = (long) Math.abs(System.currentTimeMillis()
+					- Math.random() * 500000000);
+			Date dateStart = new Date(dateStarted);
 
-			Date dateStart = new Date((long) Math.abs(System
-					.currentTimeMillis() - Math.random() * 500000));
-
-			Date dateEnd = new Date((long) Math.abs(System.currentTimeMillis()
-					- Math.random() * 500000));
+			Date dateEnd = new Date(
+					(long) (dateStarted + (Math.random() * 2500000)));
 
 			Game newGame = new Game(gameNumber, gameStatus, personList,
 					dateStart, dateEnd, winningPlayer);
@@ -147,25 +150,24 @@ public class sampleServerWindow {
 		JTree tree = new JTree();
 		tree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("JTree") {
 			{
-				DefaultMutableTreeNode node_1;
-				node_1 = new DefaultMutableTreeNode("colors");
-				node_1.add(new DefaultMutableTreeNode("blue"));
-				node_1.add(new DefaultMutableTreeNode("violet"));
-				node_1.add(new DefaultMutableTreeNode("red"));
-				node_1.add(new DefaultMutableTreeNode("yellow"));
-				add(node_1);
-				node_1 = new DefaultMutableTreeNode("sports");
-				node_1.add(new DefaultMutableTreeNode("basketball"));
-				node_1.add(new DefaultMutableTreeNode("soccer"));
-				node_1.add(new DefaultMutableTreeNode("football"));
-				node_1.add(new DefaultMutableTreeNode("hockey"));
-				add(node_1);
-				node_1 = new DefaultMutableTreeNode("food");
-				node_1.add(new DefaultMutableTreeNode("hot dogs"));
-				node_1.add(new DefaultMutableTreeNode("pizza"));
-				node_1.add(new DefaultMutableTreeNode("ravioli"));
-				node_1.add(new DefaultMutableTreeNode("bananas"));
-				add(node_1);
+				// DefaultMutableTreeNode activeNode = new
+				// DefaultMutableTreeNode(
+				// "Active Games");
+				// DefaultMutableTreeNode inactiveNode = new
+				// DefaultMutableTreeNode(
+				// "Inactive Games");
+				// for (int k = 0; k < gameList.length; k++) {
+				// if (gameList[k].getGameStatus() == Game.State.Active) {
+				// activeNode.add(new DefaultMutableTreeNode(gameList[k]));
+				//
+				// } else {
+				// inactiveNode
+				// .add(new DefaultMutableTreeNode(gameList[k]));
+				//
+				// }
+				// }
+				// add(activeNode);
+				// add(inactiveNode);
 			}
 		}));
 		tree.getSelectionModel().setSelectionMode(
