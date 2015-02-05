@@ -42,9 +42,11 @@ public class driver {
         JFrame frame = new JFrame("Server GUI Demo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ServerTankObjectGUI test = new ServerTankObjectGUI();
+        GameTree tree = new GameTree();
         
         test.setOpaque(true); //content panes must be opaque
         frame.setContentPane(test);
+        frame.add(tree);
 
         //Display the window.
         frame.pack();
