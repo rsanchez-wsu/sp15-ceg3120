@@ -25,7 +25,7 @@ package team2;
 
 /**
  * A dummy player class for representing a player in the simple JList.
- * @author william, edited by Alyssa
+ * @author william, edited by Alyssa & Anthony
  */
 public class Player {
     private final String HANDLE;
@@ -34,7 +34,7 @@ public class Player {
     private int time;
     private int positionX;
     private int positionY;
-    private String status; 
+    private PlayerState status; 
     private int tempRandom; //will not need after we can pull actual data for players
     private static int handleID;
     
@@ -56,12 +56,12 @@ public class Player {
         //just a random temporary status until we can pull actual data
         tempRandom = (int)(Math.random()*10); 
         if (tempRandom < 3){
-        	status = "Active";
+        	status = PlayerState.ACTIVE;
         }else if(tempRandom > 7){
-        	status = "Dead";
+        	status = PlayerState.DEAD;
         }
         else{
-        	status = "Waiting";
+        	status = PlayerState.WAIT;
         }
         
     }
@@ -94,7 +94,7 @@ public class Player {
     }
     
     public String getStatus(){
-    	return status;
+    	return status.toString();
     }
     
     public int getTime(){
@@ -113,11 +113,22 @@ public class Player {
     	this.positionY = positionY;
     }
     
-    public void setStatus(String status){
+    public void setStatus(PlayerState status){
     	this.status = status;
     }
     
     public void setTime(int time){
     	this.time = time;
     }
+    
+    public enum PlayerState {
+		ACTIVE, DEAD, WAIT;
+		
+		@Override 
+		public String toString () {
+	        String result = super.toString();
+	        result = result.substring (0, 1).toUpperCase() + result.substring(1).toLowerCase();;
+	        return result;
+	    }
+	}
 }// End Player Class
