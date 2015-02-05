@@ -70,6 +70,7 @@ public class ServerTankObjectGUI extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane);
-    }
-}
+        
+    }// end ServerTankObjectGUI()
+}// end ServerTankObjectGUI Class
 

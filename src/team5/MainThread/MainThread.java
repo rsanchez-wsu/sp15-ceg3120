@@ -18,7 +18,6 @@
 package team5.MainThread;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.Vector;
 
@@ -29,6 +28,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
 
+
+import team5.Client.ClientBoardTable;
 import team5.Client.ClientStatusTable;
 import team5.Client.EnemyPlayer;
 import team5.Client.GameStatus;
@@ -58,6 +59,7 @@ public class MainThread extends Thread {
 		JSplitPane splitFrame;
 		final JTextField titleBar;
 		ClientStatusTable playerTable;
+		ClientBoardTable boardTable;
 		GameStatus gameStatus;
 	    GameStatus.StatusEnum actualStatus; 
 		
@@ -78,10 +80,13 @@ public class MainThread extends Thread {
 		titleBar.setHorizontalAlignment(JTextField.CENTER);
 		titleBar.setEditable(false);
 
+		boardTable = new ClientBoardTable(playerList, actualPlayer);
+		
 		// Create the gameBoard Panel 
 		gameBoard = new JPanel();
-		gameBoard.setBackground(Color.BLACK);
-		gameBoard.add(titleBar, BorderLayout.NORTH);
+		gameBoard.setLayout(new GridLayout(1,0));
+		//gameBoard.add(titleBar, BorderLayout.NORTH);
+		gameBoard.add(boardTable);
 		
 		// Create JList for Status Implementation
 		gamePanel = new JPanel();

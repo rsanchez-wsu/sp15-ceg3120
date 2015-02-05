@@ -29,7 +29,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author william
+ * @author williame, edited by Alyssa
  */
 public class Team2_SimpleJList {
 
@@ -41,7 +41,7 @@ public class Team2_SimpleJList {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         PlayerList panel = new PlayerList();
-        for(int i = 0; i < 20; i++) {
+        for(int i = 0; i < 8; i++) {
             panel.addPlayer();
         }
         
