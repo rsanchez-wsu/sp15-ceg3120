@@ -15,34 +15,33 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
+ 
 package team1;
+
+import java.math.*;
 
 public class Player
 {
 	
 	private int health;
 	private int[] position;
+	private String name;
+	private PLAYER_STATUS status;
 	
 	public Player()
 	{
 		health = 50;
 		position = new int[2];
+		status = PLAYER_STATUS.ALIVE;
+		name = randomNameGenerator();
 	}
 	
-	public void attack()
+	public Player(String name)
 	{
-		
-	}
-
-	public void move()
-	{
-		
-	}
-	
-	public void pass()
-	{
-		
+		health = 50;
+		position = new int[2];
+		status = PLAYER_STATUS.ALIVE;
+		this.name = name;
 	}
 	
 	public int getHealth()
@@ -63,6 +62,35 @@ public class Player
 	public void setPosition(int[] newPosition)
 	{
 		position = newPosition;
+	}
+	
+	public String getName()
+	{
+		return name;
+	}
+	
+	public void setPlayerStatus(PLAYER_STATUS newStatus)
+	{
+		status = newStatus;
+	}
+	
+	public PLAYER_STATUS getPlayerStatus()
+	{
+		return status;
+	}
+	
+	public String randomNameGenerator()
+	{
+		int stringLength = (int) (Math.random() % 6) + 1;
+		
+		String newName = "Bob";
+		
+		for(int i = 0; i < stringLength; i++){
+			char rand = 65;
+	        rand += (int)Math.random() % 25;
+	        newName += rand;
+		}
+		return newName;
 	}
 	
 }
