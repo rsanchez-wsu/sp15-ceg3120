@@ -72,7 +72,7 @@ public class MainThread extends Thread {
 		gameStatus = new GameStatus("1.1.1.1", 3,  actualStatus);
 
 		// Get the client player
-		actualPlayer = playerList.get(2);
+		actualPlayer = playerList.get(0);
 		
 		// Create the Title Bar
 	    titleBar = new JTextField();
@@ -135,25 +135,25 @@ public class MainThread extends Thread {
 	 * creates players
 	 */
 	protected void initializePlayers() {
-		int x = 1;
-		int y = 1;
+		int x = 6;
+		int y = 7;
 		Player.State state = Player.State.WAITING;
 		Pair position = new Pair(x, y);
-		Player player = new EnemyPlayer( 0, 25, position, state);
+		Player player = new Player( 0, 25, position, state);
 		playerList.addElement(player);
 		
-		x = 10;
-		y = 10;
+		x = 5;
+		y = 5;
 		position = new Pair(x, y);
 		state = Player.State.ALIVE;
 		player = new EnemyPlayer(1, 20, null, state);
 		playerList.addElement(player);
 		
-		x = 10;
-		y = 10;
+		x = 15;
+		y = 15;
 		state = Player.State.WAITING;
 		position = new Pair(x,y);
-		player = new Player(2, 50, position, state);
+		player = new EnemyPlayer(2, 50, position, state);
 		playerList.addElement(player);
 		
 		x = 11;
