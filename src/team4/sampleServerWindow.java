@@ -31,6 +31,9 @@ import java.util.Date;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
@@ -83,7 +86,7 @@ public class sampleServerWindow {
 		final Game[] gameList = new Game[numGames];
 		for (int i = 0; i < numGames; i++) { // Generate 8 games
 			Person[] personList = new Person[numPlayersInGame];
-			int gameNumber = (int) (Math.random() * 500);
+			int gameNumber = i+1;
 			int playersTurn = (int) (Math.random() * numPlayersInGame);
 			for (int j = 0; j < numPlayersInGame; j++) {// Generate 8 players
 														// per game
@@ -129,16 +132,16 @@ public class sampleServerWindow {
 			gameList[i] = newGame;
 		}
 
-		String[] headings = { "IP Address", "Game Id", "Player #", "Health",
-				"Position", "State" };
+		final String[] headings = { "IP Address", "Game Id", "Player #",
+				"Health", "Position", "State" };
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 927, 546);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// table by benjamin
-		JTable playerTable = new JTable(gameList[5].getObjectPlayerData(),
-				headings);
+		final JTable playerTable = new JTable(
+				gameList[0].getObjectPlayerData(), headings);
 		JScrollPane scrollPane = new JScrollPane(playerTable);
 		scrollPane.setBounds(387, 11, 514, 486);
 		playerTable.getColumnModel().getColumn(0).setPreferredWidth(100);
@@ -148,13 +151,15 @@ public class sampleServerWindow {
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 
-		JTree tree = new JTree();
+		final JTree tree = new JTree();
 		tree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("JTree") {
 			{
 				DefaultMutableTreeNode activeNode = new DefaultMutableTreeNode(
 						"Active Games");
 				DefaultMutableTreeNode inactiveNode = new DefaultMutableTreeNode(
 						"Inactive Games");
+				DefaultMutableTreeNode gamesRoot = new DefaultMutableTreeNode(
+						"Games");
 				for (int k = 0; k < gameList.length; k++) {
 					if (gameList[k].getGameStatus() == Game.State.Active) {
 						activeNode.add(new DefaultMutableTreeNode(gameList[k]));
@@ -165,10 +170,31 @@ public class sampleServerWindow {
 
 					}
 				}
-				add(activeNode);
-				add(inactiveNode);
+				gamesRoot.add(activeNode);
+				gamesRoot.add(inactiveNode);
+				add(gamesRoot);
+
 			}
 		}));
+		tree.expandRow(1);
+		tree.addTreeSelectionListener(new TreeSelectionListener() {
+			public void valueChanged(TreeSelectionEvent e) {
+				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
+						.getLastSelectedPathComponent();
+				if (node == null)
+					return;
+
+				Object nodeInfo = node.getUserObject();
+				if (nodeInfo instanceof Game) {
+					Game clickedNode = (Game) nodeInfo;
+					playerTable.setModel(new DefaultTableModel(clickedNode
+							.getObjectPlayerData(), headings));
+					// System.out.println(nodeInfo.toString());
+
+				}
+
+			}
+		});
 		tree.getSelectionModel().setSelectionMode(
 				TreeSelectionModel.SINGLE_TREE_SELECTION);
 		tree.putClientProperty("JTree.lineStyle", "None");
@@ -180,4 +206,5 @@ public class sampleServerWindow {
 		// add scrollPane to panel
 		panel.add(scrollPane);
 	}
+
 }
