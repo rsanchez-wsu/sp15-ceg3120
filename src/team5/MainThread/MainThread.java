@@ -18,6 +18,7 @@
 package team5.MainThread;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.Vector;
 
@@ -26,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
+
 
 
 
@@ -52,6 +54,7 @@ public class MainThread extends Thread {
 		JPanel gameBoard;
 		JFrame frame;
 		JPanel gamePanel;
+		JPanel chatPanel;
 		JPanel statusPanel;
 		JLabel status;
 		JLabel info;
@@ -82,11 +85,26 @@ public class MainThread extends Thread {
 
 		boardTable = new ClientBoardTable(playerList, actualPlayer);
 		
+		//create the chat panel
+				JTextField chat = new JTextField();
+				chat.setBackground(new Color(85,153,187));
+				JTextField chattxt = new JTextField();
+				chattxt.setBackground(new Color(85,153,176));
+				//chattxt.set
+				
+				chatPanel = new JPanel();
+				chatPanel.setLayout(new GridLayout(1,0));
+				chatPanel.add(chat, BorderLayout.NORTH);
+				chatPanel.add(chat, BorderLayout.SOUTH);
+		
 		// Create the gameBoard Panel 
 		gameBoard = new JPanel();
 		gameBoard.setLayout(new GridLayout(1,0));
 		//gameBoard.add(titleBar, BorderLayout.NORTH);
 		gameBoard.add(boardTable);
+		gameBoard.add(chatPanel, BorderLayout.EAST);
+		
+		
 		
 		// Create JList for Status Implementation
 		gamePanel = new JPanel();
