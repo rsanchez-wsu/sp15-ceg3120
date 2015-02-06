@@ -33,6 +33,7 @@ import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 public class sampleServerWindow {
@@ -76,11 +77,11 @@ public class sampleServerWindow {
 		// as of 2/3/2015 I've gotten to the point of generating all the
 		// necesarry information however the treemodel needs to be implemented.
 		// Haven't planned that out yet.
-		int numGames = 10;
+		int numGames = 25;
 		int numPlayersInGame = 25;
 
-		Game[] gameList = new Game[numGames];
-		for (int i = 0; i < 8; i++) { // Generate 8 games
+		final Game[] gameList = new Game[numGames];
+		for (int i = 0; i < numGames; i++) { // Generate 8 games
 			Person[] personList = new Person[numPlayersInGame];
 			int gameNumber = (int) (Math.random() * 500);
 			int playersTurn = (int) (Math.random() * numPlayersInGame);
@@ -150,24 +151,22 @@ public class sampleServerWindow {
 		JTree tree = new JTree();
 		tree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("JTree") {
 			{
-				// DefaultMutableTreeNode activeNode = new
-				// DefaultMutableTreeNode(
-				// "Active Games");
-				// DefaultMutableTreeNode inactiveNode = new
-				// DefaultMutableTreeNode(
-				// "Inactive Games");
-				// for (int k = 0; k < gameList.length; k++) {
-				// if (gameList[k].getGameStatus() == Game.State.Active) {
-				// activeNode.add(new DefaultMutableTreeNode(gameList[k]));
-				//
-				// } else {
-				// inactiveNode
-				// .add(new DefaultMutableTreeNode(gameList[k]));
-				//
-				// }
-				// }
-				// add(activeNode);
-				// add(inactiveNode);
+				DefaultMutableTreeNode activeNode = new DefaultMutableTreeNode(
+						"Active Games");
+				DefaultMutableTreeNode inactiveNode = new DefaultMutableTreeNode(
+						"Inactive Games");
+				for (int k = 0; k < gameList.length; k++) {
+					if (gameList[k].getGameStatus() == Game.State.Active) {
+						activeNode.add(new DefaultMutableTreeNode(gameList[k]));
+
+					} else {
+						inactiveNode
+								.add(new DefaultMutableTreeNode(gameList[k]));
+
+					}
+				}
+				add(activeNode);
+				add(inactiveNode);
 			}
 		}));
 		tree.getSelectionModel().setSelectionMode(
