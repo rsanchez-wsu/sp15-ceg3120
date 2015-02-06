@@ -22,33 +22,49 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+import javax.swing.event.*;
 
 
 public class TurnTanks extends JPanel implements ActionListener {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JList PlayerList;
+	private DefaultListModel PlayerModel;
 	
 	public TurnTanks() {
 		
+		PlayerModel = new DefaultListModel();
 		
-		Player[] Players = new Player[8];
+		for(int i = 0; i < 8; i++){
+			PlayerModel.addElement(new Player());
+		}
 		
-		PlayerList = new JList(Players);
-		PlayerList.setVisibleRowCount(-1);
+		PlayerList = new JList(PlayerModel);
+		PlayerList.setVisibleRowCount(8);
+		JScrollPane PLPane =new JScrollPane(PlayerList);
 		
-		//JPane PLPane = new JPane(PlayerList);
+		
+		JPanel PLPanel = new JPanel();
 		
 		JPanel PlayerPanel = new JPanel();
-		GridBagLayout PlayerPanelLayout = new GridBagLayout();
-		GridBagConstraints GBConstraint = new GridBagConstraints();
+		//GridBagLayout PlayerPanelLayout = new GridBagLayout();
+		//GridBagConstraints GBConstraint = new GridBagConstraints();
 		
-		PlayerPanel.setLayout(PlayerPanelLayout);
+		PlayerPanel.setLayout(new BorderLayout());
+		PlayerPanel.add(PLPane, BorderLayout.SOUTH);
+		
+		
+		
+		add(PlayerPanel);
 		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		
 		
 	} 
 	
@@ -58,7 +74,10 @@ public class TurnTanks extends JPanel implements ActionListener {
 		JFrame frame = new JFrame("TURN TANKS!!ONE!11!");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		
-		frame.add(new TurnTanks());		
+		JComponent newContentPane = new TurnTanks();
+		newContentPane.setOpaque(true);
+		frame.setContentPane(newContentPane);
+		
 		frame.setSize(600, 600);
 		//frame.pack();
 		frame.setVisible(true);
