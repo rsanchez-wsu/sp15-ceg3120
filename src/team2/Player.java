@@ -61,7 +61,7 @@ public class Player {
         	status = PlayerState.DEAD;
         }
         else{
-        	status = PlayerState.WAIT;
+        	status = PlayerState.WAITING;
         }
         
     }
@@ -69,13 +69,13 @@ public class Player {
     @Override
     public String toString() {
         if (status.equals(PlayerState.ACTIVE)){
-            return ("Player" + HANDLE + " (IP: " + IP_ADDRESS + ") | State: " + status
-                    +  " | Health: " + lifeAmount + "%" + " | Position: (" + positionX + 
-                    ", " + positionY + ") | Time: " + time + "s");
+            return ("<html>Player" + HANDLE + " (IP: " + IP_ADDRESS + ") | State: " + status
+                    +  " <br> Health: " + lifeAmount + "%" + " | Position: (" + positionX + 
+                    ", " + positionY + ") | Time: " + time + "s<br><br><html>");
         }else {
-            return ("Player" + HANDLE + " (IP: " + IP_ADDRESS + ") | State: " + status
-                    +  " | Health: " + lifeAmount + "%" + " | Position: (" + positionX + 
-                    ", " + positionY + ")");
+            return ("<html>Player" + HANDLE + " (IP: " + IP_ADDRESS + ") | State: " + status
+                    +  " <br> Health: " + lifeAmount + "%" + " | Position: (" + positionX + 
+                    ", " + positionY + ")<br><br><html>");
         }
     	
 
@@ -122,7 +122,7 @@ public class Player {
     }
     
     public enum PlayerState {
-		ACTIVE, DEAD, WAIT;
+		ACTIVE, DEAD, WAITING;
 		
 		@Override 
 		public String toString () {
