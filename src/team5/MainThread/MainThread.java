@@ -28,6 +28,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -89,6 +90,7 @@ public class MainThread extends Thread {
 		chat.setEditable(false);
 		chatTxt = new JTextField();
 	    chatTxt.setText("");
+	    chatTxt.setSize(100, 100);
 		submitButton = new JButton();
 		submitButton.setText("Submit");
 		
@@ -105,8 +107,11 @@ public class MainThread extends Thread {
 			
 		});
 		
+		JScrollPane scroll = new JScrollPane (chat);
+	    scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		
 		chatSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-		chatSplitPane.add(chat, JSplitPane.TOP);
+		chatSplitPane.add(scroll, JSplitPane.TOP);
 		chatSplitPane.add(chatTxt, JSplitPane.BOTTOM);
 		
 		chatPanel = new JPanel();
