@@ -88,6 +88,8 @@ public class MainThread extends Thread {
 		chatPanel = new JPanel();
 		chat = new JTextArea();
 		chat.setEditable(false);
+		chat.setWrapStyleWord(true);
+		chat.setLineWrap(true);
 		chatTxt = new JTextField();
 	    chatTxt.setText("");
 	    chatTxt.setSize(100, 100);
@@ -109,6 +111,7 @@ public class MainThread extends Thread {
 		
 		JScrollPane scroll = new JScrollPane (chat);
 	    scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	    scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		chatSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		chatSplitPane.add(scroll, JSplitPane.TOP);
