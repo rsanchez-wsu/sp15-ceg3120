@@ -37,7 +37,7 @@ public class TurnTanks {
 		//frame.pack();
 		tankFrame.setVisible(true);
 		
-	}
+	}//end of constructor
 	
 	//run the frame
 	public static void main(String args[]) {
@@ -50,7 +50,4 @@ public class TurnTanks {
 		
 		
 	}//end of main
-
-	
-	
-}
+}//end of TurnTanks

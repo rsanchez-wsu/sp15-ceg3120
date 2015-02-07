@@ -28,6 +28,8 @@ public class GameFrame extends JFrame {
 	
 	private JList PlayerList;
 	private JLabel testLabel;
+	private static final long serialVersionUID = 1L;
+	private DefaultListModel PlayerModel;
 	
 public GameFrame() {
 		createComponents();
@@ -39,8 +41,12 @@ private void createComponents(){
 	//create the main panel that will contain all other panels
 	JPanel mainPanel = new JPanel();
 	mainPanel.setLayout(new BorderLayout());
+	
+	//create the panel to display player info
 	JPanel playerDisplay = new JPanel();
 	playerDisplay.setLayout(new BorderLayout());
+	
+	//create the panel to display game grid
 	JPanel gameDisplay = new JPanel();
 	gameDisplay.setLayout(new BorderLayout());
 	
@@ -48,8 +54,16 @@ private void createComponents(){
 	Player[] Players = new Player[8];
 	PlayerList = new JList(Players);
 	PlayerList.setVisibleRowCount(-1);
+	PlayerModel = new DefaultListModel();
 	
-	testLabel = new JLabel("TESTING");
+	for(int i = 0; i < 8; i++){
+		PlayerModel.addElement(new Player());
+	}
+	
+	PlayerList = new JList(PlayerModel);
+	PlayerList.setVisibleRowCount(8);
+	
+	//testLabel = new JLabel("TESTING");
 	
 	playerDisplay.add(PlayerList);
 	mainPanel.add(gameDisplay, BorderLayout.NORTH);

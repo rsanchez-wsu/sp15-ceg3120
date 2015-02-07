@@ -18,16 +18,19 @@
 package team5.MainThread;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-
 
 import team5.Client.ClientBoardTable;
 import team5.Client.ClientStatusTable;
@@ -42,7 +45,10 @@ import team5.PlayerObject.Player;
 public class MainThread extends Thread {
 
 	Vector<Player> playerList = new Vector<Player>();
-
+	JTextArea chat;
+	JTextField chatTxt;
+	JButton submitButton;
+	
 	/**
 	 * Runs Main Thread
 	 */
@@ -53,16 +59,17 @@ public class MainThread extends Thread {
 		JFrame frame;
 		JPanel gamePanel;
 		JPanel statusPanel;
+		JPanel chatPanel;
 		JLabel status;
 		JLabel info;
 		JSplitPane splitPane;
 		JSplitPane splitFrame;
-		final JTextField titleBar;
+		JSplitPane chatSplitPane;
+		JSplitPane gameBoardSplitPane;
 		ClientStatusTable playerTable;
 		ClientBoardTable boardTable;
 		GameStatus gameStatus;
 	    GameStatus.StatusEnum actualStatus; 
-		
 		
 		// Method to create dummy players
 		initializePlayers();
@@ -73,20 +80,44 @@ public class MainThread extends Thread {
 
 		// Get the client player
 		actualPlayer = playerList.get(0);
-		
-		// Create the Title Bar
-	    titleBar = new JTextField();
-		titleBar.setText("Game Map");
-		titleBar.setHorizontalAlignment(JTextField.CENTER);
-		titleBar.setEditable(false);
 
 		boardTable = new ClientBoardTable(playerList, actualPlayer);
 		
+		//create the chat panel
+		chatPanel = new JPanel();
+		chat = new JTextArea();
+		chat.setEditable(false);
+		chatTxt = new JTextField();
+	    chatTxt.setText("");
+		submitButton = new JButton();
+		submitButton.setText("Submit");
+		
+		chatTxt.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String temp;
+				temp = chat.getText();
+				temp =  temp + System.lineSeparator() + chatTxt.getText();
+				chat.setText(temp);
+				chatTxt.setText("");
+			}
+			
+		});
+		
+		chatSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		chatSplitPane.add(chat, JSplitPane.TOP);
+		chatSplitPane.add(chatTxt, JSplitPane.BOTTOM);
+		
+		chatPanel = new JPanel();
+		chatPanel.add(chatSplitPane);
+		
 		// Create the gameBoard Panel 
 		gameBoard = new JPanel();
+		gameBoardSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		gameBoard.setLayout(new GridLayout(1,0));
-		//gameBoard.add(titleBar, BorderLayout.NORTH);
-		gameBoard.add(boardTable);
+		gameBoardSplitPane.add(boardTable, JSplitPane.RIGHT);
+		gameBoardSplitPane.add(chatSplitPane, JSplitPane.LEFT);
 		
 		// Create JList for Status Implementation
 		gamePanel = new JPanel();
@@ -106,7 +137,7 @@ public class MainThread extends Thread {
 		
 		playerTable = new ClientStatusTable(playerList, actualPlayer);
 	
-		gamePanel.add(gameBoard);
+		gamePanel.add(gameBoardSplitPane);
 		
 		statusPanel.add(status, BorderLayout.WEST);
 		statusPanel.add(info, BorderLayout.EAST);
