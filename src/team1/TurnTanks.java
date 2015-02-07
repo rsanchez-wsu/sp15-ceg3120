@@ -24,48 +24,22 @@ import java.awt.event.*;
 import javax.swing.*;
 
 
-public class TurnTanks extends JPanel implements ActionListener {
-	
-	private JList PlayerList;
-	
-	public TurnTanks() {
-		
-		
-		Player[] Players = new Player[8];
-		
-		PlayerList = new JList(Players);
-		PlayerList.setVisibleRowCount(-1);
-		
-		//JPane PLPane = new JPane(PlayerList);
-		
-		JPanel PlayerPanel = new JPanel();
-		GridBagLayout PlayerPanelLayout = new GridBagLayout();
-		GridBagConstraints GBConstraint = new GridBagConstraints();
-		
-		PlayerPanel.setLayout(PlayerPanelLayout);
-		
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	} 
+public class TurnTanks {
 	
 	// Create the frame
 	private static void createClientWindow() {
 		
-		JFrame frame = new JFrame("TURN TANKS!!ONE!11!");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
-		
-		frame.add(new TurnTanks());		
-		frame.setSize(600, 600);
+		GameFrame tankFrame = new GameFrame();
+		tankFrame.setTitle("TURN TANKS!!ONE!11!");
+		tankFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
+		//frame.add(new TurnTanks());		
+		//tankFrame.setSize(600, 600);
 		//frame.pack();
-		frame.setVisible(true);
+		tankFrame.setVisible(true);
 		
 	}
 	
-	
+	//run the frame
 	public static void main(String args[]) {
 		
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
