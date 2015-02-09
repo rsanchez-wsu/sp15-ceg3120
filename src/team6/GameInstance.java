@@ -28,6 +28,10 @@ package team6;
 
 import java.util.*;
 
+
+//This class represents the state of 8 tanks in a game. It could
+//represent the history of a past game, or a on going game.
+//
 public class GameInstance {
 	
 	//public all the things	

@@ -34,7 +34,9 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+//This class currently takes hardcoded tankobjects, in a 2d array, and displays
+//them in a table.  Will adapt to accept GameState objects, or at least a return
+//from a GameState.toArray call.
 public class ServerTankObjectGUI extends JPanel {
 
     public ServerTankObjectGUI() {

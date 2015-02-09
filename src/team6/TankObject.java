@@ -27,7 +27,8 @@
 package team6;
 
 public class TankObject {
-    
+    //
+	//
     public String TankImage;
     public String Name;
     public String IP;    

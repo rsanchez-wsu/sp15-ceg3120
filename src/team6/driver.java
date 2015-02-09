@@ -35,6 +35,7 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+//This class just creates a frame, and adds what ever panel we are testing
 public class driver {
 
     public static void main(String[] args) {
