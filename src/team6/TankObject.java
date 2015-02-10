@@ -51,7 +51,6 @@ public class TankObject {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.health = health;
-        this.score = score;
         this.state = state;
     }//end empty constructor    
     
@@ -64,7 +63,7 @@ public class TankObject {
 
     @Override
     public String toString() {
-        return "TankObject{" + "TankImage=" + TankImage + ", Name=" + Name + ", IP=" + IP + ", xCoord=" + xCoord + ", yCoord=" + yCoord + ", health=" + health + ", score=" + score + ", state=" + state + '}';
+        return "TankObject{" + "TankImage=" + TankImage + ", Name=" + Name + ", IP=" + IP + ", xCoord=" + xCoord + ", yCoord=" + yCoord + ", health=" + health + ", state=" + state + '}';
     }
      
 }//end tank class

@@ -34,25 +34,46 @@ public class driver {
 
     public static void main(String[] args) {
       
-        JFrame frame = new JFrame("Server GUI Demo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ServerGUI test = new ServerGUI();
+        JFrame gameFrame = new JFrame("game GUI Demo");
+        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        center(gameFrame);
+        ServerGUI table = new ServerGUI();
         GameTree tree = new GameTree();
         GameRenderer renderer = new GameRenderer() {
             @Override
             public Dimension getPreferredSize() {
-                return new Dimension(640, 640);
+                return new Dimension(64*50, 64*50); //hard coded tile size
             }
         };
+        gameFrame.getContentPane().add(new JScrollPane(renderer), BorderLayout.CENTER);        
+        gameFrame.setVisible(true);
         
-        test.setOpaque(true); //content panes must be opaque
-        //frame.setContentPane(test);
-        //frame.add(tree);     
-        //frame.add(renderer);
-        frame.getContentPane().add(new JScrollPane(renderer), BorderLayout.CENTER);
-        frame.setSize(400, 400);
-        //Display the window.
-        frame.setVisible(true);  
+        //JFrame serverFrame = new JFrame("server GUI Demo");
+        //test.setOpaque(true); //content panes must be opaque
+        // serverFrame.setContentPane(table);
+        //serverFrame.getContentPane().add(new JScrollPane(tree), BorderLayout.WEST);
+        // serverFrame.setVisible(true);
+        //frame.setContentPane(table);
+        //frame.add(tree);
+        
     }// end main
+  
+    
+
+    public static void center(JFrame frame) {
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        Point center = ge.getCenterPoint();
+        int windowX = 1366;
+        int windowY = 768;
+        int x = center.x - windowX / 2;
+        int y = center.y - windowY / 2;
+        frame.setBounds(x, y, windowX, windowY);
+        frame.validate();
+    }
+    
+    
+    
+    
 }//end main class
 

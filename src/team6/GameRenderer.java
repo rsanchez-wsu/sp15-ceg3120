@@ -14,7 +14,8 @@ public class GameRenderer extends JPanel {
 	char[][] map = new char[64][64];
 	GameInstance players;
 	int xFov=24;
-	int yFov=16;		
+	int yFov=16;
+	int tileSize=50;
 
 
 	public GameRenderer() {
@@ -59,7 +60,7 @@ public class GameRenderer extends JPanel {
 					g.setColor(Color.BLACK);//bad color
 				
 				
-				g.fillRect(i * 10, j * 10, 10,10);				
+				g.fillRect(i * tileSize, j * tileSize, tileSize,tileSize);				
 			}
 		}
 
@@ -69,7 +70,7 @@ public class GameRenderer extends JPanel {
 			x=players.tanks.get(i).xCoord;
 			y=players.tanks.get(i).yCoord;
 			g.setColor(Color.RED);
-			g.fillRect(x*10, y*10, 10, 10);
+			g.fillRect(x*tileSize, y*tileSize, tileSize, tileSize);
 		}
 	}
 

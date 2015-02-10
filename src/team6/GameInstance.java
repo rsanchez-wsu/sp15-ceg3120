@@ -41,8 +41,7 @@ public class GameInstance {
 	//default test constructor
 	public GameInstance(){
 		time= time.getInstance();
-		///
-		
+			
         tanks.add( new TankObject("green.jpg", "Matt", "178.224.102.99",
                 12, 34, 40, 45, "wait"));
         tanks.add( new TankObject("green.jpg", "Jeff", "211.87.23.81",
@@ -68,5 +67,8 @@ public class GameInstance {
 		this.tanks=tanks;
 	}
 
-
+	public void add(TankObject player){
+		tanks.add(player);
+		
+	}
 }
