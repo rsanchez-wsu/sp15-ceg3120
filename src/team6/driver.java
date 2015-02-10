@@ -37,22 +37,30 @@ public class driver {
         JFrame gameFrame = new JFrame("game GUI Demo");
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         center(gameFrame);
-        ServerGUI table = new ServerGUI();
-        GameTree tree = new GameTree();
+
         GameRenderer renderer = new GameRenderer() {
             @Override
             public Dimension getPreferredSize() {
-                return new Dimension(64*50, 64*50); //hard coded tile size
+                return new Dimension(64*50, 64*50); //hard coded tile size must be updated here and in renderer
             }
         };
         gameFrame.getContentPane().add(new JScrollPane(renderer), BorderLayout.CENTER);        
         gameFrame.setVisible(true);
+ 
         
-        //JFrame serverFrame = new JFrame("server GUI Demo");
+        JFrame serverFrame = new JFrame("server GUI Demo");
+        ServerGUI table = new ServerGUI();
+        serverFrame.setContentPane(table);        
+        serverFrame.pack();
+        serverFrame.setVisible(true);
+        
+        
+        //GameTree tree = new GameTree();        
         //test.setOpaque(true); //content panes must be opaque
-        // serverFrame.setContentPane(table);
-        //serverFrame.getContentPane().add(new JScrollPane(tree), BorderLayout.WEST);
-        // serverFrame.setVisible(true);
+        
+        //serverFrame.add(tree);
+        
+        
         //frame.setContentPane(table);
         //frame.add(tree);
         
@@ -64,8 +72,8 @@ public class driver {
 
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Point center = ge.getCenterPoint();
-        int windowX = 1366;
-        int windowY = 768;
+        int windowX = 1024;
+        int windowY = 640;
         int x = center.x - windowX / 2;
         int y = center.y - windowY / 2;
         frame.setBounds(x, y, windowX, windowY);

@@ -44,9 +44,13 @@ public class ServerGUI extends JPanel {
 
         String[] columnNames = {"Tank Image", "Name", "IP",
             "x coord", "y coord", "Health","Status"};
-
+  
         Object[][] data = new Object[8][]; //ugg probably not the best, but i'm rusty and havent picked a standard. this will always be populated?
+        GameInstance game=new GameInstance();
         
+        for (int i=0;i<8;i++){
+        	data[i]=game.tanks.get(i).toStringArray();
+        }
         
 
         JTable table = new JTable(data, columnNames);
