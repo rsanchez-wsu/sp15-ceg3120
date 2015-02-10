@@ -26,14 +26,8 @@
 //
 package team6;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.*;
+import java.awt.*;
 
 //This class just creates a frame, and adds what ever panel we are testing
 public class driver {
@@ -42,16 +36,22 @@ public class driver {
       
         JFrame frame = new JFrame("Server GUI Demo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ServerTankObjectGUI test = new ServerTankObjectGUI();
+        ServerGUI test = new ServerGUI();
         GameTree tree = new GameTree();
-        GameRenderer renderer = new GameRenderer();
+        GameRenderer renderer = new GameRenderer() {
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(640, 640);
+            }
+        };
         
         test.setOpaque(true); //content panes must be opaque
         //frame.setContentPane(test);
-        //frame.add(tree);
-        frame.add(renderer);
+        //frame.add(tree);     
+        //frame.add(renderer);
+        frame.getContentPane().add(new JScrollPane(renderer), BorderLayout.CENTER);
+        frame.setSize(400, 400);
         //Display the window.
-        frame.pack();
         frame.setVisible(true);  
     }// end main
 }//end main class

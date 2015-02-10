@@ -36,25 +36,27 @@ public class GameInstance {
 	
 	//public all the things	
 	public 	Calendar time;
-	public ArrayList<TankObject> tanks; 
+	public ArrayList<TankObject> tanks= new ArrayList(); 
 	
 	//default test constructor
 	public GameInstance(){
 		time= time.getInstance();
+		///
+		
         tanks.add( new TankObject("green.jpg", "Matt", "178.224.102.99",
                 12, 34, 40, 45, "wait"));
         tanks.add( new TankObject("green.jpg", "Jeff", "211.87.23.81",
                 44, 12, 10, 55, "wait"));
         tanks.add( new TankObject("green.jpg", "Gary", "73.23.144.17",
-                55, 86, 20, 74, "wait"));
+                55, 27, 20, 74, "wait"));
         tanks.add( new TankObject("green.jpg", "Stu", "141.55.12.201",
-                33, 12, 0, 102, "dead"));
+                14, 12, 0, 102, "dead"));
         tanks.add( new TankObject("green.jpg", "Jill", "51.122.77.2",
-                78, 47, 15, 82, "wait"));
+                11, 47, 15, 82, "wait"));
         tanks.add( new TankObject("green.jpg", "Kent", "134.11.3.210",
-                74, 22, 35, 102, "wait"));
+                33, 22, 35, 102, "wait"));
         tanks.add( new TankObject("green.jpg", "Scot", "178.224.102.99",
-                74, 22, 60, 10, "wait"));
+                24, 22, 60, 10, "wait"));
         tanks.add( new TankObject("red.jpg", "xXKi113R69Xx", "192.168.1.1",
                 99, 99, 65535, 65535, "Active"));
 	}
@@ -65,10 +67,6 @@ public class GameInstance {
 		this.time=time;
 		this.tanks=tanks;
 	}
-	
-	//add a tank to our tanks arraylist
-	public void add(TankObject tank){
-		tanks.add(tank);
-	}
+
 
 }
