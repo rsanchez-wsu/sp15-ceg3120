@@ -43,7 +43,7 @@ public class TankObject {
     
     //full constructor
     public TankObject(String TankImage, String Name, String IP,
-            int xCoord, int yCoord, int health, int score, String state) {        
+            int xCoord, int yCoord, int health, String state) {        
         
         this.TankImage = TankImage;
         this.Name = Name;
@@ -56,7 +56,7 @@ public class TankObject {
     
     
      public String[] toStringArray() {
-        String[] stringArray = {TankImage,Name,IP,String.valueOf(xCoord),String.valueOf(yCoord) ,String.valueOf(health) ,String.valueOf(score),state }; 
+        String[] stringArray = {TankImage,Name,IP,String.valueOf(xCoord),String.valueOf(yCoord) ,String.valueOf(health) ,state }; 
          
         return stringArray ;
     }   

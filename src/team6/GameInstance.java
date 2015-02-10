@@ -42,22 +42,22 @@ public class GameInstance {
 	public GameInstance(){
 		time= time.getInstance();
 			
-        tanks.add( new TankObject("green.jpg", "Matt", "178.224.102.99",
-                12, 34, 40, 45, "wait"));
-        tanks.add( new TankObject("green.jpg", "Jeff", "211.87.23.81",
-                44, 12, 10, 55, "wait"));
-        tanks.add( new TankObject("green.jpg", "Gary", "73.23.144.17",
-                55, 27, 20, 74, "wait"));
-        tanks.add( new TankObject("green.jpg", "Stu", "141.55.12.201",
-                14, 12, 0, 102, "dead"));
-        tanks.add( new TankObject("green.jpg", "Jill", "51.122.77.2",
-                11, 47, 15, 82, "wait"));
-        tanks.add( new TankObject("green.jpg", "Kent", "134.11.3.210",
-                33, 22, 35, 102, "wait"));
-        tanks.add( new TankObject("green.jpg", "Scot", "178.224.102.99",
-                24, 22, 60, 10, "wait"));
+        tanks.add( new TankObject("green.jpg", "Matt"+String.valueOf((int)(Math.random()*50)), "178.224.102.99",
+                (int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
+        tanks.add( new TankObject("green.jpg", "Jeff"+String.valueOf((int)(Math.random()*50)), "211.87.23.81",
+        		(int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
+        tanks.add( new TankObject("green.jpg", "Gary"+String.valueOf((int)(Math.random()*50)), "73.23.144.17",
+        		(int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
+        tanks.add( new TankObject("green.jpg", "Stu"+String.valueOf((int)(Math.random()*50)), "141.55.12.201",
+        		(int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
+        tanks.add( new TankObject("green.jpg", "Jill"+String.valueOf((int)(Math.random()*50)), "51.122.77.2",
+        		(int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
+        tanks.add( new TankObject("green.jpg", "Kent"+String.valueOf((int)(Math.random()*50)), "134.11.3.210",
+        		(int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
+        tanks.add( new TankObject("green.jpg", "Scot"+String.valueOf((int)(Math.random()*50)), "178.224.102.99",
+        		(int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
         tanks.add( new TankObject("red.jpg", "xXKi113R69Xx", "192.168.1.1",
-                99, 99, 65535, 65535, "Active"));
+                63, 63, 50, "Active"));
 	}
 	
 	

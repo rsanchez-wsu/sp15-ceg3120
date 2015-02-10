@@ -13,17 +13,15 @@ public class GameRenderer extends JPanel {
 
 	char[][] map = new char[64][64];
 	GameInstance players;
-	int xFov=24;
-	int yFov=16;
-	int tileSize=50;
+	int xFov=24;  //not used yet
+	int yFov=16; //not used yet
+	int tileSize=50;  //must be updated here and in driver
 
 
 	public GameRenderer() {
 		for(int i=0; i<64 ; i++){
-			for (int j=0; j<64; j++){
-				
-				int temp= (int) (Math.random()*30);
-				System.out.println(temp);
+			for (int j=0; j<64; j++){				
+				int temp= (int) (Math.random()*30);	//gen random terrain			
 				if (temp<=15)				
 				map[i][j]='g';
 				else if (temp<=23)
