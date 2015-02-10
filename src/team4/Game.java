@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) <2015>  <Brad Reynolds> - reynolds.0345@gmail.com
- *  					 ADD names/emails here
+ *  					 <Benjamin Hansen> - hansen.21@wright.edu
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
