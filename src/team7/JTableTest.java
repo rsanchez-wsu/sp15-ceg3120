@@ -21,7 +21,7 @@ public class JTableTest {
 		ArrayList<Player> players = new ArrayList<>();
 		
 		players.add(new Player("Player 1", 3, 5));
-		players.add(new Player("Player 2", 8, 7);
+		players.add(new Player("Player 2", 8, 7));
 		players.add(new Player("Player 3", 2, 5));
 		players.add(new Player("Player 4", 4, 6));
 		players.add(new Player("Player 5", 1, 9));
