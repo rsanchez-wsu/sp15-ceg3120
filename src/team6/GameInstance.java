@@ -35,11 +35,12 @@ import java.util.*;
 public class GameInstance {
 	
 	//public all the things	
-	public 	Date time;
+	public 	Calendar time;
 	public ArrayList<TankObject> tanks; 
 	
 	//default test constructor
 	public GameInstance(){
+		time= time.getInstance();
         tanks.add( new TankObject("green.jpg", "Matt", "178.224.102.99",
                 12, 34, 40, 45, "wait"));
         tanks.add( new TankObject("green.jpg", "Jeff", "211.87.23.81",
@@ -60,7 +61,8 @@ public class GameInstance {
 	
 	
 	//creates a gameinstance from a arraylist of tanks
-	public GameInstance(ArrayList<TankObject> tanks){
+	public GameInstance(ArrayList<TankObject> tanks, Calendar time){
+		this.time=time;
 		this.tanks=tanks;
 	}
 	

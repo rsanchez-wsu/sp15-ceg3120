@@ -13,6 +13,16 @@ public class GameRenderer extends JPanel {
 	GameInstance players;
 
 	public void GameRenderer() {
+		for(int i=0; i<63 ; i++){
+			for (int j=0; j<63; j++){
+				
+				map[i][j]='g';
+			}
+			
+			
+		}
+		
+		players=new GameInstance(); //temp fake constructor
 
 	}
 
@@ -25,32 +35,32 @@ public class GameRenderer extends JPanel {
 	// @override
 	public void paint(Graphics g) {
 		for (int i = 0; i < 63; i++) {
-			for (int j = 0; i < 63; j++) {
+			for (int j = 0; j < 63; j++) {
 
 				if (map[i][j] == 'g')// grass
 					g.setColor(Color.GREEN);
 				else if (map[i][j] == 'l')
-					g.setColor(Color.BLUE);
-				else if (map[i][j] == 'm')
+					g.setColor(Color.BLUE);//lake
+				else if (map[i][j] == 'm')//mountain
 					g.setColor(Color.darkGray);
-				else if (map[i][j] == 'h')
+				else if (map[i][j] == 'h')//hill
 					g.setColor(Color.lightGray);
 				else
-					g.setColor(Color.BLACK);
-				g.fillRect(i * 10, i * 10, i * 10 + 10, j * 10 + 10);
+					g.setColor(Color.ORANGE);//bad color
+				g.fillRect(i * 5, j * 5, i * 5 + 5, j * 5 + 5);
 				
 				
 			}
 		}
 
-		for (int i=0; i<7;i++){
+		/*for (int i=0; i<7;i++){
 			int x=0;
 			int y=0;
 			x=players.tanks.get(i).xCoord;
 			y=players.tanks.get(i).yCoord;
 			g.setColor(Color.MAGENTA);
 			g.fillRect(x*10, y*10, 10, 10);
-		}
+		}*/
 	}
 
 }
