@@ -9,45 +9,42 @@ import javax.swing.*;
 class GameServer extends JFrame
  {
 	
-	
-	public GameServer()
-	{
-	/**	
-		JFrame 		mainFrame;//The main frame for Game Server
-		JPanel		mainPanel; //The parent panel contains other panels and components
-		JPanel		gameHisPanel;//Panel that contains game history
-		JPanel		gameDetailsPanel;//Panel that contains game details
-		JList		gameHistory; //History JList
-		JList		gameDetails; //Game details JList
-		JList		listbox; */
+	public GameServer(){
+		buildGUI();
+	}
+	private void buildGUI(){
 		
 		//Main Frame 
 		JFrame mainFrame = new JFrame("Game Server");
-		mainFrame.setSize( 1000, 600 );
+		mainFrame.setSize( 800, 500 );
 		mainFrame.setBackground( Color.gray );
 		
-		JFrame gameF = new JFrame("Game");
-		gameF.setSize(600,600);
 
 		// Create a panel to hold all other components
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout( new BorderLayout() );
 		mainFrame.add(mainPanel);
 		
-		//Create Game History Panel
+		//Create Game History Panel 
 		JPanel gameHistory = new JPanel();
-		gameHistory.setSize(300,600);
+		gameHistory.setPreferredSize(new Dimension(250,500));
 		gameHistory.setBackground(Color.white);
+		gameHistory.setLayout(new BorderLayout());
+		JLabel dbStatus = new JLabel("            DB Status: [Green/Yellow/Red]");
+		
+		JLabel GameHistoryLabel = new JLabel("                              Game History");
+		gameHistory.add(GameHistoryLabel, BorderLayout.NORTH);
+		gameHistory.add(dbStatus, BorderLayout.SOUTH);
 		
 		
 		//Create Game Details Panel
 		JPanel gameDetails =  new JPanel();
-		gameDetails.setSize(600,600);
+		gameDetails.setPreferredSize(new Dimension(530,500));
 		gameDetails.setBackground(Color.white);
-
-		//Create JLabel
-		JLabel GameHistoryLabel = new JLabel("Game History");
-		JLabel gameDetailLabel = new JLabel("Game Details");
+		gameDetails.setLayout(new BorderLayout());		
+		JLabel gameDetailLabel = new JLabel("                                                  Game Details");
+		JLabel gameStatus = new JLabel("Game Status: [Waiting/In Progress/Complete]");
+		
 		// Create some items to add to the list
 		String	details[] =
 		{
@@ -61,18 +58,27 @@ class GameServer extends JFrame
 			"Player 8(IP:10.229.154.203)|State:Wait \n Health:45/50|Position:(28,19)",
 		};
 
-		// Create a new listbox control
 		JList listbox = new JList( details );
-		mainPanel.add(gameHistory);
-		mainPanel.add(gameDetails);
-		gameHistory.add(GameHistoryLabel);
-		gameDetails.add( listbox);
-		gameDetails.add(gameDetailLabel);
+	
 		
+		gameDetails.add( listbox, BorderLayout.CENTER);
+		gameDetails.add(gameDetailLabel, BorderLayout.NORTH);
+		gameDetails.add(gameStatus, BorderLayout.SOUTH);
+		
+		//Adding panels to the main panel and frame
+		mainPanel.setLayout(new BorderLayout());
+		mainPanel.add(gameHistory, BorderLayout.WEST);
+		mainPanel.add(gameDetails, BorderLayout.EAST);
 		mainFrame.add(mainPanel);
-		// Create an instance of the test application
-		
 		mainFrame.setVisible( true );
 		
+	}
+	
+	/*************************************************************************************************/
+	public static void main(String[] args)
+	{
+		// Create an instance of the application
+		
+		GameServer gs = new GameServer();
 	}
 }
