@@ -44,25 +44,24 @@ public class driver {
                 return new Dimension(64*50, 64*50); //hard coded tile size must be updated here and in renderer
             }
         };
-        gameFrame.getContentPane().add(new JScrollPane(renderer), BorderLayout.CENTER);        
+        gameFrame.getContentPane().add(new JScrollPane(renderer), BorderLayout.CENTER);      
         gameFrame.setVisible(true);
- 
+        
+        
+       //JFrame serverFrame2 = new JFrame("server GUI Demo");
+        ServerTree tree = new ServerTree();
+       //serverFrame2.add(tree);
+       //serverFrame2.pack();
+       // serverFrame2.setVisible(true);
         
         JFrame serverFrame = new JFrame("server GUI Demo");
-        ServerGUI table = new ServerGUI();
-        serverFrame.setContentPane(table);        
+        ServerGUI table = ServerGUI.getInstance();
+        serverFrame.add(table,BorderLayout.CENTER);        
         serverFrame.pack();
         serverFrame.setVisible(true);
         
+        serverFrame.add(tree,BorderLayout.WEST);
         
-        //GameTree tree = new GameTree();        
-        //test.setOpaque(true); //content panes must be opaque
-        
-        //serverFrame.add(tree);
-        
-        
-        //frame.setContentPane(table);
-        //frame.add(tree);
         
     }// end main
   

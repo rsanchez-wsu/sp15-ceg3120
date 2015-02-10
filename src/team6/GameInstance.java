@@ -71,4 +71,17 @@ public class GameInstance {
 		tanks.add(player);
 		
 	}
+	
+    public TankObject[] getAllTanks()
+    {
+            TankObject[] returnArr = new TankObject[tanks.size()];
+            for(int i = 0 ; i < returnArr.length; i++)
+            {
+                    returnArr[i] = tanks.get(i);
+            }
+            return returnArr;
+    }
+	
+	
+	
 }
