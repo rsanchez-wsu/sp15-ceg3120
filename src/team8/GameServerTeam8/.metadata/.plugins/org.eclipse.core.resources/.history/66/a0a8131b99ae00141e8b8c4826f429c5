@@ -1,0 +1,78 @@
+/**
+ * @author Hien Long
+ *
+ */
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+class GameServer 
+ {
+	
+	
+	public static void main( String args[] )
+	{
+	/**	
+		JFrame 		mainFrame;//The main frame for Game Server
+		JPanel		mainPanel; //The parent panel contains other panels and components
+		JPanel		gameHisPanel;//Panel that contains game history
+		JPanel		gameDetailsPanel;//Panel that contains game details
+		JList		gameHistory; //History JList
+		JList		gameDetails; //Game details JList
+		JList		listbox; */
+		
+		//Main Frame 
+		JFrame mainFrame = new JFrame("Game Server");
+		mainFrame.setSize( 1000, 600 );
+		mainFrame.setBackground( Color.gray );
+		
+		JFrame gameF = new JFrame("Game");
+		gameF.setSize(600,600);
+
+		// Create a panel to hold all other components
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout( new BorderLayout() );
+		mainFrame.add(mainPanel);
+		
+		//Create Game History Panel
+		JPanel gameHistory = new JPanel();
+		gameHistory.setSize(300,600);
+		gameHistory.setBackground(Color.white);
+		
+		//Create Game Details Panel
+		JPanel gameDetails =  new JPanel();
+		gameDetails.setSize(600,600);
+		gameDetails.setBackground(Color.white);
+
+		//Create JLabel
+		JLabel GameHistoryLabel = new JLabel("Game History");
+		JLabel gameDetailLabel = new JLabel("Game Details");
+		// Create some items to add to the list
+		String	details[] =
+		{
+			"Player 1(IP:10.229.154.203)|State:Wait \n Health:45/50|Position:(28,19)",
+			"Player 2(IP:10.229.154.203)|State:Wait \n Health:45/50|Position:(28,19)",
+			"Player 3(IP:10.229.154.203)|State:Wait \n Health:45/50|Position:(28,19)",
+			"Player 4(IP:10.229.154.203)|State:Wait \n Health:45/50|Position:(28,19)",
+			"Player 5(IP:10.229.154.203)|State:Wait \n Health:45/50|Position:(28,19)",
+			"Player 6(IP:10.229.154.203)|State:Wait \n Health:45/50|Position:(28,19)",
+			"Player 7(IP:10.229.154.203)|State:Wait \n Health:45/50|Position:(28,19)",
+			"Player 8(IP:10.229.154.203)|State:Wait \n Health:45/50|Position:(28,19)",
+		};
+
+		// Create a new listbox control
+		JList listbox = new JList( details );
+		mainPanel.add(gameHistory);
+		mainPanel.add(gameDetails);
+		gameHistory.add(GameHistoryLabel);
+		gameDetails.add( listbox);
+		gameDetails.add(gameDetailLabel);
+		
+		mainFrame.add(mainPanel);
+		mainFrame.add(gameF);
+		// Create an instance of the test application
+		
+		mainFrame.setVisible( true );
+		
+	}
+}

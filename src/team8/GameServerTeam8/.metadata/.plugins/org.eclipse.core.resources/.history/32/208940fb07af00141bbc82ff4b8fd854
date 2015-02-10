@@ -1,0 +1,18 @@
+/**
+ * 
+ */
+
+/**
+ * @author Hien Long
+ *
+ */
+public class main {
+
+	public static void main(String[] args) {
+		
+		GameServer gs = new GameServer();
+	
+
+	}
+
+}
