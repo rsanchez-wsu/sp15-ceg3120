@@ -24,7 +24,7 @@
  *
  */
 //
-package team6;//this is scotts comment
+package team6;//this is scots comment
 
 import javax.swing.*;
 import java.awt.*;
