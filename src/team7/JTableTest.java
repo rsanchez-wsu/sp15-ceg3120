@@ -18,24 +18,24 @@ public class JTableTest {
 		// Player player9 = new Player("Player 9", 7, 6);
 		// Player player10 = new Player("Player 10", 0, 9);
 		
-		ArrayList<Player> players = new ArrayList<>();
+		final ArrayList<Player> PLAYERS = new ArrayList<>();
 		
-		players.add(new Player("Player 1", 3, 5));
-		players.add(new Player("Player 2", 8, 7));
-		players.add(new Player("Player 3", 2, 5));
-		players.add(new Player("Player 4", 4, 6));
-		players.add(new Player("Player 5", 1, 9));
-		players.add(new Player("Player 6", 0, 0));
-		players.add(new Player("Player 7", 0, 1));
-		players.add(new Player("Player 8", 6, 6));
-		players.add(new Player("Player 9", 7, 6));
-		players.add(new Player("Player 10", 0, 9));
+		PLAYERS.add(new Player("Player 1", 3, 5));
+		PLAYERS.add(new Player("Player 2", 8, 7));
+		PLAYERS.add(new Player("Player 3", 2, 5));
+		PLAYERS.add(new Player("Player 4", 4, 6));
+		PLAYERS.add(new Player("Player 5", 1, 9));
+		PLAYERS.add(new Player("Player 6", 0, 0));
+		PLAYERS.add(new Player("Player 7", 0, 1));
+		PLAYERS.add(new Player("Player 8", 6, 6));
+		PLAYERS.add(new Player("Player 9", 7, 6));
+		PLAYERS.add(new Player("Player 10", 0, 9));
 		
 		EventQueue.invokeLater(new Runnable()
 		{
 			public void run()
 			{
-				JFrame frame = new PlayerTableFrame(players);
+				JFrame frame = new PlayerTableFrame(PLAYERS);
 				frame.setTitle("Turn Tanks");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
