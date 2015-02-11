@@ -1,3 +1,30 @@
+/*
+ *  Copyright (C) <2015>  
+ *  Josh Crank - crank.5@wright.edu
+ *  // Aditional People
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+
+/*
+ * DEPRICATED - No Longer In Use!!!!!!!!!!!! 
+ * 
+ */
+
+/*
 package team7;
 import java.awt.*;
 import java.util.ArrayList;
@@ -7,16 +34,6 @@ import javax.swing.*;
 public class JTableTest {
 
 	public static void main(String[] args) {
-		// Player player1 = new Player("Player 1", 3, 5);
-		// Player player2 = new Player("Player 2", 8, 7);
-		// Player player3 = new Player("Player 3", 2, 5);
-		// Player player4 = new Player("Player 4", 4, 6);
-		// Player player5 = new Player("Player 5", 1, 9);
-		// Player player6 = new Player("Player 6", 0, 0);
-		// Player player7 = new Player("Player 7", 0, 1);
-		// Player player8 = new Player("Player 8", 6, 6);
-		// Player player9 = new Player("Player 9", 7, 6);
-		// Player player10 = new Player("Player 10", 0, 9);
 		
 		final ArrayList<Player> PLAYERS = new ArrayList<>();
 		
@@ -28,8 +45,6 @@ public class JTableTest {
 		PLAYERS.add(new Player("Player 6", 0, 0));
 		PLAYERS.add(new Player("Player 7", 0, 1));
 		PLAYERS.add(new Player("Player 8", 6, 6));
-		PLAYERS.add(new Player("Player 9", 7, 6));
-		PLAYERS.add(new Player("Player 10", 0, 9));
 		
 		EventQueue.invokeLater(new Runnable()
 		{
@@ -44,3 +59,4 @@ public class JTableTest {
 	}
 
 }
+*/
