@@ -30,13 +30,15 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
-import java.util.Arrays;
+//import java.util.Arrays;
 
 //This class currently takes hardcoded tankobjects, in a 2d array, and displays
 //them in a table.  Will adapt to accept GameState objects, or at least a return
 //from a GameState.toArray call.
+
+@SuppressWarnings("serial")
 public class ServerGUI extends JPanel {	
-    private static ServerGUI instance;    
+    private static ServerGUI instance= new ServerGUI();    
     JTable table; 
     String[] columnNames = {"Tank Image", "Name", "IP",
             "x coord", "y coord", "Health","Status"};
@@ -80,23 +82,14 @@ public class ServerGUI extends JPanel {
     	for (int i=0;i<8;i++){
         	data[i]=game.tanks.get(i).toStringArray();
         }
-    	
-    	
-    	System.out.println(Arrays.deepToString(data));
-    	System.out.println(Arrays.deepToString(columnNames));
-    	
-    	
+    	//removed debugging info   	
        table.setModel(new DefaultTableModel(data,columnNames ));       
     }//updateTable
     
+    
+    //instance should always be initilized now  - mason
     public static ServerGUI getInstance(){
-       
-        if(instance == null)
-        {
-                instance = new ServerGUI();
-        }
-        return instance;    
-
+        return instance;
     }//end getinstance
     
 }// end ServerTankObjectGUI Class

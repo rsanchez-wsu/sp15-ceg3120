@@ -27,12 +27,14 @@
 package team6;//this is scotts comment
 
 import javax.swing.*;
+
 import java.awt.*;
 
 //This class just creates a frame, and adds what ever panel we are testing
 public class driver {
 
-    public static void main(String[] args) {
+    @SuppressWarnings("serial")
+	public static void main(String[] args) {
       
         JFrame gameFrame = new JFrame("game GUI Demo");
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

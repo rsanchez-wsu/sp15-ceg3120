@@ -36,11 +36,11 @@ public class GameInstance {
 	
 	//public all the things	
 	public 	Calendar time;
-	public ArrayList<TankObject> tanks= new ArrayList(); 
+	public ArrayList<TankObject> tanks= new ArrayList<TankObject>(); 
 	
 	//default test constructor
 	public GameInstance(){
-		time= time.getInstance();
+		time= Calendar.getInstance();
 			
         tanks.add( new TankObject("green.jpg", "Matt"+String.valueOf((int)(Math.random()*50)), "178.224.102.99",
                 (int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));

@@ -1,14 +1,16 @@
 package team6;
 
 import java.awt.*;
+
 import javax.swing.*;
-import java.util.*;
+//import java.util.*;
 //This class will render a 64x64 array representing a map, and a array
 //of TankObjects, representing players.
 
 //will update to render only 24x16 squares at a time, scrollable through arrowkeys.
 
 
+@SuppressWarnings("serial")
 public class GameRenderer extends JPanel {
 
 	char[][] map = new char[64][64];

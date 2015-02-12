@@ -30,10 +30,10 @@ import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.*;
-
-import java.awt.*;
+//import java.awt.*;
 import java.util.*;
 
+@SuppressWarnings("serial")
 public class ServerTree extends JPanel {
 
 	JTree tree;
@@ -41,7 +41,7 @@ public class ServerTree extends JPanel {
 
 	public ServerTree() {
 
-		Date gameDate = new Date();
+		//Date gameDate = new Date();
 		// create the root node
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Games");
 		// create the child nodes
