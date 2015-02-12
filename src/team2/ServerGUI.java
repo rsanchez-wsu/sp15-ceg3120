@@ -28,6 +28,11 @@ public class ServerGUI extends JPanel{
 	// Needs to put the game history and details panes into a split pane frame
 	// and show itself.
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private JSplitPane serverSplitPane;
 	private JPanel gameDetails;
 	private JPanel gameHistory;

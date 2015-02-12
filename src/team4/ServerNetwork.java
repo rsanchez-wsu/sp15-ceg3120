@@ -30,23 +30,27 @@ import java.util.Scanner;
 public class ServerNetwork {
 
 	public static void main(String[] args) {
-		//Create a server socket
+		// Create a server socket
 		try {
+			@SuppressWarnings("unused")
 			int threadNum = 1;
-			//Create a server socket (socket not specified yet)
+			// Create a server socket (socket not specified yet)
+			@SuppressWarnings("resource")
 			ServerSocket sSocket = new ServerSocket(7777);
-			
-			//Create Threaded Sockets
-			while (true){
+
+			// Create Threaded Sockets
+			System.out.println("Created Server. Running on port "
+					+ sSocket.getLocalPort());
+			while (true) {
 				Socket incoming = sSocket.accept();
 				Runnable run = new GameThreadHandler(incoming);
 				Thread thread = new Thread(run);
 				thread.start();
 				threadNum++;
 			}
-		}catch (IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
 }
 
@@ -55,56 +59,60 @@ public class ServerNetwork {
  */
 class GameThreadHandler implements Runnable {
 	private Socket incoming;
-	
-	public GameThreadHandler(Socket incoming){
+
+	public GameThreadHandler(Socket incoming) {
 		this.incoming = incoming;
 	}
-	
-	public void run(){
-		try{
-			try{
-				
-				//Get Input and Output Streams
+
+	public void run() {
+		try {
+			try {
+
+				// Get Input and Output Streams
 				InputStream clientStream = incoming.getInputStream();
 				OutputStream serverStream = incoming.getOutputStream();
-				
-				//Create a scanner and writer for the streams
+
+				// Create a scanner and writer for the streams
+				@SuppressWarnings("resource")
 				Scanner in = new Scanner(clientStream);
-				PrintWriter out = new PrintWriter(serverStream, true );
+				PrintWriter out = new PrintWriter(serverStream, true);
+
+				// print welcome message (maybe we create a method to generate
+				// messages?)
+				System.out.println("User Connected");
+				out.println("WELCOME USER");
 				
-				//print welcome message (maybe we create a method to generate messages?)
-				out.println("WELCOME");
-				
-				//Process client messages
+				// Process client messages
 				boolean done = false;
-				while(!done && in.hasNextLine()){
+				while (!done && in.hasNextLine()) {
 					String clientMessage = in.nextLine();
-					
+					System.out.println(clientMessage);
+					out.println("Thanks For Sending : " + clientMessage);
+
 					// need processing methods
-					if(clientMessage.trim().equals("CONNECT")){
-						
+					if (clientMessage.trim().equals("CONNECT")) {
 					}
-					if(clientMessage.trim().equals("ACTION MOVE")){
-						
+					if (clientMessage.trim().equals("ACTION MOVE")) {
+
 					}
-					if(clientMessage.trim().equals("ACTION ATTACK")){
-						
+					if (clientMessage.trim().equals("ACTION ATTACK")) {
+
 					}
-					if(clientMessage.trim().equals("ACTION PASS")){
-						
+					if (clientMessage.trim().equals("ACTION PASS")) {
+
 					}
-					if(clientMessage.trim().equals("CHAT")){
-						
+					if (clientMessage.trim().equals("CHAT")) {
+
 					}
-					if(clientMessage.trim().equals("QUIT")){
+					if (clientMessage.trim().equals("QUIT")) {
 						done = true;
 					}
 				}
-				
-			}finally{
+
+			} finally {
 				incoming.close();
 			}
-		}catch (IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

@@ -27,19 +27,24 @@ import javax.swing.*;
 
 public class GameDetailsPane extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel header;
 	private JLabel footer;
-	private JList playerList;
-	private DefaultListModel model;
+	private JList<Player> playerList;
+	private DefaultListModel<Player> model;
 
 	public GameDetailsPane() {
 
 		header = new JLabel("Game Details");
 		footer = new JLabel("Game Status: [Waiting/In Progress/Complete]");
 
-		playerList = new JList();
+		playerList = new JList<Player>();
 		JScrollPane playerListScroll = new JScrollPane(playerList);
-		model = new DefaultListModel();
+		model = new DefaultListModel<Player>();
 		playerList.setModel(model);
 		
 		addRandomPlayers();
