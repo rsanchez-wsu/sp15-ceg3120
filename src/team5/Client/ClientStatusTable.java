@@ -100,14 +100,16 @@ public class ClientStatusTable extends JPanel {
 					}
 					tabs.setSelectedIndex(column);
 				}
-					playerTabsFrame.addWindowListener(new java.awt.event.WindowAdapter(){
-						@Override
-						public void windowClosing(java.awt.event.WindowEvent windowEvent){
-							tabs = null;
-							playerTabsFrame = null;
-						}
-					});
+					
 			} 
+		});
+		
+		playerTabsFrame.addWindowListener(new java.awt.event.WindowAdapter(){
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent){
+				tabs = null;
+				playerTabsFrame = null;
+			}
 		});
 
 		JScrollPane scrollPanel = new JScrollPane(table);
