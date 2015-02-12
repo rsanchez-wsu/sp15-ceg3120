@@ -76,6 +76,10 @@ public class MainThread extends Thread {
 		ClientBoardTable boardTable;
 		GameStatus gameStatus;
 	    GameStatus.StatusEnum actualStatus; 
+	    
+	    //connection info
+	    String sName = "localhost";
+        int port = 8080;
 		
 		// Method to create dummy players
 		initializePlayers();
@@ -173,10 +177,16 @@ public class MainThread extends Thread {
 		frame.pack();
 		frame.setVisible(true);
 		
-		 //Testing with the client socket from in class example
-		 String sName = "localhost";
-	        
-	        int port = 8080;
+		
+		//connect to chat thing
+		connection(sName,port);
+		
+		
+	}
+
+	public void connection(String sName, int port){
+		//Testing with the client socket from in class example
+		 
 	        try {
 	            System.out.println("Connecting to " + sName
 	                    + " on port " + port);
@@ -198,9 +208,8 @@ public class MainThread extends Thread {
 	        }
 	        
 	        System.out.println("Exiting");
-		
 	}
-
+	
 	/**
 	 * creates players
 	 */
