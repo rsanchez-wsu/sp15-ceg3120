@@ -27,7 +27,8 @@
 package team6;
 
 public class TankObject {
-    
+    //
+	//
     public String TankImage;
     public String Name;
     public String IP;    
@@ -42,7 +43,7 @@ public class TankObject {
     
     //full constructor
     public TankObject(String TankImage, String Name, String IP,
-            int xCoord, int yCoord, int health, int score, String state) {        
+            int xCoord, int yCoord, int health, String state) {        
         
         this.TankImage = TankImage;
         this.Name = Name;
@@ -50,20 +51,19 @@ public class TankObject {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.health = health;
-        this.score = score;
         this.state = state;
     }//end empty constructor    
     
     
      public String[] toStringArray() {
-        String[] stringArray = {TankImage,Name,IP,String.valueOf(xCoord),String.valueOf(yCoord) ,String.valueOf(health) ,String.valueOf(score),state }; 
+        String[] stringArray = {TankImage,Name,IP,String.valueOf(xCoord),String.valueOf(yCoord) ,String.valueOf(health) ,state }; 
          
         return stringArray ;
     }   
 
     @Override
     public String toString() {
-        return "TankObject{" + "TankImage=" + TankImage + ", Name=" + Name + ", IP=" + IP + ", xCoord=" + xCoord + ", yCoord=" + yCoord + ", health=" + health + ", score=" + score + ", state=" + state + '}';
+        return "TankObject{" + "TankImage=" + TankImage + ", Name=" + Name + ", IP=" + IP + ", xCoord=" + xCoord + ", yCoord=" + yCoord + ", health=" + health + ", state=" + state + '}';
     }
      
 }//end tank class

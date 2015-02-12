@@ -86,7 +86,6 @@ public class ClientStatusTable extends JPanel {
 					tabThread.run();
 					tabThread.setName("Tab Thread");
 					
-					System.out.println(column);
 					playerTabsFrame.setVisible(true);
 					for(Player player : playerModel){
 						Player temp = player;

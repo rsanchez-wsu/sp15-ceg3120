@@ -28,41 +28,60 @@ package team6;
 
 import java.util.*;
 
+
+//This class represents the state of 8 tanks in a game. It could
+//represent the history of a past game, or a on going game.
+//
 public class GameInstance {
 	
 	//public all the things	
-	public 	Date time;
-	public ArrayList<TankObject> tanks; 
+	public 	Calendar time;
+	public ArrayList<TankObject> tanks= new ArrayList(); 
 	
 	//default test constructor
 	public GameInstance(){
-        tanks.add( new TankObject("green.jpg", "Matt", "178.224.102.99",
-                12, 34, 40, 45, "wait"));
-        tanks.add( new TankObject("green.jpg", "Jeff", "211.87.23.81",
-                44, 12, 10, 55, "wait"));
-        tanks.add( new TankObject("green.jpg", "Gary", "73.23.144.17",
-                55, 86, 20, 74, "wait"));
-        tanks.add( new TankObject("green.jpg", "Stu", "141.55.12.201",
-                33, 12, 0, 102, "dead"));
-        tanks.add( new TankObject("green.jpg", "Jill", "51.122.77.2",
-                78, 47, 15, 82, "wait"));
-        tanks.add( new TankObject("green.jpg", "Kent", "134.11.3.210",
-                74, 22, 35, 102, "wait"));
-        tanks.add( new TankObject("green.jpg", "Scot", "178.224.102.99",
-                74, 22, 60, 10, "wait"));
+		time= time.getInstance();
+			
+        tanks.add( new TankObject("green.jpg", "Matt"+String.valueOf((int)(Math.random()*50)), "178.224.102.99",
+                (int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
+        tanks.add( new TankObject("green.jpg", "Jeff"+String.valueOf((int)(Math.random()*50)), "211.87.23.81",
+        		(int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
+        tanks.add( new TankObject("green.jpg", "Gary"+String.valueOf((int)(Math.random()*50)), "73.23.144.17",
+        		(int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
+        tanks.add( new TankObject("green.jpg", "Stu"+String.valueOf((int)(Math.random()*50)), "141.55.12.201",
+        		(int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
+        tanks.add( new TankObject("green.jpg", "Jill"+String.valueOf((int)(Math.random()*50)), "51.122.77.2",
+        		(int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
+        tanks.add( new TankObject("green.jpg", "Kent"+String.valueOf((int)(Math.random()*50)), "134.11.3.210",
+        		(int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
+        tanks.add( new TankObject("green.jpg", "Scot"+String.valueOf((int)(Math.random()*50)), "178.224.102.99",
+        		(int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
         tanks.add( new TankObject("red.jpg", "xXKi113R69Xx", "192.168.1.1",
-                99, 99, 65535, 65535, "Active"));
+                63, 63, 50, "Active"));
 	}
 	
 	
 	//creates a gameinstance from a arraylist of tanks
-	public GameInstance(ArrayList<TankObject> tanks){
+	public GameInstance(ArrayList<TankObject> tanks, Calendar time){
+		this.time=time;
 		this.tanks=tanks;
 	}
-	
-	//add a tank to our tanks arraylist
-	public void add(TankObject tank){
-		tanks.add(tank);
-	}
 
+	public void add(TankObject player){
+		tanks.add(player);
+		
+	}
+	
+    public TankObject[] getAllTanks()
+    {
+            TankObject[] returnArr = new TankObject[tanks.size()];
+            for(int i = 0 ; i < returnArr.length; i++)
+            {
+                    returnArr[i] = tanks.get(i);
+            }
+            return returnArr;
+    }
+	
+	
+	
 }

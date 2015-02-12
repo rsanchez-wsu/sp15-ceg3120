@@ -24,33 +24,63 @@
  *
  */
 //
-package team6;
+package team6;//this is scots comment
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.*;
+import java.awt.*;
 
+//This class just creates a frame, and adds what ever panel we are testing
 public class driver {
 
     public static void main(String[] args) {
       
-        JFrame frame = new JFrame("Server GUI Demo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ServerTankObjectGUI test = new ServerTankObjectGUI();
-        GameTree tree = new GameTree();
-        
-        test.setOpaque(true); //content panes must be opaque
-        frame.setContentPane(test);
-        frame.add(tree);
+        JFrame gameFrame = new JFrame("game GUI Demo");
+        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        center(gameFrame);
 
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);  
+        GameRenderer renderer = new GameRenderer() {
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(64*50, 64*50); //hard coded tile size must be updated here and in renderer
+            }
+        };
+        gameFrame.getContentPane().add(new JScrollPane(renderer), BorderLayout.CENTER);      
+        gameFrame.setVisible(true);
+        
+        
+       //JFrame serverFrame2 = new JFrame("server GUI Demo");
+        ServerTree tree = new ServerTree();
+       //serverFrame2.add(tree);
+       //serverFrame2.pack();
+       // serverFrame2.setVisible(true);
+        
+        JFrame serverFrame = new JFrame("server GUI Demo");
+        ServerGUI table = ServerGUI.getInstance();
+        serverFrame.add(table,BorderLayout.CENTER);        
+        serverFrame.pack();
+        serverFrame.setVisible(true);
+        
+        serverFrame.add(tree,BorderLayout.WEST);
+        
+        
     }// end main
+  
+    
+
+    public static void center(JFrame frame) {
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        Point center = ge.getCenterPoint();
+        int windowX = 1024;
+        int windowY = 640;
+        int x = center.x - windowX / 2;
+        int y = center.y - windowY / 2;
+        frame.setBounds(x, y, windowX, windowY);
+        frame.validate();
+    }
+    
+    
+    
+    
 }//end main class
 
