@@ -36,7 +36,7 @@ public class Player {
     private int positionY;
     private PlayerState status; 
     private int tempRandom; //will not need after we can pull actual data for players
-    private static int handleID;
+    //private static int handleID;
     
     public Player() {
         Integer handleNum = (int)(Math.random() * 8999 + 1000); //temp random handle

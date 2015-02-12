@@ -35,6 +35,11 @@ public class GameHistoryPane extends JPanel implements TreeSelectionListener {
 	// game tree
 	// bottom label (DB status)
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel header;
 	private JLabel footer;
 	private JTree gameTree;

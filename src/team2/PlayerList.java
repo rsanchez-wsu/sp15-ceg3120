@@ -30,11 +30,16 @@ import javax.swing.JList;
  *
  * @author william
  */
-public class PlayerList extends JList {
-    private DefaultListModel<Player> playerList;
+public class PlayerList extends JList<Object> {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private DefaultListModel<Player> playerList;
     
     public PlayerList() {
-        playerList = new DefaultListModel();
+        playerList = new DefaultListModel<Player>();
     }
     
     public void initializePanel() {
@@ -42,7 +47,11 @@ public class PlayerList extends JList {
     }
     
     
-    public void addPlayer() {
+    private void setModel(DefaultListModel<Player> playerList) {
+		
+	}
+
+	public void addPlayer() {
         playerList.addElement(new Player());
     }
 }
