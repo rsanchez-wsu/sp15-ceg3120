@@ -37,7 +37,6 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 public class sampleServerWindow {
@@ -154,6 +153,11 @@ public class sampleServerWindow {
 
 		final JTree tree = new JTree();
 		tree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("JTree") {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			{
 				DefaultMutableTreeNode activeNode = new DefaultMutableTreeNode(
 						"Active Games");
