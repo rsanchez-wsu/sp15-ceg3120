@@ -1,5 +1,4 @@
 package team3;
-import java.awt.Point;
 
 public class Player {
 	
