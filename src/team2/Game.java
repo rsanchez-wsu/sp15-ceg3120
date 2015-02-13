@@ -27,13 +27,13 @@ public class Game {
 
 	private static void createAndShowGUI() {
 
-        JFrame frame = new JFrame("Game Title Here");
+        JFrame frame = new JFrame("Turn Tanks: Ultimate Destruction!!!");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
         ServerGUI server = new ServerGUI();
         frame.getContentPane().add(server.getGUI());
         frame.pack();
         frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
         
     }
 	
