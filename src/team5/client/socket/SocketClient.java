@@ -19,6 +19,8 @@ package team5.client.socket;
 
 import java.io.*;
 import java.net.*;
+
+import team5.playerobject.Pair;
 /**
  *
  * @author erik
@@ -44,8 +46,14 @@ public class SocketClient {
                 OutputStream outToServer = client.getOutputStream();
                 DataOutputStream out
                         = new DataOutputStream(outToServer);
-                out.writeUTF("Hello from "
-                        + client.getLocalSocketAddress());
+//                out.writeUTF("Hello from "
+//                        + client.getLocalSocketAddress());
+                
+//                out.writeUTF(connect("player 1"));
+                out.writeUTF(action("move", new Pair(1,2)));
+//                out.writeUTF(chat("Hello all"));
+//                out.writeUTF(quit("Hate Losing"));
+//                
                 InputStream inFromServer = client.getInputStream();
                 DataInputStream in
                         = new DataInputStream(inFromServer);
@@ -62,5 +70,21 @@ public class SocketClient {
 	}
 	public static void setServerName(String serverName) {
 		SocketClient.serverName = serverName;
+	}
+	public static String connect(String playerName){
+		return "CONNECT " + playerName;
+		
+	}
+	public static String action(String action, Pair position){
+		 return action + " " + position.getxPos() + " " + position.getyPos();
+	}
+	public static String chat(String chat){
+		return "CHAT " + chat;
+	}
+	public static String quit(String reason){
+		if(reason == null){
+			return "QUIT";
+		}
+		return "QUIT " + reason;
 	}
 }

@@ -26,7 +26,7 @@ public class SocketServer extends Thread
    public SocketServer(int port) throws IOException
    {
       serverSocket = new ServerSocket(port);
-      serverSocket.setSoTimeout(20000);
+     
    }
    @Override
    public void run()
@@ -43,11 +43,11 @@ public class SocketServer extends Thread
             DataInputStream in =
                   new DataInputStream(server.getInputStream());
             System.out.println(in.readUTF());
-            DataOutputStream out =
-                 new DataOutputStream(server.getOutputStream());
-            out.writeUTF("Thank you for connecting to "
-              + server.getLocalSocketAddress() + "\nGoodbye!");
-            server.close();
+//            DataOutputStream out =
+//                 new DataOutputStream(server.getOutputStream());
+//            out.writeUTF("Thank you for connecting to "
+//              + server.getLocalSocketAddress() + "\nGoodbye!");
+//            server.close();
          }catch(SocketTimeoutException s)
          {
             System.out.println("Socket timed out!");
