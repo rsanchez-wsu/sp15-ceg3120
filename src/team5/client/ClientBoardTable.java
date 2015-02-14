@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package team5.Client;
+package team5.client;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -32,8 +32,8 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import team5.PlayerObject.Pair;
-import team5.PlayerObject.Player;
+import team5.playerobject.Pair;
+import team5.playerobject.Player;
 
 public class ClientBoardTable extends JPanel{
 

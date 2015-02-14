@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package team5.Client;
+package team5.client;
 
 /**
  * @author Joshua Hitchens, Lori Simmons, Ryan Lane, Tyler Parker

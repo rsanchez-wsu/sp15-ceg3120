@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package team5.MainThread;
+package team5.mainthread;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -38,12 +38,12 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import team5.Client.ClientBoardTable;
-import team5.Client.ClientStatusTable;
-import team5.Client.EnemyPlayer;
-import team5.Client.GameStatus;
-import team5.PlayerObject.Pair;
-import team5.PlayerObject.Player;
+import team5.client.ClientBoardTable;
+import team5.client.ClientStatusTable;
+import team5.client.EnemyPlayer;
+import team5.client.GameStatus;
+import team5.playerobject.Pair;
+import team5.playerobject.Player;
 
 /**
  * @author Joshua Hitchens, Lori Simmons, Ryan Lane, Tyler Parker

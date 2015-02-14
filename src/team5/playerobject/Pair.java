@@ -15,44 +15,46 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+package team5.playerobject;
 
-package team5.Client;
+/**
+ * @author hitchens6
+ */
+public class Pair {
+	// Pair Variables
+	private int xPos;
+	private int yPos;
 
-import java.util.Vector;
+	// Defualt Constructor
+	public Pair() {
 
-import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
-
-import team5.PlayerObject.Player;
-
-public class PlayerTabs extends JTabbedPane {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private int rows;
-	private int columns;
-	JFrame playerTabsFrame;
-	
-	public int getColumns() {
-		return columns;
 	}
 
-	public void setColumns(int columns) {
-		this.columns = columns;
+	// Position Constructor
+	public Pair(int xPos, int yPos) {
+		this.xPos = xPos;
+		this.yPos = yPos;
 	}
 
-	public int getRows() {
-		return rows;
+	// getters and setters
+	public int getxPos() {
+		return xPos;
 	}
 
-	public void setRows(int rows) {
-		this.rows = rows;
-	}
-	
-	public PlayerTabs(Vector<Player> playerList){
-		this.columns = 0;
+	public void setxPos(int xPos) {
+		this.xPos = xPos;
 	}
 
+	public int getyPos() {
+		return yPos;
+	}
+
+	public void setyPos(int yPos) {
+		this.yPos = yPos;
+	}
+
+	@Override
+	public String toString() {
+		return "(" + getxPos() + ", " + getyPos() + ")";
+	}
 }

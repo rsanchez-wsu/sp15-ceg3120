@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package team5.PlayerObject;
+package team5.playerobject;
 
 /**
  * @author Joshua Hitchens, Lori Simmons, Ryan Lane, Tyler Parker

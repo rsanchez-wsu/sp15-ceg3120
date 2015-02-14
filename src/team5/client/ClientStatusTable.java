@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package team5.Client;
+package team5.client;
 
 import java.awt.*;
 import java.util.Vector;
@@ -24,7 +24,7 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import team5.PlayerObject.Player;
+import team5.playerobject.Player;
 
 /**
  * @author Joshua Hitchens, Lori Simmons, Ryan Lane, Tyler Parker
