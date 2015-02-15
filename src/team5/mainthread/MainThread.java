@@ -21,12 +21,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.Socket;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -40,6 +34,7 @@ import javax.swing.JTextField;
 import team5.client.ClientBoardTable;
 import team5.client.ClientStatusTable;
 import team5.client.GameStatus;
+import team5.client.socket.SocketClient;
 import team5.playerobject.EnemyPlayer;
 import team5.playerobject.Pair;
 import team5.playerobject.Player;
@@ -52,11 +47,8 @@ public class MainThread extends Thread {
 	Vector<Player> playerList = new Vector<Player>();
 	JTextArea chat;
 	JTextField chatTxt;
-<<<<<<< HEAD
-=======
-	JButton submitButton;
 	int isConnected = 0;
->>>>>>> branch 'master' of https://github.com/rsanchez-wsu/sp15-ceg3120.git
+	SocketClient connection;
 	
 	/**
 	 * Runs Main Thread
@@ -79,10 +71,6 @@ public class MainThread extends Thread {
 		ClientBoardTable boardTable;
 		GameStatus gameStatus;
 	    GameStatus.StatusEnum actualStatus; 
-	    
-	    //connection info
-	    String sName = "localhost";
-        int port = 8080;
 		
 		// Method to create dummy players
 		initializePlayers();
@@ -184,43 +172,24 @@ public class MainThread extends Thread {
 		frame.pack();
 		frame.setVisible(true);
 		
-		
+		connection = new SocketClient();
 		//connect to chat thing
-		while(isConnected<8){
-		connection(sName,port);
-		isConnected++;
-		}
-		if(isConnected==8){
-			System.out.println("Connection to server timmed out after 8 trys");
-		}
 		
-	}
-
-	public void connection(String sName, int port){
-		//Testing with the client socket from in class example
-		 
-	        try {
-	            System.out.println("Connecting to " + sName
-	                    + " on port " + port);
-	            try (Socket client = new Socket(sName, port)) {
-	                System.out.println("Just connected to "
-	                        + client.getRemoteSocketAddress());
-	                OutputStream outToServer = client.getOutputStream();
-	                DataOutputStream out
-	                        = new DataOutputStream(outToServer);
-	                out.writeUTF("Hello from "
-	                        + client.getLocalSocketAddress());
-	                InputStream inFromServer = client.getInputStream();
-	                DataInputStream in
-	                        = new DataInputStream(inFromServer);
-	                System.out.println("Server says " + in.readUTF());
-	                isConnected = 9;
-	            }
-	        } catch (IOException e) {
-	            System.out.println("Failed to conect. Is Server running?");
-	        }
-	        
-	        System.out.println("Exiting");
+		while(!connection.didConnectionEstablish()){
+			if(isConnected<8){
+				System.out.println("Attempting try number: " + isConnected);
+				connection.run("127.0.0.1", 8080);
+			}
+			if(isConnected==8){
+				System.out.println("Connection to server timmed out after 8 trys");
+				break;
+			}
+			isConnected++;
+			connection = new SocketClient();
+		}
+		while(connection.isConnectionTerminated()){
+			
+		}
 	}
 	
 	/**

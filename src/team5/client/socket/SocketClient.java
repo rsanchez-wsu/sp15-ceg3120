@@ -23,20 +23,18 @@ import java.net.*;
 import team5.playerobject.Pair;
 /**
  *
- * @author erik
+ * @author Joshua HItchens
  */
-public class SocketClient {
-    private static String serverName;
+public class SocketClient extends Thread{
+    private String serverName;
+    private boolean connected = false;
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        String sName = "localhost";
-        if(0 < args.length) {
-           sName = args[0];
-        }
-        
-        int port = 8080;
+    
+    public void run(String sName, int port){
+    	sName = "localhost";
+        port = 8080;
         try {
             System.out.println("Connecting to " + sName
                     + " on port " + port);
@@ -46,6 +44,7 @@ public class SocketClient {
                 OutputStream outToServer = client.getOutputStream();
                 DataOutputStream out
                         = new DataOutputStream(outToServer);
+                connectedToServer();
 //                out.writeUTF("Hello from "
 //                        + client.getLocalSocketAddress());
                 
@@ -64,27 +63,39 @@ public class SocketClient {
         }
         
         System.out.println("Exiting");
+        connected = false;
     }
-	public static String getServerName() {
+    
+	public String getServerName() {
 		return serverName;
 	}
-	public static void setServerName(String serverName) {
-		SocketClient.serverName = serverName;
+	public void setServerName(String serverName) {
+		this.serverName = serverName;
 	}
-	public static String connect(String playerName){
+	public String connect(String playerName){
 		return "CONNECT " + playerName;
 		
 	}
-	public static String action(String action, Pair position){
+	public String action(String action, Pair position){
 		 return action + " " + position.getxPos() + " " + position.getyPos();
 	}
-	public static String chat(String chat){
+	public String chat(String chat){
 		return "CHAT " + chat;
 	}
-	public static String quit(String reason){
+	public String quit(String reason){
+		connected = false;
 		if(reason == null){
 			return "QUIT";
 		}
 		return "QUIT " + reason;
+	}
+	public boolean didConnectionEstablish(){
+		return connected; 
+	}
+	public void connectedToServer(){
+		connected = true;
+	}
+	public boolean isConnectionTerminated(){
+		return connected;
 	}
 }
