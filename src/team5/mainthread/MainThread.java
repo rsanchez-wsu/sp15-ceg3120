@@ -52,6 +52,11 @@ public class MainThread extends Thread {
 	Vector<Player> playerList = new Vector<Player>();
 	JTextArea chat;
 	JTextField chatTxt;
+<<<<<<< HEAD
+=======
+	JButton submitButton;
+	int isConnected = 0;
+>>>>>>> branch 'master' of https://github.com/rsanchez-wsu/sp15-ceg3120.git
 	
 	/**
 	 * Runs Main Thread
@@ -181,8 +186,13 @@ public class MainThread extends Thread {
 		
 		
 		//connect to chat thing
+		while(isConnected<8){
 		connection(sName,port);
-		
+		isConnected++;
+		}
+		if(isConnected==8){
+			System.out.println("Connection to server timmed out after 8 trys");
+		}
 		
 	}
 
@@ -204,6 +214,7 @@ public class MainThread extends Thread {
 	                DataInputStream in
 	                        = new DataInputStream(inFromServer);
 	                System.out.println("Server says " + in.readUTF());
+	                isConnected = 9;
 	            }
 	        } catch (IOException e) {
 	            System.out.println("Failed to conect. Is Server running?");
