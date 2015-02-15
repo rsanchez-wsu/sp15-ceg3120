@@ -29,7 +29,6 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Vector;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -40,8 +39,8 @@ import javax.swing.JTextField;
 
 import team5.client.ClientBoardTable;
 import team5.client.ClientStatusTable;
-import team5.client.EnemyPlayer;
 import team5.client.GameStatus;
+import team5.playerobject.EnemyPlayer;
 import team5.playerobject.Pair;
 import team5.playerobject.Player;
 
@@ -53,7 +52,6 @@ public class MainThread extends Thread {
 	Vector<Player> playerList = new Vector<Player>();
 	JTextArea chat;
 	JTextField chatTxt;
-	JButton submitButton;
 	
 	/**
 	 * Runs Main Thread
@@ -68,8 +66,8 @@ public class MainThread extends Thread {
 		JPanel chatPanel;
 		JLabel status;
 		JLabel info;
-		JSplitPane splitPane;
-		JSplitPane splitFrame;
+		JSplitPane statusArea;
+		JSplitPane parentPane;
 		JSplitPane chatSplitPane;
 		JSplitPane gameBoardSplitPane;
 		ClientStatusTable playerTable;
@@ -99,12 +97,11 @@ public class MainThread extends Thread {
 		chat.setEditable(false);
 		chat.setWrapStyleWord(true);
 		chat.setLineWrap(true);
+		
 		chatTxt = new JTextField();
 	    chatTxt.setText("");
 	    chatTxt.setSize(100, 100);
-		submitButton = new JButton();
-		submitButton.setText("Submit");
-		
+	
 		chatTxt.addActionListener(new ActionListener(){
 
 			@Override
@@ -112,7 +109,7 @@ public class MainThread extends Thread {
 				String temp;
 				temp = chat.getText();
 				temp =  temp + System.lineSeparator() + chatTxt.getText();
-				chat.setText(temp);
+				chat.setText(temp);		
 				chatTxt.setText("");
 			}
 			
@@ -125,6 +122,7 @@ public class MainThread extends Thread {
 		chatSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		chatSplitPane.add(scroll, JSplitPane.TOP);
 		chatSplitPane.add(chatTxt, JSplitPane.BOTTOM);
+		chatSplitPane.setDividerLocation(600);
 		
 		chatPanel = new JPanel();
 		chatPanel.add(chatSplitPane);
@@ -133,8 +131,10 @@ public class MainThread extends Thread {
 		gameBoard = new JPanel();
 		gameBoardSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		gameBoard.setLayout(new GridLayout(1,0));
+		
 		gameBoardSplitPane.add(boardTable, JSplitPane.RIGHT);
 		gameBoardSplitPane.add(chatSplitPane, JSplitPane.LEFT);
+		gameBoardSplitPane.setDividerLocation(300);
 		
 		// Create JList for Status Implementation
 		gamePanel = new JPanel();
@@ -159,21 +159,23 @@ public class MainThread extends Thread {
 		statusPanel.add(status, BorderLayout.WEST);
 		statusPanel.add(info, BorderLayout.EAST);
 		
-		splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-		splitPane.add(statusPanel, JSplitPane.TOP);
-		splitPane.add(playerTable, JSplitPane.BOTTOM);
+		statusArea = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		statusArea.add(statusPanel, JSplitPane.TOP);
+		statusArea.add(playerTable, JSplitPane.BOTTOM);
 		
-		splitFrame = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-		splitFrame.add(gamePanel, JSplitPane.TOP);
-		splitFrame.add(splitPane, JSplitPane.BOTTOM);
+		parentPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		parentPane.add(gamePanel, JSplitPane.TOP);
+		parentPane.add(statusArea, JSplitPane.BOTTOM);
+		parentPane.setDividerLocation(925);
 		
 		// Add Objects to Frame, Frame properties and open Frame.
 		frame = new JFrame("ClientJList");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new GridLayout(1,0));
 		frame.setTitle("Turn Tanks");
-		frame.add(splitFrame);
+		frame.add(parentPane);
 		frame.setLocationRelativeTo(null);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		frame.pack();
 		frame.setVisible(true);
 		
@@ -241,33 +243,34 @@ public class MainThread extends Thread {
 		position = new Pair(x, y);
 		player = new EnemyPlayer(3, 0, null, state);
 		playerList.addElement(player);
-//		
-//		x = 15;
-//		y = 15;
-//		state = Player.State.WAITING;
-//		position = new Pair(x, y);
-//		player = new EnemyPlayer(4, 50, position, state);
-//		
-//		playerList.addElement(player);
-//		x = 11;
-//		y = 41;
-//		state = Player.State.DEAD;
-//		position = new Pair(x, y);
-//		player = new EnemyPlayer(5, 0, position, state);
-//		playerList.addElement(player);
-//		
-//		x = 30;
-//		y = 15;
-//		state = Player.State.WAITING;
-//		position = new Pair(x, y);
-//		player = new EnemyPlayer(6, 50, position, state);
-//		
-//		x = 40;
-//		y = 15;
-//		state = Player.State.WAITING;
-//		position = new Pair(x, y);
-//		player = new EnemyPlayer(7, 50, position, state);
-//		
+		
+		x = 15;
+		y = 15;
+		state = Player.State.WAITING;
+		position = new Pair(x, y);
+		player = new EnemyPlayer(4, 50, position, state);
+		
+		playerList.addElement(player);
+		x = 11;
+		y = 41;
+		state = Player.State.DEAD;
+		position = new Pair(x, y);
+		player = new EnemyPlayer(5, 0, position, state);
+		playerList.addElement(player);
+		
+		x = 30;
+		y = 15;
+		state = Player.State.WAITING;
+		position = new Pair(x, y);
+		player = new EnemyPlayer(6, 50, position, state);
+		playerList.addElement(player);
+		
+		x = 40;
+		y = 15;
+		state = Player.State.WAITING;
+		position = new Pair(x, y);
+		player = new EnemyPlayer(7, 50, position, state);
+		playerList.addElement(player);
 	}
 
 	// Creates and starts the main thread

@@ -15,10 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package team5.client;
+package team5.playerobject;
 
-import team5.playerobject.Pair;
-import team5.playerobject.Player;
 
 public class EnemyPlayer extends Player{
 
@@ -52,10 +50,10 @@ public class EnemyPlayer extends Player{
 		public String printPosition(){
 			if (getPosition() == null)
 			{
-				return "Player " + getPlayerNumber() + " Last Seen: NEVER ";
+				return "<html>Player " + getPlayerNumber() + "<br>" + "Last Seen: NEVER </html>";
 
 			}
-			return "Player " + getPlayerNumber() + " Last Seen: " + getPosition();
+			return "<html>Player " + getPlayerNumber() + "<br>" + "Last Seen: " + getPosition() + "</html>";
 			
 		}
 		

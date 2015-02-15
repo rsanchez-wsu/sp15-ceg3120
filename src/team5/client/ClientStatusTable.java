@@ -24,6 +24,7 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import team5.playerobject.EnemyPlayer;
 import team5.playerobject.Player;
 
 /**
@@ -149,8 +150,8 @@ public class ClientStatusTable extends JPanel {
 				String playerInfo = "";
 
 				if (player == actualPlayer) {
-					playerInfo = "Player " + actualPlayer.getPlayerNumber()
-							+ ": Me";
+					playerInfo = "<html>Player " + actualPlayer.getPlayerNumber()
+							+ "<br>" + "Me</html>";
 					setValueAt(playerInfo, 0, i);
 				} else {
 					setValueAt(((EnemyPlayer) player).printPosition(), 0, i);
@@ -211,10 +212,9 @@ public class ClientStatusTable extends JPanel {
 				int column) {
 
 			setRow(table);
-
 			ImageIcon icon = null;
 			icon = new ImageIcon(getClass().getResource(
-					"/team5/Client/worldwartank.png"));
+					"/team5/Client/worldwartank_status.png"));
 			lbl.setText((String) value);
 			lbl.setHorizontalAlignment(JLabel.CENTER);
 			lbl.setIcon(icon);
