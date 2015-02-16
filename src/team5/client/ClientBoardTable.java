@@ -21,6 +21,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -84,6 +85,10 @@ public class ClientBoardTable extends JPanel{
 					.setCellRenderer(new ImageRenderer());
 			table.getColumnModel().getColumn(i).setPreferredWidth(170);
 		}
+		
+		table.scrollRectToVisible(new Rectangle(table.getCellRect
+				(actualPlayer.getPosition().getxPos()+25
+				, actualPlayer.getPosition().getyPos(), true)));
 	}
 
 	class GameTable extends AbstractTableModel {

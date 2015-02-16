@@ -115,7 +115,7 @@ public class MainThread extends Thread {
 		chatSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		chatSplitPane.add(scroll, JSplitPane.TOP);
 		chatSplitPane.add(chatTxt, JSplitPane.BOTTOM);
-		chatSplitPane.setDividerLocation(600);
+		chatSplitPane.setDividerLocation(350);
 		
 		chatPanel = new JPanel();
 		chatPanel.add(chatSplitPane);
@@ -159,7 +159,7 @@ public class MainThread extends Thread {
 		parentPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		parentPane.add(gamePanel, JSplitPane.TOP);
 		parentPane.add(statusArea, JSplitPane.BOTTOM);
-		parentPane.setDividerLocation(925);
+		parentPane.setDividerLocation(550);
 		
 		// Add Objects to Frame, Frame properties and open Frame.
 		frame = new JFrame("ClientJList");
@@ -168,28 +168,27 @@ public class MainThread extends Thread {
 		frame.setTitle("Turn Tanks");
 		frame.add(parentPane);
 		frame.setLocationRelativeTo(null);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		frame.pack();
 		frame.setVisible(true);
 		
-		connection = new SocketClient();
-		//connect to chat thing
-		
-		while(!connection.didConnectionEstablish()){
-			if(isConnected<8){
-				System.out.println("Attempting try number: " + isConnected);
-				connection.run("127.0.0.1", 8080);
-			}
-			if(isConnected==8){
-				System.out.println("Connection to server timmed out after 8 trys");
-				break;
-			}
-			isConnected++;
-			connection = new SocketClient();
-		}
-		while(connection.isConnectionTerminated()){
-			
-		}
+//		connection = new SocketClient();
+//		//connect to chat thing
+//		
+//		while(!connection.didConnectionEstablish()){
+//			if(isConnected<8){
+//				System.out.println("Attempting try number: " + isConnected);
+//				connection.run("127.0.0.1", 8080);
+//			}
+//			if(isConnected==8){
+//				System.out.println("Connection to server timmed out after 8 trys");
+//				break;
+//			}
+//			isConnected++;
+//			connection = new SocketClient();
+//		}
+//		while(connection.isConnectionTerminated()){
+//			
+//		}
 	}
 	
 	/**
