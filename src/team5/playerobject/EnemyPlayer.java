@@ -20,8 +20,7 @@ package team5.playerobject;
 
 public class EnemyPlayer extends Player{
 
-	private Pair position = null;
-	
+
 	// Default Constructor
 		public EnemyPlayer() {
 
@@ -31,20 +30,36 @@ public class EnemyPlayer extends Player{
 		public EnemyPlayer(int playerNumber, int health, Pair position, State state) {
 			super();
 			this.setPlayerNumber(playerNumber);
-			this.position = position;
-		}
-		
-		public Pair getPosition(){
-			return position;
-		}
-		public void setPosition(Pair position){
-			this.position = position;
+			this.setHealth(health);
+			this.setPosition(position);
+			this.setState(state);
 		}
 		
 		@Override
 		public String toString(){
-			return "Enemy - #: " + getPlayerNumber() + " | Health: " + getHealth() + "/50 | Position "
-					+ getPosition() + " | State: " + getState();
+			String state = "";
+
+			switch (getState()) {
+			case DEAD:
+				state = "Dead";
+				break;
+			case ALIVE:
+				state = "Alive";
+				break;
+			case WAITING:
+				state = "Waiting";
+				break;
+			}
+			if(state != "Dead" && getPosition() != null){
+				return "My info - #: " + getPlayerNumber() + " | Health: " + getHealth() + "/50 | Position "
+						+ getPosition() + " | State: " + state;
+			}
+			if(state != "Dead" && getPosition() == null){
+				return "My info - #: " + getPlayerNumber() + " | Health: " + getHealth() + "/50 | Position "
+						+ "not seen | State: " + state;
+			}
+			return "My info - #: " + getPlayerNumber() + " | Health: " + getHealth() + "/50 | Position "
+				+ " | State: " + state;
 		}
 		
 		public String printPosition(){

@@ -38,7 +38,7 @@ public class Player {
 	}
 
 	// Player Constructor
-	public Player(int playerNumber, int health, Pair position ,State state) {
+	public Player(int playerNumber, int health, Pair position, State state) {
 
 		this.position = position;
 		this.setPlayerNumber(playerNumber);
@@ -48,23 +48,21 @@ public class Player {
 
 	@Override
 	public String toString() {
-//		String state = "";
-//
-//		switch (getState()) {
-//		case DEAD:
-//			state = "Dead";
-//			break;
-//		case ALIVE:
-//			state = "Alive";
-//			break;
-//		case WAITING:
-//			state = "Waiting";
-//			break;
-//		}
+		String state = "";
 
+		switch (getState()) {
+		case DEAD:
+			state = "Dead";
+			break;
+		case ALIVE:
+			state = "Alive";
+			break;
+		case WAITING:
+			state = "Waiting";
+			break;
+		}
 		return "My info - #: " + getPlayerNumber() + " | Health: " + getHealth() + "/50 | Position "
-		+ getPosition() + " | State: " + getState();
-
+			+ getPosition() + " | State: " + state;
 	}
 
 	// Getters and Setters
@@ -78,7 +76,7 @@ public class Player {
 	}
 
 	public void setState(State state) {
-		this.state = State.DEAD;
+		this.state = state;
 	}
 
 	public int getHealth() {
