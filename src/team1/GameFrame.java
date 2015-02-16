@@ -44,7 +44,7 @@ private void createComponents(){
 	
 	//create the panel to display player info
 	JPanel playerDisplay = new JPanel();
-	playerDisplay.setLayout(new BorderLayout());
+	playerDisplay.setLayout(new GridLayout(1,8));
 	
 	//create the panel to display game grid
 	JPanel gameDisplay = new JPanel();
@@ -56,23 +56,36 @@ private void createComponents(){
 	PlayerList.setVisibleRowCount(-1);
 	PlayerModel = new DefaultListModel();
 	
-	for(int i = 0; i < 8; i++){
-		PlayerModel.addElement(new Player());
-	}
+	PlayerModel.addElement(new Player("Adam"));
+	PlayerModel.addElement(new Player("Bob"));
+	PlayerModel.addElement(new Player("Charles"));
+	PlayerModel.addElement(new Player("Derrick"));
+	PlayerModel.addElement(new Player("Edward"));
+	PlayerModel.addElement(new Player("Frank"));
+	PlayerModel.addElement(new Player("Garfield"));
+	PlayerModel.addElement(new Player("Harry"));
 	
 	PlayerList = new JList(PlayerModel);
 	PlayerList.setVisibleRowCount(8);
 	
-	//testLabel = new JLabel("TESTING");
-	
-	playerDisplay.add(PlayerList);
-	mainPanel.add(gameDisplay, BorderLayout.NORTH);
-	mainPanel.add(playerDisplay, BorderLayout.SOUTH);
+	String player1status = "<html>Player 1 Status: \n" + " Player Name: " + ((Player)PlayerModel.get(0)).getName() + "</html>";
+	JLabel player1 = new JLabel(player1status);
+
+	String player2status = "Player 2 Status: \n" + " Player Name: " + ((Player)PlayerModel.get(1)).getName();
+	JLabel player2 = new JLabel(player2status);
+
+//	playerDisplay.add(player1);
+//	playerDisplay.add(player2);
+	JSplitPane playerPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,player1,player2);
+//	mainPanel.add(gameDisplay, BorderLayout.NORTH);
+//	mainPanel.add(playerDisplay, BorderLayout.SOUTH);
 	
 	//GridBagLayout PlayerPanelLayout = new GridBagLayout();
 	//GridBagConstraints GBConstraint = new GridBagConstraints();
 	
-	this.add(mainPanel);
+	JSplitPane displayPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,gameDisplay,playerPane);
+	
+	this.add(displayPane);
 	
 	
 	//JPane PLPane = new JPane(PlayerList);
