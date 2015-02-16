@@ -76,7 +76,7 @@ public class TEAM9 extends Thread{
         splitPaneB = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         splitPaneB.add(statusPanel, JSplitPane.TOP);
         splitPaneB.add(playerTable, JSplitPane.BOTTOM);
-
+        
         // Over splitPane to contain the first 2 panes along with the game pane
         splitPaneA = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         splitPaneA.add(gamePanel, JSplitPane.TOP);

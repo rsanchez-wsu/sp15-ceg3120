@@ -40,7 +40,7 @@ public class statusTable extends JPanel {
         table = new JTable(new StatusTable(playerList, currentPlayer));
         table.setRowHeight(200);
         JPanel panel = new JPanel();
-	panel.add(table);
+        panel.add(table);
         table.getColumnModel().getColumn(0).setPreferredWidth(100);
         table.getColumnModel().getColumn(1).setPreferredWidth(900);
         table.getColumnModel().getColumn(1)

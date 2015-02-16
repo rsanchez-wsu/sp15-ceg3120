@@ -19,11 +19,16 @@ package team9;
 
 import java.awt.*;
 import java.util.*;
+
 import javax.swing.*;
+import javax.swing.event.*;
 import javax.swing.table.*;
 
 public class playerTable extends JPanel {
-    /**
+	JTable table;
+	JFrame treeFrame = new JFrame();
+	playerTree playerTree;
+	/**
     * Default Constructor
     */
     public playerTable() {}
@@ -35,12 +40,33 @@ public class playerTable extends JPanel {
      */
     public playerTable(Vector<Player> playerList, Player currentPlayer) {
         super(new GridLayout(1, 0));
-        JTable table;
-		
+        
+			
         table = new JTable(new PlayersTable(playerList, currentPlayer));
+        
+        table.setCellSelectionEnabled(true);
+        ListSelectionModel cellSelectionModel = table.getSelectionModel();
+        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+        cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
+          public void valueChanged(ListSelectionEvent e) {
+        	  int selectedColumn = table.getSelectedColumn();
+              if(!(selectedColumn<0)){
+            	  
+                  Player selectedPlayer = playerList.elementAt(selectedColumn);
+            	  
+                  table.clearSelection();
+                  playerTree = new playerTree(playerList, selectedPlayer);
+                  treeFrame.add(playerTree);
+                  Dimension minSize = new Dimension(300,300);
+                  treeFrame.setMinimumSize(minSize);
+                  treeFrame.setVisible(true);
+              }
+          }
+        });
+        
         JPanel panel = new JPanel();
-	panel.add(table);
+        panel.add(table);
         
         for (int i = 0; i < playerList.size(); i++) {
             table.getColumnModel().getColumn(i)

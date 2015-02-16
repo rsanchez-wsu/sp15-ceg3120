@@ -65,4 +65,7 @@ public class Player {
             return "Wait";
         }
     }
+    public String toString(){
+    	return ("Player " + this.getPlayerNum());
+    }
 }
