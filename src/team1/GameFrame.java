@@ -71,21 +71,68 @@ private void createComponents(){
 	String player1status = "<html>Player 1 Status: \n" + " Player Name: " + ((Player)PlayerModel.get(0)).getName() + "</html>";
 	JLabel player1 = new JLabel(player1status);
 
-	String player2status = "Player 2 Status: \n" + " Player Name: " + ((Player)PlayerModel.get(1)).getName();
+	String player2status = "<html>Player 2 Status: \n" + " Player Name: " + ((Player)PlayerModel.get(1)).getName() + "</html>";
 	JLabel player2 = new JLabel(player2status);
 
-//	playerDisplay.add(player1);
-//	playerDisplay.add(player2);
-	JSplitPane playerPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,player1,player2);
+	String player3status = "<html>Player 3 Status: \n" + " Player Name: " + ((Player)PlayerModel.get(2)).getName() + "</html>";
+	JLabel player3 = new JLabel(player3status);
+	
+	String player4status = "<html>Player 4 Status: \n" + " Player Name: " + ((Player)PlayerModel.get(3)).getName() + "</html>";
+	JLabel player4 = new JLabel(player4status);
+	
+	String player5status = "<html>Player 5 Status: \n" + " Player Name: " + ((Player)PlayerModel.get(4)).getName() + "</html>";
+	JLabel player5 = new JLabel(player5status);
+	
+	String player6status = "<html>Player 6 Status: \n" + " Player Name: " + ((Player)PlayerModel.get(5)).getName() + "</html>";
+	JLabel player6 = new JLabel(player6status);
+	
+	String player7status = "<html>Player 7 Status: \n" + " Player Name: " + ((Player)PlayerModel.get(6)).getName() + "</html>";
+	JLabel player7 = new JLabel(player7status);
+	
+	String player8status = "<html>Player 8 Status: \n" + " Player Name: " + ((Player)PlayerModel.get(7)).getName() + "</html>";
+	JLabel player8 = new JLabel(player8status);
+	
+	//WOOD WAS WORKING HERE - 
+	JSplitPane playerPane0 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,player1,player2);
+	playerPane0.setBorder(BorderFactory.createEmptyBorder());
+	playerPane0.setEnabled(false);
+	
+	JSplitPane playerPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,playerPane0,player3);
+	playerPane1.setSize(300, 100);
+	playerPane1.setEnabled(false);
+	
+	JSplitPane playerPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,playerPane1,player4);
+	playerPane2.setSize(400, 100);
+	playerPane2.setEnabled(false);
+	
+	JSplitPane playerPane3 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,playerPane2,player5);
+	playerPane3.setSize(500, 100);
+	playerPane3.setEnabled(false);
+	
+	JSplitPane playerPane4 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,playerPane3,player6);
+	playerPane4.setSize(600, 100);
+	playerPane4.setEnabled(false);
+	
+	JSplitPane playerPane5 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,playerPane4,player7);
+	playerPane5.setSize(700, 100);
+	playerPane5.setEnabled(false);
+	
+	JSplitPane playerPane6 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,playerPane5,player8);
+	playerPane6.setSize(800, 100);
+	playerPane6.setEnabled(false);
+	
 //	mainPanel.add(gameDisplay, BorderLayout.NORTH);
 //	mainPanel.add(playerDisplay, BorderLayout.SOUTH);
 	
 	//GridBagLayout PlayerPanelLayout = new GridBagLayout();
 	//GridBagConstraints GBConstraint = new GridBagConstraints();
 	
-	JSplitPane displayPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,gameDisplay,playerPane);
+	JSplitPane displayPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,gameDisplay,playerPane6);
+	displayPane.setDividerLocation(450);
+	displayPane.setEnabled(false);
 	
 	this.add(displayPane);
+	
 	
 	//JPane PLPane = new JPane(PlayerList);
 	

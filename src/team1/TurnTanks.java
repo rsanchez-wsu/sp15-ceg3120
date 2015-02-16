@@ -32,6 +32,7 @@ public class TurnTanks {
 		GameFrame tankFrame = new GameFrame();
 		tankFrame.setTitle("TURN TANKS!!ONE!11!");
 		tankFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
+		tankFrame.setResizable(false);
 		//frame.add(new TurnTanks());		
 		//tankFrame.setSize(600, 600);
 		//frame.pack();
