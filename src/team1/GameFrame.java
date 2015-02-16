@@ -74,7 +74,6 @@ private void createComponents(){
 	
 	this.add(mainPanel);
 	
-	
 	//JPane PLPane = new JPane(PlayerList);
 	
 	//playerDisplay.setLayout(PlayerPanelLayout);
