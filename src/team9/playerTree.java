@@ -68,9 +68,7 @@ public class playerTree extends JSplitPane implements TreeSelectionListener{
 		tree.addTreeSelectionListener(this);
 
 		// Create and fill the window 
-		Dimension minSize = new Dimension(300,500);
-		treeView.setMinimumSize(minSize);
-		textView.setMinimumSize(minSize);
+		
 		this.add(treeView, JSplitPane.LEFT);
 		this.add(textArea, JSplitPane.RIGHT);
 	

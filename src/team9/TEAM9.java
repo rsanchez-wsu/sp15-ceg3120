@@ -19,6 +19,7 @@ package team9;
 
 import java.awt.*;
 import java.util.*;
+
 import javax.swing.*;
 
 
@@ -87,6 +88,8 @@ public class TEAM9 extends Thread{
         frame.setLayout(new GridLayout(1,0));
         frame.setTitle("#InsertNameHere");
         frame.add(splitPaneA);
+        Dimension minSize = new Dimension(600,600);
+        frame.setMinimumSize(minSize);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
