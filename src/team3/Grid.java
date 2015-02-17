@@ -2,7 +2,6 @@ package team3;
 
 	public class Grid {
 
-	    private String outputFileName;
 	    private int width = 64;
 	    private int height = 64;
 	    private byte[][] grid = new byte[64][64];
@@ -26,31 +25,6 @@ package team3;
 	    		}//end of for
 	    	}//end of for
 	    }//end of Grid Constuctor
-
-	    /**
-	     * creates an array out of the input file
-	     * PreConditions: must have an input file
-	     * PostConditions: an array is created
-	     * @param inputFileName: the name of the file that input is taken from
-	     * @throws FileNotFoundException 
-	     */
-//	    public void load(String inputFileName) throws FileNotFoundException {
-//	        
-//	        //creates a scanner
-//	        input = new Scanner(new File(inputFileName));
-//	        height = input.nextInt();
-//	        width = input.nextInt();
-//	        
-//	        //creates an array
-//	        grid = new int[height][width];
-//	        
-//	        //fills the array
-//	        for (int i = 0; i < height; i++) {
-//	            for (int j = 0; j < width; j++) {
-//	                grid[i][j] = input.nextInt();
-//	            }//end of j for
-//	        }//end of i for
-//	    }//end of load
 
 	    /**
 	     * finds the regions in the array
@@ -78,17 +52,8 @@ package team3;
 	        
 	        //base case
 	        if (!anyUncounted()) {
-	        	//System.out.println("here");
 	            return;
 	        }//end of if
-	        
-//	        System.out.println();
-//	        for(int i = 0; i < 64; i++) {
-//	        	for(int j = 0; j < 64; j++) {
-//	        		System.out.print(grid[i][j] + " ");
-//	        	}
-//	        	System.out.println();
-//	        }
 
 	        //if the number is 1, add counter to it and check all adjacent squares,
 	        //if the square has a 1, call regions recursively for that poiont
@@ -97,27 +62,15 @@ package team3;
 	            if (xCoord < width - 1 && grid[yCoord][xCoord + 1] == 1) {
 	                regions(yCoord, xCoord + 1);
 	            }
-//	            if (xCoord < width - 1 && yCoord < height - 1 && grid[yCoord + 1][xCoord + 1] == 1) {
-//	                regions(yCoord + 1, xCoord + 1);
-//	            }
 	            if (yCoord < height - 1 && grid[yCoord + 1][xCoord] == 1) {
 	                regions(yCoord + 1, xCoord);
 	            }
-//	            if (yCoord < height - 1 && xCoord > 0 && grid[yCoord + 1][xCoord - 1] == 1) {
-//	                regions(yCoord + 1, xCoord - 1);
-//	            }
 	            if (xCoord > 0 && grid[yCoord][xCoord - 1] == 1) {
 	                regions(yCoord, xCoord - 1);
 	            }
-//	            if (yCoord > 0 && xCoord > 0 && grid[yCoord - 1][xCoord - 1] == 1) {
-//	                regions(yCoord - 1, xCoord - 1);
-//	            }
 	            if (yCoord > 0 && grid[yCoord - 1][xCoord] == 1) {
 	                regions(yCoord - 1, xCoord);
 	            }
-//	            if (yCoord > 0 && xCoord < width - 1 && grid[yCoord - 1][xCoord + 1] == 1) {
-//	                regions(yCoord - 1, xCoord + 1);
-//	            }
 	        }//end of if
 	        
 	        //if the group has finished, add one to counter and call findRegions
@@ -152,50 +105,6 @@ package team3;
 	        //System.out.println(uncounted);
 	        return uncounted;
 	    }//end of anyUncounted
-
-	    /**
-	     * saves the file
-	     * PreConditions: must have a file to save to
-	     * PostConditions: the file is saved
-	     * @param outputFileName: the name of the file that is being saved
-	     * @throws FileNotFoundException
-	     */
-//	    public void save(String outputFileName) {
-//	        int num = 0;
-//	        int region = 1;
-//	        
-//	        //cycles through each region
-//	        for (int k = 2; k <= counter; k++) {
-//	            
-//	            //cycles through the array, if the number is the same as k then add 1 to num
-//	            for (int i = 0; i < height; i++) {
-//	                for (int j = 0; j < width; j++) {
-//	                    if (grid[i][j] == k) {
-//	                        num++;
-//	                        
-//	                        //subtracts one from the number to make the number match the region
-//	                        grid[i][j]--;
-//	                    }//end of if
-//	                }//end of j for
-//	            }//end of i for
-//	            
-//	            //prints region to the file
-//	            myWriter.println("Region " + region + " has a size of " + num + ".");
-//	            region++;
-//	            num = 0;
-//	        }//end of k for
-//	        
-//	        //prints the array with the regions labeled
-//	        myWriter.println("\n\nLabeled Regions\n\n");
-//	        for (int i = 0; i < height; i++) {
-//	            for (int j = 0; j < width; j++) {
-//	                myWriter.print(grid[i][j] + " ");
-//	            }//end of j for
-//	            myWriter.println();
-//	        }//end of i for
-//	        myWriter.close();
-//	        System.exit(0);
-//	    }//end of save
 
 	    /**
 	     * finds the next one
@@ -259,8 +168,4 @@ package team3;
 	        }//end of i for
 	        return done;
 	    }//end of groupDone
-	    
-	    public int getCounter() {
-	    	return counter;
-	    }
 	}//end of Grid class

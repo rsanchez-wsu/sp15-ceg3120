@@ -2,39 +2,51 @@ package team3;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
-
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class CustomTableCellRenderer extends DefaultTableCellRenderer{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JLabel lbl = new JLabel();
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-		Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 		ImageIcon icon = null;
 		
-		if(value == (Object)'#') {
+		//forest
+		if(value == (Object)0) {
 			icon = new ImageIcon(getClass().getResource("/team3/forest.png"));
 			lbl.setIcon(icon);
 		}//end of if
-		else if(value == (Object)'=') {
+		
+		//lake
+		else if(value == (Object)3) {
 			icon = new ImageIcon(getClass().getResource("/team3/lake.png"));
 			lbl.setIcon(icon);
 		}//end of if
-		else if(value == (Object)'^') {
+		
+		//mountain
+		else if(value == (Object)2) {
 			icon = new ImageIcon(getClass().getResource("/team3/mountain2.png"));
 			lbl.setIcon(icon);
 		}//end of if
-		else if(value == (Object)' '){
+		
+		//plains
+		else if(value == (Object)4){
 			icon = new ImageIcon(getClass().getResource("/team3/plains.png"));
 			lbl.setIcon(icon);
 		}//end of if
-		else if(value == (Object)'U') {
+		
+		//hill
+		else if(value == (Object)1) {
 			icon = new ImageIcon(getClass().getResource("/team3/hill.png"));
 			lbl.setIcon(icon);
 		}
+		
+		//tanks
 		else {
-			icon = new ImageIcon(getClass().getResource("/team3/tank.png"));
+			icon = new ImageIcon(getClass().getResource("/team3/tank" + value.toString() + ".png"));
 			lbl.setIcon(icon);
 		}//end of else
 		return lbl;
