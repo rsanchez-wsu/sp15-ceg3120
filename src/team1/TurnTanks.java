@@ -29,6 +29,7 @@ public class TurnTanks {
 	// Create the frame
 	private static void createClientWindow() {
 		
+		Game_Map map = new Game_Map();
 		GameFrame tankFrame = new GameFrame();
 		tankFrame.setTitle("TURN TANKS!!ONE!11!");
 		tankFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
