@@ -26,10 +26,10 @@ import javax.swing.*;
 
 public class GameFrame extends JFrame {
 	
-	private JList <Object> PlayerList;
+	private JList <Player> PlayerList;
 	//private JLabel testLabel;
 	private static final long serialVersionUID = 1L;
-	private DefaultListModel<Object> PlayerModel;
+	private DefaultListModel<Player> PlayerModel;
 	
 	public GameFrame() {
 			createComponents();
@@ -52,9 +52,9 @@ public class GameFrame extends JFrame {
 		
 		//create the players and add them to the list
 		Player[] Players = new Player[8];
-		PlayerList = new JList<Object>(Players);
+		PlayerList = new JList<Player>(Players);
 		PlayerList.setVisibleRowCount(-1);
-		PlayerModel = new DefaultListModel<Object>();
+		PlayerModel = new DefaultListModel<Player>();
 		
 		PlayerModel.addElement(new Player("Adam"));
 		PlayerModel.addElement(new Player("Bob"));
@@ -65,7 +65,7 @@ public class GameFrame extends JFrame {
 		PlayerModel.addElement(new Player("Garfield"));
 		PlayerModel.addElement(new Player("Harry"));
 		
-		PlayerList = new JList<Object>(PlayerModel);
+		PlayerList = new JList<Player>(PlayerModel);
 		PlayerList.setVisibleRowCount(8);
 		
 		//Likely implementation - Assigning players to JLabels
