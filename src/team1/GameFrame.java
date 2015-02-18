@@ -56,6 +56,7 @@ public class GameFrame extends JFrame {
 		PlayerList.setVisibleRowCount(-1);
 		PlayerModel = new DefaultListModel<Player>();
 		
+		//PLACEHOLDER PLAYERS
 		PlayerModel.addElement(new Player("Adam"));
 		PlayerModel.addElement(new Player("Bob"));
 		PlayerModel.addElement(new Player("Charles"));
@@ -113,41 +114,53 @@ public class GameFrame extends JFrame {
 		playerPane1.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		playerPane1.setSize(300, 100);
 		playerPane1.setDividerLocation(.6666);
+		playerPane1.setDividerSize(1);
 		playerPane1.setEnabled(false);
 		
 		JSplitPane playerPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,playerPane1,player4);
 		playerPane2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		playerPane2.setSize(400, 100);
 		playerPane2.setDividerLocation(.75);
+		playerPane2.setDividerSize(1);
 		playerPane2.setEnabled(false);
 		
 		JSplitPane playerPane3 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,playerPane2,player5);
 		playerPane3.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		playerPane3.setSize(500, 100);
 		playerPane3.setDividerLocation(.80);
+		playerPane3.setDividerSize(1);
 		playerPane3.setEnabled(false);
 		
 		JSplitPane playerPane4 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,playerPane3,player6);
 		playerPane4.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		playerPane4.setSize(600, 100);
 		playerPane4.setDividerLocation(.8333);
+		playerPane4.setDividerSize(1);
 		playerPane4.setEnabled(false);
 		
 		JSplitPane playerPane5 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,playerPane4,player7);
 		playerPane5.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		playerPane5.setSize(700, 100);
 		playerPane5.setDividerLocation(.8571);
+		playerPane5.setDividerSize(1);
 		playerPane5.setEnabled(false);
 		
 		JSplitPane playerPane6 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,playerPane5,player8);
 		playerPane6.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		playerPane6.setSize(800, 100);
 		playerPane6.setDividerLocation(.875);
+		playerPane6.setDividerSize(1);
 		playerPane6.setEnabled(false);
+		
+		//Add Status Pane here - 800 wide by 50 tall starting at location 400
+		//JLabel status1 = new JLabel("<html><b>STATUS</b></html>");
+		//JPanel gameStats = new JPanel();
+		
 		
 		//Adding the game display to the combined player JSplitPanels
 		JSplitPane displayPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,gameDisplay,playerPane6);
 		displayPane.setDividerLocation(450);
+		displayPane.setDividerSize(1);
 		displayPane.setEnabled(false);
 		
 		this.add(displayPane);
