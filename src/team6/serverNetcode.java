@@ -33,6 +33,7 @@ public class serverNetcode extends Thread {
 	                    System.out.print("Enter your player name: ");
 	                    String player = input.next();
 	                    out.writeUTF("Welcome "+player+" 1 "+"location: 5,7");
+	                    input.close();
 	                }
 	                if (gameMessage.startsWith("MOVE")) {
 	                    out.writeUTF("THE TANK WILL MOVE");

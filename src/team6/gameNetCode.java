@@ -3,7 +3,7 @@ import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 public class gameNetCode {
-	 private static String serverName;
+	 //private static String serverName;//not used yet
 	   
 
 	    /**
@@ -15,7 +15,7 @@ public class gameNetCode {
 	            sName = args[0];
 
 	        }
-	        Scanner input = new Scanner(System.in);
+	        //Scanner input = new Scanner(System.in);//not used debugging
 	        int port = 8080;
 	        try {
 	            System.out.println("Connecting to " + sName
@@ -69,8 +69,11 @@ public class gameNetCode {
 	        if (command.equals("CHAT")) {
 	            System.out.println("LETS CHAT");
 	        }
-
+	        
+	        
+	        input.close();
 	        return command;
+	        
 	    }
 
 
