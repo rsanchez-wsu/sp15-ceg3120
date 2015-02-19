@@ -24,7 +24,7 @@
  *
  */
 //
-package team6;//this is scots comment
+package team6;
 
 import javax.swing.*;
 
