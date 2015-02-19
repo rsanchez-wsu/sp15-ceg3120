@@ -26,7 +26,8 @@ import java.net.UnknownHostException;
 
 
 public class GameClient_Socket extends Socket {
-	private static final int PORT = 80;
+	//ToDo: Find what port will be used on the client
+	private static final int PORT = 1500;
 	
 	public GameClient_Socket(String host) throws UnknownHostException, IOException
 	{
