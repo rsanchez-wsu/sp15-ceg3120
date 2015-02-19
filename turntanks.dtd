@@ -1,0 +1,13 @@
+<!ELEMENT turntanks ((listen?,max-clients?,turn-clock?)|server?)>
+<!ATTLIST turntanks mode (client|server) #REQUIRED>
+
+<!ELEMENT listen (address*,port)>
+<!ELEMENT address (#PCDATA)>
+<!ELEMENT port (#PCDATA)>
+
+<!ELEMENT max-clients (#PCDATA)>
+<!ELEMENT turn-clock (#PCDATA)>
+<!ATTLIST turn-clock unit (seconds|minutes|hours) "seconds">
+
+<!ELEMENT server (db-uri)>
+<!ELEMENT db-uri (#PCDATA)>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE turntanks SYSTEM "turntanks.dtd">
+<turntanks mode="server">
+	<listen>
+		<address>10.31.1.43</address>
+		<address>10.4.53.217</address>
+		<port>9786</port>
+	</listen>
+	<max-clients>8</max-clients>
+	<turn-clock>30</turn-clock>
+</turntanks>
