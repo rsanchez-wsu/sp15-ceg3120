@@ -57,7 +57,8 @@ public class GameFrame extends JFrame {
 		PlayerModel = new DefaultListModel<Player>();
 		
 		//PLACEHOLDER PLAYERS
-		PlayerModel.addElement(new Player("Adam"));
+		int[] tempPos = new int[2]; tempPos[0] = 42; tempPos[1] = 108;
+		PlayerModel.addElement(new Player("Adam")); ((Player)PlayerModel.get(0)).setPosition(tempPos);
 		PlayerModel.addElement(new Player("Bob"));
 		PlayerModel.addElement(new Player("Charles"));
 		PlayerModel.addElement(new Player("Derrick"));
@@ -71,11 +72,15 @@ public class GameFrame extends JFrame {
 		
 		//Likely implementation - Assigning players to JLabels
 		String player1status = "<html>Player 1 Status" 
-				+ " <br>Player Name: " + ((Player)PlayerModel.get(0)).getName() + "</html>";
+				+ " <br>Player Name: " + ((Player)PlayerModel.get(0)).getName() 
+				+ "<br>Last Seen: "+ ((Player)PlayerModel.get(1)).getPosition()[0] + ", "
+						+ ((Player)PlayerModel.get(1)).getPosition()[1]
+						+"</html>";
 		JLabel player1 = new JLabel(player1status);
 	
 		String player2status = "<html>Player 2 Status" 
-				+ "<br>Player Name: " + ((Player)PlayerModel.get(1)).getName() + "</html>";
+				+ "<br>Player Name: " + ((Player)PlayerModel.get(1)).getName() 
+				+ "<br>Last Seen: "+ ((Player)PlayerModel.get(1)).getPosition() +"</html>";
 		JLabel player2 = new JLabel(player2status);
 	
 		String player3status = "<html>Player 3 Status" 
@@ -153,13 +158,32 @@ public class GameFrame extends JFrame {
 		playerPane6.setEnabled(false);
 		
 		//Add Status Pane here - 800 wide by 50 tall starting at location 400
-		//JLabel status1 = new JLabel("<html><b>STATUS</b></html>");
-		//JPanel gameStats = new JPanel();
+		JPanel gameStats = new JPanel(new BorderLayout());
+		JLabel statusLabel = new JLabel("<html><b>STATUS</b></html>");
+		JLabel gameStatusLabel = new JLabel("<html>" + "<b>&nbsp;&nbsp;&nbsp;GAME STATUS: </b>" 
+				+ " Game: IN PROGRESS | Server: 192.168.142.42 | Players Remaining: 5"+"</html>");
+		JLabel playerStatusLabel = new JLabel("<html>" + "<b>&nbsp;&nbsp;&nbsp;PLAYER STATUS: </b>"
+				+ "Player #: 4 | Position: (42,42) | Last Action: Move"+ "</html>");
 		
+		gameStats.add(gameStatusLabel, BorderLayout.NORTH);
+		gameStats.add(playerStatusLabel, BorderLayout.SOUTH);
+		JSplitPane statusPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, statusLabel, gameStats);
+		statusPane.setSize(800,50);
+		statusPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		statusPane.setDividerLocation(.08);
+		statusPane.setDividerSize(5);
+		statusPane.setEnabled(false);
+		
+		JSplitPane playersPlusStatus = new JSplitPane(JSplitPane.VERTICAL_SPLIT, statusPane, playerPane6);
+		playersPlusStatus.setSize(800,150);
+		playersPlusStatus.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		playersPlusStatus.setDividerLocation(50);
+		playersPlusStatus.setDividerSize(1);
+		playersPlusStatus.setEnabled(false);
 		
 		//Adding the game display to the combined player JSplitPanels
-		JSplitPane displayPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,gameDisplay,playerPane6);
-		displayPane.setDividerLocation(450);
+		JSplitPane displayPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,gameDisplay,playersPlusStatus);
+		displayPane.setDividerLocation(400);
 		displayPane.setDividerSize(1);
 		displayPane.setEnabled(false);
 		
