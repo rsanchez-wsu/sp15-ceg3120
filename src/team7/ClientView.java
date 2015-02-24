@@ -112,42 +112,50 @@ public class ClientView extends JFrame
 		
 		//(JTC) This is the pane that contains the status and map areas
 		JSplitPane topPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, mapPane, statusPane);
-		topPane.setDividerLocation(0.1);
+		//topPane.setDividerLocation(0.1);
+		topPane.setBorder(null);
 		topPane.setEnabled( false );
 		topPane.setDividerSize(1);
 		
 		//(JTC) These are the panes that hold the player buttons in a single horizontal line
 		JSplitPane p1p2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, p1, p2);
+		p1p2.setBorder(null);
 		p1p2.setResizeWeight(0.5);
 		p1p2.setEnabled( false );
 		p1p2.setDividerSize(1);
 		
 		JSplitPane p3p4 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, p3, p4);
+		p3p4.setBorder(null);
 		p3p4.setResizeWeight(0.5);
 		p3p4.setEnabled( false );
 		p3p4.setDividerSize(1);
 		
 		JSplitPane p5p6 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, p5, p6);
+		p5p6.setBorder(null);
 		p5p6.setResizeWeight(0.5);
 		p5p6.setEnabled( false );
 		p5p6.setDividerSize(1);
 		
 		JSplitPane p7p8 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, p7, p8);
+		p7p8.setBorder(null);
 		p7p8.setResizeWeight(0.5);
 		p7p8.setEnabled( false );
 		p7p8.setDividerSize(1);
 		
 		JSplitPane p1p2p3p4 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, p1p2, p3p4);
+		p1p2p3p4.setBorder(null);
 		p1p2p3p4.setResizeWeight(0.5);
 		p1p2p3p4.setEnabled( false );
 		p1p2p3p4.setDividerSize(1);
 		
 		JSplitPane p5p6p7p8 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, p5p6, p7p8);
+		p5p6p7p8.setBorder(null);
 		p5p6p7p8.setResizeWeight(0.5);
 		p5p6p7p8.setEnabled( false );
 		p5p6p7p8.setDividerSize(1);
 		
 		JSplitPane allPlayers = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, p1p2p3p4, p5p6p7p8);
+		allPlayers.setBorder(null);
 		allPlayers.setResizeWeight(0.5);
 		allPlayers.setEnabled( false );
 		allPlayers.setDividerSize(1);
