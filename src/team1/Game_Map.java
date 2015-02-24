@@ -30,6 +30,10 @@ import javax.swing.*;
 	int rows = 64; //number of tiles down
 	int cols = 64; //number of tiles across
 	
+	Color available = Color.GREEN;
+	Color unavailable = Color.BLACK;
+	Color visited = Color.DARK_GRAY;
+	
 	
 	public void paintComponent(Graphics g){ //painting the tiles onto the panel
 		super.paintComponent(g);
@@ -47,6 +51,17 @@ import javax.swing.*;
 				int w = i*panelWidth; 
 				int h = j*panelHeight;
 				g.setColor(Color.DARK_GRAY); //color each tile dark gray
+				
+				/**set color method
+					get tank location
+						if a tile has been previously visited, it is marked as such (gray)
+							else, set 5 tiles in every direction of tank location to be available (green) 
+							all other tiles should be unavailable (black)
+					when a tank visits a location the tile should be marked visited and remain visited (gray)
+					all tiles further than 5 tiles away from the tank's location should be unavailable (black)
+				**/
+				
+				
 				g.fillRect(w,h,panelWidth,panelHeight); //fill the jPanel with tiles
 			}
 		}
