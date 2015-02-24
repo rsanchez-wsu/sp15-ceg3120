@@ -23,10 +23,12 @@ public class Player {
     
     final private int playerNum;
     private int health;
+    String name;
     private Coordinate loc;
     private Coordinate lastLoc = new Coordinate(-1,-1);
     private String IPAddress;
     private String status;
+    String[] names = {"Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel"};
     public Player(int playerNum){
         this.health = 50;
         this.playerNum=playerNum;
@@ -65,7 +67,16 @@ public class Player {
             return "Wait";
         }
     }
+    public void giveDefaultName(){
+    	this.name = names[this.getPlayerNum()-1];
+    }
+    public String getName(){
+    	return this.name;
+    }
+    public void setName(String name){
+    	this.name= name;
+    }
     public String toString(){
-    	return ("Player " + this.getPlayerNum());
+    	return (this.getName());
     }
 }

@@ -30,8 +30,8 @@ public class TEAM9 extends Thread{
     @Override
     public void run(){
         // Initialize Variables
-        Player currentPlayer;
-        Player playerPlaying;
+        Player currentPlayer;			// Player playing on this terminal
+		Player playerPlaying;			// Play that is currently deciding their move
         JPanel gameBoard;
         JFrame frame;
         JPanel gamePanel;
@@ -104,6 +104,7 @@ public class TEAM9 extends Thread{
             players.elementAt(i).setLoc(startingCoord);
             Coordinate lastSeen = new Coordinate(-1,-1);
             players.elementAt(i).setLastSeen(lastSeen);
+            players.elementAt(i).giveDefaultName();
         }
         
     }

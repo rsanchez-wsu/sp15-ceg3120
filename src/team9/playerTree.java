@@ -110,7 +110,7 @@ public class playerTree extends JSplitPane implements TreeSelectionListener{
 	private void displayNode(Player player){
 		// Displays the player selected
 		if(player != null){
-			String s = "Player" + player.getPlayerNum()+"\nHealth: "+player.getHealth()+
+			String s = player.getName()+"\nPlayer " + player.getPlayerNum()+"\nHealth: "+player.getHealth()+
 					"\nLast Seen Position: "+player.getLastLoc();
 			textArea.setText(s);	
 		}
