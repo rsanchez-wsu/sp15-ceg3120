@@ -33,5 +33,6 @@ public class GameController {
 		ClientView window = new ClientView();
 		window.show();
 		window.setResizable(false);
+		
 	}
 }
