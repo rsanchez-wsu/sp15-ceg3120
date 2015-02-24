@@ -70,44 +70,74 @@ public class GameFrame extends JFrame {
 		PlayerList = new JList<Player>(PlayerModel);
 		PlayerList.setVisibleRowCount(8);
 		
-		//Likely implementation - Assigning players to JLabels
+		//Assigning all players to JLablel objects -- displays Player Name, Last Seen
+		//Player 1 JLabel
 		String player1status = "<html>Player 1 Status" 
 				+ " <br>Player Name: " + ((Player)PlayerModel.get(0)).getName() 
-				+ "<br>Last Seen: "+ ((Player)PlayerModel.get(1)).getPosition()[0] + ", "
-						+ ((Player)PlayerModel.get(1)).getPosition()[1]
+				+ "<br>Last Seen: "+ ((Player)PlayerModel.get(0)).getPosition()[0] + ", "
+				+ ((Player)PlayerModel.get(0)).getPosition()[1]
 						+"</html>";
 		JLabel player1 = new JLabel(player1status);
 	
+		//Player 2 JLabel
 		String player2status = "<html>Player 2 Status" 
 				+ "<br>Player Name: " + ((Player)PlayerModel.get(1)).getName() 
-				+ "<br>Last Seen: "+ ((Player)PlayerModel.get(1)).getPosition() +"</html>";
+				+ "<br>Last Seen: "+ ((Player)PlayerModel.get(1)).getPosition()[0] + ", "
+				+ ((Player)PlayerModel.get(1)).getPosition()[1]
+								+"</html>";
 		JLabel player2 = new JLabel(player2status);
 	
+		//Player 3 JLabel
 		String player3status = "<html>Player 3 Status" 
-				+ "<br>Player Name: " + ((Player)PlayerModel.get(2)).getName() + "</html>";
+				+ "<br>Player Name: " + ((Player)PlayerModel.get(2)).getName()
+				+ "<br>Last Seen: "+ ((Player)PlayerModel.get(2)).getPosition()[0] + ", "
+				+ ((Player)PlayerModel.get(2)).getPosition()[1]
+								+"</html>";
 		JLabel player3 = new JLabel(player3status);
 		
+		//Player 4 JLabel
 		String player4status = "<html>Player 4 Status" 
-				+ "<br>Player Name: " + ((Player)PlayerModel.get(3)).getName() + "</html>";
+				+ "<br>Player Name: " + ((Player)PlayerModel.get(3)).getName() 
+				+ "<br>Last Seen: "+ ((Player)PlayerModel.get(3)).getPosition()[0] + ", "
+				+ ((Player)PlayerModel.get(3)).getPosition()[1]
+								+"</html>";
 		JLabel player4 = new JLabel(player4status);
 		
+		//Player 5 JLabel
 		String player5status = "<html>Player 5 Status" 
-				+ "<br>Player Name: " + ((Player)PlayerModel.get(4)).getName() + "</html>";
+				+ "<br>Player Name: " + ((Player)PlayerModel.get(4)).getName() 
+				+ "<br>Last Seen: "+ ((Player)PlayerModel.get(4)).getPosition()[0] + ", "
+				+ ((Player)PlayerModel.get(4)).getPosition()[1]
+								+"</html>";
 		JLabel player5 = new JLabel(player5status);
 		
+		//Player 6 JLabel
 		String player6status = "<html>Player 6 Status" 
-				+ "<br>Player Name: " + ((Player)PlayerModel.get(5)).getName() + "</html>";
+				+ "<br>Player Name: " + ((Player)PlayerModel.get(5)).getName() 
+				+ "<br>Last Seen: "+ ((Player)PlayerModel.get(5)).getPosition()[0] + ", "
+				+ ((Player)PlayerModel.get(5)).getPosition()[1]
+								+"</html>";
 		JLabel player6 = new JLabel(player6status);
 		
+		//Player 7 JLabel
 		String player7status = "<html>Player 7 Status" 
-				+ "<br>Player Name: " + ((Player)PlayerModel.get(6)).getName() + "</html>";
+				+ "<br>Player Name: " + ((Player)PlayerModel.get(6)).getName() 
+				+ "<br>Last Seen: "+ ((Player)PlayerModel.get(6)).getPosition()[0] + ", "
+				+ ((Player)PlayerModel.get(6)).getPosition()[1]
+								+"</html>";
 		JLabel player7 = new JLabel(player7status);
 		
+		//Player 8 JLabel
 		String player8status = "<html>Player 8 Status" 
-				+ "<br>Player Name: " + ((Player)PlayerModel.get(7)).getName() + "</html>";
+				+ "<br>Player Name: " + ((Player)PlayerModel.get(7)).getName() 
+				+ "<br>Last Seen: "+ ((Player)PlayerModel.get(7)).getPosition()[0] + ", "
+				+ ((Player)PlayerModel.get(7)).getPosition()[1]
+								+"</html>";
 		JLabel player8 = new JLabel(player8status);
 		
 		//Attaching JLabels to JSplit Panes
+			//--remove borders, assign fixed size and divider position, disable manual resizing of each player window.
+		//Combine Player 1 and Player 2
 		JSplitPane playerPane0 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,player1,player2);
 		playerPane0.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		playerPane0.setSize(200, 100);
@@ -115,6 +145,7 @@ public class GameFrame extends JFrame {
 		playerPane0.setDividerSize(1);
 		playerPane0.setEnabled(false);
 		
+		//Combine Player1,2 pane with Player 3
 		JSplitPane playerPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,playerPane0,player3);
 		playerPane1.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		playerPane1.setSize(300, 100);
@@ -122,6 +153,7 @@ public class GameFrame extends JFrame {
 		playerPane1.setDividerSize(1);
 		playerPane1.setEnabled(false);
 		
+		//Combine Player1,2,3 pane with Player 4
 		JSplitPane playerPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,playerPane1,player4);
 		playerPane2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		playerPane2.setSize(400, 100);
@@ -129,6 +161,7 @@ public class GameFrame extends JFrame {
 		playerPane2.setDividerSize(1);
 		playerPane2.setEnabled(false);
 		
+		//Combine Player1,2,3,4 pane with Player 5
 		JSplitPane playerPane3 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,playerPane2,player5);
 		playerPane3.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		playerPane3.setSize(500, 100);
@@ -136,6 +169,7 @@ public class GameFrame extends JFrame {
 		playerPane3.setDividerSize(1);
 		playerPane3.setEnabled(false);
 		
+		//Combine Player1,2,3,4,5 pane with Player 6
 		JSplitPane playerPane4 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,playerPane3,player6);
 		playerPane4.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		playerPane4.setSize(600, 100);
@@ -143,6 +177,7 @@ public class GameFrame extends JFrame {
 		playerPane4.setDividerSize(1);
 		playerPane4.setEnabled(false);
 		
+		//Combine Player1,2,3,4,5,6 pane with Player 7
 		JSplitPane playerPane5 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,playerPane4,player7);
 		playerPane5.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		playerPane5.setSize(700, 100);
@@ -150,6 +185,7 @@ public class GameFrame extends JFrame {
 		playerPane5.setDividerSize(1);
 		playerPane5.setEnabled(false);
 		
+		//Combine Player1,2,3,4,5,6,7 pane with Player 8
 		JSplitPane playerPane6 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,playerPane5,player8);
 		playerPane6.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		playerPane6.setSize(800, 100);
@@ -157,7 +193,9 @@ public class GameFrame extends JFrame {
 		playerPane6.setDividerSize(1);
 		playerPane6.setEnabled(false);
 		
-		//Add Status Pane here - 800 wide by 50 tall starting at location 400
+		//Status panel
+			//Top row displays Game status, Server IP, Players left alive in JLabel
+			//Bottom row displays Player number, Position, Last player action in JLabel
 		JPanel gameStats = new JPanel(new BorderLayout());
 		JLabel statusLabel = new JLabel("<html><b>STATUS</b></html>");
 		JLabel gameStatusLabel = new JLabel("<html>" + "<b>&nbsp;&nbsp;&nbsp;GAME STATUS: </b>" 
@@ -165,6 +203,7 @@ public class GameFrame extends JFrame {
 		JLabel playerStatusLabel = new JLabel("<html>" + "<b>&nbsp;&nbsp;&nbsp;PLAYER STATUS: </b>"
 				+ "Player #: 4 | Position: (42,42) | Last Action: Move"+ "</html>");
 		
+		//Combine Status labels to complete Status Panel
 		gameStats.add(gameStatusLabel, BorderLayout.NORTH);
 		gameStats.add(playerStatusLabel, BorderLayout.SOUTH);
 		JSplitPane statusPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, statusLabel, gameStats);
@@ -174,6 +213,7 @@ public class GameFrame extends JFrame {
 		statusPane.setDividerSize(5);
 		statusPane.setEnabled(false);
 		
+		//Combine Status Panel with Player Panel
 		JSplitPane playersPlusStatus = new JSplitPane(JSplitPane.VERTICAL_SPLIT, statusPane, playerPane6);
 		playersPlusStatus.setSize(800,150);
 		playersPlusStatus.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -187,6 +227,7 @@ public class GameFrame extends JFrame {
 		displayPane.setDividerSize(1);
 		displayPane.setEnabled(false);
 		
+		//add the combined game panels to the Game Frame for display.
 		this.add(displayPane);
 		
 		
