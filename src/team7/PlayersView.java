@@ -34,13 +34,12 @@ public class PlayersView extends JFrame{
 	private static final int DEFAULT_WIDTH = 800;
 	private static final int DEFAULT_HEIGHT = 300;
 	
+	private PlayersView self = this;
+	
 	private JTabbedPane tabbedPane;
 	
 	public PlayersView(String player, ClientView cv)
 	{
-		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-		
-		// Listens for when the window closes and informs the ClientView
 		this.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -48,59 +47,70 @@ public class PlayersView extends JFrame{
 		    }
 		});
 		
+		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		
 		tabbedPane = new JTabbedPane();
-		
-		ImageIcon icon = new ImageIcon("tank.png", "Tank Icon");
-		
-		tabbedPane.addTab("Player 1", icon, null);
-		tabbedPane.addTab("Player 2", icon, null);
-		tabbedPane.addTab("Player 3", icon, null);
-		tabbedPane.addTab("Player 4", icon, null);
-		tabbedPane.addTab("Player 5", icon, null);
-		tabbedPane.addTab("Player 6", icon, null);
-		tabbedPane.addTab("Player 7", icon, null);
-		tabbedPane.addTab("Player 8", icon, null);
-		
-		final int playerIndex = getPlayerIndex(player);
-		JPanel playerPanel = new JPanel();
-		playerPanel.add(new JLabel(player, icon, SwingConstants.LEADING));
-		JToggleButton playerCheckBox = new JCheckBox();
-		
-		playerCheckBox.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				tabbedPane.remove(playerIndex);
-			}
-		});
-		
-		playerPanel.add(playerCheckBox);
-		tabbedPane.setTabComponentAt(playerIndex, playerPanel);
-		add(tabbedPane, "Center");
-		
-		tabbedPane.addChangeListener(new ChangeListener()
-		{
-			public void stateChanged(ChangeEvent event)
-			{
-				// check if this tab still has a null component
-				if(tabbedPane.getSelectedComponent() == null)
-				{
-					// set component to image icon
-					int n = tabbedPane.getSelectedIndex();
-					loadTab(n);
-				}
-			}
-		});
-		
-		loadTab(0);
+        ImageIcon icon = new ImageIcon("tank.png", "Tank Icon");
+        
+        JComponent p1 = makePlayerPanel("Player 1");
+        tabbedPane.addTab("Player 1", icon, p1);
+        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+        
+        JComponent p2 = makePlayerPanel("Player 2");
+        tabbedPane.addTab("Player 2", icon, p2);
+        tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
+        
+        JComponent p3 = makePlayerPanel("Player 3");
+        tabbedPane.addTab("Player 3", icon, p3);
+        tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
+        
+        JComponent p4 = makePlayerPanel("Player 4");
+        tabbedPane.addTab("Player 4", icon, p4);
+        tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
+        
+        JComponent p5 = makePlayerPanel("Player 5");
+        tabbedPane.addTab("Player 5", icon, p5);
+        tabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
+        
+        JComponent p6 = makePlayerPanel("Player 6");
+        tabbedPane.addTab("Player 6", icon, p6);
+        tabbedPane.setMnemonicAt(5, KeyEvent.VK_6);
+        
+        JComponent p7 = makePlayerPanel("Player 7");
+        tabbedPane.addTab("Player 7", icon, p7);
+        tabbedPane.setMnemonicAt(6, KeyEvent.VK_7);
+        
+        JComponent p8 = makePlayerPanel("Player 8");
+        tabbedPane.addTab("Player 8", icon, p8);
+        tabbedPane.setMnemonicAt(7, KeyEvent.VK_8);
+        
+        //(JTC) Add the tabbed pane to this panel.
+        add(tabbedPane);
+        
+        //(JTC) Set up tab preferences
+        tabbedPane.setTabLayoutPolicy(JTabbedPane.WRAP_TAB_LAYOUT);
+        int pIndex = tabbedPane.indexOfTab(player);
+        tabbedPane.setSelectedIndex(pIndex);
+        
 	}
 	
-	public int getPlayerIndex(String p)
+	
+	public void changeTab(int i)
 	{
-		return this.tabbedPane.indexOfTab(p);
+		tabbedPane.setSelectedIndex(i);
 	}
 	
-	public void loadTab(int n)
+	private JComponent makePlayerPanel(String p)
+	{
+		JPanel panel = new JPanel(false);
+        JLabel filler = new JLabel(p);
+        filler.setHorizontalAlignment(JLabel.CENTER);
+        panel.setLayout(new GridLayout(1, 1));
+        panel.add(filler);
+        return panel;
+	}
+	
+	private void loadTab(int n)
 	{
 		String title = tabbedPane.getTitleAt(n);
 		// (JTC) The following line will replace the pIcon in use once dynamic player icons are implemented

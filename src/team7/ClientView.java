@@ -37,7 +37,7 @@ public class ClientView extends JFrame
 	private static final int DEFAULT_WIDTH = 1024;
 	private static final int DEFAULT_HEIGHT = 768;
 	private static PlayersView currentPlayersView;
-	private ClientView self = this;
+	private static ClientView self = null;
 	
 	private ArrayList<Player> players = Client.genPlayers();
 	
@@ -100,8 +100,7 @@ public class ClientView extends JFrame
 	        		playersWindow.show();
 	        		playersWindow.setResizable(false);
             	} else {
-            		int n = currentPlayersView.getPlayerIndex("Player 1");
-            		currentPlayersView.loadTab(n);
+            		currentPlayersView.changeTab(0);
             		currentPlayersView.toFront();
             	}
             }
@@ -120,8 +119,7 @@ public class ClientView extends JFrame
 	        		playersWindow.show();
 	        		playersWindow.setResizable(false);
             	} else {
-            		int n = currentPlayersView.getPlayerIndex("Player 2");
-            		currentPlayersView.loadTab(n);
+            		currentPlayersView.changeTab(1);
             		currentPlayersView.toFront();
             	}
             }
@@ -140,8 +138,7 @@ public class ClientView extends JFrame
 	        		playersWindow.show();
 	        		playersWindow.setResizable(false);
             	} else {
-            		int n = currentPlayersView.getPlayerIndex("Player 3");
-            		currentPlayersView.loadTab(n);
+            		currentPlayersView.changeTab(2);
             		currentPlayersView.toFront();
             	}
             }
@@ -160,8 +157,7 @@ public class ClientView extends JFrame
 	        		playersWindow.show();
 	        		playersWindow.setResizable(false);
             	} else {
-            		int n = currentPlayersView.getPlayerIndex("Player 4");
-            		currentPlayersView.loadTab(n);
+            		currentPlayersView.changeTab(3);
             		currentPlayersView.toFront();
             	}
             }
@@ -180,8 +176,7 @@ public class ClientView extends JFrame
 	        		playersWindow.show();
 	        		playersWindow.setResizable(false);
             	} else {
-            		int n = currentPlayersView.getPlayerIndex("Player 5");
-            		currentPlayersView.loadTab(n);
+            		currentPlayersView.changeTab(4);
             		currentPlayersView.toFront();
             	}
             }
@@ -200,8 +195,7 @@ public class ClientView extends JFrame
 	        		playersWindow.show();
 	        		playersWindow.setResizable(false);
             	} else {
-            		int n = currentPlayersView.getPlayerIndex("Player 6");
-            		currentPlayersView.loadTab(n);
+            		currentPlayersView.changeTab(5);
             		currentPlayersView.toFront();
             	}
             }
@@ -220,8 +214,7 @@ public class ClientView extends JFrame
 	        		playersWindow.show();
 	        		playersWindow.setResizable(false);
             	} else {
-            		int n = currentPlayersView.getPlayerIndex("Player 7");
-            		currentPlayersView.loadTab(n);
+            		currentPlayersView.changeTab(6);
             		currentPlayersView.toFront();
             	}
             }
@@ -240,9 +233,8 @@ public class ClientView extends JFrame
 	        		playersWindow.show();
 	        		playersWindow.setResizable(false);
             	} else {
-            		int n = currentPlayersView.getPlayerIndex("Player 8");
+            		currentPlayersView.changeTab(7);
             		currentPlayersView.toFront();
-            		currentPlayersView.loadTab(n);
             	}
             }
         });
