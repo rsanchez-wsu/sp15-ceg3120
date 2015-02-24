@@ -40,7 +40,7 @@ import javax.swing.*;
 		int panelWidth = getWidth()/cols; //setting panel width
 		int panelHeight = getHeight()/rows; //seting panel height
 		
-		Dimension setPreferredSize = (new Dimension(width, height)); //set the preferred size of the jPanel
+		//Dimension setPreferredSize = (new Dimension(width, height)); //set the preferred size of the jPanel
 		
 		for (int i=0; i<rows; i++){ //loop to paint rows of tiles
 			for(int j=0; j<cols; j++){ //loop to paint cols of tiles

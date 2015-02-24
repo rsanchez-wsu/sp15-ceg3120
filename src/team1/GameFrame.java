@@ -19,12 +19,11 @@
 package team1;
 
 import java.awt.*;
-//import java.awt.event.*;
 
 import javax.swing.*;
 
 
-public class GameFrame extends JFrame {
+public class GameFrame extends JFrame{
 	
 	private JList <Player> PlayerList;
 	//private JLabel testLabel;
@@ -47,8 +46,10 @@ public class GameFrame extends JFrame {
 		playerDisplay.setLayout(new GridLayout(1,8));
 		
 		//create the panel to display game grid
-		JPanel gameDisplay = new JPanel();
+		Game_Map gameDisplay = new Game_Map();
+		//JPanel gameDisplay = new JPanel();
 		gameDisplay.setLayout(new BorderLayout());
+		
 		
 		//create the players and add them to the list
 		Player[] Players = new Player[8];
