@@ -64,8 +64,6 @@ public class ServerTree extends JPanel {
 
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode) e
 						.getPath().getLastPathComponent();
-				System.out.println("-----debug-----");
-				System.out.println(node.toString());
 
 				GameInstance gi = gameList.get(node.toString());
 
