@@ -45,7 +45,8 @@ public class ServerTree extends JPanel {
 		// create the root node
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Games");
 		// create the child nodes
-		HashMap<String, GameInstance> gameList = new HashMap<>();
+		// ????? Eclipse told me to make final ?????
+		final HashMap<String, GameInstance> gameList = new HashMap<>();
 		for (int i = 0; i < 8; i++) {
 			root.add(new DefaultMutableTreeNode("Game " + i));
 		}

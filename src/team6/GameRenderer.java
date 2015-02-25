@@ -3,6 +3,9 @@ package team6;
 import java.awt.*;
 
 import javax.swing.*;
+
+import javax.imageio.*;
+import java.io.*;
 //import java.util.*;
 //This class will render a 64x64 array representing a map, and a array
 //of TankObjects, representing players.
@@ -18,6 +21,11 @@ public class GameRenderer extends JPanel {
 	int xFov=24;  //not used yet
 	int yFov=16; //not used yet
 	int tileSize=50;  //must be updated here and in driver
+	Image tank = null;
+	Image grass = null;
+	Image lake = null;
+	Image mountain = null;
+	Image hill = null;
 
 
 	public GameRenderer() {
@@ -35,6 +43,15 @@ public class GameRenderer extends JPanel {
 			}
 		}		
 		players=new GameInstance(); //temp fake constructor
+		
+		try {                
+	        tank = ImageIO.read(new File("/tank.png"));
+	        mountain = ImageIO.read(new File("/gravel.png"));
+	        hill = ImageIO.read(new File("/dirt.png"));
+	       } catch (IOException ex) {
+	    	   System.out.println(ex);
+	    	   // handle exception...
+	       } 
 	}
 
 	public GameRenderer(char[][] map, GameInstance players) {
@@ -48,19 +65,32 @@ public class GameRenderer extends JPanel {
 		for (int i = 0; i < 64; i++) {
 			for (int j = 0; j < 64; j++) {
 				
-				if (map[i][j] == 'g')
-					g.setColor(new Color(10,100,26));// grass
-				else if (map[i][j] == 'l')
+				if (map[i][j] == 'g'){
+					//g.setColor(new Color(10,100,26));// grass
+					g.drawImage(mountain, i*tileSize, j*tileSize, null);
+				}
+				else if (map[i][j] == 'l'){
 					g.setColor(new Color(25,35,165));//lake
-				else if (map[i][j] == 'm')
+					g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
+					//g.drawImage(mountain, i * tileSize, j * tileSize, tileSize, tileSize, null);
+				}
+				else if (map[i][j] == 'm'){
 					g.setColor(new Color(90,95,100));//mountain
-				else if (map[i][j] == 'h')
-					g.setColor(new Color(125,90,65));//hill
-				else
+					g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
+					//g.drawImage(mountain, i * tileSize, j * tileSize, tileSize, tileSize, null);
+				}
+				else if (map[i][j] == 'h'){
+					//g.setColor(new Color(125,90,65));//hill
+					//g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
+					g.drawImage(hill, i * tileSize, j * tileSize, tileSize, tileSize, null);
+				}
+				else{
 					g.setColor(Color.BLACK);//bad color
+					g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
+					//g.drawImage(mountain, i * tileSize, j * tileSize, tileSize, tileSize, null);
+				}
 				
-				
-				g.fillRect(i * tileSize, j * tileSize, tileSize,tileSize);				
+								
 			}
 		}
 
@@ -69,9 +99,12 @@ public class GameRenderer extends JPanel {
 			int y=0;
 			x=players.tanks.get(i).xCoord;
 			y=players.tanks.get(i).yCoord;
-			g.setColor(Color.RED);
-			g.fillRect(x*tileSize, y*tileSize, tileSize, tileSize);
+			//g.setColor(Color.RED);
+			//g.fillRect(x*tileSize, y*tileSize, tileSize, tileSize);
+			g.drawImage(tank, x*tileSize, y*tileSize, tileSize, tileSize, null);
 		}
+		
+		
 	}
 
 }
