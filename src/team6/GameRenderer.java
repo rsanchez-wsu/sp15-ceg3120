@@ -12,6 +12,7 @@ import java.io.*;
 
 //will update to render only 24x16 squares at a time, scrollable through arrowkeys.
 
+// ????? Pass tileSize from driver ?????
 
 @SuppressWarnings("serial")
 public class GameRenderer extends JPanel {
@@ -33,7 +34,7 @@ public class GameRenderer extends JPanel {
 			for (int j=0; j<64; j++){				
 				int temp= (int) (Math.random()*30);	//gen random terrain			
 				if (temp<=15)				
-				map[i][j]='g';
+					map[i][j]='g';
 				else if (temp<=23)
 					map[i][j]='h';
 				else if (temp<=26)
@@ -45,9 +46,11 @@ public class GameRenderer extends JPanel {
 		players=new GameInstance(); //temp fake constructor
 		
 		try {                
-	        tank = ImageIO.read(new File("/tank.png"));
-	        mountain = ImageIO.read(new File("/gravel.png"));
-	        hill = ImageIO.read(new File("/dirt.png"));
+	        tank = ImageIO.read(new File("./src/team6/tank.png"));
+	        mountain = ImageIO.read(new File("./src/team6/mountain.png"));
+	        hill = ImageIO.read(new File("./src/team6/hill.png"));
+	        lake = ImageIO.read(new File("./src/team6/lake.png"));
+	        grass = ImageIO.read(new File("./src/team6/grass.png"));
 	       } catch (IOException ex) {
 	    	   System.out.println(ex);
 	    	   // handle exception...
@@ -65,29 +68,30 @@ public class GameRenderer extends JPanel {
 		for (int i = 0; i < 64; i++) {
 			for (int j = 0; j < 64; j++) {
 				
-				if (map[i][j] == 'g'){
-					//g.setColor(new Color(10,100,26));// grass
-					g.drawImage(mountain, i*tileSize, j*tileSize, null);
+				if (map[i][j] == 'g'){// grass
+					//g.setColor(new Color(10,100,26));
+					//g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
+					g.drawImage(grass, i*tileSize, j*tileSize, tileSize, tileSize, null);
 				}
-				else if (map[i][j] == 'l'){
-					g.setColor(new Color(25,35,165));//lake
-					g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
-					//g.drawImage(mountain, i * tileSize, j * tileSize, tileSize, tileSize, null);
+				else if (map[i][j] == 'l'){//lake
+					//g.setColor(new Color(25,35,165));
+					//g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
+					g.drawImage(lake, i * tileSize, j * tileSize, tileSize, tileSize, null);
 				}
-				else if (map[i][j] == 'm'){
-					g.setColor(new Color(90,95,100));//mountain
-					g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
-					//g.drawImage(mountain, i * tileSize, j * tileSize, tileSize, tileSize, null);
+				else if (map[i][j] == 'm'){//mountain
+					//g.setColor(new Color(90,95,100));
+					//g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
+					g.drawImage(mountain, i * tileSize, j * tileSize, tileSize, tileSize, null);
 				}
-				else if (map[i][j] == 'h'){
-					//g.setColor(new Color(125,90,65));//hill
+				else if (map[i][j] == 'h'){//hill
+					//g.setColor(new Color(125,90,65));
 					//g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
 					g.drawImage(hill, i * tileSize, j * tileSize, tileSize, tileSize, null);
+					
 				}
-				else{
-					g.setColor(Color.BLACK);//bad color
+				else{//bad color
+					g.setColor(Color.BLACK);
 					g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
-					//g.drawImage(mountain, i * tileSize, j * tileSize, tileSize, tileSize, null);
 				}
 				
 								
