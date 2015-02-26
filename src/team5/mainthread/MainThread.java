@@ -42,7 +42,7 @@ import team5.playerobject.Player;
 /**
  * @author Joshua Hitchens, Lori Simmons, Ryan Lane, Tyler Parker
  */
-public class MainThread extends Thread {
+public class MainThread implements Runnable{
 
 	Vector<Player> playerList = new Vector<Player>();
 	JTextArea chat;
@@ -254,7 +254,7 @@ public class MainThread extends Thread {
 
 	// Creates and starts the main thread
 	public static void main(String[] args) {
-		(new MainThread()).start();
+		(new MainThread()).run();
 	}
 
 }
