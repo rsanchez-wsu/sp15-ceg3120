@@ -47,7 +47,6 @@ public class GameFrame extends JFrame{
 		
 		//create the panel to display game grid
 		Game_Map gameDisplay = new Game_Map();
-		//JPanel gameDisplay = new JPanel();
 		gameDisplay.setLayout(new BorderLayout());
 		
 		

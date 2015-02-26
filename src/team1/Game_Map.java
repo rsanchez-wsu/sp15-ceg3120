@@ -21,8 +21,6 @@ import java.awt.*;
 
 import javax.swing.*;
 
-
-
 	public class Game_Map extends JPanel{
 
 	static JPanel gameMap = new JPanel(); //create the game map jPanel
@@ -41,10 +39,6 @@ import javax.swing.*;
 		int tileSize = 20; //pixels for each tile
 		int width = cols * tileSize; //width of the jPanel
 		int height = rows * tileSize; //height of the jPanel
-		//int panelWidth = getWidth()/cols; //setting panel width
-		//int panelHeight = getHeight()/rows; //seting panel height
-		
-		//Dimension setPreferredSize = (new Dimension(width, height)); //set the preferred size of the jPanel
 		
 		for (int i=0; i<rows; i++){ //loop to paint rows of tiles
 			for(int j=0; j<cols; j++){ //loop to paint cols of tiles
@@ -65,7 +59,6 @@ import javax.swing.*;
 				g.fillRect(w,h,width,height); //fill the jPanel with tiles
 			}
 		}
-		
 	}
 	
 	public static void main(String[] args){
