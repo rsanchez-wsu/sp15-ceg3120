@@ -10,7 +10,7 @@ import java.util.concurrent.*;
 // For now, exceptions will just be printed
 public class ServerMT {
 	
-	static ConcurrentLinkedQueue inBuffer = new ConcurrentLinkedQueue<String>();	
+	static ConcurrentLinkedQueue inBuffer = new ConcurrentLinkedQueue<ServerMTInstruction>();	
 	static ConcurrentLinkedQueue outBuffer = new ConcurrentLinkedQueue<String>();
 	ServerMTSockListen listener = new ServerMTSockListen();
 	
@@ -18,10 +18,18 @@ public class ServerMT {
 	
 	public ServerMT(){		
 	Thread thread = new Thread(listener);
+	thread.start();
+	ServerMTInstruction temp = new ServerMTInstruction(0,  20,  20, "fucku", 0, -1);
+	inBuffer.add(temp);
 	}//end constructor
 	
-	private void step (){
-		process(inBuffer.remove());
+	public void step(){
+
+		
+		
+		if (!inBuffer.isEmpty())
+			
+		inProcess((ServerMTInstruction) inBuffer.remove());
 		
 		//-parse inBuffer, take action on gameInstance
 		////-detect new terrain to send to tank that moved
@@ -32,13 +40,15 @@ public class ServerMT {
 	
 	
 	
-	private void process(Object temp) {
+	private void inProcess(ServerMTInstruction temp) {
 		ServerMTInstruction instruction=(ServerMTInstruction)temp;
 		
 		switch (instruction.type) {   
 		case 0:  System.out.println("MT processing tank move");
-        case 1:  System.out.println("MT processing tank attack");
-        case 2:  System.out.println("MT processing chat");
+		
+		break;
+        case 1:  System.out.println("MT processing tank attack");break;
+        case 2:  System.out.println("MT processing chat"); break;
 
         default: break;
     }
