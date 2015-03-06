@@ -50,19 +50,18 @@ public class driver {
         gameFrame.setVisible(true);
         
         
-       //JFrame serverFrame2 = new JFrame("server GUI Demo");
-        ServerTree tree = new ServerTree();
-       //serverFrame2.add(tree);
-       //serverFrame2.pack();
-       // serverFrame2.setVisible(true);
-        
+
+        ///create Jframe, create tree, create table, add tree and table to jframe using borerlayouts  
         JFrame serverFrame = new JFrame("server GUI Demo");
+        ServerTree tree = new ServerTree();  //create tree first before table, singleton needs to be initilized     
         ServerGUI table = ServerGUI.getInstance();
         serverFrame.add(table,BorderLayout.CENTER);        
         serverFrame.pack();
-        serverFrame.setVisible(true);
+        serverFrame.setVisible(true);        
+        serverFrame.add(tree,BorderLayout.WEST);        
+        //create instance of the game which will be our 'current' game; tree class will need to be updated and fixed to represent this
+        GameInstance currentGame= new GameInstance();
         
-        serverFrame.add(tree,BorderLayout.WEST);
         
         
     }// end main
@@ -70,7 +69,6 @@ public class driver {
     
 
     public static void center(JFrame frame) {
-
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Point center = ge.getCenterPoint();
         int windowX = 1024;

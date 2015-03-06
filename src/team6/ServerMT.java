@@ -18,9 +18,6 @@ public class ServerMT {
 	
 	public ServerMT(){		
 	Thread thread = new Thread(listener);
-
-	
-		
 	}//end constructor
 	
 	private void step (){

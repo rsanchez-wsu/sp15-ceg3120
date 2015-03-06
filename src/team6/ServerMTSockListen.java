@@ -20,7 +20,6 @@ public class ServerMTSockListen implements Runnable {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-
 	}// end run
 
 	private void process() {
