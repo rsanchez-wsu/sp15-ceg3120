@@ -7,8 +7,8 @@ import java.util.*;
 //it will maintain references to all threads it makes
 
 public class ServerMTSockListen implements Runnable {
-
-	ArrayList<Socket> socketList = new ArrayList<Socket>();
+	
+	static ArrayList<ServerMTSock> socketList = new ArrayList<ServerMTSock>();
 
 	public ServerMTSockListen() {
 
@@ -20,12 +20,11 @@ public class ServerMTSockListen implements Runnable {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-
 	}// end run
 
 	private void process() {
 
-		int port = 6789;
+		int port = 6666;
 
 		try {
 
@@ -35,9 +34,11 @@ public class ServerMTSockListen implements Runnable {
 			boolean listenLoop = true;
 			while (listenLoop) {
 				// Listen
+				System.out.println("listening");
 				Socket socket = serverSocket.accept();
 				// Construct an object to process the socket connection
 				ServerMTSock connection = new ServerMTSock(socket);
+				socketList.add(connection);//keeps references to each thread
 				// Create a new thread to process the request.
 				Thread thread = new Thread(connection);
 				// Start the thread.

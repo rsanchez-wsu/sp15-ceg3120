@@ -40,6 +40,8 @@ public class driver {
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         center(gameFrame);
 
+        
+        //renderer section
         GameRenderer renderer = new GameRenderer() {
             @Override
             public Dimension getPreferredSize() {
@@ -48,21 +50,36 @@ public class driver {
         };
         gameFrame.getContentPane().add(new JScrollPane(renderer), BorderLayout.CENTER);      
         gameFrame.setVisible(true);
+        //end renderer section
         
-        
-       //JFrame serverFrame2 = new JFrame("server GUI Demo");
-        ServerTree tree = new ServerTree();
-       //serverFrame2.add(tree);
-       //serverFrame2.pack();
-       // serverFrame2.setVisible(true);
-        
+        //server gui section
+        ///create Jframe, create tree, create table, and gameInstance add tree and table to jframe using borerlayouts
+        //serverGUI gets updated with our CurrentGame;
+        GameInstance currentGame= new GameInstance();
+        System.out.println(currentGame.tanks.get(0).toString());
         JFrame serverFrame = new JFrame("server GUI Demo");
+        ServerTree tree = new ServerTree(); 
         ServerGUI table = ServerGUI.getInstance();
+        table.updateTable(currentGame);
         serverFrame.add(table,BorderLayout.CENTER);        
         serverFrame.pack();
-        serverFrame.setVisible(true);
+        serverFrame.setVisible(true);        
+        serverFrame.add(tree,BorderLayout.WEST);       
         
-        serverFrame.add(tree,BorderLayout.WEST);
+        
+        //create instance of ServerMT, and give it our current game reference. then infinite loop step method
+        ServerMT server= new ServerMT();
+        
+        while(true){
+        	
+        server.step();	
+        	
+        	
+        }//end while
+        
+        
+        
+        
         
         
     }// end main
@@ -70,7 +87,6 @@ public class driver {
     
 
     public static void center(JFrame frame) {
-
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Point center = ge.getCenterPoint();
         int windowX = 1024;
