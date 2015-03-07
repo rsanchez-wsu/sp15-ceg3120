@@ -13,14 +13,16 @@ public class ServerMT {
 	static ConcurrentLinkedQueue inBuffer = new ConcurrentLinkedQueue<ServerMTInstruction>();	
 	static ConcurrentLinkedQueue outBuffer = new ConcurrentLinkedQueue<String>();
 	ServerMTSockListen listener = new ServerMTSockListen();
+	GameInstance currentGame;
 	
 	
 	
-	public ServerMT(){		
+	public ServerMT(GameInstance game){		
 	Thread thread = new Thread(listener);
 	thread.start();
 	ServerMTInstruction temp = new ServerMTInstruction(0,  20,  20, "fucku", 0, -1);
 	inBuffer.add(temp);
+	currentGame=game;
 	}//end constructor
 	
 	public void step(){
@@ -40,11 +42,12 @@ public class ServerMT {
 	
 	
 	
-	private void inProcess(ServerMTInstruction temp) {
-		ServerMTInstruction instruction=(ServerMTInstruction)temp;
+	private void inProcess(ServerMTInstruction temp) {		
 		
-		switch (instruction.type) {   
+		switch (temp.type) {   
 		case 0:  System.out.println("MT processing tank move");
+		//check to see if tank is only moving 1 sq
+		validateMove(temp);
 		
 		break;
         case 1:  System.out.println("MT processing tank attack");break;
@@ -56,11 +59,25 @@ public class ServerMT {
 		
 		
 		
+	}//end serverMTInstruction
+	
+	private void validateMove(ServerMTInstruction temp){
+		
+		
+		
+		
 	}
 
+	private void validateAttack(ServerMTInstruction temp){
+		
+		
+		
+		
+	}
+	
+	
 
 
-
 	
 	
 	
@@ -69,4 +86,4 @@ public class ServerMT {
 	
 	
 
-}
+}//end class

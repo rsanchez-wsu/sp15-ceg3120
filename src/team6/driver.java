@@ -68,7 +68,7 @@ public class driver {
         
         
         //create instance of ServerMT, and give it our current game reference. then infinite loop step method
-        ServerMT server= new ServerMT();
+        ServerMT server= new ServerMT(currentGame);
         
         while(true){
         	

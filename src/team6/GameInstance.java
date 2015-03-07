@@ -41,7 +41,9 @@ public class GameInstance {
 	//default test constructor
 	public GameInstance(){
 		time= Calendar.getInstance();
-			
+		
+        tanks.add( new TankObject("red.jpg", "xXKi113R69Xx", "192.168.1.1",
+                5, 5, 50, "Active"));	
         tanks.add( new TankObject("green.jpg", "Matt"+String.valueOf((int)(Math.random()*50)), "178.224.102.99",
                 (int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
         tanks.add( new TankObject("green.jpg", "Jeff"+String.valueOf((int)(Math.random()*50)), "211.87.23.81",
@@ -56,8 +58,7 @@ public class GameInstance {
         		(int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
         tanks.add( new TankObject("green.jpg", "Scot"+String.valueOf((int)(Math.random()*50)), "178.224.102.99",
         		(int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
-        tanks.add( new TankObject("red.jpg", "xXKi113R69Xx", "192.168.1.1",
-                63, 63, 50, "Active"));
+
 	}
 	
 	

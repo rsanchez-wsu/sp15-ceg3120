@@ -40,7 +40,7 @@ public class ServerMTSock implements Runnable {
 
 			try {
 				
-				out.writeInt(666);				
+				out.writeInt(-1);				
 				int type=in.readInt();
 				System.out.println("debug "+type);
 				
