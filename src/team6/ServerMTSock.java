@@ -44,10 +44,14 @@ public class ServerMTSock implements Runnable {
 				int type=in.readInt();
 				System.out.println("debug "+type);
 				
-				switch (type) {   
-				case 0:  System.out.println("MT parsing tank move");ServerMT.inBuffer.add(parseAsMove());  break;
-		        case 1:  System.out.println("MT parsing tank attack");ServerMT.inBuffer.add(parseAsAttack()); break;
-		        case 2:  System.out.println("MT parsing chat");ServerMT.inBuffer.add(parseAsChat()); break;
+				switch (type) {
+				case -1: System.out.println("MT do nothing");				
+				case 0:  System.out.println("MT parsing tank move");
+						ServerMT.inBuffer.add(parseAsMove());  break;
+		        case 1:  System.out.println("MT parsing tank attack");
+		        		ServerMT.inBuffer.add(parseAsAttack()); break;
+		        case 2:  System.out.println("MT parsing chat");
+		        		ServerMT.inBuffer.add(parseAsChat()); break;
 
 		        default: System.out.println("not a valid message parsed: serverMTSock");break;
 		    }

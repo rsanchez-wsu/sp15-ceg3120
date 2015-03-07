@@ -45,7 +45,7 @@ public class GameInstance {
         tanks.add( new TankObject("red.jpg", "xXKi113R69Xx", "192.168.1.1",
                 5, 5, 50, "Active"));	
         tanks.add( new TankObject("green.jpg", "Matt"+String.valueOf((int)(Math.random()*50)), "178.224.102.99",
-                (int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
+                7,5,(int)(Math.random()*50), "wait"));
         tanks.add( new TankObject("green.jpg", "Jeff"+String.valueOf((int)(Math.random()*50)), "211.87.23.81",
         		(int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50), "wait"));
         tanks.add( new TankObject("green.jpg", "Gary"+String.valueOf((int)(Math.random()*50)), "73.23.144.17",

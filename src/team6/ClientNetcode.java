@@ -30,6 +30,10 @@ public class ClientNetcode {
 	                DataInputStream in = new DataInputStream(inFromServer);
 	                //loop var becomes false in several exceptions and on quit
 	                boolean loop = true;
+	                
+	                
+	                
+	                
 	                while (loop) {
 	                    System.out.println("local: Enter command:   ");
 
@@ -37,7 +41,7 @@ public class ClientNetcode {
 	                    
 	                    
 	                    
-	                        System.out.println(in.readInt()+" server wants a message");//wait for the 666
+	                        System.out.println(in.readInt()+" server wants a message");//wait for the -1
 	                        int userInput = scanner.nextInt();                        
 	                        out.writeInt(userInput);
 	                        if (userInput==-1){

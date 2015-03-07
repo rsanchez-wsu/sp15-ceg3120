@@ -72,9 +72,9 @@ public class driver {
         
         while(true){
         	
-        server.step();	
-        	
-        	
+        server.step();
+       
+        
         }//end while
         
         
