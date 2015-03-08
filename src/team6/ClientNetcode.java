@@ -10,7 +10,9 @@ public class ClientNetcode {
 	     * @param args the command line arguments
 	     */
 	    public static void main(String[] args) {
-	        String sName = "localhost";
+	    	GameInstance clientGame= new GameInstance();
+	    	
+	        String sName = "104.231.9.131";
 	        if (0 < args.length) {
 	            sName = args[0];
 	        }
@@ -30,6 +32,11 @@ public class ClientNetcode {
 	                DataInputStream in = new DataInputStream(inFromServer);
 	                //loop var becomes false in several exceptions and on quit
 	                boolean loop = true;
+	                
+	                String name = "mason";
+	                out.writeUTF(name);
+	                int playerID=-1;
+	                playerID=in.read();
 	                
 	                
 	                

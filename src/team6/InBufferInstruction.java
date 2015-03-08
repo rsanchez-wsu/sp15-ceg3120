@@ -1,18 +1,18 @@
 package team6;
 //this class represents instructions that will sit in the concurrent queue, to be processed by
 //ServerMT.  Likely created by a MTSock parsing a network message that was parsed.
-public class ServerMTInstruction {
+public class InBufferInstruction {
 
-	public int type; //-1 is no instruction(if read from stream, nothing else will be parsed),0 is move, 1 is attack, 2 is chat
+	public int type; //-1 is no instruction(if read from stream, nothing else will be parsed),0 is move, 1 is attack, 2 is chat, 3 is player name(name in message)
 	public int sourceID; //the id of the tank/thread, lets try and make it the same list position
 	public int x=-1; // position moving to, or attacking 
 	public int y=-1; //
-	public String message="empty";// used for chat 
+	public String message="empty";// used for chat(2) and name (3)
 	public int destID=-1;
 	
-	public ServerMTInstruction(){}
+	public InBufferInstruction(){}
 	
-	public ServerMTInstruction(int type,  int x, int y, String message, int sourceID, int destID){
+	public InBufferInstruction(int type,  int x, int y, String message, int sourceID, int destID){
 		
 		this.type=type;		
 		this.x=x;

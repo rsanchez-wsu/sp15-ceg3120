@@ -13,15 +13,16 @@ import java.math.*;
 // For now, exceptions will just be printed
 public class ServerMT {
 
-	static ConcurrentLinkedQueue inBuffer = new ConcurrentLinkedQueue<ServerMTInstruction>();
-	static ConcurrentLinkedQueue outBuffer = new ConcurrentLinkedQueue<String>();
+	static ConcurrentLinkedQueue inBuffer = new ConcurrentLinkedQueue<InBufferInstruction>();
+	static ArrayList<ConcurrentLinkedQueue> outBuffers = new ArrayList();
+
 	ServerMTSockListen listener = new ServerMTSockListen();
 	GameInstance currentGame;
 
 	public ServerMT(GameInstance game) {
 		Thread thread = new Thread(listener);
 		thread.start();
-		ServerMTInstruction temp = new ServerMTInstruction(0, 20, 20, "fucku",
+		InBufferInstruction temp = new InBufferInstruction(0, 20, 20, "fucku",
 				0, -1);
 		inBuffer.add(temp);
 		currentGame = game;
@@ -30,8 +31,8 @@ public class ServerMT {
 	public void step() {
 
 		if (!inBuffer.isEmpty())
-			inProcess((ServerMTInstruction) inBuffer.remove());
-
+			inProcess((InBufferInstruction) inBuffer.remove());
+	
 		// -parse inBuffer, take action on gameInstance
 		// //-detect new terrain to send to tank that moved
 		// //-check and see if anytanks can see moved tank
@@ -39,7 +40,7 @@ public class ServerMT {
 
 	}
 
-	private void inProcess(ServerMTInstruction instruction) {
+	private void inProcess(InBufferInstruction instruction) {
 
 		switch (instruction.type) {
 		case 0:
@@ -67,6 +68,11 @@ public class ServerMT {
 		case 2:
 			System.out.println("MT processing chat");
 			break;
+			
+		case 3:
+			System.out.println("MT processing rename");
+			currentGame.tanks.get(instruction.sourceID).Name=instruction.message;
+			break;	
 
 		default:
 			break;
@@ -76,7 +82,7 @@ public class ServerMT {
 
 	// checks to make sure that the move is only 1 space
 	// need to add check to make sure terrain
-	private boolean validateMove(ServerMTInstruction instruction) {
+	private boolean validateMove(InBufferInstruction instruction) {
 		int temp = 0;
 		temp = Math.abs(currentGame.tanks.get(instruction.sourceID).yCoord
 				- instruction.y);
@@ -94,17 +100,18 @@ public class ServerMT {
 		return true;
 	}// end validate move
 
-	private boolean validateAttack(ServerMTInstruction instruction) {
+	private boolean validateAttack(InBufferInstruction instruction) {
 
 		boolean test = false;
 		for (TankObject tank : currentGame.tanks) {
 			if (tank.xCoord == instruction.x && tank.yCoord == instruction.y)
 				test = true;
 		}
+		//TODO add check to make sure attack position is on same x, or y coord as attacker
 		return test;
 	}// end validate attack
 
-	private void conductAttack(ServerMTInstruction instruction) {
+	private void conductAttack(InBufferInstruction instruction) {
 
 		int temp = -1;
 		temp = (int) Math.pow(

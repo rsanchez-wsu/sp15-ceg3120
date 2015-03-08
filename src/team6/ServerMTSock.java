@@ -10,6 +10,7 @@ import java.net.*;
 public class ServerMTSock implements Runnable {
 	Socket socket;
 	int playerID;
+	String name;
 	DataInputStream in;
 	DataOutputStream out;
 
@@ -18,6 +19,12 @@ public class ServerMTSock implements Runnable {
 		in = new DataInputStream(socket.getInputStream());
 		out= new DataOutputStream(socket.getOutputStream());
 		playerID=ServerMTSockListen.socketList.size();
+		name=in.readUTF();// first thing client does is send a string name in utf
+		out.writeInt(playerID);
+		
+		InBufferInstruction instruction = new InBufferInstruction(3,-1,-1,name,playerID, -1);
+		ServerMT.inBuffer.add(instruction);
+		
 		
 	}// end const
 
@@ -69,7 +76,7 @@ public class ServerMTSock implements Runnable {
 
 	} // end process
 	
-	private ServerMTInstruction parseAsMove(){		
+	private InBufferInstruction parseAsMove(){		
 		int type=0; //move
 		int x=-1;
 		int y=-1;		
@@ -81,12 +88,12 @@ public class ServerMTSock implements Runnable {
 			e.printStackTrace();
 		}
 		
-		ServerMTInstruction temp = new ServerMTInstruction(type,x,y,"none",playerID, -1);
+		InBufferInstruction temp = new InBufferInstruction(type,x,y,"none",playerID, -1);
 		
 		return temp;
 	}
 	
-	private ServerMTInstruction parseAsAttack(){		
+	private InBufferInstruction parseAsAttack(){		
 		int type=1; //attack
 		int x=-1;
 		int y=-1;		
@@ -98,12 +105,12 @@ public class ServerMTSock implements Runnable {
 			e.printStackTrace();
 		}
 		
-		ServerMTInstruction temp = new ServerMTInstruction(type,x,y,"none",playerID, -1);
+		InBufferInstruction temp = new InBufferInstruction(type,x,y,"none",playerID, -1);
 		
 		return temp;
 	}
 	
-	private ServerMTInstruction parseAsChat(){
+	private InBufferInstruction parseAsChat(){
 		int type=2;
 		String message="default text:error";
 		try {
@@ -113,7 +120,7 @@ public class ServerMTSock implements Runnable {
 			e.printStackTrace();
 		}
 		
-		ServerMTInstruction temp = new ServerMTInstruction(type,-1,-1,message,playerID, -1);
+		InBufferInstruction temp = new InBufferInstruction(type,-1,-1,message,playerID, -1);
 		return temp;
 	}
 
