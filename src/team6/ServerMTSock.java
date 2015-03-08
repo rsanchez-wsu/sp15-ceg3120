@@ -20,6 +20,7 @@ public class ServerMTSock implements Runnable {
 		out= new DataOutputStream(socket.getOutputStream());
 		playerID=ServerMTSockListen.socketList.size();
 		name=in.readUTF();// first thing client does is send a string name in utf
+		System.out.println(name);
 		out.writeInt(playerID);
 		
 		InBufferInstruction instruction = new InBufferInstruction(3,-1,-1,name,playerID, -1);

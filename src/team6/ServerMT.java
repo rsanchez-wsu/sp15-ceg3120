@@ -72,6 +72,7 @@ public class ServerMT {
 		case 3:
 			System.out.println("MT processing rename");
 			currentGame.tanks.get(instruction.sourceID).Name=instruction.message;
+			ServerGUI.getInstance().updateTable(currentGame);
 			break;	
 
 		default:
