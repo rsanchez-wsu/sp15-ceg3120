@@ -85,6 +85,9 @@ public class TurnTanks {
 	//run the frame
 	public static void main(String args[]) {
 		
+		//ClientSocket socket = new ClientSocket();
+		//socket.sendMessage("Hello World!");
+		//System.out.print(socket.recMessage());
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				createClientWindow();
