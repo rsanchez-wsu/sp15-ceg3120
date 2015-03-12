@@ -11,7 +11,7 @@ public class ClientNetcode {
 	     */
 	    public static void main(String[] args) {
 	    	GameInstance clientGame= new GameInstance();
-	    	
+	    	Scanner input = new Scanner(System.in);
 	        String sName = "104.231.9.131";
 	        if (0 < args.length) {
 	            sName = args[0];
@@ -33,7 +33,12 @@ public class ClientNetcode {
 	                //loop var becomes false in several exceptions and on quit
 	                boolean loop = true;
 	                
-	                String name = "mason";
+	                
+	                String name = "";
+	                //Take in the name and store it in the variable, name.
+	                System.out.print("Enter player name: ");
+	                name = input.next();
+	                
 	                out.writeUTF(name);
 	                int playerID=-1;
 	                playerID=in.read();
@@ -49,19 +54,23 @@ public class ClientNetcode {
 	                    
 	                    
 	                        System.out.println(in.readInt()+" server wants a message");//wait for the -1
+	                        System.out.println("Enter a 0 to move your tank, enter 1 to attack another tank,\nenter 2 to send a chat message, or enter -1 to do nothing.");
 	                        int userInput = scanner.nextInt();                        
 	                        out.writeInt(userInput);
 	                        if (userInput==-1){
-	                            System.out.println("nothing to send message sent");
+	                            //System.out.println("nothing to send message sent");
+	                           System.out.println("You have chosen to do nothing.");
 	                        }
 	                        else if (userInput==2){
-	                            System.out.println("chat type sent, enter message");
+	                            //System.out.println("chat type sent, enter message");
+	                            System.out.print("Enter the message: ");
 	                            scanner.next();
 	                            String temp = scanner.nextLine();
 	                            out.writeUTF(temp);
 	                        }
 	                        else{
-	                            System.out.println("move or atttack type sent, enter two coords");                            
+	                            //System.out.println("move or attack type sent, enter two coords");   
+	                            System.out.print("Enter the coordinates for your chosen action: ");
 	                        userInput = scanner.nextInt();
 	                        out.writeInt(userInput);
 	                        userInput = scanner.nextInt();
