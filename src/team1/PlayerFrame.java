@@ -25,13 +25,11 @@ import javax.swing.*;
 
 public class PlayerFrame extends JFrame 
 {
-
-	private Player displayedPlayer;
+	private JTabbedPane playerDisplay;
 	private static final long serialVersionUID = 1L;
 	
-	public PlayerFrame(Player selectedPlayer) 
+	public PlayerFrame() 
 	{
-		displayedPlayer = selectedPlayer;
 		createComponents();
 		this.setSize(400, 300);
 	}//end constructor
@@ -39,11 +37,14 @@ public class PlayerFrame extends JFrame
 	private void createComponents()
 	{
 		//create the main panel that will contain all other panels
-		
-		JPanel playerPanel = new JPanel();
-		playerPanel.setLayout(new BorderLayout());
-		
-		
+		playerDisplay = new JTabbedPane();
+		add(playerDisplay);
 	}
 	
+	
+	public void addPlayer(Player playerAdded, JLabel information)
+	{
+		playerDisplay.addTab(playerAdded.getName(),information);
+		
+	}
 }
