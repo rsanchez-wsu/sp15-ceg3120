@@ -71,7 +71,7 @@ public class GameInstance {
 	public GameInstance() {
 		time = Calendar.getInstance();
 		for (int i = 0; i < 8; i++) {
-			tanks.add(new TankObject("red.jpg", "noName", "noIP", 0, 0, 50,
+			tanks.add(new TankObject("red.jpg", "noName", "noIP", 0, 2, 50,
 					"waiting"));
 		}// end for
 
