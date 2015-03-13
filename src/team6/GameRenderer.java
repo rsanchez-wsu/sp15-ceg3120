@@ -25,7 +25,14 @@ public class GameRenderer extends JPanel {
 	int xFov=24;  //not used yet
 	int yFov=16; //not used yet
 	int tileSize=50;  //must be updated here and in driver
+	
+	int timesExpanded = 0; // used to limit recursive terrain feature growth
+	boolean[][] expanded = new boolean[mapXSize][mapYSize]; // used for recursive growth limiting
+	int debugCounter = 0;
+	
 	Image tank = null;
+	
+	// depreciated
 	Image grass = null;
 	Image lake = null;
 	Image mountain = null;
@@ -157,28 +164,78 @@ public class GameRenderer extends JPanel {
 
 	}
 	
-	private void buildBasicMap(){
-		
-		for(int i = 0; i < mapXSize; i++){
-			for (int j = 0; j < mapYSize; j++){
-				
-				int rand = (int)(Math.random() * 100);	//generate random terrain			
-				
-				// movable terrain   : 60%
+	private void buildBasicMap() {
+		 
+		for (int i = 0; i < mapXSize; i++) {
+			for (int j = 0; j < mapYSize; j++) {
+
+				int rand = (int) (Math.random() * 1000); // generate random terrain
+
+				// movable terrain : 60%
 				// immovable terrain : 40%
-				if(rand < 20)	  // tree
+				if (rand > 0 && rand < 10) // tree
 					map[i][j] = 't';
-				else if(rand < 40)// grass
-					map[i][j] = 'g';
-				else if(rand < 60)// mud
-					map[i][j] = 'u';
-				else if(rand < 80)// water
-					map[i][j] = 'w';
-				else			  // mountain
+				else if (rand > 100 && rand < 103)// mountain
 					map[i][j] = 'm';
+				else if (rand > 200 && rand < 205)// mud
+					map[i][j] = 'u';
+				else if (rand > 300 && rand < 302)// water
+					map[i][j] = 'w';
+				else
+					// grass
+					map[i][j] = 'g';
+
 			}
 		}
+
+		expandFeature('m', 85, 5);
+		expandFeature('w', 70, 5);
+		expandFeature('t', 65, 5);
+		expandFeature('u', 70, 5);
+
 	}// end buildBasiceMap()
+
+	private void expandFeature(char type,int randomBase,int randomIncrease) {
+		zeroRecursiveVars();
+
+		for (int i = 0; i < mapXSize; i++) {
+			for (int j = 0; j < mapXSize; j++) {
+				if (map[i][j] == type) {
+					recursiveTrees(i, j, 0, type, randomBase, randomIncrease);                                     
+				}
+			}// end
+		}// end
+	}// end expandFeature()
+
+	private void recursiveTrees(int y, int x, int count, char type,int randomBase,int randomIncrease) {
+		if (y < 0 || x < 0 || y > mapYSize - 1 || x > mapXSize - 1)
+			return;
+		if (!expanded[y][x]) {
+			map[y][x]=type;
+			for (int k = -1; k <= 1; k++) {
+				for (int l = -1; l <= 1; l++) {
+					int rand = (int) (Math.random() * 100);
+					if (rand > 70+(4*count)){
+						recursiveTrees(k+y, l+x, count++, type,randomBase, randomIncrease); //incriments count
+						if (!(k+y<0 || l+x<0 ||k+y>mapYSize-1||l+x>mapXSize-1))
+							expanded[k+y][l+x] = true;
+						debugCounter++;}//end if
+					//System.out.println(debugCounter+" y="+ y + " x=" + x);
+				}//end inner for
+			}//end outer for
+		}// end if
+	}// end recursiveTrees()
+
+	private void zeroRecursiveVars() {
+		timesExpanded = 0;
+		for (int i = 0; i < mapYSize; i++) {
+			for (int j = 0; j < mapXSize; j++) {
+				expanded[i][j] = false;
+
+			}
+		}
+
+	}// zeroRecursiveVars()
 	
 	private void buildDetailMap(){
 		
