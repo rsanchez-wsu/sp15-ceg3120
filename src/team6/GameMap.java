@@ -54,6 +54,13 @@ public class GameMap {
 	Image treeBL = null;
 	Image treeBM = null;
 	Image treeBR = null;
+	Image treeAA = null;
+	Image treeAT = null;
+	Image treeAR = null;
+	Image treeAL = null;
+	Image treeAB = null;
+	Image treeUDT = null;
+	Image treeLRT = null;
 
 	Image grassTL = null;
 	Image grassTM = null;
@@ -130,6 +137,13 @@ public class GameMap {
 	        treeBL = ImageIO.read(new File("./src/team6/images/tree_bl.jpg"));
 	        treeBM = ImageIO.read(new File("./src/team6/images/tree_bm.jpg"));
 	        treeBR = ImageIO.read(new File("./src/team6/images/tree_br.jpg"));
+	        treeAA = ImageIO.read(new File("./src/team6/images/tree_aa.jpg"));
+	        treeAT = ImageIO.read(new File("./src/team6/images/tree_at.jpg"));
+	        treeAL = ImageIO.read(new File("./src/team6/images/tree_al.jpg"));
+	        treeAR = ImageIO.read(new File("./src/team6/images/tree_ar.jpg"));
+	        treeAB = ImageIO.read(new File("./src/team6/images/tree_ab.jpg"));
+	        treeUDT = ImageIO.read(new File("./src/team6/images/tree_udt.jpg"));
+	        treeLRT = ImageIO.read(new File("./src/team6/images/tree_lrt.jpg"));
 	        
 	        grassTL = ImageIO.read(new File("./src/team6/images/grass_tl.jpg"));
 	        grassTM = ImageIO.read(new File("./src/team6/images/grass_tm.jpg"));
@@ -383,6 +397,20 @@ public class GameMap {
 				case 'x' : result = treeBM;
 							break;
 				case 'c' : result = treeBR;
+							break;
+				case 'v' : result = treeAA;
+							break;
+				case 'r' : result = treeAT;
+							break;
+				case 't' : result = treeAL;
+							break;
+				case 'y' : result = treeAR;
+							break;
+				case 'u' : result = treeAB;
+							break;
+				case 'f' : result = treeLRT;
+							break;
+				case 'g' : result = treeUDT;
 							break;
 				default : result = treeMM;
 			}
