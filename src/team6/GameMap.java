@@ -37,8 +37,7 @@ public class GameMap {
 	int mapYSize = 64;
 	char[][] baseLayer = new char[mapXSize][mapYSize];
 	char[][] topLayer = new char[mapXSize][mapYSize];
-	char[][] spriteStyle = new char[mapXSize][mapYSize];
-	boolean mapDetailsBuilt = false;
+	char[][] spriteStyle = new char[mapXSize][mapYSize];	
 	
 	int timesExpanded = 0;// used to limit recursive terrain feature growth
 	boolean[][] expanded = new boolean[mapXSize][mapYSize];// used for recursive growth limiting
@@ -105,14 +104,6 @@ public class GameMap {
 		buildSpriteStyle();
 	}// end GameMap()
 	
-	public void checkFeatures(){
-		
-		if(!mapDetailsBuilt){
-			buildTopLayer();
-			buildSpriteStyle();
-			mapDetailsBuilt = true;
-		}
-	}
 	
 	private void findFiles(){
 		
