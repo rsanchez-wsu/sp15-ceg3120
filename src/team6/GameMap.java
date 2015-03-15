@@ -35,15 +35,18 @@ public class GameMap {
 
 	int mapXSize = 64;
 	int mapYSize = 64;
+	char[][] baseLayer = new char[mapXSize][mapYSize];
+	char[][] topLayer = new char[mapXSize][mapYSize];
+	char[][] spriteStyle = new char[mapXSize][mapYSize];
+	boolean mapDetailsBuilt = false;
 	
-	char[][] map = new char[mapXSize][mapYSize];
-	char[][] mapDetails = new char[mapXSize][mapYSize];
-	
-	int timesExpanded = 0; // used to limit recursive terrain feature growth
-	boolean[][] expanded = new boolean[mapXSize][mapYSize]; // used for recursive growth limiting
+	int timesExpanded = 0;// used to limit recursive terrain feature growth
+	boolean[][] expanded = new boolean[mapXSize][mapYSize];// used for recursive growth limiting
 	int debugCounter = 0;
 	
 	Image tank = null;
+	Image grass = null;
+	Image mud = null;
 	
 	Image treeTL = null;
 	Image treeTM = null;
@@ -62,26 +65,6 @@ public class GameMap {
 	Image treeUDT = null;
 	Image treeLRT = null;
 
-	Image grassTL = null;
-	Image grassTM = null;
-	Image grassTR = null;
-	Image grassML = null;
-	Image grassMM = null;
-	Image grassMR = null;
-	Image grassBL = null;
-	Image grassBM = null;
-	Image grassBR = null;
-
-	Image mudTL = null;
-	Image mudTM = null;
-	Image mudTR = null;
-	Image mudML = null;
-	Image mudMM = null;
-	Image mudMR = null;
-	Image mudBL = null;
-	Image mudBM = null;
-	Image mudBR = null;
-	
 	Image waterTL = null;
 	Image waterTM = null;
 	Image waterTR = null;
@@ -99,10 +82,10 @@ public class GameMap {
 	Image waterLRT = null;
 	Image waterUDT = null;
 	
-	Image waterDBL = null;
-	Image waterDBR = null;
-	Image waterDTL = null;
-	Image waterDTR = null;
+	Image waterCBL = null;
+	Image waterCBR = null;
+	Image waterCTL = null;
+	Image waterCTR = null;
 	
 	Image mountainTL = null;
 	Image mountainTM = null;
@@ -116,17 +99,27 @@ public class GameMap {
 	
 	public GameMap(){
 		
-		buildBasicMap();
-		buildDetailedMap();
-		
 		findFiles();
+		buildBaseLayer();
+		buildTopLayer();
+		buildSpriteStyle();
+	}// end GameMap()
+	
+	public void checkFeatures(){
 		
+		if(!mapDetailsBuilt){
+			buildTopLayer();
+			buildSpriteStyle();
+			mapDetailsBuilt = true;
+		}
 	}
 	
 	private void findFiles(){
 		
 		try {                
 	        tank = ImageIO.read(new File("./src/team6/images/tank.png"));
+	        grass = ImageIO.read(new File("./src/team6/images/grass.jpg"));
+	        mud = ImageIO.read(new File("./src/team6/images/mud.jpg"));
 	        
 	        treeTL = ImageIO.read(new File("./src/team6/images/tree_tl.jpg"));
 	        treeTM = ImageIO.read(new File("./src/team6/images/tree_tm.jpg"));
@@ -145,26 +138,6 @@ public class GameMap {
 	        treeUDT = ImageIO.read(new File("./src/team6/images/tree_udt.jpg"));
 	        treeLRT = ImageIO.read(new File("./src/team6/images/tree_lrt.jpg"));
 	        
-	        grassTL = ImageIO.read(new File("./src/team6/images/grass_tl.jpg"));
-	        grassTM = ImageIO.read(new File("./src/team6/images/grass_tm.jpg"));
-	        grassTR = ImageIO.read(new File("./src/team6/images/grass_tr.jpg"));
-	        grassML = ImageIO.read(new File("./src/team6/images/grass_ml.jpg"));
-	        grassMM = ImageIO.read(new File("./src/team6/images/grass_mm.jpg"));
-	        grassMR = ImageIO.read(new File("./src/team6/images/grass_mr.jpg"));
-	        grassBL = ImageIO.read(new File("./src/team6/images/grass_bl.jpg"));
-	        grassBM = ImageIO.read(new File("./src/team6/images/grass_bm.jpg"));
-	        grassBR = ImageIO.read(new File("./src/team6/images/grass_br.jpg"));
-	        
-	        mudTL = ImageIO.read(new File("./src/team6/images/mud_tl.jpg"));
-	        mudTM = ImageIO.read(new File("./src/team6/images/mud_tm.jpg"));
-	        mudTR = ImageIO.read(new File("./src/team6/images/mud_tr.jpg"));
-	        mudML = ImageIO.read(new File("./src/team6/images/mud_ml.jpg"));
-	        mudMM = ImageIO.read(new File("./src/team6/images/mud_mm.jpg"));
-	        mudMR = ImageIO.read(new File("./src/team6/images/mud_mr.jpg"));
-	        mudBL = ImageIO.read(new File("./src/team6/images/mud_bl.jpg"));
-	        mudBM = ImageIO.read(new File("./src/team6/images/mud_bm.jpg"));
-	        mudBR = ImageIO.read(new File("./src/team6/images/mud_br.jpg"));
-
 	        waterTL = ImageIO.read(new File("./src/team6/images/water_tl.jpg"));
 	        waterTM = ImageIO.read(new File("./src/team6/images/water_tm.jpg"));
 	        waterTR = ImageIO.read(new File("./src/team6/images/water_tr.jpg"));
@@ -181,10 +154,11 @@ public class GameMap {
 	        waterAB = ImageIO.read(new File("./src/team6/images/water_ab.jpg"));
 	        waterLRT = ImageIO.read(new File("./src/team6/images/water_lrt.jpg"));
 	    	waterUDT = ImageIO.read(new File("./src/team6/images/water_udt.jpg"));
-	    	waterDBL = ImageIO.read(new File("./src/team6/images/water_dbl.jpg"));
-	    	waterDBR = ImageIO.read(new File("./src/team6/images/water_dbr.jpg"));
-	    	waterDTL = ImageIO.read(new File("./src/team6/images/water_dtl.jpg"));
-	    	waterDTR = ImageIO.read(new File("./src/team6/images/water_dtr.jpg"));
+	    	
+	    	waterCBL = ImageIO.read(new File("./src/team6/images/water_cbl.png"));
+	    	waterCBR = ImageIO.read(new File("./src/team6/images/water_cbr.png"));
+	    	waterCTL = ImageIO.read(new File("./src/team6/images/water_ctl.png"));
+	    	waterCTR = ImageIO.read(new File("./src/team6/images/water_ctr.png"));
 	        
 	        mountainTL = ImageIO.read(new File("./src/team6/images/mountain_tl.jpg"));
 	        mountainTM = ImageIO.read(new File("./src/team6/images/mountain_tm.jpg"));
@@ -200,10 +174,26 @@ public class GameMap {
 	    	   System.out.println(ex);
 	    	   // handle exception...
 	       } 
-	}
+	}// end findFiles()
 
-	private void buildBasicMap() {
+	private void buildBaseLayer() {
 		
+		for (int i = 0; i < mapXSize; i++){
+			for (int j = 0; j < mapYSize; j++){
+				
+				int rand = (int)(Math.random() * 1000);
+				if(rand < 5)
+					baseLayer[i][j] = 'u';
+				else
+					baseLayer[i][j] = 'g';
+			}
+		}
+			
+		expandFeature('u', baseLayer, 70, 5);
+		
+	}// end buildBaseLayer()
+
+	private void buildTopLayer(){
 		/*
 		 * 		TERRAIN TYPE TABLE
 		 * 	-char-			   -type-
@@ -217,72 +207,25 @@ public class GameMap {
 		for (int i = 0; i < mapXSize; i++) {
 			for (int j = 0; j < mapYSize; j++) {
 
-				int rand = (int)(Math.random() * 1000); // generate random terrain
+				int rand = (int)(Math.random() * 1000);// generate random terrain
 
-				// movable terrain : 60%
-				// immovable terrain : 40%
-				if (rand < 10) // tree
-					map[i][j] = 't';
-				else if (rand > 100 && rand < 103)// mountain
-					map[i][j] = 'm';
-				else if (rand > 200 && rand < 205)// mud
-					map[i][j] = 'u';
-				else if (rand > 300 && rand < 302)// water
-					map[i][j] = 'w';
-				else	// grass
-					map[i][j] = 'g';
+				if(rand > 0 && rand < 4) 		// tree
+					topLayer[i][j] = 't';
+				else if(rand > 100 && rand < 104)	// mountain
+					topLayer[i][j] = 'm';
+				else if(rand > 200 && rand < 204)	// water
+					topLayer[i][j] = 'w';
+				else
+					topLayer[i][j] = baseLayer[i][j];
 			}
 		}// end for loop
 
-		expandFeature('m', 85, 5);
-		expandFeature('w', 70, 5);
-		expandFeature('t', 65, 5);
-		expandFeature('u', 70, 5);
-
-	}// end buildBasiceMap()
-
-	private void expandFeature(char type,int randomBase,int randomIncrease) {
-		zeroRecursiveVars();
-
-		for (int i = 0; i < mapXSize; i++) {
-			for (int j = 0; j < mapXSize; j++) {
-				if (map[i][j] == type) {
-					recursiveTrees(i, j, 0, type, randomBase, randomIncrease);                                     
-				}
-			}// end
-		}// end
-	}// end expandFeature()
-
-	private void recursiveTrees(int y, int x, int count, char type,int randomBase,int randomIncrease) {
-		if (y < 0 || x < 0 || y > mapYSize - 1 || x > mapXSize - 1)
-			return;
-		if (!expanded[y][x]) {
-			map[y][x]=type;
-			for (int k = -1; k <= 1; k++) {
-				for (int l = -1; l <= 1; l++) {
-					int rand = (int) (Math.random() * 100);
-					if (rand > 70+(4*count)){
-						recursiveTrees(k+y, l+x, count++, type,randomBase, randomIncrease); //incriments count
-						if (!(k+y<0 || l+x<0 ||k+y>mapYSize-1||l+x>mapXSize-1))
-							expanded[k+y][l+x] = true;
-						debugCounter++;}//end if
-					//System.out.println(debugCounter+" y="+ y + " x=" + x);
-				}//end inner for
-			}//end outer for
-		}// end if
-	}// end recursiveTrees()
-
-	private void zeroRecursiveVars() {
-		timesExpanded = 0;
-		for (int i = 0; i < mapYSize; i++) {
-			for (int j = 0; j < mapXSize; j++) {
-				expanded[i][j] = false;
-			}
-		}// end for loop
-	}// zeroRecursiveVars()
-
-	private void buildDetailedMap(){
-		
+		expandFeature('m', topLayer, 80, 5);
+		expandFeature('w', topLayer, 75, 5);
+		expandFeature('t', topLayer, 70, 5);
+	}// end buildTopLayer()
+	
+	private void buildSpriteStyle(){
 		/*
 		 *  TERRAIN STYLE TABLE:
 		 *	-char-		   -MEANING-
@@ -313,57 +256,57 @@ public class GameMap {
 		for(int i = 0; i < mapXSize; i++){
 			for(int j = 0; j < mapYSize; j++){
 				
-				isT = (j == 0 || map[i][j] != map[i][j - 1]);
-				isR = (i == mapXSize - 1 || map[i][j] != map[i + 1][j]);
-				isB = (j == mapYSize - 1 || map[i][j] != map[i][j + 1]);
-				isL = (i == 0 || map[i][j] != map[i - 1][j]);
+				isT = (j == 0 || topLayer[i][j] != topLayer[i][j - 1]);
+				isR = (i == mapXSize - 1 || topLayer[i][j] != topLayer[i + 1][j]);
+				isB = (j == mapYSize - 1 || topLayer[i][j] != topLayer[i][j + 1]);
+				isL = (i == 0 || topLayer[i][j] != topLayer[i - 1][j]);
 				
 				if(isT)
 					if(isR)
 						if(isB)
 							if(isL)// AA
-								mapDetails[i][j] = 'v';
+								spriteStyle[i][j] = 'v';
 							else	// AR
-								mapDetails[i][j] = 'y';
+								spriteStyle[i][j] = 'y';
 						else
 							if(isL)// AT
-								mapDetails[i][j] = 'r';
+								spriteStyle[i][j] = 'r';
 							else	// TR
-								mapDetails[i][j] = 'e';
+								spriteStyle[i][j] = 'e';
 					else
 						if(isB)
 							if(isL)// AL
-								mapDetails[i][j] = 't';
+								spriteStyle[i][j] = 't';
 							else	// LRT
-								mapDetails[i][j] = 'f';
+								spriteStyle[i][j] = 'f';
 						else
 							if(isL)// TL
-								mapDetails[i][j] = 'q';
+								spriteStyle[i][j] = 'q';
 							else	// TM
-								mapDetails[i][j] = 'w';
+								spriteStyle[i][j] = 'w';
 				else
 					if(isR)
 						if(isB)
 							if(isL)// AB
-								mapDetails[i][j] = 'u';
+								spriteStyle[i][j] = 'u';
 							else	// BR
-								mapDetails[i][j] = 'c';
+								spriteStyle[i][j] = 'c';
 						else
 							if(isL)// UDT
-								mapDetails[i][j] = 'g';
+								spriteStyle[i][j] = 'g';
 							else	// MR
-								mapDetails[i][j] = 'd';
+								spriteStyle[i][j] = 'd';
 					else
 						if(isB)
 							if(isL)// BL
-								mapDetails[i][j] = 'z';
+								spriteStyle[i][j] = 'z';
 							else	// BM
-								mapDetails[i][j] = 'x';
+								spriteStyle[i][j] = 'x';
 						else
 							if(isL)// ML
-								mapDetails[i][j] = 'a';
+								spriteStyle[i][j] = 'a';
 							else	// MM
-								mapDetails[i][j] = 's';
+								spriteStyle[i][j] = 's';
 							
 				isT = false;
 				isR = false;
@@ -372,14 +315,54 @@ public class GameMap {
 				
 			}
 		}// end for loop
-	}// end buildDetailMap()
+	}// end buildSpriteStyle()
 	
-	public Image getTerrain(char mapPos, char detail){
+	private void expandFeature(char type, char[][] layer, int randomBase, int randomIncrease) {
+		zeroRecursiveVars();
+
+		for (int i = 0; i < mapXSize; i++) {
+			for (int j = 0; j < mapXSize; j++) {
+				if (layer[i][j] == type) {
+					recursiveTrees(i, j, 0, type, layer, randomBase, randomIncrease);                                     
+				}
+			}// end
+		}// end
+	}// end expandFeature()
+
+	private void recursiveTrees(int y, int x, int count, char type, char[][] layer, int randomBase,int randomIncrease) {
+		
+		if (y < 0 || x < 0 || y > mapYSize - 1 || x > mapXSize - 1)
+			return;
+		if (!expanded[y][x]) {
+			layer[y][x]=type;
+			for (int k = -1; k <= 1; k++) {
+				for (int l = -1; l <= 1; l++) {
+					int rand = (int) (Math.random() * 100);
+					if (rand > randomBase+(4*count)){
+						recursiveTrees(k+y, l+x, count++, type,layer,randomBase, randomIncrease);//increments count
+						if (!(k+y<0 || l+x<0 ||k+y>mapYSize-1||l+x>mapXSize-1))
+							expanded[k+y][l+x] = true;
+						debugCounter++;}//end if
+				}//end inner for
+			}//end outer for
+		}// end if
+	}// end recursiveTrees()
+
+	private void zeroRecursiveVars() {
+		timesExpanded = 0;
+		for (int i = 0; i < mapYSize; i++) {
+			for (int j = 0; j < mapXSize; j++) {
+				expanded[i][j] = false;
+			}
+		}// end for loop
+	}// zeroRecursiveVars()
+
+	public Image getTerrain(char mapPos, char style){
 		
 		Image result = null;
 		
 		if(mapPos == 't'){// terrain is trees
-			switch(detail){
+			switch(style){
 				case 'q' : result = treeTL;
 							break;
 				case 'w' : result = treeTM;
@@ -415,54 +398,8 @@ public class GameMap {
 				default : result = treeMM;
 			}
 		}
-		else if(mapPos == 'g'){// terrain is grass
-			switch(detail){
-				case 'q' : result = grassTL;
-							break;
-				case 'w' : result = grassTM;
-							break;
-				case 'e' : result = grassTR;
-							break;
-				case 'a' : result = grassML;
-							break;
-				case 's' : result = grassMM;
-							break;
-				case 'd' : result = grassMR;
-							break;
-				case 'z' : result = grassBL;
-							break;
-				case 'x' : result = grassBM;
-							break;
-				case 'c' : result = grassBR;
-							break;
-				default : result = grassMM;
-			}
-		}
-		else if(mapPos == 'u'){// terrain is mud
-			switch(detail){
-				case 'q' : result = mudTL;
-							break;
-				case 'w' : result = mudTM;
-							break;
-				case 'e' : result = mudTR;
-							break;
-				case 'a' : result = mudML;
-							break;
-				case 's' : result = mudMM;
-							break;
-				case 'd' : result = mudMR;
-							break;
-				case 'z' : result = mudBL;
-							break;
-				case 'x' : result = mudBM;
-							break;
-				case 'c' : result = mudBR;
-							break;
-				default : result = mudMM;
-			}
-		}
 		else if(mapPos == 'w'){// terrain is water
-			switch(detail){
+			switch(style){
 				case 'q' : result = waterTL;
 							break;
 				case 'w' : result = waterTM;
@@ -499,7 +436,7 @@ public class GameMap {
 			}
 		}
 		else if(mapPos == 'm'){// terrain is mountain
-			switch(detail){
+			switch(style){
 				case 'q' : result = mountainTL;
 							break;
 				case 'w' : result = mountainTM;
@@ -521,12 +458,19 @@ public class GameMap {
 				default : result = mountainMM;
 			}
 		}
+		else if(mapPos == 'g'){// terrain is grass
+			result = grass;
+		}
+		else if(mapPos == 'u'){// terrain is mud
+			result = mud;
+		}
 		
 		return result;
-	}
+	}// end getTerrain()
 	
 	public Image getTank(int playerNum){
 	
 		return tank;
 	}
-}
+
+}// end GameMap Class

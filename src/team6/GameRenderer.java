@@ -45,57 +45,68 @@ public class GameRenderer extends JPanel {
 	int mapYSize = 64;
 	
 	GameInstance players;
-	int xFov=24;  //not used yet
-	int yFov=16; //not used yet
-	int tileSize=50;  //must be updated here and in driver
+	int xFov = 24;  //not used yet
+	int yFov = 16; //not used yet
+	int tileSize = 50;  //must be updated here and in driver
 	
 	public GameRenderer() {
 		
 		gameMap = new GameMap();
 		players = new GameInstance(); //temp fake constructor
-		
 	}
 
+	// TODO : Needs to be changed, need more parameters
 	public GameRenderer(char[][] map, GameInstance players) {
-		gameMap.map = map;
+		gameMap.topLayer = map;
 		this.players = players;
-
 	}
 	
 	// @override
 	public void paint(Graphics g) {
 		
-		Image mapImage = null;
+		Image tile = null;
 		
-		for (int i = 0; i < mapXSize; i++) {
-			for (int j = 0; j < mapYSize; j++) {
+		// Draw baseLayer
+		for (int i = 0; i < mapXSize; i++){
+			for (int j = 0; j < mapYSize; j++){
+		
+				tile = gameMap.getTerrain(gameMap.baseLayer[i][j], ' ');
+				g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
+			}
+		}
+		
+		// Draw topLayer
+		for (int i = 0; i < mapXSize; i++){
+			for (int j = 0; j < mapYSize; j++){
 				
-				mapImage = gameMap.getTerrain(gameMap.map[i][j], gameMap.mapDetails[i][j]);
-				
-				if(mapImage != null)
-					g.drawImage(mapImage, i * tileSize, j * tileSize, tileSize, tileSize, null);
+				tile = gameMap.getTerrain(gameMap.topLayer[i][j], gameMap.spriteStyle[i][j]);
+
+				if(tile != null)
+					g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
 				else{//bad color
 					g.setColor(Color.BLACK);
 					g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
 				}
 			}
 		}// end for loop
-
-		for (int i=0; i<7;i++){
+		
+		/*
+		 * Demo for corners issue.
+		g.drawImage(gameMap.waterBM, 10 * tileSize, 10 * tileSize, tileSize, tileSize, null);
+		g.drawImage(gameMap.waterBR, 9 * tileSize, 11 * tileSize, tileSize, tileSize, null);
+		g.drawImage(gameMap.waterMM, 9 * tileSize, 10 * tileSize, tileSize, tileSize, null);
+		g.drawImage(gameMap.waterCBR, 9 * tileSize, 10 * tileSize, tileSize, tileSize, null);
+		*/
+		
+		// Draw Tanks
+		for (int i = 0; i < 7; i++){
 			int x = 0;
 			int y = 0;
 			x = players.tanks.get(i).xCoord;
 			y = players.tanks.get(i).yCoord;
-			g.drawImage(gameMap.getTank(i), x*tileSize, y*tileSize, tileSize, tileSize, null);
+			g.drawImage(gameMap.getTank(i), x * tileSize, y * tileSize, tileSize, tileSize, null);
 		}
 		
-		/*
-		 * Testing dongles. Why is the background white?? Mason HELP!!
-		g.drawImage(gameMap.waterBR, 10 * tileSize, 10 * tileSize, tileSize, tileSize, null);
-		g.drawImage(gameMap.waterBM, 11 * tileSize, 9 * tileSize, tileSize, tileSize, null);
-		g.drawImage(gameMap.waterMM, 10 * tileSize, 9 * tileSize, tileSize, tileSize, null);
-		g.drawImage(gameMap.waterDBR, 10 * tileSize, 9 * tileSize, tileSize, tileSize, null);
-		*/
 	}// end paint()
 
-}
+}// end GameRenderer Class
