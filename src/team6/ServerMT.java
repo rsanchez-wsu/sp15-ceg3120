@@ -65,7 +65,7 @@ public class ServerMT {
 		// //generate tank position messages to send to those tanks
 
 	}
-
+//processes instructions based on their types
 	private void inProcess(InBufferInstruction instruction) {
 
 		switch (instruction.type) {
