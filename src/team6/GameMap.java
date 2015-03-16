@@ -95,7 +95,14 @@ public class GameMap {
 	Image mountainBL = null;
 	Image mountainBM = null;
 	Image mountainBR = null;
-
+	Image mountainAA = null;
+	Image mountainAT = null;
+	Image mountainAR = null;
+	Image mountainAB = null;
+	Image mountainAL = null;
+	Image mountainUDT = null;
+	Image mountainLRT = null;
+	
 	public GameMap() {
 
 		findFiles();
@@ -151,31 +158,45 @@ public class GameMap {
 			waterCTR = ImageIO.read(new File("./src/team6/images/water_ctr.png"));
 
 			mountainTL = ImageIO.read(new File(
-					"./src/team6/images/mountain_tl.jpg"));
+					"./src/team6/images/mountain_tl.png"));
 			mountainTM = ImageIO.read(new File(
-					"./src/team6/images/mountain_tm.jpg"));
+					"./src/team6/images/mountain_tm.png"));
 			mountainTR = ImageIO.read(new File(
-					"./src/team6/images/mountain_tr.jpg"));
+					"./src/team6/images/mountain_tr.png"));
 			mountainML = ImageIO.read(new File(
-					"./src/team6/images/mountain_ml.jpg"));
+					"./src/team6/images/mountain_ml.png"));
 			mountainMM = ImageIO.read(new File(
-					"./src/team6/images/mountain_mm.jpg"));
+					"./src/team6/images/mountain_mm.png"));
 			mountainMR = ImageIO.read(new File(
-					"./src/team6/images/mountain_mr.jpg"));
+					"./src/team6/images/mountain_mr.png"));
 			mountainBL = ImageIO.read(new File(
-					"./src/team6/images/mountain_bl.jpg"));
+					"./src/team6/images/mountain_bl.png"));
 			mountainBM = ImageIO.read(new File(
-					"./src/team6/images/mountain_bm.jpg"));
+					"./src/team6/images/mountain_bm.png"));
 			mountainBR = ImageIO.read(new File(
-					"./src/team6/images/mountain_br.jpg"));
+					"./src/team6/images/mountain_br.png"));
+			mountainAA = ImageIO.read(new File(
+					"./src/team6/images/mountain_aa.png"));
+			mountainAT = ImageIO.read(new File(
+					"./src/team6/images/mountain_at.png"));
+			mountainAR = ImageIO.read(new File(
+					"./src/team6/images/mountain_ar.png"));
+			mountainAB = ImageIO.read(new File(
+					"./src/team6/images/mountain_ab.png"));
+			mountainAL = ImageIO.read(new File(
+					"./src/team6/images/mountain_al.png"));
+			mountainUDT = ImageIO.read(new File(
+					"./src/team6/images/mountain_udt.png"));
+			mountainLRT = ImageIO.read(new File(
+					"./src/team6/images/mountain_lrt.png"));
 
-		} catch (IOException ex) {
+		} catch (IOException ex){
 			System.out.println(ex);
 			// handle exception...
 		}
 	}// end findFiles()
 
-	private void buildBaseLayer() {
+	private void buildBaseLayer(){
 		/*
 		 * This conditional tree picks the probability for a 'seed' of each
 		 * terrain type. Each 'seed' will be expanded into a cluster of terrain
@@ -338,10 +359,12 @@ public class GameMap {
 			}// end
 		}// end
 	}// end expandFeature()
-		// called from expand features, read it's comments for more information
-		// count is the number of times this recursive function has sucessfully
-		// made more terrain
 
+	/*	
+	 *  called from expand features, read it's comments for more information
+	 *	count is the number of times this recursive function has sucessfully
+	 *	made more terrain
+	*/
 	private void recursiveTrees(int y, int x, int count, char type,
 			char[][] layer, int randomBase, int randomIncrease) {
 
@@ -517,6 +540,27 @@ public class GameMap {
 				break;
 			case 'c':
 				result = mountainBR;
+				break;	
+			case 'v':
+				result = mountainAA;
+				break;
+			case 'r':
+				result = mountainAT;
+				break;
+			case 't':
+				result = mountainAL;
+				break;
+			case 'y':
+				result = mountainAR;
+				break;
+			case 'u':
+				result = mountainAB;
+				break;
+			case 'f':
+				result = mountainLRT;
+				break;
+			case 'g':
+				result = mountainUDT;
 				break;
 			default:
 				result = mountainMM;
