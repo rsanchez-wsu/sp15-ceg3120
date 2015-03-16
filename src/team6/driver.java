@@ -56,11 +56,13 @@ public class driver {
         ///create Jframe, create tree, create table, and gameInstance add tree and table to jframe using borerlayouts
         //serverGUI gets updated with our CurrentGame;
         GameInstance currentGame= new GameInstance();
+        
         System.out.println(currentGame.tanks.get(0).toString());
         JFrame serverFrame = new JFrame("server GUI Demo");
         ServerTree tree = new ServerTree(); 
         ServerGUI table = ServerGUI.getInstance();
         table.updateTable(currentGame);
+        table.statusBar(serverFrame);
         serverFrame.add(table,BorderLayout.CENTER);        
         serverFrame.pack();
         serverFrame.setVisible(true);        
