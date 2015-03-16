@@ -34,8 +34,9 @@ import java.util.*;
 public class GameInstance {
 
 	// public all the things
-	public Calendar time;
+	public Calendar time;	
 	public ArrayList<TankObject> tanks = new ArrayList<TankObject>();
+	public GameMap map= new GameMap();//place holder for testing, eventually game maps will be generated elsewhere.
 
 	// default test constructor
 	/*
