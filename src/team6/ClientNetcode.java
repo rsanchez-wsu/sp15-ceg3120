@@ -84,8 +84,8 @@ public class ClientNetcode {
 	                    	System.out.println(in.readUTF()+" :debug should be player name");	
 	                    	}
 	                    	
-	                    	else
-	                        System.out.println(-1+" server wants a message");//wait for the -1
+	                    	else	                    		
+	                        System.out.println(temp+" server wants a message");//wait for the -1
 	                        
 	                        
 	                        System.out.println("Enter a 0 to move your tank, enter 1 to attack another tank,\nenter 2 to send a chat message, or enter -1 to do nothing.");

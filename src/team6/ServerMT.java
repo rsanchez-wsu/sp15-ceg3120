@@ -114,7 +114,9 @@ public class ServerMT {
 				// sent a message to each socket, the name of the player
 				// associated with the outer loop
 				for(int j = 0; j < listener.socketList.size(); j++){
+					
 				outBuffers.get(j).add(new OutBufferInstruction(1,i,currentGame.tanks.get(i).Name));	
+				System.out.println("debug: player name");
 				}//end inner loop
 
 			}//end outer loop

@@ -39,6 +39,7 @@ public class OutBufferInstruction {
 		this.type = type;
 		this.playerNumber = playerNumber;
 		this.playerName = playerName;
+		System.out.println("out instruction created");
 	}
 	
 	
