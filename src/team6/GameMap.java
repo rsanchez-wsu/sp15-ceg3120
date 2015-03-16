@@ -111,50 +111,44 @@ public class GameMap {
 			grass = ImageIO.read(new File("./src/team6/images/grass.jpg"));
 			mud = ImageIO.read(new File("./src/team6/images/mud.jpg"));
 
-			treeTL = ImageIO.read(new File("./src/team6/images/tree_tl.jpg"));
-			treeTM = ImageIO.read(new File("./src/team6/images/tree_tm.jpg"));
-			treeTR = ImageIO.read(new File("./src/team6/images/tree_tr.jpg"));
-			treeML = ImageIO.read(new File("./src/team6/images/tree_ml.jpg"));
-			treeMM = ImageIO.read(new File("./src/team6/images/tree_mm.jpg"));
-			treeMR = ImageIO.read(new File("./src/team6/images/tree_mr.jpg"));
-			treeBL = ImageIO.read(new File("./src/team6/images/tree_bl.jpg"));
-			treeBM = ImageIO.read(new File("./src/team6/images/tree_bm.jpg"));
-			treeBR = ImageIO.read(new File("./src/team6/images/tree_br.jpg"));
-			treeAA = ImageIO.read(new File("./src/team6/images/tree_aa.jpg"));
-			treeAT = ImageIO.read(new File("./src/team6/images/tree_at.jpg"));
-			treeAL = ImageIO.read(new File("./src/team6/images/tree_al.jpg"));
-			treeAR = ImageIO.read(new File("./src/team6/images/tree_ar.jpg"));
-			treeAB = ImageIO.read(new File("./src/team6/images/tree_ab.jpg"));
-			treeUDT = ImageIO.read(new File("./src/team6/images/tree_udt.jpg"));
-			treeLRT = ImageIO.read(new File("./src/team6/images/tree_lrt.jpg"));
+			treeTL = ImageIO.read(new File("./src/team6/images/tree_tl.png"));
+			treeTM = ImageIO.read(new File("./src/team6/images/tree_tm.png"));
+			treeTR = ImageIO.read(new File("./src/team6/images/tree_tr.png"));
+			treeML = ImageIO.read(new File("./src/team6/images/tree_ml.png"));
+			treeMM = ImageIO.read(new File("./src/team6/images/tree_mm.png"));
+			treeMR = ImageIO.read(new File("./src/team6/images/tree_mr.png"));
+			treeBL = ImageIO.read(new File("./src/team6/images/tree_bl.png"));
+			treeBM = ImageIO.read(new File("./src/team6/images/tree_bm.png"));
+			treeBR = ImageIO.read(new File("./src/team6/images/tree_br.png"));
+			treeAA = ImageIO.read(new File("./src/team6/images/tree_aa.png"));
+			treeAT = ImageIO.read(new File("./src/team6/images/tree_at.png"));
+			treeAL = ImageIO.read(new File("./src/team6/images/tree_al.png"));
+			treeAR = ImageIO.read(new File("./src/team6/images/tree_ar.png"));
+			treeAB = ImageIO.read(new File("./src/team6/images/tree_ab.png"));
+			treeUDT = ImageIO.read(new File("./src/team6/images/tree_udt.png"));
+			treeLRT = ImageIO.read(new File("./src/team6/images/tree_lrt.png"));
 
-			waterTL = ImageIO.read(new File("./src/team6/images/water_tl.jpg"));
-			waterTM = ImageIO.read(new File("./src/team6/images/water_tm.jpg"));
-			waterTR = ImageIO.read(new File("./src/team6/images/water_tr.jpg"));
-			waterML = ImageIO.read(new File("./src/team6/images/water_ml.jpg"));
-			waterMM = ImageIO.read(new File("./src/team6/images/water_mm.jpg"));
-			waterMR = ImageIO.read(new File("./src/team6/images/water_mr.jpg"));
-			waterBL = ImageIO.read(new File("./src/team6/images/water_bl.jpg"));
-			waterBM = ImageIO.read(new File("./src/team6/images/water_bm.jpg"));
-			waterBR = ImageIO.read(new File("./src/team6/images/water_br.jpg"));
-			waterAA = ImageIO.read(new File("./src/team6/images/water_aa.jpg"));
-			waterAT = ImageIO.read(new File("./src/team6/images/water_at.jpg"));
-			waterAL = ImageIO.read(new File("./src/team6/images/water_al.jpg"));
-			waterAR = ImageIO.read(new File("./src/team6/images/water_ar.jpg"));
-			waterAB = ImageIO.read(new File("./src/team6/images/water_ab.jpg"));
-			waterLRT = ImageIO
-					.read(new File("./src/team6/images/water_lrt.jpg"));
-			waterUDT = ImageIO
-					.read(new File("./src/team6/images/water_udt.jpg"));
+			waterTL = ImageIO.read(new File("./src/team6/images/water_tl.png"));
+			waterTM = ImageIO.read(new File("./src/team6/images/water_tm.png"));
+			waterTR = ImageIO.read(new File("./src/team6/images/water_tr.png"));
+			waterML = ImageIO.read(new File("./src/team6/images/water_ml.png"));
+			waterMM = ImageIO.read(new File("./src/team6/images/water_mm.png"));
+			waterMR = ImageIO.read(new File("./src/team6/images/water_mr.png"));
+			waterBL = ImageIO.read(new File("./src/team6/images/water_bl.png"));
+			waterBM = ImageIO.read(new File("./src/team6/images/water_bm.png"));
+			waterBR = ImageIO.read(new File("./src/team6/images/water_br.png"));
+			waterAA = ImageIO.read(new File("./src/team6/images/water_aa.png"));
+			waterAT = ImageIO.read(new File("./src/team6/images/water_at.png"));
+			waterAL = ImageIO.read(new File("./src/team6/images/water_al.png"));
+			waterAR = ImageIO.read(new File("./src/team6/images/water_ar.png"));
+			waterAB = ImageIO.read(new File("./src/team6/images/water_ab.png"));
+			waterLRT = ImageIO.read(new File("./src/team6/images/water_lrt.png"));
+			waterUDT = ImageIO.read(new File("./src/team6/images/water_udt.png"));
 
-			waterCBL = ImageIO
-					.read(new File("./src/team6/images/water_cbl.png"));
-			waterCBR = ImageIO
-					.read(new File("./src/team6/images/water_cbr.png"));
-			waterCTL = ImageIO
-					.read(new File("./src/team6/images/water_ctl.png"));
-			waterCTR = ImageIO
-					.read(new File("./src/team6/images/water_ctr.png"));
+			waterCBL = ImageIO.read(new File("./src/team6/images/water_cbl.png"));
+			waterCBR = ImageIO.read(new File("./src/team6/images/water_cbr.png"));
+			waterCTL = ImageIO.read(new File("./src/team6/images/water_ctl.png"));
+			waterCTR = ImageIO.read(new File("./src/team6/images/water_ctr.png"));
 
 			mountainTL = ImageIO.read(new File(
 					"./src/team6/images/mountain_tl.jpg"));
