@@ -39,26 +39,22 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class GameRenderer extends JPanel {
 	
-	GameMap gameMap;
+	GameInstance gameInstance;
 	
 	int mapXSize = 64;
 	int mapYSize = 64;
-	
-	GameInstance players;
 	int xFov = 24;  //not used yet
 	int yFov = 16; //not used yet
 	int tileSize = 50;  //must be updated here and in driver
 	
+	//temp fake constuctor
 	public GameRenderer() {
-		
-		gameMap = new GameMap();
-		players = new GameInstance(); //temp fake constructor
+		gameInstance = new GameInstance();
 	}
 
 	// TODO : Needs to be changed, need more parameters
-	public GameRenderer(char[][] map, GameInstance players) {
-		gameMap.topLayer = map;
-		this.players = players;
+	public GameRenderer(GameInstance instance) {
+		this.gameInstance = instance;
 	}
 	
 	// @override
@@ -70,7 +66,7 @@ public class GameRenderer extends JPanel {
 		for (int i = 0; i < mapXSize; i++){
 			for (int j = 0; j < mapYSize; j++){
 		
-				tile = gameMap.getTerrain(gameMap.baseLayer[i][j], ' ');
+				tile = gameInstance.gameMap.getTerrain(gameInstance.gameMap.baseLayer[i][j], ' ');
 				g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
 			}
 		}
@@ -79,7 +75,8 @@ public class GameRenderer extends JPanel {
 		for (int i = 0; i < mapXSize; i++){
 			for (int j = 0; j < mapYSize; j++){
 				
-				tile = gameMap.getTerrain(gameMap.topLayer[i][j], gameMap.spriteStyle[i][j]);
+				tile = gameInstance.gameMap.getTerrain(gameInstance.gameMap.topLayer[i][j], 
+													gameInstance.gameMap.spriteStyle[i][j]);
 
 				if(tile != null)
 					g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
@@ -102,9 +99,9 @@ public class GameRenderer extends JPanel {
 		for (int i = 0; i < 7; i++){
 			int x = 0;
 			int y = 0;
-			x = players.tanks.get(i).xCoord;
-			y = players.tanks.get(i).yCoord;
-			g.drawImage(gameMap.getTank(i), x * tileSize, y * tileSize, tileSize, tileSize, null);
+			x = gameInstance.tanks.get(i).xCoord;
+			y = gameInstance.tanks.get(i).yCoord;
+			g.drawImage(gameInstance.gameMap.getTank(i), x * tileSize, y * tileSize, tileSize, tileSize, null);
 		}
 		
 	}// end paint()
