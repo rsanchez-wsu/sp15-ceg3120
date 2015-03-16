@@ -58,6 +58,9 @@ public class GameRenderer extends JPanel {
 	}
 	
 	// @override
+	
+	
+	
 	public void paint(Graphics g) {
 		
 		Image tile = null;

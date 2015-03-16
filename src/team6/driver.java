@@ -33,13 +33,68 @@ import java.awt.*;
 //This class just creates a frame, and adds what ever panel we are testing
 public class driver {
 
-    @SuppressWarnings("serial")
+	@SuppressWarnings("serial")
 	public static void main(String[] args) {
-      
-        JFrame gameFrame = new JFrame("game GUI Demo");
-        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        center(gameFrame);
 
+		GameInstance currentGame = new GameInstance();
+
+		JFrame gameFrame = new JFrame("game GUI Demo");
+		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		center(gameFrame);
+
+		// renderer section
+		GameRenderer renderer = new GameRenderer(currentGame) {
+			@Override
+			public Dimension getPreferredSize() {
+				return new Dimension(64 * 50, 64 * 50); // hard coded tile size
+														// must be updated here
+														// and in renderer
+			}
+		};
+		gameFrame.getContentPane().add(new JScrollPane(renderer),
+				BorderLayout.CENTER);
+		gameFrame.setVisible(true);
+		// end renderer section
+
+		// server gui section
+		// /create Jframe, create tree, create table, and gameInstance add tree
+		// and table to jframe using borerlayouts
+		// serverGUI gets updated with our CurrentGame;
+
+		System.out.println(currentGame.tanks.get(0).toString());
+		JFrame serverFrame = new JFrame("server GUI Demo");
+		ServerTree tree = new ServerTree();
+		ServerGUI table = ServerGUI.getInstance();
+		table.updateTable(currentGame);
+		table.statusBar(serverFrame);
+		serverFrame.add(table, BorderLayout.CENTER);
+		serverFrame.pack();
+		serverFrame.setVisible(true);
+		serverFrame.add(tree, BorderLayout.WEST);
+
+		// create instance of ServerMT, and give it our current game reference.
+		// then infinite loop step method
+		ServerMT server = new ServerMT(currentGame);
+
+		while (true) {
+			server.step();
+			renderer.repaint();
+
+		}// end while
+
+	}// end main
+
+	public static void center(JFrame frame) {
+		GraphicsEnvironment ge = GraphicsEnvironment
+				.getLocalGraphicsEnvironment();
+		Point center = ge.getCenterPoint();
+		int windowX = 1024;
+		int windowY = 640;
+		int x = center.x - windowX / 2;
+		int y = center.y - windowY / 2;
+		frame.setBounds(x, y, windowX, windowY);
+		frame.validate();
+	}
         
         //renderer section
         GameRenderer renderer = new GameRenderer() {
@@ -56,11 +111,13 @@ public class driver {
         ///create Jframe, create tree, create table, and gameInstance add tree and table to jframe using borerlayouts
         //serverGUI gets updated with our CurrentGame;
         GameInstance currentGame= new GameInstance();
+        
         System.out.println(currentGame.tanks.get(0).toString());
         JFrame serverFrame = new JFrame("server GUI Demo");
         ServerTree tree = new ServerTree(); 
         ServerGUI table = ServerGUI.getInstance();
         table.updateTable(currentGame);
+        table.statusBar(serverFrame);
         serverFrame.add(table,BorderLayout.CENTER);        
         serverFrame.pack();
         serverFrame.setVisible(true);        
@@ -86,19 +143,5 @@ public class driver {
   
     
 
-    public static void center(JFrame frame) {
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        Point center = ge.getCenterPoint();
-        int windowX = 1024;
-        int windowY = 640;
-        int x = center.x - windowX / 2;
-        int y = center.y - windowY / 2;
-        frame.setBounds(x, y, windowX, windowY);
-        frame.validate();
-    }
-    
-    
-    
-    
-}//end main class
+}// end main class
 

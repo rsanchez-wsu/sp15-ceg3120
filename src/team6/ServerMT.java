@@ -54,18 +54,28 @@ public class ServerMT {
 		currentGame = game;
 	}// end constructor
 
+	public boolean lobby() {
+		if (listener.socketList.size() > 7)
+			return false;
+		else
+
+			return true;
+
+	}
+
 	public void step() {
 
 		if (!inBuffer.isEmpty())
 			inProcess((InBufferInstruction) inBuffer.remove());
-	
+
 		// -parse inBuffer, take action on gameInstance
 		// //-detect new terrain to send to tank that moved
 		// //-check and see if anytanks can see moved tank
 		// //generate tank position messages to send to those tanks
 
 	}
-//processes instructions based on their types
+
+	// processes instructions based on their types
 	private void inProcess(InBufferInstruction instruction) {
 
 		switch (instruction.type) {
@@ -79,7 +89,7 @@ public class ServerMT {
 						+ " moved to x=" + instruction.x + " y="
 						+ instruction.y);
 				ServerGUI.getInstance().updateTable(currentGame);
-				//call send map info to moved tank
+				// call send map info to moved tank
 			}
 
 			break;
@@ -87,21 +97,32 @@ public class ServerMT {
 			System.out.println("MT processing tank attack");
 			if (validateAttack(instruction)) {
 				conductAttack(instruction);
-				ServerGUI.getInstance().updateTable(currentGame);	
+				ServerGUI.getInstance().updateTable(currentGame);
 			}
 
 			break;
 		case 2:
 			System.out.println("MT processing chat");
 			break;
-			
+
 		case 3:
-			System.out.println("MT processing rename");
-			currentGame.tanks.get(instruction.sourceID).Name=instruction.message;
+			System.out.println("MT processing handshake");
+			currentGame.tanks.get(instruction.sourceID).Name = instruction.message;
 			ServerGUI.getInstance().updateTable(currentGame);
-			break;	
+			// generate messages to update player names to everyone
+			for (int i = 0; i < listener.socketList.size(); i++) {
+				// sent a message to each socket, the name of the player
+				// associated with the outer loop
+				for(int j = 0; j < listener.socketList.size(); j++){
+				outBuffers.get(j).add(new OutBufferInstruction(1,i,currentGame.tanks.get(i).Name));	
+				}//end inner loop
+
+			}//end outer loop
+
+			break;
 
 		default:
+			System.out.println("inprocess failed");
 			break;
 		}
 
@@ -134,7 +155,8 @@ public class ServerMT {
 			if (tank.xCoord == instruction.x && tank.yCoord == instruction.y)
 				test = true;
 		}
-		//TODO add check to make sure attack position is on same x, or y coord as attacker
+		// TODO add check to make sure attack position is on same x, or y coord
+		// as attacker
 		return test;
 	}// end validate attack
 
@@ -174,22 +196,24 @@ public class ServerMT {
 			System.out.println("mason messed up the distance formula");
 
 		}// end switch
-		
-		// if the shot hit, perform attack		
+
+		// if the shot hit, perform attack
 		Random rand = new Random();
-		if (attack) {			
-			int attackVal = rand.nextInt((10 - 4) + 1) + 4; // 4-10 random number													
+		if (attack) {
+			int attackVal = rand.nextInt((10 - 4) + 1) + 4; // 4-10 random
+															// number
 
 			for (int i = 0; i < 8; i++) {
 				if (currentGame.tanks.get(i).xCoord == instruction.x
 						&& currentGame.tanks.get(i).yCoord == instruction.y) {
 					currentGame.tanks.get(i).health -= attackVal;
-					System.out.println("shot hit for "+ attackVal);
+					System.out.println("shot hit for " + attackVal);
 
 				}// end if tank matches
 			}// end for
 		}// end if attack
-		else System.out.println("miss attack");
+		else
+			System.out.println("miss attack");
 		// counter attack
 		boolean counterAttack = false;
 		switch (temp) {
@@ -214,16 +238,16 @@ public class ServerMT {
 
 		}// end switch
 			// if counter attack hits
-		
-		if (counterAttack&&attack){ // ensures counter attack only happens if attack happen
+
+		if (counterAttack && attack) { // ensures counter attack only happens if
+										// attack happen
 			rand = new Random();
 			int counterAttackVal = rand.nextInt((5 - 2) + 1) + 5; // 2-5 random
-			currentGame.tanks.get(instruction.sourceID).health -=counterAttackVal;
-			System.out.println("counter shot hit for "+ counterAttackVal);
-		}//end counter attack
-		else System.out.println("miss counter attack");
-		
-		
+			currentGame.tanks.get(instruction.sourceID).health -= counterAttackVal;
+			System.out.println("counter shot hit for " + counterAttackVal);
+		}// end counter attack
+		else
+			System.out.println("miss counter attack");
 
 	}// end conduct attack
 

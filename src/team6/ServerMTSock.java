@@ -73,8 +73,18 @@ public class ServerMTSock implements Runnable {
 			
 
 			try {
+			
+			if (!ServerMT.outBuffers.get(playerID).isEmpty()){	// if queue isnt empty
+				OutBufferInstruction instruction=(OutBufferInstruction)ServerMT.outBuffers.get(playerID).remove();
+				out.writeInt(instruction.type);
+				out.writeInt(instruction.playerNumber);
+				out.writeUTF(instruction.playerName);
+			}
+			else{
+				out.writeInt(-1);
+			}
 				
-				out.writeInt(-1);				
+				
 				int type=in.readInt();
 				System.out.println("debug "+type);
 				
