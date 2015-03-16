@@ -88,7 +88,7 @@ public class ServerGUI extends JPanel {
     	statBar.setBorder(new BevelBorder(BevelBorder.LOWERED));
     	frame.add(statBar, BorderLayout.SOUTH);
 
-    	JLabel statInfo = new JLabel("Wins: 5  ;  Losses: 6");
+    	JLabel statInfo = new JLabel("DB Status:             Game Status:");
     	
     	statBar.add(statInfo);
 
