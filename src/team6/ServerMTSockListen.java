@@ -28,6 +28,7 @@ package team6;
 
 //import java.io.*;
 import java.net.*;
+import java.util.concurrent.*;
 import java.util.*;
 //This class will act like a traditional multithreaded server socket class
 //it will maintain references to all threads it makes
@@ -65,7 +66,7 @@ public class ServerMTSockListen implements Runnable {
 				// Construct an object to process the socket connection
 				ServerMTSock connection = new ServerMTSock(socket);
 				socketList.add(connection);//keeps references to each thread
-				// Create a new thread to process the request.
+				ServerMT.outBuffers.add(new ConcurrentLinkedQueue());
 				Thread thread = new Thread(connection);
 				// Start the thread.
 				thread.start();

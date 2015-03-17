@@ -33,9 +33,9 @@ import java.util.*;
 //
 public class GameInstance {
 
-	// public all the things
-	public Calendar time;
+	public Calendar time;	
 	public ArrayList<TankObject> tanks = new ArrayList<TankObject>();
+	public GameMap gameMap = new GameMap();//place holder for testing, eventually game maps will be generated elsewhere.
 
 	// default test constructor
 	/*
@@ -74,13 +74,15 @@ public class GameInstance {
 			tanks.add(new TankObject("red.jpg", "noName", "noIP", 0, 2, 50,
 					"waiting"));
 		}// end for
-
+		
+		gameMap = new GameMap();
 	}
 
 	// creates a gameinstance from a arraylist of tanks
-	public GameInstance(ArrayList<TankObject> tanks, Calendar time) {
+	public GameInstance(ArrayList<TankObject> tanks, Calendar time, GameMap gameMap) {
 		this.time = time;
 		this.tanks = tanks;
+		this.gameMap = gameMap;
 	}
 
 	public void add(TankObject player) {

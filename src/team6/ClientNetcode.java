@@ -77,9 +77,17 @@ public class ClientNetcode {
 
 	                    Scanner scanner = new Scanner(System.in);
 	                    
-	                    
-	                    
-	                        System.out.println(in.readInt()+" server wants a message");//wait for the -1
+	                    	int temp=in.readInt();
+	                    	
+	                    	if (temp==1){
+	                    	System.out.println(in.readInt()+" :debug should be player number");	
+	                    	System.out.println(in.readUTF()+" :debug should be player name");	
+	                    	}
+	                    	
+	                    	else	                    		
+	                        System.out.println(temp+" server wants a message");//wait for the -1
+	                        
+	                        
 	                        System.out.println("Enter a 0 to move your tank, enter 1 to attack another tank,\nenter 2 to send a chat message, or enter -1 to do nothing.");
 	                        int userInput = scanner.nextInt();                        
 	                        out.writeInt(userInput);
@@ -91,8 +99,8 @@ public class ClientNetcode {
 	                            //System.out.println("chat type sent, enter message");
 	                            System.out.print("Enter the message: ");
 	                            scanner.next();
-	                            String temp = scanner.nextLine();
-	                            out.writeUTF(temp);
+	                            String message = scanner.nextLine();
+	                            out.writeUTF(message);
 	                        }
 	                        else{
 	                            //System.out.println("move or attack type sent, enter two coords");   
