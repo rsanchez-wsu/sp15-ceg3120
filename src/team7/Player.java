@@ -27,6 +27,7 @@ public class Player {
 	int posX;
 	int posY;
 	int state = 1; // 1: active, 2: wait, 3: dead
+	int playerNum;
 	
 	public Player(String name, int x, int y)
 	{
@@ -91,4 +92,13 @@ public class Player {
 		this.state = state;
 	}
 
+	public int getPlayerNum(){
+		return playerNum;
+	}	
+		
+	public void setPlayerNum(int playerNum)	{
+		this.playerNum = playerNum;
+	}
+	
 }
+
