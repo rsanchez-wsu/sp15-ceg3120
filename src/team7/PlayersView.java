@@ -38,12 +38,12 @@ public class PlayersView extends JFrame{
 	
 	private JTabbedPane tabbedPane;
 	
-	public PlayersView(String player, ClientView cv)
+	public PlayersView(String player, final ClientView cv)
 	{
 		this.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		        cv.removePlayersView();
+		        cv.removePlayersView();// Adjusted cv to be final to get rid of error message.
 		    }
 		});
 		
