@@ -57,28 +57,50 @@ public class Client {
 				smsg = din.readUTF();
 				
 				
-				/* (JTC) COMMAND PROCESSOR				
-				switch(smsg)
-				{
-					case "WELCOME":
-						//TODO
-						break;
-					case "PLAYERS PRESENT":
-						//TODO
-						break;
-					case "SORRY - GAME IN PROGRESS":
-						//TODO
-						break;
-					case "Game Started":
-						//TODO
-						break;
-					case "Game Started":
-						//TODO
-						break;
-					case "Game Started":
-						//TODO
-						break;
-				} */
+				//COMMAND PROCESSOR 
+				switch(smsg) { 
+				case "WELCOME": //TODO
+				
+				  break; 
+				  case "PLAYERS PRESENT": //TODO 
+					  break; 
+				  case
+				  "SORRY - GAME IN PROGRESS": //TODO 
+					  break; 
+				  case "GAME STARTED": //TODO
+					  break; 
+				  case "GAME ENDED": 
+					  //TODO
+					  break; 
+				  case "MAP INFO": //?EMPTY? 
+					  //TODO 
+					  break; 
+				  case "HEALTH": 
+				  	  //TODO 
+					  break; 
+				  case "GO": //TODO 
+					  break; 
+				  case "TIME":
+				  //TODO 
+					  break; 
+				  case "CHAT FROM": //TODO 
+					  break; 
+				  case
+				  "ILLEGAL ACTION": //TODO 
+					  break; 
+				  case "PLAYER MOVED": //TODO
+					  break;  
+				  case "PLAYER ATTACKING": //TODO 
+					  break; 
+				  case "ATTACK HIT":
+				      break;
+				  case "ATTACK MISS":
+				  	  break;
+				  case "INVALID MESSAGE":
+				  System.out.println("Your command was unrecognized by the server. Please re-enter.");
+				  	  break;
+			}
+				
 				
 				
 			}
