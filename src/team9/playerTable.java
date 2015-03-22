@@ -38,7 +38,7 @@ public class playerTable extends JPanel {
      * @param playerList Full list of players
      * @param currentPlayer Player playing on the current client
      */
-    public playerTable(Vector<Player> playerList, Player currentPlayer) {
+    public playerTable(final Vector<Player> playerList, Player currentPlayer) {
         super(new GridLayout(1, 0));
         
 			
