@@ -49,6 +49,7 @@ public class playerTable extends JPanel {
 		cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
+			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				int selectedColumn = table.getSelectedColumn();
 				if(!(selectedColumn<0)){
