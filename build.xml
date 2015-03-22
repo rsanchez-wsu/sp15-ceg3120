@@ -59,11 +59,7 @@
         destdir="build"
         includeantruntime="false"
         debug="on"
-        deprecation="on">
-          <!-- Exclude directories of teams whose code doesn't build -->
-          <exclude name="team9/**"/>
-      </javac>
-      <echo message="********** Excluding team9/ code from the build!"/>
+        deprecation="on"/>
       <copy todir="build">
         <fileset dir="src">
           <exclude name="**/*.java"/>
