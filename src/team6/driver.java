@@ -61,7 +61,6 @@ public class driver {
 		// and table to jframe using borerlayouts
 		// serverGUI gets updated with our CurrentGame;
 
-		System.out.println(currentGame.tanks.get(0).toString());
 		JFrame serverFrame = new JFrame("server GUI Demo");
 		ServerTree tree = new ServerTree();
 		ServerGUI table = ServerGUI.getInstance();
