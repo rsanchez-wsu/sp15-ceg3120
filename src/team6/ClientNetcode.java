@@ -62,14 +62,17 @@ public class ClientNetcode {
 	                
 	                String name = "";
 	                //Take in the name and store it in the variable, name.
-	                System.out.print("Enter player name: ");
+	                System.out.println("enter name: ");
 	                name = input.next();
 	                
 	                out.writeUTF(name);
 	                int playerID=-1;
-	                playerID=in.read();
+	                playerID=in.readInt();
+	                System.out.println("debug client read in playerID as "+playerID);
 	                
-	                
+	                //debug nothing should be in the socket buffers
+	        		System.out.println("debug nothing should be in the socket buffers");	        		
+	        		
 	                
 	                
 	                while (loop) {
@@ -80,18 +83,20 @@ public class ClientNetcode {
 	                    	int temp=in.readInt();
 	                    	
 	                    	if (temp==1){
+	                    	System.out.println("debug inbound message");		
 	                    	System.out.println(in.readInt()+" :debug should be player number");	
 	                    	System.out.println(in.readUTF()+" :debug should be player name");	
 	                    	}
 	                    	
 	                    	else	                    		
-	                        System.out.println(temp+" server wants a message");//wait for the -1
-	                        
-	                        
+	                        System.out.println("the inbound messagetype was"+temp);//wait for the -1
+	                    	
+	                    	System.out.println(" server wants a message"); 
 	                        System.out.println("Enter a 0 to move your tank, enter 1 to attack another tank,\nenter 2 to send a chat message, or enter -1 to do nothing.");
 	                        int userInput = scanner.nextInt();                        
 	                        out.writeInt(userInput);
 	                        if (userInput==-1){
+	                        	out.writeInt(-1);
 	                            //System.out.println("nothing to send message sent");
 	                           System.out.println("You have chosen to do nothing.");
 	                        }
@@ -100,16 +105,19 @@ public class ClientNetcode {
 	                            System.out.print("Enter the message: ");
 	                            scanner.next();
 	                            String message = scanner.nextLine();
-	                            out.writeUTF(message);
+	                            out.writeUTF(message); 
 	                        }
-	                        else{
+	                        else if(userInput==0||userInput==1){
 	                            //System.out.println("move or attack type sent, enter two coords");   
 	                            System.out.print("Enter the coordinates for your chosen action: ");
 	                        userInput = scanner.nextInt();
 	                        out.writeInt(userInput);
 	                        userInput = scanner.nextInt();
 	                        out.writeInt(userInput);
-	                        }//end else
+	                        }//end else if
+	                        else{
+	                        	System.out.print("invalid choice, you broke the client for now");
+	                        }
 
 	                }//end while
 	            }

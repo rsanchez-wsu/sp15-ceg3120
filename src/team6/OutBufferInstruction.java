@@ -39,7 +39,7 @@ public class OutBufferInstruction {
 		this.type = type;
 		this.playerNumber = playerNumber;
 		this.playerName = playerName;
-		System.out.println("out instruction created");
+		System.out.println("debug out instruction created. type= "+ type +" playerNumber= "+playerNumber+ " playername= "+ playerName );
 	}
 	
 	

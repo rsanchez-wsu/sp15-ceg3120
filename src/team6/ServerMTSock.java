@@ -46,11 +46,14 @@ public class ServerMTSock implements Runnable {
 		out= new DataOutputStream(socket.getOutputStream());
 		playerID=ServerMTSockListen.socketList.size();
 		name=in.readUTF();// first thing client does is send a string name in utf
-		System.out.println(name);
+		System.out.println("debug client connected with name of "+name);
 		out.writeInt(playerID);
-		
-		InBufferInstruction instruction = new InBufferInstruction(3,-1,-1,name,playerID, -1);
+		InBufferInstruction instruction = new InBufferInstruction(3,-1,-1,name,playerID, -1);//makes the playername inBufferInstructions
 		ServerMT.inBuffer.add(instruction);
+		
+		//debug nothing should be in the socket buffers
+		System.out.println("debug nothing should be in the socket buffers");
+		
 		
 		
 	}// end const
@@ -74,12 +77,14 @@ public class ServerMTSock implements Runnable {
 
 			try {
 			
-			if (!ServerMT.outBuffers.get(playerID).isEmpty()){	// if queue isnt empty
-				System.out.println("writing name message to socket");
+			if (!ServerMT.outBuffers.get(playerID).isEmpty()){	// if queue isnt empty				
 				OutBufferInstruction instruction=(OutBufferInstruction)ServerMT.outBuffers.get(playerID).remove();
-				System.out.println(instruction.type);//displaying this instead of debug
+				System.out.println("debug in serverMTSock sending Type= "+ instruction.type);//displaying this instead of debug
+				System.out.println("debug writing to socket: "+instruction.type );
 				out.writeInt(instruction.type);//debug
+				System.out.println("debug writing to socket: "+instruction.playerNumber );
 				out.writeInt(instruction.playerNumber);
+				System.out.println("debug writing to socket: "+instruction.playerName );
 				out.writeUTF(instruction.playerName);
 			}
 			else{
@@ -87,11 +92,11 @@ public class ServerMTSock implements Runnable {
 			}
 				
 				
-				int type=in.readInt();
-				System.out.println("debug "+type);
+				int type=in.readInt();				
+				System.out.println("debug read from socket: "+type );
 				
 				switch (type) {
-				case -1: System.out.println("MT do nothing");				
+				case -1: System.out.println("MT parsing(not really) nothing message"); break;				
 				case 0:  System.out.println("MT parsing tank move");
 						ServerMT.inBuffer.add(parseAsMove());  break;
 		        case 1:  System.out.println("MT parsing tank attack");
@@ -152,13 +157,14 @@ public class ServerMTSock implements Runnable {
 	private InBufferInstruction parseAsChat(){
 		int type=2;
 		String message="default text:error";
+		
 		try {
 			message=in.readUTF();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		System.out.println("debug chat message"+message );
 		InBufferInstruction temp = new InBufferInstruction(type,-1,-1,message,playerID, -1);
 		return temp;
 	}
