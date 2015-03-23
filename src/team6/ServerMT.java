@@ -48,9 +48,6 @@ public class ServerMT {
 	public ServerMT(GameInstance game) {
 		Thread thread = new Thread(listener);
 		thread.start();
-		InBufferInstruction temp = new InBufferInstruction(0, 20, 20, "fucku",
-				0, -1);
-		inBuffer.add(temp);
 		currentGame = game;
 	}// end constructor
 
