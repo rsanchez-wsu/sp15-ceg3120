@@ -163,8 +163,7 @@ public class ServerMTSock implements Runnable {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		System.out.println("debug chat message"+message );
+		}		
 		InBufferInstruction temp = new InBufferInstruction(type,-1,-1,message,playerID, -1);
 		return temp;
 	}

@@ -57,8 +57,7 @@ public class ClientNetcode {
 	                DataOutputStream out = new DataOutputStream(outToServer);
 	                DataInputStream in = new DataInputStream(inFromServer);
 	                //loop var becomes false in several exceptions and on quit
-	                boolean loop = true;
-	                
+	                boolean loop = true;	                
 	                
 	                String name = "";
 	                //Take in the name and store it in the variable, name.
@@ -83,10 +82,15 @@ public class ClientNetcode {
 	                    	int temp=in.readInt();
 	                    	
 	                    	if (temp==1){
-	                    	System.out.println("debug inbound message");		
-	                    	System.out.println(in.readInt()+" :debug should be player number");	
-	                    	System.out.println(in.readUTF()+" :debug should be player name");	
+	                    	System.out.println("debug inbound name message");
+	                    	int nameMsgPlayerID= in.readInt();
+	                    	System.out.println(nameMsgPlayerID+" :debug should be player number");	
+	                    	String nameMsgPlayerName = in.readUTF();
+	                    	System.out.println(nameMsgPlayerName+" :debug should be player name");
+	                    	clientGame.tanks.get(nameMsgPlayerID).Name=nameMsgPlayerName;
+	                    	
 	                    	}
+	                    	
 	                    	
 	                    	else	                    		
 	                        System.out.println("the inbound messagetype was"+temp);//wait for the -1

@@ -100,6 +100,8 @@ public class ServerMT {
 			break;
 		case 2:
 			System.out.println("MT processing chat");
+			System.out.println("debug: Chat is: "+ instruction.message );
+			//add outbufferinstruction for chat sending message to each client
 			break;
 
 		case 3:
