@@ -29,6 +29,7 @@ package team6;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 
 public class GameMap {
@@ -38,7 +39,8 @@ public class GameMap {
 	char[][] baseLayer = new char[mapXSize][mapYSize];
 	char[][] topLayer = new char[mapXSize][mapYSize];
 	char[][] spriteStyle = new char[mapXSize][mapYSize];
-
+	char[][] corners = new char[mapXSize][mapYSize];
+	
 	int timesExpanded = 0;// used to limit recursive terrain feature growth
 	boolean[][] expanded = new boolean[mapXSize][mapYSize];// used for recursive
 															// growth limiting
@@ -81,11 +83,22 @@ public class GameMap {
 	Image waterLRT = null;
 	Image waterUDT = null;
 
-	Image waterCBL = null;
-	Image waterCBR = null;
 	Image waterCTL = null;
 	Image waterCTR = null;
-
+	Image waterCBL = null;
+	Image waterCBR = null;
+	Image waterCTLTR = null;
+	Image waterCTLBL = null;
+	Image waterCTLBR = null;
+	Image waterCTRBL = null;
+	Image waterCTRBR = null;
+	Image waterCBLBR = null;
+	Image waterCTLTRBL = null;
+	Image waterCTLTRBR = null;
+	Image waterCTLBLBR = null;
+	Image waterCTRBLBR = null;
+	Image waterCTLTRBLBR = null;
+	
 	Image mountainTL = null;
 	Image mountainTM = null;
 	Image mountainTR = null;
@@ -109,6 +122,7 @@ public class GameMap {
 		buildBaseLayer();
 		buildTopLayer();
 		buildSpriteStyle();
+		buildCorners();
 	}// end GameMap()
 
 	private void findFiles() {
@@ -152,10 +166,21 @@ public class GameMap {
 			waterLRT = ImageIO.read(new File("./src/team6/images/water_lrt.png"));
 			waterUDT = ImageIO.read(new File("./src/team6/images/water_udt.png"));
 
-			waterCBL = ImageIO.read(new File("./src/team6/images/water_cbl.png"));
-			waterCBR = ImageIO.read(new File("./src/team6/images/water_cbr.png"));
 			waterCTL = ImageIO.read(new File("./src/team6/images/water_ctl.png"));
 			waterCTR = ImageIO.read(new File("./src/team6/images/water_ctr.png"));
+			waterCBL = ImageIO.read(new File("./src/team6/images/water_cbl.png"));
+			waterCBR = ImageIO.read(new File("./src/team6/images/water_cbr.png"));
+			waterCTLTR = ImageIO.read(new File("./src/team6/images/water_ctl_tr.png"));
+			waterCTLBL = ImageIO.read(new File("./src/team6/images/water_ctl_bl.png"));
+			waterCTLBR = ImageIO.read(new File("./src/team6/images/water_ctl_br.png"));
+			waterCTRBL = ImageIO.read(new File("./src/team6/images/water_ctr_bl.png"));
+			waterCTRBR = ImageIO.read(new File("./src/team6/images/water_ctr_br.png"));
+			waterCBLBR = ImageIO.read(new File("./src/team6/images/water_cbl_br.png"));
+			waterCTLTRBL = ImageIO.read(new File("./src/team6/images/water_ctl_tr_bl.png"));
+			waterCTLTRBR = ImageIO.read(new File("./src/team6/images/water_ctl_tr_br.png"));
+			waterCTLBLBR = ImageIO.read(new File("./src/team6/images/water_ctl_bl_br.png"));
+			waterCBLBR = ImageIO.read(new File("./src/team6/images/water_cbl_br.png"));
+			waterCTLTRBLBR = ImageIO.read(new File("./src/team6/images/water_ctl_tr_bl_br.png"));
 
 			mountainTL = ImageIO.read(new File(
 					"./src/team6/images/mountain_tl.png"));
@@ -255,9 +280,11 @@ public class GameMap {
 
 	private void buildSpriteStyle() {
 		/*
-		 * TERRAIN STYLE TABLE: -char- -MEANING- q Top-Left w Top-Middle e
-		 * Top-Right a Middle-Right s Middle-Middle d Middle-Right z Bottom-Left
-		 * x Bottom-Middle c Bottom-Right v Alone-Alone r Alone-Top t Alone-Left
+		 * TERRAIN STYLE TABLE: -char- -MEANING- 
+		 * q Top-Left w Top-Middle e Top-Right 
+		 * a Middle-Left s Middle-Middle d Middle-Right 
+		 * z Bottom-Left x Bottom-Middle c Bottom-Right 
+		 * v Alone-Alone r Alone-Top t Alone-Left
 		 * y Alone-Right u Alone-Bottom f Left-Right Tunnel g Up-Down Tunnel
 		 */
 
@@ -333,6 +360,128 @@ public class GameMap {
 		}// end for loop
 	}// end buildSpriteStyle()
 
+	private void buildCorners(){
+		
+		/*
+		 * CORNER STYLE TABLE -char- -MEANING-
+		 * q Top-Left p Top-Right z Bottom-Left m Bottom-Right
+		 * t Top-Left && Top-Right a Top-Left && Bottom-Left g Top-Left && Bottom-Right 
+		 * h Top-Right && Bottom-Left l Top-Right && Bottom-Right 
+		 * v Bottom-Left && Bottom-Right
+		 * f Top-Left && Top-Right && Bottom-Left
+		 * j Top-Left && Top-Right && Bottom-Right
+		 * c Top-Left && Bottom-Left && Bottom-Right
+		 * b Top-Right && Bottom-Left && Bottom-Right
+		 * y All
+		 */
+		
+		for(int i = 0; i < mapXSize; i++){
+			for(int j = 0; j < mapYSize; j++){
+			
+				if(topLayer[i][j] == 'w'){
+					switch(spriteStyle[i][j]){
+						case 'q' : 
+							if(spriteStyle[i + 1][j] == 's' || spriteStyle[i + 1][j] == 'd'){
+								combineCorners(i + 1, j, 'q' );
+						}
+					}
+				}
+			}
+		}
+	}// end buildCorners()
+	
+	/*
+	 *	Used when a corner is needed. This checks if the tile currently has a
+	 *	corner associated with it, then combines the two corners to make one
+	 *	corner tile.
+	 */
+	private void combineCorners(int i, int j, char newChar){
+		
+		char curChar = corners[i][j];
+		
+		if(curChar == '\0')
+			corners[i][j] = newChar;
+		else{
+			if(newChar == 'q'){// adding TL
+				switch(curChar){
+				case 'p' : corners[i][j] = 't';
+							break;
+				case 'z' : corners[i][j] = 'a';
+							break;
+				case 'm' : corners[i][j] = 'g';
+							break;
+				case 'h' : corners[i][j] = 'f';
+							break;
+				case 'l' : corners[i][j] = 'j';
+							break;
+				case 'v' : corners[i][j] = 'c';
+							break;
+				case 'b' : corners[i][j] = 'y';
+							break;
+				default : break;
+				}
+			}
+			else if(newChar == 'p'){// adding TR
+				switch(curChar){
+				case 'q' : corners[i][j] = 't';
+							break;
+				case 'z' : corners[i][j] = 'h';
+							break;
+				case 'm' : corners[i][j] = 'l';
+							break;
+				case 'a' : corners[i][j] = 'f';
+							break;
+				case 'g' : corners[i][j] = 'j';
+							break;
+				case 'v' : corners[i][j] = 'b';
+							break;
+				case 'c' : corners[i][j] = 'y';
+							break;
+				default : break;
+				}
+			}
+			else if(newChar == 'z'){// adding BL
+				switch(curChar){
+				case 'q' : corners[i][j] = 'a';
+							break;
+				case 'p' : corners[i][j] = 'h';
+							break;
+				case 'm' : corners[i][j] = 'v';
+							break;
+				case 't' : corners[i][j] = 'f';
+							break;
+				case 'g' : corners[i][j] = 'c';
+							break;
+				case 'l' : corners[i][j] = 'b';
+							break;
+				case 'j' : corners[i][j] = 'y';
+							break;
+				default : break;
+				}
+			}
+			else if(newChar == 'm'){// adding BR
+				switch(curChar){
+				case 'q' : corners[i][j] = 'g';
+							break;
+				case 'p' : corners[i][j] = 'l';
+							break;
+				case 'z' : corners[i][j] = 'v';
+							break;
+				case 't' : corners[i][j] = 'j';
+							break;
+				case 'a' : corners[i][j] = 'c';
+							break;
+				case 'h' : corners[i][j] = 'b';
+							break;
+				case 'f' : corners[i][j] = 'y';
+							break;
+				default : break;
+				}
+			}
+		}
+	}// end combineCorners()
+	
+	
 	/*
 	 * This method ensures that every tile possibly gets expanded upon, so that
 	 * terrain types occur in clusters. It also zeroes out some member variables
@@ -574,7 +723,22 @@ public class GameMap {
 		return result;
 	}// end getTerrain()
 
-	public Image getTank(int playerNum) {
+	public Image getCorner(int i, int j){
+		
+		Image result = null;
+		
+		if(topLayer[i][j] == 'w'){// terrain is water
+			switch(corners[i][j]){
+			case 'q' : result = waterCTL;
+						break;
+			default : break;
+			}
+		}
+		
+		return result;
+	}// end getCorner()
+	
+ 	public Image getTank(int playerNum) {
 
 		return tank;
 	}

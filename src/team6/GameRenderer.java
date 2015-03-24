@@ -57,10 +57,9 @@ public class GameRenderer extends JPanel {
 		this.gameInstance = instance;
 	}
 	
-	// @override
 	
 	
-	
+	@Override
 	public void paint(Graphics g) {
 		
 		Image tile = null;
@@ -80,7 +79,6 @@ public class GameRenderer extends JPanel {
 				
 				tile = gameInstance.gameMap.getTerrain(gameInstance.gameMap.topLayer[i][j], 
 													gameInstance.gameMap.spriteStyle[i][j]);
-
 				if(tile != null)
 					g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
 				else{//bad color
@@ -90,13 +88,16 @@ public class GameRenderer extends JPanel {
 			}
 		}// end for loop
 		
-		/*
-		 * Demo for corners issue.
-		g.drawImage(gameMap.waterBM, 10 * tileSize, 10 * tileSize, tileSize, tileSize, null);
-		g.drawImage(gameMap.waterBR, 9 * tileSize, 11 * tileSize, tileSize, tileSize, null);
-		g.drawImage(gameMap.waterMM, 9 * tileSize, 10 * tileSize, tileSize, tileSize, null);
-		g.drawImage(gameMap.waterCBR, 9 * tileSize, 10 * tileSize, tileSize, tileSize, null);
-		*/
+		// Draw Corners
+		for(int i = 0; i < mapXSize; i++){
+			for(int j = 0; j < mapYSize; j++){
+				
+				tile = gameInstance.gameMap.getCorner(i, j);
+				
+				if(tile != null)
+					g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
+			}
+		}// end for loop
 		
 		// Draw Tanks
 		for (int i = 0; i < 7; i++){
