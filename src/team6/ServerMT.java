@@ -78,7 +78,7 @@ public class ServerMT {
 
 	}
 	private void generateViews(){
-		for (int i=0; i<8; i++){
+		for (int i=0; i<ServerMTSockListen.socketList.size(); i++){
 			if (playerUpdate[i])
 			processVision(i);
 			playerUpdate[i]=false;
