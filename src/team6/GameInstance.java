@@ -35,43 +35,12 @@ public class GameInstance {
 
 	public Calendar time;	
 	public ArrayList<TankObject> tanks = new ArrayList<TankObject>();
-	public GameMap gameMap = new GameMap();//place holder for testing, eventually game maps will be generated elsewhere.
-
-	// default test constructor
-	/*
-	 * public GameInstance(){ time= Calendar.getInstance();
-	 * 
-	 * tanks.add( new TankObject("red.jpg", "xXKi113R69Xx", "192.168.1.1", 5, 5,
-	 * 50, "Active")); tanks.add( new TankObject("green.jpg",
-	 * "Matt"+String.valueOf((int)(Math.random()*50)), "178.224.102.99",
-	 * 7,5,(int)(Math.random()*50), "wait")); tanks.add( new
-	 * TankObject("green.jpg", "Jeff"+String.valueOf((int)(Math.random()*50)),
-	 * "211.87.23.81",
-	 * (int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50),
-	 * "wait")); tanks.add( new TankObject("green.jpg",
-	 * "Gary"+String.valueOf((int)(Math.random()*50)), "73.23.144.17",
-	 * (int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50),
-	 * "wait")); tanks.add( new TankObject("green.jpg",
-	 * "Stu"+String.valueOf((int)(Math.random()*50)), "141.55.12.201",
-	 * (int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50),
-	 * "wait")); tanks.add( new TankObject("green.jpg",
-	 * "Jill"+String.valueOf((int)(Math.random()*50)), "51.122.77.2",
-	 * (int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50),
-	 * "wait")); tanks.add( new TankObject("green.jpg",
-	 * "Kent"+String.valueOf((int)(Math.random()*50)), "134.11.3.210",
-	 * (int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50),
-	 * "wait")); tanks.add( new TankObject("green.jpg",
-	 * "Scot"+String.valueOf((int)(Math.random()*50)), "178.224.102.99",
-	 * (int)(Math.random()*50),(int)(Math.random()*50),(int)(Math.random()*50),
-	 * "wait"));
-	 * 
-	 * }
-	 */
+	public GameMap gameMap = new GameMap();
 
 	public GameInstance() {
 		time = Calendar.getInstance();
 		for (int i = 0; i < 8; i++) {
-			tanks.add(new TankObject("red.jpg", "noName", "noIP", 0, 2, 50,
+			tanks.add(new TankObject("red.jpg", "noName", "noIP", 0, 0, 50,
 					"waiting"));
 		}// end for
 		
@@ -82,7 +51,7 @@ public class GameInstance {
 	public GameInstance(Calendar time, GameMap gameMap) {
 		
 		for (int i = 0; i < 8; i++) {
-			tanks.add(new TankObject("red.jpg", "noName", "noIP", 0, 2, 50,
+			tanks.add(new TankObject("red.jpg", "noName", "noIP", 2, 2, 50,
 					"waiting"));
 		}// end for
 		
