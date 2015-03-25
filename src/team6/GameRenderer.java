@@ -1,114 +1,104 @@
+/*
+ * Team 6
+ * Mason Henrickson
+ * Christopher Dolence
+ * Scott Lee
+ * Benjamin Winks
+ */
+
+/*
+ *  Copyright (C) <2015>  <Team 6>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package team6;
 
 import java.awt.*;
-
 import javax.swing.*;
-
-import javax.imageio.*;
-import java.io.*;
-//import java.util.*;
-//This class will render a 64x64 array representing a map, and a array
-//of TankObjects, representing players.
-
-//will update to render only 24x16 squares at a time, scrollable through arrowkeys.
 
 // ????? Pass tileSize from driver ?????
 
 @SuppressWarnings("serial")
 public class GameRenderer extends JPanel {
-
-	char[][] map = new char[64][64];
-	GameInstance players;
-	int xFov=24;  //not used yet
-	int yFov=16; //not used yet
-	int tileSize=50;  //must be updated here and in driver
-	Image tank = null;
-	Image grass = null;
-	Image lake = null;
-	Image mountain = null;
-	Image hill = null;
-
-
+	
+	GameInstance gameInstance;
+	
+	int mapXSize = 64;
+	int mapYSize = 64;
+	int xFov = 24;  //not used yet
+	int yFov = 16; //not used yet
+	int tileSize = 50;  //must be updated here and in driver
+	
+	//temp fake constuctor
 	public GameRenderer() {
-		for(int i=0; i<64 ; i++){
-			for (int j=0; j<64; j++){				
-				int temp= (int) (Math.random()*30);	//gen random terrain			
-				if (temp<=15)				
-					map[i][j]='g';
-				else if (temp<=23)
-					map[i][j]='h';
-				else if (temp<=26)
-					map[i][j]='m';
-				else
-					map[i][j]='l';
-			}
-		}		
-		players=new GameInstance(); //temp fake constructor
-		
-		try {                
-	        tank = ImageIO.read(new File("./src/team6/tank.png"));
-	        mountain = ImageIO.read(new File("./src/team6/mountain.png"));
-	        hill = ImageIO.read(new File("./src/team6/hill.png"));
-	        lake = ImageIO.read(new File("./src/team6/lake.png"));
-	        grass = ImageIO.read(new File("./src/team6/grass.png"));
-	       } catch (IOException ex) {
-	    	   System.out.println(ex);
-	    	   // handle exception...
-	       } 
+		gameInstance = new GameInstance();
 	}
 
-	public GameRenderer(char[][] map, GameInstance players) {
-		this.map = map;
-		this.players = players;
-
+	// TODO : Needs to be changed, need more parameters
+	public GameRenderer(GameInstance instance) {
+		this.gameInstance = instance;
 	}
-
-	// @override
+	
+	
+	@Override
 	public void paint(Graphics g) {
-		for (int i = 0; i < 64; i++) {
-			for (int j = 0; j < 64; j++) {
+		
+		Image tile = null;
+		
+		// Draw terrain
+		for (int i = 0; i < mapXSize; i++){
+			for (int j = 0; j < mapYSize; j++){
+		
+				// Draw baseLayer
+				tile = gameInstance.gameMap.getTerrain(gameInstance.gameMap.baseLayer[i][j], ' ');
 				
-				if (map[i][j] == 'g'){// grass
-					//g.setColor(new Color(10,100,26));
-					//g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
-					g.drawImage(grass, i*tileSize, j*tileSize, tileSize, tileSize, null);
-				}
-				else if (map[i][j] == 'l'){//lake
-					//g.setColor(new Color(25,35,165));
-					//g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
-					g.drawImage(lake, i * tileSize, j * tileSize, tileSize, tileSize, null);
-				}
-				else if (map[i][j] == 'm'){//mountain
-					//g.setColor(new Color(90,95,100));
-					//g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
-					g.drawImage(mountain, i * tileSize, j * tileSize, tileSize, tileSize, null);
-				}
-				else if (map[i][j] == 'h'){//hill
-					//g.setColor(new Color(125,90,65));
-					//g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
-					g.drawImage(hill, i * tileSize, j * tileSize, tileSize, tileSize, null);
-					
-				}
+				if(tile != null)
+					g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
 				else{//bad color
 					g.setColor(Color.BLACK);
 					g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
 				}
 				
-								
+				// Draw TopLayer
+				tile = gameInstance.gameMap.getTerrain(gameInstance.gameMap.topLayer[i][j], 
+						gameInstance.gameMap.spriteStyle[i][j]);
+				if(tile != null)
+					g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
+				else{//bad color
+					g.setColor(Color.BLACK);
+					g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
+				}
+				
+				// Draw Corners
+				tile = gameInstance.gameMap.getCorner(i, j);
+				
+				if(tile != null)
+					g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
 			}
-		}
-
-		for (int i=0; i<7;i++){
-			int x=0;
-			int y=0;
-			x=players.tanks.get(i).xCoord;
-			y=players.tanks.get(i).yCoord;
-			//g.setColor(Color.RED);
-			//g.fillRect(x*tileSize, y*tileSize, tileSize, tileSize);
-			g.drawImage(tank, x*tileSize, y*tileSize, tileSize, tileSize, null);
+		}// end for loop
+		
+		// Draw Tanks
+		for (int i = 0; i < 7; i++){
+			int x = 0;
+			int y = 0;
+			x = gameInstance.tanks.get(i).xCoord;
+			y = gameInstance.tanks.get(i).yCoord;
+			g.drawImage(gameInstance.gameMap.getTank(i), x * tileSize, y * tileSize, tileSize, tileSize, null);
 		}
 		
-		
-	}
+	}// end paint()
 
-}
+}// end GameRenderer Class

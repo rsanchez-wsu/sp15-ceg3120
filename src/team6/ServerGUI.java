@@ -27,6 +27,7 @@
 package team6;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
@@ -38,15 +39,20 @@ import java.awt.*;
 
 @SuppressWarnings("serial")
 public class ServerGUI extends JPanel {	
+	
     private static ServerGUI instance= new ServerGUI();    
     JTable table; 
     String[] columnNames = {"Tank Image", "Name", "IP",
             "x coord", "y coord", "Health","Status"};
-    Object[][] data = new Object[8][]; //ugg probably not the best, but i'm rusty and havent picked a standard. this will always be populated?
+   
+    Object[][] data = new Object[8][]; //will be at most 8 tanks in the game, but tank object structure isnt finalized
+    //when ever updating gameInstance, make sure to reparse the data into the array; untill the data object is factored out.
+    public GameInstance game=new GameInstance();  //having the gameInstance, and data 2d array object is two representations of the same data, should move the 2d array aspect into gameInstance
     
     public ServerGUI() {
+    	
         super(new GridLayout(1, 0));
-        GameInstance game=new GameInstance();
+        
         for (int i=0;i<8;i++){
         	data[i]=game.tanks.get(i).toStringArray();
         }
@@ -61,7 +67,7 @@ public class ServerGUI extends JPanel {
 
     public ServerGUI(GameInstance game) {
         super(new GridLayout(1, 0));
-                Object[][] data = new Object[8][]; //ugg probably not the best, but i'm rusty and havent picked a standard. this will always be populated?
+                Object[][] data = new Object[8][]; 
         
         
         for (int i=0;i<8;i++){
@@ -75,10 +81,24 @@ public class ServerGUI extends JPanel {
         add(scrollPane);        
     }// end ServerTankObjectGUI()
     
-    
-    
+    //Status bar for Server GUI
+    public void statusBar(JFrame frame){
+
+    	JPanel statBar = new JPanel();
+    	statBar.setBorder(new BevelBorder(BevelBorder.LOWERED));
+    	frame.add(statBar, BorderLayout.SOUTH);
+
+    	JLabel statInfo = new JLabel("DB Status:             Game Status:");
+    	
+    	statBar.add(statInfo);
+
+    	frame.setVisible(true);
+    	    
+    }
+
     public void updateTable(GameInstance game)
-    {     	
+    {   
+    	this.game=game;//needed because this class has redunant data representation; move 2d array into game instance later.
     	for (int i=0;i<8;i++){
         	data[i]=game.tanks.get(i).toStringArray();
         }
@@ -87,10 +107,12 @@ public class ServerGUI extends JPanel {
     }//updateTable
     
     
-    //instance should always be initilized now  - mason
+    //not needed instance should always be initilized now  - mason
     public static ServerGUI getInstance(){
         return instance;
     }//end getinstance
+    
+
     
 }// end ServerTankObjectGUI Class
 

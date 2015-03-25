@@ -23,7 +23,8 @@ public class Coordinate extends java.awt.Point {
     public Coordinate(int x, int y){
         super(x,y);
     }
-    public String toString(){
+    @Override
+	public String toString(){
         if(x<0||y<0){
             return"(never)";
         }

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="turntanks" default="all" xmlns:ivy="antlib:org.apache.ivy.ant">
+  <!--
+  In order to use the Ivy tasks, it is necessary for Ant to be able to find
+  the Ivy jar.  If you install the Ivy plugin for your IDE, then the Ivy
+  instance in your IDE will handle resolving the necessary dependencies.  If
+  you want to be able to run the Ant tasks from the command line, you ned to
+  make sure to install the ivy.jar in your ${ANT_HOME}/lib directory so that
+  Ant can find it.
+
+  Instructions for installing Apache Ivy can be obtained here:
+  
+  For use with command-line Ant: http://ant.apache.org/ivy/download.cgi
+  For use with an IDE: http://ant.apache.org/ivy/ivyde/download.cgi
+  -->
+
+  <!--
+  This location is set to that Ant is able to locate the ivy.jar on systems
+  (like Linux) that use a package manager but do not install every .jar into
+  the system classpath by default (or that don't have a system classpath).
+  If the ivy.jar is in ${ANT_HOME}/lib, then it will be found there first
+  and this path will be ignored.  If this path does not exist on your system
+  its declaration here will not cause an error.
+  -->
+  <path id="ivy.jar.location">
+    <pathelement location="/usr/share/java/ivy.jar"/>
+  </path>
+
+  <!-- ********************* -->
+  <!-- Declare the Ivy tasks -->
+  <!-- ********************* -->
+
+  <taskdef resource="org/apache/ivy/ant/antlib.xml"
+    uri="antlib:org.apache.ivy.ant"
+    classpathref="ivy.jar.location"/>
+
+  <target name="init"
+    depends="resolve"
+    description="Initialize the build environment"/>
+
+  <target name="resolve"
+    description="Retrieve dependencies with Ivy">
+    <ivy:configure/>
+    <ivy:resolve/>
+    <ivy:retrieve/>
+  </target>
+
+  <target name="all"
+    depends="clean,init,build,test"
+    description="Execute the clean, init, build, and test targets"/>
+
+  <target name="build"
+    depends="init"
+    description="Build the code">
+
+    <mkdir dir="build"/>
+      <javac srcdir="src"
+        destdir="build"
+        includeantruntime="false"
+        debug="on"
+        deprecation="on"/>
+      <copy todir="build">
+        <fileset dir="src">
+          <exclude name="**/*.java"/>
+        </fileset>
+      </copy>
+
+  </target>
+
+  <target name="clean"
+    description="Remove compiled artifacts and clean up work files">
+
+    <delete dir="lib" quiet="true"/>
+    <delete dir="build" quiet="true"/>
+
+  </target>
+
+  <target name="test"
+    depends="build"
+    description="Execute unit tests">
+
+    <!-- Place commands to execute unit tests here -->
+    <echo message="The 'test' task is not yet implemented!"/>
+
+  </target>
+
+  <target name="run-client"
+    depends="build"
+    description="Run the Turn Tanks client application">
+
+    <!-- Place commands to run client here -->
+    <echo message="The 'run-client' task is not yet implemented!"/>
+
+  </target>
+
+  <target name="run-server"
+    depends="build"
+    description="Run the Turn Tanks server application">
+
+    <!-- Place commands to run server here -->
+    <echo message="The 'run-server' task is not yet implemented!"/>
+
+  </target>
+
+</project>

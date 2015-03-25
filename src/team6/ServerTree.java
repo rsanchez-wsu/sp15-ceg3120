@@ -41,56 +41,53 @@ public class ServerTree extends JPanel {
 
 	public ServerTree() {
 
-		//Date gameDate = new Date();
+		// Date gameDate = new Date();
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("invisible root");		
 		// create the root node
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Games");
-		// create the child nodes
-		// ????? Eclipse told me to make final ?????
+		DefaultMutableTreeNode historyRoot = new DefaultMutableTreeNode("Past Games");
+		
+		DefaultMutableTreeNode currentGame = new DefaultMutableTreeNode("Current Game");
+		
+		
+		// create the child nodes		
 		final HashMap<String, GameInstance> gameList = new HashMap<>();
 		for (int i = 0; i < 8; i++) {
-			root.add(new DefaultMutableTreeNode("Game " + i));
+			historyRoot.add(new DefaultMutableTreeNode("Game " + i));
 		}
-		for (int i = 0; i < root.getChildCount(); i++) {
+		for (int i = 0; i < historyRoot.getChildCount(); i++) {
 			GameInstance tempVar = new GameInstance();
 
-			gameList.put(root.getChildAt(i).toString(), tempVar);
+			gameList.put(historyRoot.getChildAt(i).toString(), tempVar);
 		}
 
 		// create the tree by passing in the root node
-		tree = new JTree(root);
-
+		root.add(currentGame);
+		root.add(historyRoot);
+		
+		tree = new JTree(root); //creates the tree, with out added root node
+		tree.setRootVisible(false);
+		add(tree);// adds tree to pane
+		
+		
 		tree.addTreeSelectionListener(new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent e) {
 
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode) e
 						.getPath().getLastPathComponent();
+				GameInstance gi;
+				if (node.toString().equals("Past Games"))
+					return; //return if root node was clicked
+				else if (node.toString().equals("Current Game"))
+					gi=ServerGUI.getInstance().game; //pulls the game instance from the serverGUI class
+				else
+				gi = gameList.get(node.toString());
 
-				GameInstance gi = gameList.get(node.toString());
-
-				System.out.println(gi.tanks.get(0).toString());				
-				
-				ServerGUI gui = ServerGUI.getInstance();
-				
-				
-//				TankObject[] tanks = gi.getAllTanks();
-
-//				Object[][] data = new Object[tanks.length][];
-//				for (int i = 0; i < data.length; i++) {
-//					data[i] = tanks[i].toStringArray();
-//
-//				}
-//				gui.updateTable(data);
-				gui.updateTable(gi);
+				ServerGUI.getInstance().updateTable(gi);
 			}
 		}
 
 		);
 
-		add(tree);
 
-		// for (int i = 0; i < currentGames.tanks.size(); i++) {
-		// if (currentGames.tanks.)
-		// }
-
-	}
-}
+	}//end constructor
+}//end class

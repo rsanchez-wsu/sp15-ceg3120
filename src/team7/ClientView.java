@@ -78,7 +78,8 @@ public class ClientView extends JFrame
 		//(JTC) Set up icons for player buttons
 		final ImageIcon tankIcon = new ImageIcon("tank.png", "Tank Icon");
 		Image image = tankIcon.getImage();
-		image = image.getScaledInstance(image.getWidth(null)/2, image.getHeight(null)/2, Image.SCALE_SMOOTH);
+		//image.getWidth(null)/2 ; image.getHeight(null)/2
+		image = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 		tankIcon.setImage(image);
 		
 		
