@@ -27,10 +27,10 @@
 package team6;
 
 public class OutBufferInstruction {
-	
+	//TODO this class should be changed so that the constructor type sets the type value, instead of being passed.
 	
 
-	int type =-1; //0 is welcome, 1 is players present, 2 is tank position, 3 is terrain message
+	int type =-1; //0 is welcome, 1 is players present, 2 is tank move, 3 is terrain message
 	int playerNumber=-1;
 	int x;
 	int y;
@@ -42,7 +42,7 @@ public class OutBufferInstruction {
 	
 	String playerName="none";
 
-	public OutBufferInstruction(int type, int playerNumber, String playerName) {
+	public OutBufferInstruction(int type, int playerNumber, String playerName) {//should be type 1
 		super();
 		this.type = type;
 		this.playerNumber = playerNumber;
@@ -50,7 +50,18 @@ public class OutBufferInstruction {
 		System.out.println("debug out instruction created. type= "+ type +" playerNumber= "+playerNumber+ " playername= "+ playerName );
 	}
 	
-	public OutBufferInstruction(int type, int playerNumber, String playerName,char bot, char top, char style, char corner) {
+	public OutBufferInstruction(int type, int playerNumber, int x, int y) {//should be type 2 tank move message constructor
+		
+		this.type = type;
+		this.playerNumber=playerNumber;
+		this.x=x;
+		this.y=y;				
+		
+		System.out.println("debug out instruction created. type= "+ type +" playerNumber= "+playerNumber+ " cords "+ x+", "+y );
+		
+	}
+	
+	public OutBufferInstruction(int type, int playerNumber, String playerName,char bot, char top, char style, char corner) {//should be type 3 terrain message constructor
 		super();
 		this.type = type;
 		this.playerNumber = playerNumber;
@@ -59,20 +70,10 @@ public class OutBufferInstruction {
 		this.top=top;
 		this.style=style;
 		this.corner=corner;
-		System.out.println("debug out instruction created. type= "+ type +" playerNumber= "+playerNumber+ " playername= "+ playerName );
+		System.out.println("debug out instruction created. type= "+ type + " playername= "+ playerName );
 	}
 	
-	public OutBufferInstruction(int type, int playerNumber, int x, int y) {
-		
-		this.type = type;
-		this.playerNumber=playerNumber;
-		this.x=x;
-		this.y=y;
-				
-		
-		
-		
-	}
+
 	
 
 }
