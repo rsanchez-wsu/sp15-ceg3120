@@ -77,11 +77,16 @@ public class GameInstance {
 		
 		gameMap = new GameMap();
 	}
-
+	
 	// creates a gameinstance from a arraylist of tanks
-	public GameInstance(ArrayList<TankObject> tanks, Calendar time, GameMap gameMap) {
+	public GameInstance(Calendar time, GameMap gameMap) {
+		
+		for (int i = 0; i < 8; i++) {
+			tanks.add(new TankObject("red.jpg", "noName", "noIP", 0, 2, 50,
+					"waiting"));
+		}// end for
+		
 		this.time = time;
-		this.tanks = tanks;
 		this.gameMap = gameMap;
 	}
 

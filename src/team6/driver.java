@@ -29,6 +29,7 @@ package team6;
 import javax.swing.*;
 
 import java.awt.*;
+import java.util.Calendar;
 
 //This class just creates a frame, and adds what ever panel we are testing
 public class driver {
@@ -36,8 +37,10 @@ public class driver {
 	@SuppressWarnings("serial")
 	public static void main(String[] args) {
 
-		GameInstance currentGame = new GameInstance();
-
+		GameMap currentMap = new GameMap();
+		currentMap.generateMap();
+		GameInstance currentGame = new GameInstance(Calendar.getInstance(), currentMap);
+		
 		JFrame gameFrame = new JFrame("game GUI Demo");
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		center(gameFrame);

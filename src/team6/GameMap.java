@@ -117,14 +117,32 @@ public class GameMap {
 	Image mountainLRT = null;
 	
 	public GameMap() {
+		
+		generateBlankLayers();
+		
+	}// end GameMap()
 
+	public void generateMap(){
+		
 		findFiles();
 		buildBaseLayer();
 		buildTopLayer();
 		buildSpriteStyle();
 		buildCorners();
-	}// end GameMap()
-
+	}// end generateMap()
+	
+	private void generateBlankLayers(){
+		
+		for(int i = 0; i < mapXSize; i++){
+			for(int j = 0; j < mapYSize; j++){
+				baseLayer[i][j] = 'x';
+				topLayer[i][j] = 'x';
+				spriteStyle[i][j] = 'x';
+				corners[i][j] = 'x';
+			}
+		}
+	}// end generateBlankLayers()
+	
 	private void findFiles() {
 
 		try {
@@ -360,8 +378,72 @@ public class GameMap {
 		}// end for loop
 	}// end buildSpriteStyle()
 
+	@SuppressWarnings({ "incomplete-switch", "fallthrough" })
 	private void buildCorners(){
 		
+		char currTopLayer;
+		char top = '\0';
+		char right = '\0';
+		char down = '\0';
+		char left = '\0';
+		
+		for(int i = 0; i < mapXSize; i++){
+			for(int j = 0; j < mapYSize; j++){
+			
+				currTopLayer = topLayer[i][j];
+				if(currTopLayer == 'w'){// current terrain is water
+					
+					// retrieve the next top, right, down, and left tiles
+					if(j > 0 && topLayer[i][j - 1] == currTopLayer)
+						top = spriteStyle[i][j - 1];
+					if(i < mapXSize - 1 && topLayer[i + 1][j] == currTopLayer)
+						right = spriteStyle[i + 1][j];
+					if(j < mapYSize - 1 && topLayer[i][j + 1] == currTopLayer)
+						down = spriteStyle[i][j + 1];
+					if(i > 0 && topLayer[i - 1][j] == currTopLayer)
+						left = spriteStyle[i - 1][j];
+				
+					switch(spriteStyle[i][j]){
+						case 'q' : 
+							switch(right){
+							case 'x' : combineCorners(i, j, 'm' );
+							case 's' :
+							case 'd' : 
+							case 'c' : combineCorners(i + 1, j, 'q' );
+										break;
+							case 'f' : 
+							case 'y' : combineCorners(i, j, 'm');
+										break;
+							}
+							switch(down){
+							case 's' :
+							case 'd' :
+							case 'x' :
+							case 'c' : combineCorners(i, j + 1, 'q');
+										break;
+							}
+						case 'e' :
+							switch(down){
+							case 'a' : combineCorners(i, j + 1, 'p');
+										break;
+							}
+					}
+				}
+				top = '\0';
+				right = '\0';
+				down = '\0';
+				left = '\0';
+			}
+		}// end for loop
+	}// end buildCorners()
+	
+	/*
+	 *	Used when a corner is needed. This checks if the tile currently has a
+	 *	corner associated with it, then combines the two corners to make one
+	 *	corner tile.
+	 */
+	@SuppressWarnings("incomplete-switch")
+	private void combineCorners(int i, int j, char newChar){
 		/*
 		 * CORNER STYLE TABLE -char- -MEANING-
 		 * q Top-Left p Top-Right z Bottom-Left m Bottom-Right
@@ -374,28 +456,6 @@ public class GameMap {
 		 * b Top-Right && Bottom-Left && Bottom-Right
 		 * y All
 		 */
-		
-		for(int i = 0; i < mapXSize; i++){
-			for(int j = 0; j < mapYSize; j++){
-			
-				if(topLayer[i][j] == 'w'){
-					switch(spriteStyle[i][j]){
-						case 'q' : 
-							if(spriteStyle[i + 1][j] == 's' || spriteStyle[i + 1][j] == 'd'){
-								combineCorners(i + 1, j, 'q' );
-						}
-					}
-				}
-			}
-		}
-	}// end buildCorners()
-	
-	/*
-	 *	Used when a corner is needed. This checks if the tile currently has a
-	 *	corner associated with it, then combines the two corners to make one
-	 *	corner tile.
-	 */
-	private void combineCorners(int i, int j, char newChar){
 		
 		char curChar = corners[i][j];
 		
@@ -418,7 +478,6 @@ public class GameMap {
 							break;
 				case 'b' : corners[i][j] = 'y';
 							break;
-				default : break;
 				}
 			}
 			else if(newChar == 'p'){// adding TR
@@ -437,7 +496,6 @@ public class GameMap {
 							break;
 				case 'c' : corners[i][j] = 'y';
 							break;
-				default : break;
 				}
 			}
 			else if(newChar == 'z'){// adding BL
@@ -456,7 +514,6 @@ public class GameMap {
 							break;
 				case 'j' : corners[i][j] = 'y';
 							break;
-				default : break;
 				}
 			}
 			else if(newChar == 'm'){// adding BR
@@ -475,12 +532,10 @@ public class GameMap {
 							break;
 				case 'f' : corners[i][j] = 'y';
 							break;
-				default : break;
 				}
 			}
 		}
 	}// end combineCorners()
-	
 	
 	/*
 	 * This method ensures that every tile possibly gets expanded upon, so that
@@ -550,176 +605,184 @@ public class GameMap {
 			}
 		}// end for loop
 	}// zeroRecursiveVars()
-
-	public Image getTerrain(char mapPos, char style) {
+	
+	/*
+	 * Image look-up for rendering.
+	 * 
+	 * @param terrain : the type of terrain at a given tile from TopLayer[][]
+	 * @param style : the variation of the terrain tile from spriteStyle[][]
+	 * @return : the Image to be drawn
+	 */
+	public Image getTerrain(char terrain, char style) {
 
 		Image result = null;
 
-		if (mapPos == 't') {// terrain is trees
-			switch (style) {
-			case 'q':
-				result = treeTL;
-				break;
-			case 'w':
-				result = treeTM;
-				break;
-			case 'e':
-				result = treeTR;
-				break;
-			case 'a':
-				result = treeML;
-				break;
-			case 's':
-				result = treeMM;
-				break;
-			case 'd':
-				result = treeMR;
-				break;
-			case 'z':
-				result = treeBL;
-				break;
-			case 'x':
-				result = treeBM;
-				break;
-			case 'c':
-				result = treeBR;
-				break;
-			case 'v':
-				result = treeAA;
-				break;
-			case 'r':
-				result = treeAT;
-				break;
-			case 't':
-				result = treeAL;
-				break;
-			case 'y':
-				result = treeAR;
-				break;
-			case 'u':
-				result = treeAB;
-				break;
-			case 'f':
-				result = treeLRT;
-				break;
-			case 'g':
-				result = treeUDT;
-				break;
-			default:
-				result = treeMM;
+		if(terrain != 'x'){
+			if (terrain == 't') {// terrain is trees
+				switch (style) {
+				case 'q':
+					result = treeTL;
+					break;
+				case 'w':
+					result = treeTM;
+					break;
+				case 'e':
+					result = treeTR;
+					break;
+				case 'a':
+					result = treeML;
+					break;
+				case 's':
+					result = treeMM;
+					break;
+				case 'd':
+					result = treeMR;
+					break;
+				case 'z':
+					result = treeBL;
+					break;
+				case 'x':
+					result = treeBM;
+					break;
+				case 'c':
+					result = treeBR;
+					break;
+				case 'v':
+					result = treeAA;
+					break;
+				case 'r':
+					result = treeAT;
+					break;
+				case 't':
+					result = treeAL;
+					break;
+				case 'y':
+					result = treeAR;
+					break;
+				case 'u':
+					result = treeAB;
+					break;
+				case 'f':
+					result = treeLRT;
+					break;
+				case 'g':
+					result = treeUDT;
+					break;
+				default:
+					result = treeMM;
+				}
+			} else if (terrain == 'w') {// terrain is water
+				switch (style) {
+				case 'q':
+					result = waterTL;
+					break;
+				case 'w':
+					result = waterTM;
+					break;
+				case 'e':
+					result = waterTR;
+					break;
+				case 'a':
+					result = waterML;
+					break;
+				case 's':
+					result = waterMM;
+					break;
+				case 'd':
+					result = waterMR;
+					break;
+				case 'z':
+					result = waterBL;
+					break;
+				case 'x':
+					result = waterBM;
+					break;
+				case 'c':
+					result = waterBR;
+					break;
+				case 'v':
+					result = waterAA;
+					break;
+				case 'r':
+					result = waterAT;
+					break;
+				case 't':
+					result = waterAL;
+					break;
+				case 'y':
+					result = waterAR;
+					break;
+				case 'u':
+					result = waterAB;
+					break;
+				case 'f':
+					result = waterLRT;
+					break;
+				case 'g':
+					result = waterUDT;
+					break;
+				default:
+					result = waterMM;
+				}
+			} else if (terrain == 'm') {// terrain is mountain
+				switch (style) {
+				case 'q':
+					result = mountainTL;
+					break;
+				case 'w':
+					result = mountainTM;
+					break;
+				case 'e':
+					result = mountainTR;
+					break;
+				case 'a':
+					result = mountainML;
+					break;
+				case 's':
+					result = mountainMM;
+					break;
+				case 'd':
+					result = mountainMR;
+					break;
+				case 'z':
+					result = mountainBL;
+					break;
+				case 'x':
+					result = mountainBM;
+					break;
+				case 'c':
+					result = mountainBR;
+					break;	
+				case 'v':
+					result = mountainAA;
+					break;
+				case 'r':
+					result = mountainAT;
+					break;
+				case 't':
+					result = mountainAL;
+					break;
+				case 'y':
+					result = mountainAR;
+					break;
+				case 'u':
+					result = mountainAB;
+					break;
+				case 'f':
+					result = mountainLRT;
+					break;
+				case 'g':
+					result = mountainUDT;
+					break;
+				default:
+					result = mountainMM;
+				}
+			} else if (terrain == 'g') {// terrain is grass
+				result = grass;
+			} else if (terrain == 'u') {// terrain is mud
+				result = mud;
 			}
-		} else if (mapPos == 'w') {// terrain is water
-			switch (style) {
-			case 'q':
-				result = waterTL;
-				break;
-			case 'w':
-				result = waterTM;
-				break;
-			case 'e':
-				result = waterTR;
-				break;
-			case 'a':
-				result = waterML;
-				break;
-			case 's':
-				result = waterMM;
-				break;
-			case 'd':
-				result = waterMR;
-				break;
-			case 'z':
-				result = waterBL;
-				break;
-			case 'x':
-				result = waterBM;
-				break;
-			case 'c':
-				result = waterBR;
-				break;
-			case 'v':
-				result = waterAA;
-				break;
-			case 'r':
-				result = waterAT;
-				break;
-			case 't':
-				result = waterAL;
-				break;
-			case 'y':
-				result = waterAR;
-				break;
-			case 'u':
-				result = waterAB;
-				break;
-			case 'f':
-				result = waterLRT;
-				break;
-			case 'g':
-				result = waterUDT;
-				break;
-			default:
-				result = waterMM;
-			}
-		} else if (mapPos == 'm') {// terrain is mountain
-			switch (style) {
-			case 'q':
-				result = mountainTL;
-				break;
-			case 'w':
-				result = mountainTM;
-				break;
-			case 'e':
-				result = mountainTR;
-				break;
-			case 'a':
-				result = mountainML;
-				break;
-			case 's':
-				result = mountainMM;
-				break;
-			case 'd':
-				result = mountainMR;
-				break;
-			case 'z':
-				result = mountainBL;
-				break;
-			case 'x':
-				result = mountainBM;
-				break;
-			case 'c':
-				result = mountainBR;
-				break;	
-			case 'v':
-				result = mountainAA;
-				break;
-			case 'r':
-				result = mountainAT;
-				break;
-			case 't':
-				result = mountainAL;
-				break;
-			case 'y':
-				result = mountainAR;
-				break;
-			case 'u':
-				result = mountainAB;
-				break;
-			case 'f':
-				result = mountainLRT;
-				break;
-			case 'g':
-				result = mountainUDT;
-				break;
-			default:
-				result = mountainMM;
-			}
-		} else if (mapPos == 'g') {// terrain is grass
-			result = grass;
-		} else if (mapPos == 'u') {// terrain is mud
-			result = mud;
 		}
-
 		return result;
 	}// end getTerrain()
 

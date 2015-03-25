@@ -29,11 +29,6 @@ package team6;
 import java.awt.*;
 import javax.swing.*;
 
-//This class will render a 64x64 array representing a map, and a array
-//of TankObjects, representing players.
-
-//will update to render only 24x16 squares at a time, scrollable through arrowkeys.
-
 // ????? Pass tileSize from driver ?????
 
 @SuppressWarnings("serial")
@@ -58,40 +53,36 @@ public class GameRenderer extends JPanel {
 	}
 	
 	
-	
 	@Override
 	public void paint(Graphics g) {
 		
 		Image tile = null;
 		
-		// Draw baseLayer
+		// Draw terrain
 		for (int i = 0; i < mapXSize; i++){
 			for (int j = 0; j < mapYSize; j++){
 		
+				// Draw baseLayer
 				tile = gameInstance.gameMap.getTerrain(gameInstance.gameMap.baseLayer[i][j], ' ');
-				g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
-			}
-		}
-		
-		// Draw topLayer
-		for (int i = 0; i < mapXSize; i++){
-			for (int j = 0; j < mapYSize; j++){
 				
-				tile = gameInstance.gameMap.getTerrain(gameInstance.gameMap.topLayer[i][j], 
-													gameInstance.gameMap.spriteStyle[i][j]);
 				if(tile != null)
 					g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
 				else{//bad color
 					g.setColor(Color.BLACK);
 					g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
 				}
-			}
-		}// end for loop
-		
-		// Draw Corners
-		for(int i = 0; i < mapXSize; i++){
-			for(int j = 0; j < mapYSize; j++){
 				
+				// Draw TopLayer
+				tile = gameInstance.gameMap.getTerrain(gameInstance.gameMap.topLayer[i][j], 
+						gameInstance.gameMap.spriteStyle[i][j]);
+				if(tile != null)
+					g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
+				else{//bad color
+					g.setColor(Color.BLACK);
+					g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
+				}
+				
+				// Draw Corners
 				tile = gameInstance.gameMap.getCorner(i, j);
 				
 				if(tile != null)
