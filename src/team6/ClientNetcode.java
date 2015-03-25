@@ -31,8 +31,8 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
+import javax.swing.*;
+import javax.swing.table.*;
 
 public class ClientNetcode {
 	   private static String serverName;
@@ -41,11 +41,17 @@ public class ClientNetcode {
 	     * @param args the command line arguments
 	     */
 	    public static void main(String[] args) {
+	    	
+	    	/*GameMap currentMap = new GameMap();//test to ensure client can function off gameInstance
+			currentMap.generateMap();
+	    	GameInstance clientGame= new GameInstance(Calendar.getInstance(), currentMap);
+	    	*/
+	    	
 	    	GameInstance clientGame= new GameInstance(); //contains blank map, and all tanks at 0/0
 	    	//TODO make this a method call
 			JFrame gameFrame = new JFrame("game renderer Demo");
 			gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);			
-
+			//
 			// renderer section
 			GameRenderer renderer = new GameRenderer(clientGame) {
 				@Override
@@ -55,10 +61,29 @@ public class ClientNetcode {
 															// and in renderer
 				}
 			};
+			gameFrame.setSize(640, 480);
 			gameFrame.getContentPane().add(new JScrollPane(renderer),
 					BorderLayout.CENTER);
 			gameFrame.setVisible(true);
-			//TODO end make method
+			//TODO end make renderer method
+			//
+			//jtable debug
+			JFrame tableFrame=new JFrame();
+			String[] colnames= {"Tank Image", "Name", "IP",
+		            "x coord", "y coord", "Health","Status"};
+			Object[][] data = new Object[8][];
+	        for (int i=0;i<8;i++){
+	        	data[i]=clientGame.tanks.get(i).toStringArray();
+	        }
+			JTable table=new JTable(data, colnames);//yeah its bad, fail me; i do know about models
+			tableFrame.add(table);
+			tableFrame.setSize(500, 300);
+			tableFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			tableFrame.setVisible(true);
+			
+			
+			//end jtable debug
+			//
 	    	Scanner input = new Scanner(System.in);
 	        String sName = "104.231.9.131";
 	        if (0 < args.length) {
@@ -169,9 +194,11 @@ public class ClientNetcode {
 	                        }
 	                        //TODO end make each if a method call
 	                        renderer.repaint();
+	                        updateTable(table,clientGame);
 	                }//end while
 	            }
-
+	            
+	            
 
 	        } catch (IOException e) {
 	            System.out.println("local: Failed to conect. Is Server running?");
@@ -180,7 +207,18 @@ public class ClientNetcode {
 	        System.out.println("local: Exiting");
 	    }//end main	
 		
-		
+	    static public void updateTable(JTable table,GameInstance game)
+	    {  
+	    	String[] colnames= {"Tank Image", "Name", "IP",
+		            "x coord", "y coord", "Health","Status"};
+			Object[][] data = new Object[8][];
+	    	
+	    	for (int i=0;i<8;i++){
+	        	data[i]=game.tanks.get(i).toStringArray();
+	        }
+	    	//removed debugging info   	
+	       table.setModel(new DefaultTableModel(data,colnames ));       
+	    }//updateTable	
 		
 		
 	    
