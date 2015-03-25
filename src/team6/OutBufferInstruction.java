@@ -61,16 +61,16 @@ public class OutBufferInstruction {
 		
 	}
 	
-	public OutBufferInstruction(int type, int playerNumber, String playerName,char bot, char top, char style, char corner) {//should be type 3 terrain message constructor
+	public OutBufferInstruction(int type,  char base, char top, char style, char corner) {//should be type 3 terrain message constructor
 		super();
 		this.type = type;
-		this.playerNumber = playerNumber;
-		this.playerName = playerName;
+		this.playerNumber = -1;
+		this.playerName = "";
 		this.base=base;
 		this.top=top;
 		this.style=style;
 		this.corner=corner;
-		System.out.println("debug out instruction created. type= "+ type + " playername= "+ playerName );
+		System.out.println("debug out instruction created. type= "+ type + "base-top-style-corner"+base+top+style+corner );
 	}
 	
 
