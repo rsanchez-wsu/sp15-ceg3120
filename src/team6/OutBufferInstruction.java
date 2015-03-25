@@ -30,8 +30,16 @@ public class OutBufferInstruction {
 	
 	
 
-	int type =-1; //0 is welcome, 1 is players present
+	int type =-1; //0 is welcome, 1 is players present, 2 is tank position, 3 is terrain message
 	int playerNumber=-1;
+	int x;
+	int y;
+	//current used map type+ renderer requires these 4 values
+	char base;
+	char top;
+	char style;
+	char corner;
+	
 	String playerName="none";
 
 	public OutBufferInstruction(int type, int playerNumber, String playerName) {
@@ -42,6 +50,29 @@ public class OutBufferInstruction {
 		System.out.println("debug out instruction created. type= "+ type +" playerNumber= "+playerNumber+ " playername= "+ playerName );
 	}
 	
+	public OutBufferInstruction(int type, int playerNumber, String playerName,char bot, char top, char style, char corner) {
+		super();
+		this.type = type;
+		this.playerNumber = playerNumber;
+		this.playerName = playerName;
+		this.base=base;
+		this.top=top;
+		this.style=style;
+		this.corner=corner;
+		System.out.println("debug out instruction created. type= "+ type +" playerNumber= "+playerNumber+ " playername= "+ playerName );
+	}
+	
+	public OutBufferInstruction(int type, int playerNumber, int x, int y) {
+		
+		this.type = type;
+		this.playerNumber=playerNumber;
+		this.x=x;
+		this.y=y;
+				
+		
+		
+		
+	}
 	
 
 }
