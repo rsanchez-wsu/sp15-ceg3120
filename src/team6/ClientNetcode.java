@@ -25,9 +25,14 @@
  */
 
 package team6;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 public class ClientNetcode {
 	   private static String serverName;
@@ -36,7 +41,24 @@ public class ClientNetcode {
 	     * @param args the command line arguments
 	     */
 	    public static void main(String[] args) {
-	    	GameInstance clientGame= new GameInstance();
+	    	GameInstance clientGame= new GameInstance(); //contains blank map, and all tanks at 0/0
+	    	//TODO make this a method call
+			JFrame gameFrame = new JFrame("game renderer Demo");
+			gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);			
+
+			// renderer section
+			GameRenderer renderer = new GameRenderer(clientGame) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(64 * 50, 64 * 50); // hard coded tile size
+															// must be updated here
+															// and in renderer
+				}
+			};
+			gameFrame.getContentPane().add(new JScrollPane(renderer),
+					BorderLayout.CENTER);
+			gameFrame.setVisible(true);
+			//TODO end make method
 	    	Scanner input = new Scanner(System.in);
 	        String sName = "104.231.9.131";
 	        if (0 < args.length) {
@@ -79,26 +101,49 @@ public class ClientNetcode {
 
 	                    Scanner scanner = new Scanner(System.in);
 	                    
-	                    	int temp=in.readInt();
-	                    	
-	                    	if (temp==1){
+	                    	int msgType=in.readInt();
+	                    	//TODO make each if a single method call
+	                    	if (msgType==1){//player name message
 	                    	System.out.println("debug inbound name message");
 	                    	int nameMsgPlayerID= in.readInt();
 	                    	System.out.println(nameMsgPlayerID+" :debug should be player number");	
 	                    	String nameMsgPlayerName = in.readUTF();
 	                    	System.out.println(nameMsgPlayerName+" :debug should be player name");
-	                    	clientGame.tanks.get(nameMsgPlayerID).Name=nameMsgPlayerName;
+	                    	clientGame.tanks.get(nameMsgPlayerID).Name=nameMsgPlayerName;	                    	
+	                    	}//end 1
+	                    	else if(msgType==2){
+	                    	int moveMsgPlayerID= in.readInt();
+	                    	int x=in.readInt();
+	                    	int y=in.readInt();
+	                    	clientGame.tanks.get(moveMsgPlayerID).xCoord=x;
+	                    	clientGame.tanks.get(moveMsgPlayerID).yCoord=y;
+	                    	System.out.println("debug "+moveMsgPlayerID +" tank moved");
+	                    	}//end 2
 	                    	
+	                    	else if(msgType==3){
+		                    	int x= in.readInt();
+		                    	int y= in.readInt();
+		                    	char base = in.readChar();
+		                    	char top = in.readChar();
+		                    	char style = in.readChar();
+		                    	char corner = in.readChar();
+		                    	clientGame.gameMap.baseLayer[y][x]=base;
+		                    	clientGame.gameMap.topLayer[y][x]=top;
+		                    	clientGame.gameMap.spriteStyle[y][x]=style;
+		                    	clientGame.gameMap.corners[y][x]=corner;
+		                    	System.out.println("debug tile "+x +" , "+ y);
 	                    	}
-	                    	
-	                    	
 	                    	else	                    		
-	                        System.out.println("the inbound messagetype was"+temp);//wait for the -1
+	                        System.out.println("the inbound messagetype was"+msgType);//should only ever be -1 for now, will upgrade to a better system like exception throwing(lol not really)
+	                    	//TODO end make each if a method call
+	                    	
 	                    	
 	                    	System.out.println(" server wants a message"); 
 	                        System.out.println("Enter a 0 to move your tank, enter 1 to attack another tank,\nenter 2 to send a chat message, or enter -1 to do nothing.");
 	                        int userInput = scanner.nextInt();                        
 	                        out.writeInt(userInput);
+	                        
+	                        //TODO make each if a method call
 	                        if (userInput==-1){
 	                        	out.writeInt(-1);
 	                            //System.out.println("nothing to send message sent");
@@ -122,6 +167,7 @@ public class ClientNetcode {
 	                        else{
 	                        	System.out.print("invalid choice, you broke the client for now");
 	                        }
+	                        //TODO end make each if a method call
 
 	                }//end while
 	            }
