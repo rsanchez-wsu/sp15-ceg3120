@@ -117,14 +117,13 @@ public class GameMap {
 	private Image mountainLRT = null;
 	
 	public GameMap() {
-		
+		findFiles();
 		generateBlankLayers();
 		
 	}// end GameMap()
 
-	public void generateMap(){
+	public void generateMap(){		
 		
-		findFiles();
 		buildBaseLayer();
 		buildTopLayer();
 		buildSpriteStyle();
