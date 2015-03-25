@@ -44,7 +44,7 @@ public class driverClient {
 	     * @param args the command line arguments
 	     */
 	    public static void main(String[] args) {
-	    	
+	    	String ip = "localhost";
 	    	/*GameMap currentMap = new GameMap();//test to ensure client can function off gameInstance
 			currentMap.generateMap();
 	    	GameInstance clientGame= new GameInstance(Calendar.getInstance(), currentMap);
@@ -86,16 +86,13 @@ public class driverClient {
 			//end jtable debug
 			//
 	    	Scanner input = new Scanner(System.in);
-	        String sName = "104.231.9.131";
-	        if (0 < args.length) {
-	            sName = args[0];
-	        }
+	        
 
 	        int port = 6666;
 	        try {
-	            System.out.println("local: Connecting to " + sName
+	            System.out.println("local: Connecting to " + ip
 	                    + " on port " + port);
-	            try (Socket client = new Socket(sName, port)) {
+	            try (Socket client = new Socket(ip, port)) {
 
 	                System.out.println("local: Just connected to "
 	                        + client.getRemoteSocketAddress());
