@@ -43,19 +43,19 @@ public class ServerMTSock implements Runnable {
 	public ServerMTSock(Socket socket) throws Exception {
 		this.socket = socket;
 		in = new DataInputStream(socket.getInputStream());
-		out= new DataOutputStream(socket.getOutputStream());
-		playerID=ServerMTSockListen.socketList.size();
-		name=in.readUTF();// first thing client does is send a string name in utf
-		System.out.println("debug client connected with name of "+name);
+		out = new DataOutputStream(socket.getOutputStream());
+		playerID = ServerMTSockListen.socketList.size();
+		name = in.readUTF();// first thing client does is send a string name in
+							// utf
+		System.out.println("debug client connected with name of " + name);
 		out.writeInt(playerID);
-		InBufferInstruction instruction = new InBufferInstruction(3,-1,-1,name,playerID, -1);//makes the playername inBufferInstructions
+		InBufferInstruction instruction = new InBufferInstruction(3, -1, -1,
+				name, playerID, -1);// makes the playername inBufferInstructions
 		ServerMT.inBuffer.add(instruction);
-		
-		//debug nothing should be in the socket buffers
+
+		// debug nothing should be in the socket buffers
 		System.out.println("debug nothing should be in the socket buffers");
-		
-		
-		
+
 	}// end const
 
 	public void run() {
@@ -73,77 +73,103 @@ public class ServerMTSock implements Runnable {
 	// reads from outbound buffer, sends instructions to client
 	private void process() {
 		while (true) {
-			
 
 			try {
-			
-			if (!ServerMT.outBuffers.get(playerID).isEmpty()){	// if queue isnt empty				
-				OutBufferInstruction instruction=(OutBufferInstruction)ServerMT.outBuffers.get(playerID).remove();
-				//TODO make ifs method calls
-				if(instruction.type==1){
-				System.out.println("debug in serverMTSock sending Type= "+ instruction.type);//displaying this instead of debug
-				System.out.println("debug writing to socket: "+instruction.type );
-				out.writeInt(instruction.type);
-				System.out.println("debug writing to socket: "+instruction.playerNumber );
-				out.writeInt(instruction.playerNumber);
-				System.out.println("debug writing to socket: "+instruction.playerName );
-				out.writeUTF(instruction.playerName);
-				}//end 1 name msg
-				
-				else if (instruction.type==2){
-					System.out.println("debug in serverMTSock sending move, msgType= "+ instruction.type);
-					out.writeInt(instruction.type);
-					out.writeInt(instruction.playerNumber);//of moving tank
-					out.writeInt(instruction.x);
-					out.writeInt(instruction.y);
-					
-				}//end 2 tank move msg
-				else if (instruction.type==3){
-					System.out.println("debug in serverMTSock sending terrain, msgType= "+ instruction.type);
-					out.writeInt(instruction.type);
-					out.writeInt(instruction.x);
-					out.writeInt(instruction.y);
-					out.writeChar(instruction.base);
-					out.writeChar(instruction.top);
-					out.writeChar(instruction.style);
-					out.writeChar(instruction.corner);
-				
-					
-				}//end 3 terrain msg
-				
-				
-				else{
-					System.out.println("mtsock error!@#$@!#%$!%$!#@^%$@&#$@&%@!&$#$@");
-					
-				}
-				
-				
-				//TODO end
-			}
-			
-			else{
-				out.writeInt(-1);
-			}
-				
-				
-				int type=in.readInt();				
-				System.out.println("debug read from socket: "+type );
-				
-				switch (type) {
-				case -1: System.out.println("MT parsing(not really) nothing message"); break;				
-				case 0:  System.out.println("MT parsing tank move");
-						ServerMT.inBuffer.add(parseAsMove());  break;
-		        case 1:  System.out.println("MT parsing tank attack");
-		        		ServerMT.inBuffer.add(parseAsAttack()); break;
-		        case 2:  System.out.println("MT parsing chat");
-		        		ServerMT.inBuffer.add(parseAsChat()); break;
 
-		        default: System.out.println("not a valid message parsed: serverMTSock");break;
-		    }
-				//check to see if next outbuffer message is for this thread
-				
-				
-				////parse messages into MTInstructions
+				if (!ServerMT.outBuffers.get(playerID).isEmpty()) { // if queue
+																	// isnt
+																	// empty
+					int size = ServerMT.outBuffers.get(playerID).size();
+					out.writeInt(size);
+					for (int i = 0; i < size; i++) {//thread safety by not just emptying
+						OutBufferInstruction instruction = (OutBufferInstruction) ServerMT.outBuffers
+								.get(playerID).remove();
+						// TODO make ifs method calls
+						if (instruction.type == 1) {
+							System.out
+									.println("debug in serverMTSock sending Type= "
+											+ instruction.type);// displaying
+																// this instead
+																// of debug
+							System.out.println("debug writing to socket: "
+									+ instruction.type);
+							out.writeInt(instruction.type);
+							System.out.println("debug writing to socket: "
+									+ instruction.playerNumber);
+							out.writeInt(instruction.playerNumber);
+							System.out.println("debug writing to socket: "
+									+ instruction.playerName);
+							out.writeUTF(instruction.playerName);
+						}// end 1 name msg
+
+						else if (instruction.type == 2) {
+							System.out
+									.println("debug in serverMTSock sending move, msgType= "
+											+ instruction.type);
+							out.writeInt(instruction.type);
+							out.writeInt(instruction.playerNumber);// of moving
+																	// tank
+							out.writeInt(instruction.x);
+							out.writeInt(instruction.y);
+
+						}// end 2 tank move msg
+						else if (instruction.type == 3) {
+							System.out
+									.println("debug in serverMTSock sending terrain, msgType= "
+											+ instruction.type);
+							out.writeInt(instruction.type);
+							out.writeInt(instruction.x);
+							out.writeInt(instruction.y);
+							out.writeChar(instruction.base);
+							out.writeChar(instruction.top);
+							out.writeChar(instruction.style);
+							out.writeChar(instruction.corner);
+
+						}// end 3 terrain msg
+
+						else {
+							System.out.println("mtsock error!");
+
+						}// end else
+
+						// TODO end
+					}// end for
+				}// end if server not empty
+
+				else {
+					out.writeInt(0);// number of messages
+
+				}// end
+
+				int type = in.readInt();
+				System.out.println("debug read from socket: " + type);
+
+				switch (type) {
+				case -1:
+					System.out
+							.println("MT parsing(not really) nothing message");
+					break;
+				case 0:
+					System.out.println("MT parsing tank move");
+					ServerMT.inBuffer.add(parseAsMove());
+					break;
+				case 1:
+					System.out.println("MT parsing tank attack");
+					ServerMT.inBuffer.add(parseAsAttack());
+					break;
+				case 2:
+					System.out.println("MT parsing chat");
+					ServerMT.inBuffer.add(parseAsChat());
+					break;
+
+				default:
+					System.out
+							.println("not a valid message parsed: serverMTSock");
+					break;
+				}
+				// check to see if next outbuffer message is for this thread
+
+				// //parse messages into MTInstructions
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -153,52 +179,55 @@ public class ServerMTSock implements Runnable {
 		}// end while
 
 	} // end process
-	
-	private InBufferInstruction parseAsMove(){		
-		int type=0; //move
-		int x=-1;
-		int y=-1;		
+
+	private InBufferInstruction parseAsMove() {
+		int type = 0; // move
+		int x = -1;
+		int y = -1;
 		try {
-			 x=in.readInt();
-			 y=in.readInt();
+			x = in.readInt();
+			y = in.readInt();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		InBufferInstruction temp = new InBufferInstruction(type,x,y,"none",playerID, -1);
-		
+
+		InBufferInstruction temp = new InBufferInstruction(type, x, y, "none",
+				playerID, -1);
+
 		return temp;
 	}
-	
-	private InBufferInstruction parseAsAttack(){		
-		int type=1; //attack
-		int x=-1;
-		int y=-1;		
+
+	private InBufferInstruction parseAsAttack() {
+		int type = 1; // attack
+		int x = -1;
+		int y = -1;
 		try {
-			 x=in.readInt();
-			 y=in.readInt();
+			x = in.readInt();
+			y = in.readInt();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		InBufferInstruction temp = new InBufferInstruction(type,x,y,"none",playerID, -1);
-		
+
+		InBufferInstruction temp = new InBufferInstruction(type, x, y, "none",
+				playerID, -1);
+
 		return temp;
 	}
-	
-	private InBufferInstruction parseAsChat(){
-		int type=2;
-		String message="default text:error";
-		
+
+	private InBufferInstruction parseAsChat() {
+		int type = 2;
+		String message = "default text:error";
+
 		try {
-			message=in.readUTF();
+			message = in.readUTF();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
-		InBufferInstruction temp = new InBufferInstruction(type,-1,-1,message,playerID, -1);
+		}
+		InBufferInstruction temp = new InBufferInstruction(type, -1, -1,
+				message, playerID, -1);
 		return temp;
 	}
 
