@@ -159,7 +159,7 @@ public class driverClient {
 		                    	clientGame.gameMap.spriteStyle[y][x]=style;
 		                    	clientGame.gameMap.corners[y][x]=corner;
 		                    	renderer.repaint();
-		                    	System.out.println("debug tile "+x +" , "+ y+" btsc"+base+top+style+corner);
+		                    	System.out.println("debug tile "+x +" , "+ y+" btsc "+base+top+style+corner);
 	                    	}
 	                    	else	                    		
 	                        System.out.println("debug the inbound messagetype was"+msgType);//should only ever be -1 for now, will upgrade to a better system like exception throwing(lol not really)
