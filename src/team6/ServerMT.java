@@ -44,6 +44,8 @@ public class ServerMT {
 
 	ServerMTSockListen listener = new ServerMTSockListen();
 	GameInstance currentGame;
+	boolean needViewUpdate = false; //gets flagged when playerUpdate array contains a true
+	boolean playerUpdate[]={false,false,false,false,false,false,false,false};//means that corrisponding player number needs a new vision update
 
 	public ServerMT(GameInstance game) {
 		Thread thread = new Thread(listener);
@@ -59,17 +61,53 @@ public class ServerMT {
 			return true;
 
 	}
-
+	
+	
 	public void step() {
 
 		if (!inBuffer.isEmpty())
 			inProcess((InBufferInstruction) inBuffer.remove());
+		
+		if (needViewUpdate)
+			generateViews();
 
 		// -parse inBuffer, take action on gameInstance
 		// //-detect new terrain to send to tank that moved
 		// //-check and see if anytanks can see moved tank
 		// //generate tank position messages to send to those tanks
 
+	}
+	private void generateViews(){
+		for (int i=0; i<8; i++){
+			if (playerUpdate[i])
+			processVision(i);
+			playerUpdate[i]=false;
+		}
+		needViewUpdate=false;
+		
+		
+	}//end generateViews()
+	
+	//this method will calculate vision based on terrian view modifiers, but for now just shows tile tank is in
+	private void processVision(int playerNumber){
+		int x=currentGame.tanks.get(playerNumber).xCoord;
+		int y=currentGame.tanks.get(playerNumber).yCoord;
+		
+		OutBufferInstruction outInstruction;
+		//for(...)
+		//each tank in player's view
+		outInstruction= new OutBufferInstruction(2, playerNumber,x,y );// updates tank position
+		outBuffers.get(playerNumber).add(outInstruction);
+		
+		//for(i -4 to 4)
+		//for(j -4 to 4)
+		//if lineOfSite=true
+		outInstruction= new OutBufferInstruction(3, -1, "",currentGame.gameMap.baseLayer[y][x], currentGame.gameMap.topLayer[y][x],
+				currentGame.gameMap.spriteStyle[y][x], currentGame.gameMap.baseLayer[y][x]);
+		outBuffers.get(playerNumber).add(outInstruction);
+		
+		
+		
 	}
 
 	// processes instructions based on their types
@@ -82,6 +120,8 @@ public class ServerMT {
 			if (validateMove(instruction)) {
 				currentGame.tanks.get(instruction.sourceID).yCoord = instruction.y;
 				currentGame.tanks.get(instruction.sourceID).xCoord = instruction.x;
+				needViewUpdate=true;
+				playerUpdate[instruction.sourceID]=true;
 				System.out.println("tank " + instruction.sourceID
 						+ " moved to x=" + instruction.x + " y="
 						+ instruction.y);
