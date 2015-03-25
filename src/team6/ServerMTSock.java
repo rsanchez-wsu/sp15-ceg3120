@@ -79,14 +79,48 @@ public class ServerMTSock implements Runnable {
 			
 			if (!ServerMT.outBuffers.get(playerID).isEmpty()){	// if queue isnt empty				
 				OutBufferInstruction instruction=(OutBufferInstruction)ServerMT.outBuffers.get(playerID).remove();
+				//TODO make ifs method calls
+				if(instruction.type==1){
 				System.out.println("debug in serverMTSock sending Type= "+ instruction.type);//displaying this instead of debug
 				System.out.println("debug writing to socket: "+instruction.type );
-				out.writeInt(instruction.type);//debug
+				out.writeInt(instruction.type);
 				System.out.println("debug writing to socket: "+instruction.playerNumber );
 				out.writeInt(instruction.playerNumber);
 				System.out.println("debug writing to socket: "+instruction.playerName );
 				out.writeUTF(instruction.playerName);
+				}//end 1 name msg
+				
+				else if (instruction.type==2){
+					System.out.println("debug in serverMTSock sending move, msgType= "+ instruction.type);
+					out.writeInt(instruction.type);
+					out.writeInt(instruction.playerNumber);//of moving tank
+					out.writeInt(instruction.x);
+					out.writeInt(instruction.y);
+					
+				}//end 2 tank move msg
+				else if (instruction.type==3){
+					System.out.println("debug in serverMTSock sending terrain, msgType= "+ instruction.type);
+					out.writeInt(instruction.type);
+					out.writeInt(instruction.x);
+					out.writeInt(instruction.y);
+					out.writeChar(instruction.base);
+					out.writeChar(instruction.top);
+					out.writeChar(instruction.style);
+					out.writeChar(instruction.corner);
+				
+					
+				}//end 3 terrain msg
+				
+				
+				else{
+					System.out.println("mtsock error!@#$@!#%$!%$!#@^%$@&#$@&%@!&$#$@");
+					
+				}
+				
+				
+				//TODO end
 			}
+			
 			else{
 				out.writeInt(-1);
 			}
