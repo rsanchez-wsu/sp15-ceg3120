@@ -32,7 +32,7 @@ import java.awt.*;
 import java.util.Calendar;
 
 //This class just creates a frame, and adds what ever panel we are testing
-public class driver {
+public class driverServer {
 
 	@SuppressWarnings("serial")
 	public static void main(String[] args) {

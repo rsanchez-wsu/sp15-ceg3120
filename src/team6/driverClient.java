@@ -24,6 +24,7 @@
  *
  */
 
+
 package team6;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -33,8 +34,10 @@ import java.util.*;
 
 import javax.swing.*;
 import javax.swing.table.*;
-
-public class ClientNetcode {
+//
+//Messy dont blame us, we were assigned server code, this started as just a test bench
+//
+public class driverClient {
 	   private static String serverName;
 
 	    /**
