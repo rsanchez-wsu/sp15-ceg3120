@@ -168,7 +168,7 @@ public class ClientNetcode {
 	                        	System.out.print("invalid choice, you broke the client for now");
 	                        }
 	                        //TODO end make each if a method call
-
+	                        renderer.repaint();
 	                }//end while
 	            }
 
