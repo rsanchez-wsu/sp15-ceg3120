@@ -59,9 +59,7 @@ public class driverClient {
 			GameRenderer renderer = new GameRenderer(clientGame) {
 				@Override
 				public Dimension getPreferredSize() {
-					return new Dimension(64 * 50, 64 * 50); // hard coded tile size
-															// must be updated here
-															// and in renderer
+					return new Dimension(64 * 50, 64 * 50); 
 				}
 			};
 			gameFrame.setSize(640, 480);
@@ -124,8 +122,7 @@ public class driverClient {
 	        		
 	                
 	                
-	                while (loop) {
-	                    System.out.println("local: Enter command:   ");
+	                while (loop) {	                    
 
 	                    Scanner scanner = new Scanner(System.in);
 	                    
@@ -133,22 +130,24 @@ public class driverClient {
 	                    	//TODO make each if a single method call
 	                    	if (msgType==1){//player name message
 	                    	System.out.println("debug inbound name message");
-	                    	int nameMsgPlayerID= in.readInt();
-	                    	System.out.println(nameMsgPlayerID+" :debug should be player number");	
-	                    	String nameMsgPlayerName = in.readUTF();
-	                    	System.out.println(nameMsgPlayerName+" :debug should be player name");
+	                    	int nameMsgPlayerID= in.readInt();	                    		
+	                    	String nameMsgPlayerName = in.readUTF();	                    	
 	                    	clientGame.tanks.get(nameMsgPlayerID).Name=nameMsgPlayerName;	                    	
+	                    	System.out.println("debug player number"+nameMsgPlayerID+" is "+nameMsgPlayerName);
 	                    	}//end 1
 	                    	else if(msgType==2){
+	                    	System.out.println("debug inbound move message");
 	                    	int moveMsgPlayerID= in.readInt();
 	                    	int x=in.readInt();
 	                    	int y=in.readInt();
 	                    	clientGame.tanks.get(moveMsgPlayerID).xCoord=x;
 	                    	clientGame.tanks.get(moveMsgPlayerID).yCoord=y;
-	                    	System.out.println("debug "+moveMsgPlayerID +" tank moved");
+	                    	renderer.repaint();
+	                    	System.out.println("debug "+moveMsgPlayerID +" tank moved to "+ x + ", "+y);
 	                    	}//end 2
 	                    	
 	                    	else if(msgType==3){
+	                    		System.out.println("debug inbound terrain message");
 		                    	int x= in.readInt();
 		                    	int y= in.readInt();
 		                    	char base = in.readChar();
@@ -159,23 +158,22 @@ public class driverClient {
 		                    	clientGame.gameMap.topLayer[y][x]=top;
 		                    	clientGame.gameMap.spriteStyle[y][x]=style;
 		                    	clientGame.gameMap.corners[y][x]=corner;
-		                    	System.out.println("debug tile "+x +" , "+ y);
+		                    	renderer.repaint();
+		                    	System.out.println("debug tile "+x +" , "+ y+" btsc"+base+top+style+corner);
 	                    	}
 	                    	else	                    		
-	                        System.out.println("the inbound messagetype was"+msgType);//should only ever be -1 for now, will upgrade to a better system like exception throwing(lol not really)
-	                    	//TODO end make each if a method call
+	                        System.out.println("debug the inbound messagetype was"+msgType);//should only ever be -1 for now, will upgrade to a better system like exception throwing(lol not really)
+	                    	//TODO end make each if a method call	                    	
 	                    	
 	                    	
-	                    	System.out.println(" server wants a message"); 
-	                        System.out.println("Enter a 0 to move your tank, enter 1 to attack another tank,\nenter 2 to send a chat message, or enter -1 to do nothing.");
+	                        System.out.println("Enter a 0 to move , 1 to attack, 2 to chat , or -1 to do nothing(do this alot)");
 	                        int userInput = scanner.nextInt();                        
 	                        out.writeInt(userInput);
 	                        
 	                        //TODO make each if a method call
 	                        if (userInput==-1){
-	                        	out.writeInt(-1);
-	                            //System.out.println("nothing to send message sent");
-	                           System.out.println("You have chosen to do nothing.");
+	                        	out.writeInt(-1);	                         
+	                           //System.out.println("You have chosen to do nothing.");
 	                        }
 	                        else if (userInput==2){
 	                            //System.out.println("chat type sent, enter message");
@@ -186,14 +184,15 @@ public class driverClient {
 	                        }
 	                        else if(userInput==0||userInput==1){
 	                            //System.out.println("move or attack type sent, enter two coords");   
-	                            System.out.print("Enter the coordinates for your chosen action: ");
+	                            System.out.print("Enter the coordinates: ");
 	                        userInput = scanner.nextInt();
 	                        out.writeInt(userInput);
 	                        userInput = scanner.nextInt();
 	                        out.writeInt(userInput);
 	                        }//end else if
 	                        else{
-	                        	System.out.print("invalid choice, you broke the client for now");
+	                        	System.out.print("invalid choice, sending -1");
+	                        	out.writeInt(-1);
 	                        }
 	                        //TODO end make each if a method call
 	                        renderer.repaint();
@@ -209,7 +208,7 @@ public class driverClient {
 
 	        System.out.println("local: Exiting");
 	    }//end main	
-		
+		//temp method for table update without model
 	    static public void updateTable(JTable table,GameInstance game)
 	    {  
 	    	String[] colnames= {"Tank Image", "Name", "IP",

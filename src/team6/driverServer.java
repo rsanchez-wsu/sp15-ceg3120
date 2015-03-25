@@ -50,8 +50,6 @@ public class driverServer {
 			@Override
 			public Dimension getPreferredSize() {
 				return new Dimension(64 * 50, 64 * 50); // hard coded tile size
-														// must be updated here
-														// and in renderer
 			}
 		};
 		gameFrame.getContentPane().add(new JScrollPane(renderer),
