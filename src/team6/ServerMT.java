@@ -102,7 +102,7 @@ public class ServerMT {
 		//for(i -4 to 4)
 		//for(j -4 to 4)
 		//if lineOfSite=true
-		outInstruction= new OutBufferInstruction(3, -1, "",currentGame.gameMap.baseLayer[y][x], currentGame.gameMap.topLayer[y][x],
+		outInstruction= new OutBufferInstruction(3, x,y,currentGame.gameMap.baseLayer[y][x], currentGame.gameMap.topLayer[y][x],
 				currentGame.gameMap.spriteStyle[y][x], currentGame.gameMap.baseLayer[y][x]);
 		outBuffers.get(playerNumber).add(outInstruction);
 		

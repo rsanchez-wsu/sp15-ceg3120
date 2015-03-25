@@ -66,6 +66,8 @@ public class OutBufferInstruction {
 		this.type = type;
 		this.playerNumber = -1;
 		this.playerName = "";
+		this.x=x;
+		this.y=y;
 		this.base=base;
 		this.top=top;
 		this.style=style;
