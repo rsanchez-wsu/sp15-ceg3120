@@ -2,6 +2,8 @@ package team3;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class ClientConnector {
@@ -20,6 +22,17 @@ public class ClientConnector {
 		catch(Exception e) {
 			System.err.println("ERROR: could not connect to port " + port);
 		}//end of catch
+		
+		try {
+			Socket myServer = new Socket("192.168.73.43",9786);//creates a socket connected to 9786
+			
+			PrintWriter myWriter = new PrintWriter(myServer.getOutputStream());//creates a printwriter that gets the output stream for the server
+			myWriter.print("Hello World!");//print output
+			myWriter.close();
+			myServer.close();
+		} catch (IOException e) {//unable to connect
+			
+		}
 	}//end of constructor
 	
 	//sends a message to the server
