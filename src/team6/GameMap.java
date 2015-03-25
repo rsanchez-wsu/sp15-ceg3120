@@ -45,76 +45,76 @@ public class GameMap {
 	boolean[][] expanded = new boolean[mapXSize][mapYSize];// used for recursive
 															// growth limiting
 
-	Image tank = null;
-	Image grass = null;
-	Image mud = null;
+	private Image tank = null;
+	private Image grass = null;
+	private Image mud = null;
 
-	Image treeTL = null;
-	Image treeTM = null;
-	Image treeTR = null;
-	Image treeML = null;
-	Image treeMM = null;
-	Image treeMR = null;
-	Image treeBL = null;
-	Image treeBM = null;
-	Image treeBR = null;
-	Image treeAA = null;
-	Image treeAT = null;
-	Image treeAR = null;
-	Image treeAL = null;
-	Image treeAB = null;
-	Image treeUDT = null;
-	Image treeLRT = null;
+	private Image treeTL = null;
+	private Image treeTM = null;
+	private Image treeTR = null;
+	private Image treeML = null;
+	private Image treeMM = null;
+	private Image treeMR = null;
+	private Image treeBL = null;
+	private Image treeBM = null;
+	private Image treeBR = null;
+	private Image treeAA = null;
+	private Image treeAT = null;
+	private Image treeAR = null;
+	private Image treeAL = null;
+	private Image treeAB = null;
+	private Image treeUDT = null;
+	private Image treeLRT = null;
 
-	Image waterTL = null;
-	Image waterTM = null;
-	Image waterTR = null;
-	Image waterML = null;
-	Image waterMM = null;
-	Image waterMR = null;
-	Image waterBL = null;
-	Image waterBM = null;
-	Image waterBR = null;
-	Image waterAA = null;
-	Image waterAT = null;
-	Image waterAL = null;
-	Image waterAR = null;
-	Image waterAB = null;
-	Image waterLRT = null;
-	Image waterUDT = null;
+	private Image waterTL = null;
+	private Image waterTM = null;
+	private Image waterTR = null;
+	private Image waterML = null;
+	private Image waterMM = null;
+	private Image waterMR = null;
+	private Image waterBL = null;
+	private Image waterBM = null;
+	private Image waterBR = null;
+	private Image waterAA = null;
+	private Image waterAT = null;
+	private Image waterAL = null;
+	private Image waterAR = null;
+	private Image waterAB = null;
+	private Image waterLRT = null;
+	private Image waterUDT = null;
 
-	Image waterCTL = null;
-	Image waterCTR = null;
-	Image waterCBL = null;
-	Image waterCBR = null;
-	Image waterCTLTR = null;
-	Image waterCTLBL = null;
-	Image waterCTLBR = null;
-	Image waterCTRBL = null;
-	Image waterCTRBR = null;
-	Image waterCBLBR = null;
-	Image waterCTLTRBL = null;
-	Image waterCTLTRBR = null;
-	Image waterCTLBLBR = null;
-	Image waterCTRBLBR = null;
-	Image waterCTLTRBLBR = null;
+	private Image waterCTL = null;
+	private Image waterCTR = null;
+	private Image waterCBL = null;
+	private Image waterCBR = null;
+	private Image waterCTLTR = null;
+	private Image waterCTLBL = null;
+	private Image waterCTLBR = null;
+	private Image waterCTRBL = null;
+	private Image waterCTRBR = null;
+	private Image waterCBLBR = null;
+	private Image waterCTLTRBL = null;
+	private Image waterCTLTRBR = null;
+	private Image waterCTLBLBR = null;
+	private Image waterCTRBLBR = null;
+	private Image waterCTLTRBLBR = null;
 	
-	Image mountainTL = null;
-	Image mountainTM = null;
-	Image mountainTR = null;
-	Image mountainML = null;
-	Image mountainMM = null;
-	Image mountainMR = null;
-	Image mountainBL = null;
-	Image mountainBM = null;
-	Image mountainBR = null;
-	Image mountainAA = null;
-	Image mountainAT = null;
-	Image mountainAR = null;
-	Image mountainAB = null;
-	Image mountainAL = null;
-	Image mountainUDT = null;
-	Image mountainLRT = null;
+	private Image mountainTL = null;
+	private Image mountainTM = null;
+	private Image mountainTR = null;
+	private Image mountainML = null;
+	private Image mountainMM = null;
+	private Image mountainMR = null;
+	private Image mountainBL = null;
+	private Image mountainBM = null;
+	private Image mountainBR = null;
+	private Image mountainAA = null;
+	private Image mountainAT = null;
+	private Image mountainAR = null;
+	private Image mountainAB = null;
+	private Image mountainAL = null;
+	private Image mountainUDT = null;
+	private Image mountainLRT = null;
 	
 	public GameMap() {
 		
@@ -135,10 +135,10 @@ public class GameMap {
 		
 		for(int i = 0; i < mapXSize; i++){
 			for(int j = 0; j < mapYSize; j++){
-				baseLayer[i][j] = 'x';
-				topLayer[i][j] = 'x';
-				spriteStyle[i][j] = 'x';
-				corners[i][j] = 'x';
+				baseLayer[i][j] = '?';
+				topLayer[i][j] = '?';
+				spriteStyle[i][j] = '?';
+				corners[i][j] = '?';
 			}
 		}
 	}// end generateBlankLayers()
@@ -378,11 +378,11 @@ public class GameMap {
 		}// end for loop
 	}// end buildSpriteStyle()
 
-	@SuppressWarnings({ "incomplete-switch", "fallthrough" })
+	@SuppressWarnings({"incomplete-switch"})
 	private void buildCorners(){
 		
 		char currTopLayer;
-		char top = '\0';
+		char up = '\0';
 		char right = '\0';
 		char down = '\0';
 		char left = '\0';
@@ -395,7 +395,7 @@ public class GameMap {
 					
 					// retrieve the next top, right, down, and left tiles
 					if(j > 0 && topLayer[i][j - 1] == currTopLayer)
-						top = spriteStyle[i][j - 1];
+						up = spriteStyle[i][j - 1];
 					if(i < mapXSize - 1 && topLayer[i + 1][j] == currTopLayer)
 						right = spriteStyle[i + 1][j];
 					if(j < mapYSize - 1 && topLayer[i][j + 1] == currTopLayer)
@@ -404,32 +404,103 @@ public class GameMap {
 						left = spriteStyle[i - 1][j];
 				
 					switch(spriteStyle[i][j]){
-						case 'q' : 
-							switch(right){
-							case 'x' : combineCorners(i, j, 'm' );
-							case 's' :
-							case 'd' : 
-							case 'c' : combineCorners(i + 1, j, 'q' );
-										break;
-							case 'f' : 
-							case 'y' : combineCorners(i, j, 'm');
-										break;
+						case 'q' :	// TL
+							if(right == 's' || right == 'd'){
+								combineCorners(i + 1, j, 'q');
+							}else if(right == 'f' || right == 'y'){
+								combineCorners(i, j, 'm');
+							}else if(right == 'x' || right == 'c'){
+								combineCorners(i + 1, j, 'q');
+								combineCorners(i, j, 'm');
 							}
-							switch(down){
-							case 's' :
-							case 'd' :
-							case 'x' :
-							case 'c' : combineCorners(i, j + 1, 'q');
-										break;
+							
+							if(down == 's' || down == 'x'){
+								combineCorners(i, j + 1, 'q');
+							}else if(down == 'u' || down == 'g'){
+								combineCorners(i, j, 'm');
+							}else if(down == 'd' || down == 'c'){
+								combineCorners(i, j + 1, 'q');
+								combineCorners(i, j, 'm');
 							}
-						case 'e' :
-							switch(down){
-							case 'a' : combineCorners(i, j + 1, 'p');
-										break;
+							break;
+						case 'w' :	// TM
+							if(left == 'a' || left == 's'){
+								combineCorners(i - 1, j, 'p');
+							}else if(left == 'f' || left == 't'){
+								combineCorners(i, j, 'z');
+							}else if(left == 'z' || left == 'x'){
+								combineCorners(i - 1, j, 'p');
+								combineCorners(i, j, 'z');
+							}
+							
+							if(right == 's' || right == 'd'){
+								combineCorners(i + 1, j, 'q');
+							}else if(right == 'y' || right == 'f'){
+								combineCorners(i, j, 'm');
+							}else if(right == 'x' || right == 'c'){
+								combineCorners(i + 1, j, 'q'); 	
+								combineCorners(i, j, 'm');
+							}
+							break;
+						case 'e' :	// TR
+							if(down == 's' || down == 'x'){
+								combineCorners(i, j + 1, 'p');
+							}else if(down == 'u' || down == 'g'){
+								combineCorners(i, j, 'z');
+							}else if(down == 'a' || down == 'z'){
+								combineCorners(i, j + 1, 'p');
+								combineCorners(i, j, 'z');
+							}
+							
+							if(left == 'a' || left == 's'){
+								combineCorners(i - 1, j, 'p');
+							}else if(left == 't' || left == 'f'){
+								combineCorners(i, j, 'z');
+							}else if(left == 'z' || left == 'x'){
+								combineCorners(i - 1, j, 'p');
+								combineCorners(i, j, 'z');
+							}
+							break;
+						case 'a' : // ML
+							if(up == 'w' || up == 's'){
+								combineCorners(i, j - 1, 'z');
+							}else if(up == 'r' || up == 'g'){
+								combineCorners(i, j, 'p');
+							}else if(up == 'e' || up == 'd'){
+								combineCorners(i, j - 1, 'z');
+								combineCorners(i, j, 'p');
+							}
+							
+							if(down == 's' || down == 'w'){
+								combineCorners(i, j + 1, 'q');
+							}else if(down == 'u' || down == 'g'){
+								combineCorners(i, j, 'm');
+							}else if(down == 'd' || down == 'c'){
+								combineCorners(i, j + 1, 'q');
+								combineCorners(i, j, 'm');
+							}
+							break;
+						case 'd' : // MR
+							if(up == 'w' || up == 's'){
+								combineCorners(i, j - 1, 'm');
+							}else if(up == 'r' || up == 'g'){
+								combineCorners(i, j, 'q');
+							}else if(up == 'q' || up == 'a'){
+								combineCorners(i, j - 1, 'm');
+								combineCorners(i, j, 'q');
+							}
+							
+							if(down == 's' || down == 'x'){
+								combineCorners(i, j + 1, 'p');
+							}else if(down == 'u' || down == 'g'){
+								combineCorners(i, j, 'z');
+							}else if(down == 'a' || down == 'z'){
+								combineCorners(i, j + 1, 'p');
+								combineCorners(i, j, 'z');
 							}
 					}
 				}
-				top = '\0';
+				up = '\0';
 				right = '\0';
 				down = '\0';
 				left = '\0';
@@ -459,7 +530,7 @@ public class GameMap {
 		
 		char curChar = corners[i][j];
 		
-		if(curChar == '\0')
+		if(curChar == '?')
 			corners[i][j] = newChar;
 		else{
 			if(newChar == 'q'){// adding TL
@@ -557,7 +628,7 @@ public class GameMap {
 		for (int i = 0; i < mapXSize; i++) {
 			for (int j = 0; j < mapXSize; j++) {
 				if (layer[i][j] == type) {
-					recursiveTrees(i, j, 0, type, layer, randomBase,
+					recursiveExpand(i, j, 0, type, layer, randomBase,
 							randomIncrease);
 				}
 			}// end
@@ -569,7 +640,7 @@ public class GameMap {
 	 *	count is the number of times this recursive function has sucessfully
 	 *	made more terrain
 	*/
-	private void recursiveTrees(int y, int x, int count, char type,
+	private void recursiveExpand(int y, int x, int count, char type,
 			char[][] layer, int randomBase, int randomIncrease) {
 
 		if (y < 0 || x < 0 || y > mapYSize - 1 || x > mapXSize - 1)
@@ -583,7 +654,7 @@ public class GameMap {
 					if (rand > randomBase + (randomIncrease * count)) {
 						// start probability slowly gets bigger, so less chance
 						// to grow
-						recursiveTrees(k + y, l + x, count++, type, layer,
+						recursiveExpand(k + y, l + x, count++, type, layer,
 								randomBase, randomIncrease);// increments count
 															// on each
 															// successful
@@ -595,7 +666,7 @@ public class GameMap {
 				}// end inner for
 			}// end outer for
 		}// end if
-	}// end recursiveTrees()
+	}// end recursiveExpand()
 
 	private void zeroRecursiveVars() {
 		timesExpanded = 0;
@@ -617,7 +688,7 @@ public class GameMap {
 
 		Image result = null;
 
-		if(terrain != 'x'){
+		if(terrain != '?'){
 			if (terrain == 't') {// terrain is trees
 				switch (style) {
 				case 'q':
@@ -786,6 +857,7 @@ public class GameMap {
 		return result;
 	}// end getTerrain()
 
+	@SuppressWarnings("incomplete-switch")
 	public Image getCorner(int i, int j){
 		
 		Image result = null;
@@ -794,7 +866,34 @@ public class GameMap {
 			switch(corners[i][j]){
 			case 'q' : result = waterCTL;
 						break;
-			default : break;
+			case 'p' : result = waterCTR;
+						break;
+			case 'z' : result = waterCBL;
+						break;
+			case 'm' : result = waterCBR;
+						break;
+			case 't' : result = waterCTLTR;
+						break;
+			case 'a' : result = waterCTLBL;
+						break;
+			case 'g' : result = waterCTLBR;
+						break;
+			case 'h' : result = waterCTRBL;
+						break;
+			case 'l' : result = waterCTRBR;
+						break;
+			case 'v' : result = waterCBLBR;
+						break;
+			case 'f' : result = waterCTLTRBL;
+						break;
+			case 'j' : result = waterCTLTRBR;
+						break;
+			case 'c' : result = waterCTLBLBR;
+						break;
+			case 'b' : result = waterCTRBLBR;
+						break;
+			case 'y' : result = waterCTLTRBLBR;
+						break;
 			}
 		}
 		
