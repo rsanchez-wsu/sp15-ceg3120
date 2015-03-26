@@ -32,6 +32,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+
+
+
+// TODO Catch File not found exceptions
+
+
+
+
 public class GameMap {
 
 	int mapXSize = 64;
@@ -41,9 +49,11 @@ public class GameMap {
 	char[][] spriteStyle = new char[mapXSize][mapYSize];
 	char[][] corners = new char[mapXSize][mapYSize];
 	
-	int timesExpanded = 0;// used to limit recursive terrain feature growth
-	boolean[][] expanded = new boolean[mapXSize][mapYSize];// used for recursive
-															// growth limiting
+	// used to limit recursive terrain feature growth
+	int timesExpanded = 0;
+	
+	// used for recursive growth limiting
+	boolean[][] expanded = new boolean[mapXSize][mapYSize];
 
 	private Image tank = null;
 	private Image grass = null;
@@ -117,11 +127,14 @@ public class GameMap {
 	private Image mountainLRT = null;
 	
 	public GameMap() {
+		
 		findFiles();
 		generateBlankLayers();
-		
 	}// end GameMap()
 
+	/*
+	 * Creates a randomized map.
+	 */
 	public void generateMap(){		
 		
 		buildBaseLayer();
@@ -130,6 +143,10 @@ public class GameMap {
 		buildCorners();
 	}// end generateMap()
 	
+	/*
+	 * Creates a completely unknown map. All arrays are initiated
+	 * to '?', this char is never used
+	 */
 	private void generateBlankLayers(){
 		
 		for(int i = 0; i < mapXSize; i++){
@@ -142,6 +159,9 @@ public class GameMap {
 		}
 	}// end generateBlankLayers()
 	
+	/*
+	 * Connects the Image Objects with the files.
+	 */
 	private void findFiles() {
 
 		try {
@@ -238,6 +258,12 @@ public class GameMap {
 		}
 	}// end findFiles()
 
+	/*
+	 * Generates the bottom layer of the game map. This layer is only
+	 * cosmetic, since in buildTopLayer() the actual features of the
+	 * map are created and expanded. Through the alpha colors in topLayer
+	 * you will see the baseLayer terrain.
+	 */
 	private void buildBaseLayer(){
 		/*
 		 * This conditional tree picks the probability for a 'seed' of each
@@ -261,6 +287,10 @@ public class GameMap {
 
 	}// end buildBaseLayer()
 
+	/*
+	 * Generates the features that make the map interesting. This layer is
+	 * held in the topLayer array and contains the type of each terrain piece 
+	 */
 	private void buildTopLayer() {
 		/*
 		 * TERRAIN TYPE TABLE -char- -type- t tree m mountain u mud w water g
@@ -295,6 +325,12 @@ public class GameMap {
 		expandFeature('t', topLayer, 70, 5);
 	}// end buildTopLayer()
 
+	/*
+	 * To make the map look more realistic, there are different 'styles' for
+	 * each tile piece, depending on the neighboring tiles. These styles include
+	 * a basic 3x3 assortment and also singleton pieces and tunnel-like pieces.
+	 * Each piece has it's own style char, included in a table below.
+	 */
 	private void buildSpriteStyle() {
 		/*
 		 * TERRAIN STYLE TABLE: -char- -MEANING- 
@@ -315,11 +351,13 @@ public class GameMap {
 		for (int i = 0; i < mapXSize; i++) {
 			for (int j = 0; j < mapYSize; j++) {
 
+				// check each cardinal direction to determine what kind of tile it is
 				isT = (j == 0 || topLayer[i][j] != topLayer[i][j - 1]);
 				isR = (i == mapXSize - 1 || topLayer[i][j] != topLayer[i + 1][j]);
 				isB = (j == mapYSize - 1 || topLayer[i][j] != topLayer[i][j + 1]);
 				isL = (i == 0 || topLayer[i][j] != topLayer[i - 1][j]);
 
+				// very basic logic that assigns the tile a style depending on its cardinal directions
 				if (isT)
 					if (isR)
 						if (isB)
@@ -377,6 +415,11 @@ public class GameMap {
 		}// end for loop
 	}// end buildSpriteStyle()
 
+	/*
+	 * To make the map even more realistic, corners have been implemented.
+	 * These pieces are necessary for when there is a change in 'direction'
+	 * between neighboring tiles.
+	 */
 	@SuppressWarnings({"incomplete-switch"})
 	private void buildCorners(){
 		
@@ -386,6 +429,10 @@ public class GameMap {
 		char down = '\0';
 		char left = '\0';
 		
+		/*
+		 *	step through the map array checking the style of neighboring tiles
+		 *	to decide if a corner is necessary
+		 */
 		for(int i = 0; i < mapXSize; i++){
 			for(int j = 0; j < mapYSize; j++){
 			
@@ -529,7 +576,7 @@ public class GameMap {
 		
 		char curChar = corners[i][j];
 		
-		if(curChar == '?')
+		if(curChar == '?' || curChar == newChar)
 			corners[i][j] = newChar;
 		else{
 			if(newChar == 'q'){// adding TL
@@ -677,7 +724,7 @@ public class GameMap {
 	}// zeroRecursiveVars()
 	
 	/*
-	 * Image look-up for rendering.
+	 * Image look-up for rendering a tile.
 	 * 
 	 * @param terrain : the type of terrain at a given tile from TopLayer[][]
 	 * @param style : the variation of the terrain tile from spriteStyle[][]
@@ -739,7 +786,7 @@ public class GameMap {
 					result = treeUDT;
 					break;
 				default:
-					result = treeMM;
+					result = treeAA;
 				}
 			} else if (terrain == 'w') {// terrain is water
 				switch (style) {
@@ -792,7 +839,7 @@ public class GameMap {
 					result = waterUDT;
 					break;
 				default:
-					result = waterMM;
+					result = waterAA;
 				}
 			} else if (terrain == 'm') {// terrain is mountain
 				switch (style) {
@@ -845,7 +892,7 @@ public class GameMap {
 					result = mountainUDT;
 					break;
 				default:
-					result = mountainMM;
+					result = mountainAA;
 				}
 			} else if (terrain == 'g') {// terrain is grass
 				result = grass;
@@ -856,6 +903,12 @@ public class GameMap {
 		return result;
 	}// end getTerrain()
 
+	/*
+	 * Image look-up for rendering a corner.
+	 * 
+	 * @param i : x coordinate in the array
+	 * @param j : y coordinate in the array
+	 */
 	@SuppressWarnings("incomplete-switch")
 	public Image getCorner(int i, int j){
 		

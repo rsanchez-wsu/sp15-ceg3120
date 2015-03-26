@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE turntanks SYSTEM "turntanks.dtd">
+
+<!-- 
+	This is the turntanks configuration file.  
+
+	The example configuration given here is for operating a game server.
+
+	All configuration options are required, except as noted.
+
+	Available configuration options are:
+
+	- <listen>: Contains the <address> and <port> elements
+		- <address>: 0 or more addresses to which the server will bind
+			to listen for incoming connections. If no address is
+			specified then the server will only bind to the local
+			loopback address. To specify "all interfaces" use the
+			address 0.0.0.0.
+		- <port>: The port to which the server will bind.
+
+	- <max-clients>: The maximum number of clients permitted to connect to
+		the server.
+
+	- <turn-clock>: How long the the turn clock should last.  Use the
+		attribute 'unit' to specify "seconds", "minutes", or "hours"
+		for the clock's unit.  If the 'unit' attribute is not specified
+		it defaults to "seconds".
+
+	- <db-uri>: A URI that specifies the database to which the server will
+		connect for storing game data.  The URI must be formatted as a
+		valid JDBC URI such that it can be passed directly to the
+		DriverManager.getConnection() method.
+ -->
+
+<turntanks mode="server">
+	<listen>
+		<address>10.31.1.43</address>
+		<address>10.4.53.217</address>
+		<port>9786</port>
+	</listen>
+	<max-clients>8</max-clients>
+	<turn-clock>30</turn-clock>
+	<db-uri>jdbc:derby:turntanks-db;create=true</db-uri>
+</turntanks>
