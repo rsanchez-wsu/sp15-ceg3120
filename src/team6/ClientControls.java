@@ -11,7 +11,7 @@ public class ClientControls extends JPanel{
 	private int xOffset=0;
 	private int yOffset=0;
 	private boolean attack=false;
-	ActionListener press = new CommandAction();
+	ActionListener press = new Press();
 	
 	public ClientControls() {
 		super();
@@ -31,6 +31,18 @@ public class ClientControls extends JPanel{
 		this.add(panel);
 		
 	}	
+	public int getInputX(){	
+		int temp=xOffset;
+		xOffset=0;
+		return temp;			
+	}
+	
+	public int getInputY(){		
+		int temp=yOffset;
+		yOffset=0;
+		return temp;		
+		
+	}
 	
 	
 	
@@ -39,22 +51,30 @@ public class ClientControls extends JPanel{
 		private int yOffset;		
 		private offsetButton(String text,int x, int y){
 		super(text);
-		xOffset=x;
-		yOffset=y;	
-		}
+		xOffset=x+1;//makes parsing easier, -1 later in actionlistener
+		yOffset=y+1;//makes parsing easier, -1 later in actionlistener
+		this.addActionListener(press);
+		}		
 		
-	}
+		@Override
+		public String getActionCommand(){
+			
+			return String.valueOf(xOffset)+String.valueOf(yOffset);
+		}
+	}//end button class
 	
-	private class CommandAction implements ActionListener
+	private class Press implements ActionListener
 {
 public void actionPerformed(ActionEvent event)
 {
 
-	
+xOffset=Integer.parseInt(event.getActionCommand().substring(0, 1))-1;	
+yOffset=Integer.parseInt(event.getActionCommand().substring(1, 2))-1;
+
 }
-}
+}//end listener
 	
 	
 	
 	
-}
+}//end client control class
