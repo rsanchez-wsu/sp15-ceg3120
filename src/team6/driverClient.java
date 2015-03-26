@@ -55,7 +55,7 @@ public class driverClient {
 
 		GameInstance clientGame = new GameInstance(); // contains blank map, and
 														// all tanks at 0/0
-		// TODO make this a method call
+		///////////// TODO make this a method call/////////////////////
 		JFrame gameFrame = new JFrame("game renderer Demo");
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//
@@ -71,8 +71,10 @@ public class driverClient {
 				BorderLayout.CENTER);
 		gameFrame.setVisible(true);
 		// TODO end make renderer method
-		//
-		// jtable debug
+		////////////////////////////////////////////////////
+		
+		////////////////////////////////////////////////////
+		/////////// jtable debug
 		JFrame tableFrame = new JFrame();
 		String[] colnames = { "Tank Image", "Name", "IP", "x coord", "y coord",
 				"Health", "Status" };
@@ -86,9 +88,18 @@ public class driverClient {
 		tableFrame.setSize(500, 300);
 		tableFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		tableFrame.setVisible(true);
-
-		// end jtable debug
-		//
+		/////////////// end jtable debug/////////
+		
+		/////////////controls/////////////////////
+		JFrame controlFrame = new JFrame("game controls");
+		ClientControls controls=new ClientControls();
+		controlFrame.add(controls);
+		controlFrame.setSize(150, 150);
+		controlFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		controlFrame.setVisible(true);
+		
+		
+		///////////////////////////////////
 		Scanner input = new Scanner(System.in);
 
 		int port = 6666;
@@ -214,8 +225,19 @@ public class driverClient {
 
 		System.out.println("local: Exiting");
 	}// end main
+	
+	static public void debugGUIElements(){
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
 		// temp method for table update without model
-
 	static public void updateTable(JTable table, GameInstance game) {
 		String[] colnames = { "Tank Image", "Name", "IP", "x coord", "y coord",
 				"Health", "Status" };
