@@ -420,14 +420,20 @@ public class GameMap {
 	 * These pieces are necessary for when there is a change in 'direction'
 	 * between neighboring tiles.
 	 */
-	@SuppressWarnings({"incomplete-switch"})
 	private void buildCorners(){
 		
 		char currTopLayer;
-		char up = '\0';
-		char right = '\0';
-		char down = '\0';
-		char left = '\0';
+		char currSpriteStyle;
+		char neighbor = '?';
+		
+		boolean edgeTL = false;
+		boolean edgeTR = false;
+		boolean edgeRT = false;
+		boolean edgeRB = false;
+		boolean edgeBR = false;
+		boolean edgeBL = false;
+		boolean edgeLB = false;
+		boolean edgeLT = false;
 		
 		/*
 		 *	step through the map array checking the style of neighboring tiles
@@ -439,117 +445,59 @@ public class GameMap {
 				currTopLayer = topLayer[i][j];
 				if(currTopLayer == 'w'){// current terrain is water
 					
-					// retrieve the next top, right, down, and left tiles
-					if(j > 0 && topLayer[i][j - 1] == currTopLayer)
-						up = spriteStyle[i][j - 1];
-					if(i < mapXSize - 1 && topLayer[i + 1][j] == currTopLayer)
-						right = spriteStyle[i + 1][j];
-					if(j < mapYSize - 1 && topLayer[i][j + 1] == currTopLayer)
-						down = spriteStyle[i][j + 1];
-					if(i > 0 && topLayer[i - 1][j] == currTopLayer)
-						left = spriteStyle[i - 1][j];
-				
-					switch(spriteStyle[i][j]){
-						case 'q' :	// TL
-							if(right == 's' || right == 'd'){
-								combineCorners(i + 1, j, 'q');
-							}else if(right == 'f' || right == 'y'){
-								combineCorners(i, j, 'm');
-							}else if(right == 'x' || right == 'c'){
-								combineCorners(i + 1, j, 'q');
-								combineCorners(i, j, 'm');
-							}
-							
-							if(down == 's' || down == 'x'){
-								combineCorners(i, j + 1, 'q');
-							}else if(down == 'u' || down == 'g'){
-								combineCorners(i, j, 'm');
-							}else if(down == 'd' || down == 'c'){
-								combineCorners(i, j + 1, 'q');
-								combineCorners(i, j, 'm');
-							}
-							break;
-						case 'w' :	// TM
-							if(left == 'a' || left == 's'){
-								combineCorners(i - 1, j, 'p');
-							}else if(left == 'f' || left == 't'){
-								combineCorners(i, j, 'z');
-							}else if(left == 'z' || left == 'x'){
-								combineCorners(i - 1, j, 'p');
-								combineCorners(i, j, 'z');
-							}
-							
-							if(right == 's' || right == 'd'){
-								combineCorners(i + 1, j, 'q');
-							}else if(right == 'y' || right == 'f'){
-								combineCorners(i, j, 'm');
-							}else if(right == 'x' || right == 'c'){
-								combineCorners(i + 1, j, 'q'); 	
-								combineCorners(i, j, 'm');
-							}
-							break;
-						case 'e' :	// TR
-							if(down == 's' || down == 'x'){
-								combineCorners(i, j + 1, 'p');
-							}else if(down == 'u' || down == 'g'){
-								combineCorners(i, j, 'z');
-							}else if(down == 'a' || down == 'z'){
-								combineCorners(i, j + 1, 'p');
-								combineCorners(i, j, 'z');
-							}
-							
-							if(left == 'a' || left == 's'){
-								combineCorners(i - 1, j, 'p');
-							}else if(left == 't' || left == 'f'){
-								combineCorners(i, j, 'z');
-							}else if(left == 'z' || left == 'x'){
-								combineCorners(i - 1, j, 'p');
-								combineCorners(i, j, 'z');
-							}
-							break;
-						case 'a' : // ML
-							if(up == 'w' || up == 's'){
-								combineCorners(i, j - 1, 'z');
-							}else if(up == 'r' || up == 'g'){
-								combineCorners(i, j, 'p');
-							}else if(up == 'e' || up == 'd'){
-								combineCorners(i, j - 1, 'z');
-								combineCorners(i, j, 'p');
-							}
-							
-							if(down == 's' || down == 'w'){
-								combineCorners(i, j + 1, 'q');
-							}else if(down == 'u' || down == 'g'){
-								combineCorners(i, j, 'm');
-							}else if(down == 'd' || down == 'c'){
-								combineCorners(i, j + 1, 'q');
-								combineCorners(i, j, 'm');
-							}
-							break;
-						case 'd' : // MR
-							if(up == 'w' || up == 's'){
-								combineCorners(i, j - 1, 'm');
-							}else if(up == 'r' || up == 'g'){
-								combineCorners(i, j, 'q');
-							}else if(up == 'q' || up == 'a'){
-								combineCorners(i, j - 1, 'm');
-								combineCorners(i, j, 'q');
-							}
-							
-							if(down == 's' || down == 'x'){
-								combineCorners(i, j + 1, 'p');
-							}else if(down == 'u' || down == 'g'){
-								combineCorners(i, j, 'z');
-							}else if(down == 'a' || down == 'z'){
-								combineCorners(i, j + 1, 'p');
-								combineCorners(i, j, 'z');
-							}
+					currSpriteStyle = spriteStyle[i][j];
+					
+					// depending on the tile type, decide which directions need to be checked
+					edgeTL = (currSpriteStyle == 'w' || currSpriteStyle == 'e' || currSpriteStyle == 'y' || currSpriteStyle == 'f');
+					edgeTR = (currSpriteStyle == 'q' || currSpriteStyle == 'w' || currSpriteStyle == 't' || currSpriteStyle == 'f');
+					edgeRT = (currSpriteStyle == 'd' || currSpriteStyle == 'c' || currSpriteStyle == 'u' || currSpriteStyle == 'g');
+					edgeRB = (currSpriteStyle == 'e' || currSpriteStyle == 'd' || currSpriteStyle == 'r' || currSpriteStyle == 'g');
+					edgeBR = (currSpriteStyle == 'z' || currSpriteStyle == 'x' || currSpriteStyle == 't' || currSpriteStyle == 'f');
+					edgeBL = (currSpriteStyle == 'x' || currSpriteStyle == 'c' || currSpriteStyle == 'y' || currSpriteStyle == 'f');
+					edgeLB = (currSpriteStyle == 'q' || currSpriteStyle == 'a' || currSpriteStyle == 'r' || currSpriteStyle == 'g');
+					edgeLT = (currSpriteStyle == 'a' || currSpriteStyle == 'z' || currSpriteStyle == 'u' || currSpriteStyle == 'g');
+
+					if(edgeTL){
+						neighbor = spriteStyle[i - 1][j];
+						if(neighbor == 's' || neighbor == 'x' || neighbor == 'a' || neighbor == 'z')
+							combineCorners(i - 1, j, 'p');
+					}
+					if(edgeTR){
+						neighbor = spriteStyle[i + 1][j];
+						if(neighbor == 's' || neighbor == 'x' || neighbor == 'd' || neighbor == 'c')
+							combineCorners(i + 1, j, 'q');
+					}
+					if(edgeRT){
+						neighbor = spriteStyle[i][j - 1];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'q' || neighbor == 'a')
+							combineCorners(i, j - 1, 'm');
+					}
+					if(edgeRB){
+						neighbor = spriteStyle[i][j + 1];
+						if(neighbor == 's' || neighbor == 'x' || neighbor == 'a' || neighbor == 'z')
+							combineCorners(i, j + 1, 'p');
+					}
+					if(edgeBR){
+						neighbor = spriteStyle[i + 1][j];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'd' || neighbor == 'e')
+							combineCorners(i + 1, j, 'z');
+					}
+					if(edgeBL){
+						neighbor = spriteStyle[i - 1][j];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'a' || neighbor == 'q')
+							combineCorners(i - 1, j, 'm');
+					}
+					if(edgeLB){
+						neighbor = spriteStyle[i][j + 1];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'd' || neighbor == 'c')
+							combineCorners(i, j + 1, 'q');
+					}
+					if(edgeLT){
+						neighbor = spriteStyle[i][j - 1];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'e' || neighbor == 'd')
+							combineCorners(i, j - 1, 'z');
 					}
 				}
-				up = '\0';
-				right = '\0';
-				down = '\0';
-				left = '\0';
 			}
 		}// end for loop
 	}// end buildCorners()
