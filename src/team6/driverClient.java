@@ -45,7 +45,7 @@ public class driverClient {
 	 * @param args
 	 *            the command line arguments
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		String ip = "localhost";
 		/*
 		 * GameMap currentMap = new GameMap();//test to ensure client can
@@ -190,12 +190,10 @@ public class driverClient {
 					///////user input section
 					//
 					//System.out.println("Enter a 0 to move , 1 to attack, 2 to chat , or -1 to do nothing(do this alot)");
-					int userInput = -1;
-					out.writeInt(userInput);
+					int userInput = -1;					
 					//temp user interface code
 					int xCoord=controls.getInputX();
-					int yCoord=controls.getInputY();
-					System.out.println("looping fine");
+					int yCoord=controls.getInputY();					
 					
 					if (!(xCoord==0 && yCoord==0)){
 						userInput=0;
@@ -215,14 +213,15 @@ public class driverClient {
 						out.writeUTF(message);
 					} else if (userInput == 0 || userInput == 1) {
 											
-						out.write(userInput);
-						out.writeInt(xCoord+clientGame.tanks.get(playerID).xCoord);
-						out.writeInt(yCoord+clientGame.tanks.get(playerID).yCoord);
+						out.writeInt(userInput);
+						int temp1=(xCoord+clientGame.tanks.get(playerID).xCoord);
+						int temp2=(yCoord+clientGame.tanks.get(playerID).yCoord);
+						out.writeInt(temp1);
+						out.writeInt(temp2);
 						System.out.println(userInput);
-						System.out.println(xCoord+clientGame.tanks.get(playerID).xCoord);
-						System.out.println(xCoord+clientGame.tanks.get(playerID).xCoord);
-						System.out.println("if complete");
-					
+						System.out.println(temp1);
+						System.out.println(temp2);
+						System.out.println("if complete");					
 					}// end else if
 					else {
 						System.out.print("invalid choice, sending -1");

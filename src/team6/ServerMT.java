@@ -97,22 +97,23 @@ public class ServerMT {
 		int y = currentGame.tanks.get(playerNumber).yCoord;
 
 		OutBufferInstruction outInstruction;
-
+		//creates instructions for tank positions to be updated on client
 		for (int i = 0; i < ServerMTSockListen.socketList.size(); i++) {
 			// TODO if lineOfSite=true
 			outInstruction = new OutBufferInstruction(2, playerNumber, x, y);
 			outBuffers.get(playerNumber).add(outInstruction);
 		}// end for
-			// gets tiles around tank
+		
+	// gets tiles around tank
 		for (int i = -2; i <= 2; i++) {
 			for (int j = -2; j <= 2; j++) {
 				// TODO if lineOfSite=true
 				if (x + j >= 0 && y + i >= 0) {
-					outInstruction = new OutBufferInstruction(3, x + j, y + i,
+					outInstruction = new OutBufferInstruction(3,y + j ,x + i ,
 							currentGame.gameMap.baseLayer[y + i][x + j],
 							currentGame.gameMap.topLayer[y + i][x + j],
 							currentGame.gameMap.spriteStyle[y + i][x + j],
-							currentGame.gameMap.baseLayer[y + i][x + j]);
+							currentGame.gameMap.corners[y + i][x + j]);
 					outBuffers.get(playerNumber).add(outInstruction);
 				}// end if
 			}// end for
@@ -157,6 +158,8 @@ public class ServerMT {
 		case 3:
 			System.out.println("MT processing handshake");
 			currentGame.tanks.get(instruction.sourceID).Name = instruction.message;
+			playerUpdate[instruction.sourceID]=true;
+			needViewUpdate=true;
 			ServerGUI.getInstance().updateTable(currentGame);
 			// generate messages to update player names to everyone
 			for (int i = 0; i < listener.socketList.size(); i++) {

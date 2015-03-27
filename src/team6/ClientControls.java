@@ -19,15 +19,15 @@ public class ClientControls extends JPanel{
 		panel = new JPanel();	
 		panel.setLayout(new GridLayout(3, 3));
 		
-		panel.add(new offsetButton("\\",-1,1));
-		panel.add(new offsetButton("|",0,1));
-		panel.add(new offsetButton("/",1,1));
+		panel.add(new offsetButton("\\",-1,-1));
+		panel.add(new offsetButton("|",0,-1));
+		panel.add(new offsetButton("/",1,-1));
 		panel.add(new offsetButton("<-",-1,0));
 		panel.add(new offsetButton(":D",0,0));
 		panel.add(new offsetButton("->",1,0));
-		panel.add(new offsetButton("/",-1,-1));
-		panel.add(new offsetButton("|",0,-1));
-		panel.add(new offsetButton("\\",1,-1));
+		panel.add(new offsetButton("/",-1,1));
+		panel.add(new offsetButton("|",0,1));
+		panel.add(new offsetButton("\\",1,11));
 		this.add(panel);
 		
 	}	
@@ -35,7 +35,7 @@ public class ClientControls extends JPanel{
 		int temp=xOffset;
 		xOffset=0;
 		
-		//if (temp!=0)
+		if (temp!=0)
 			System.out.println(temp);
 		return temp;
 	}
@@ -43,7 +43,7 @@ public class ClientControls extends JPanel{
 	public int getInputY(){		
 		int temp=yOffset;
 		yOffset=0;
-		//if (temp!=0)
+		if (temp!=0)
 			System.out.println(temp);
 		return temp;		
 		
