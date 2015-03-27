@@ -142,12 +142,12 @@ public class ServerMTSock implements Runnable {
 				}// end
 
 				int type = in.readInt();
+				if (type!=-1)
 				System.out.println("debug read from socket: " + type);
 
 				switch (type) {
 				case -1:
-					System.out
-							.println("MT parsing(not really) nothing message");
+					//System.out.println("MT parsing(not really) nothing message");
 					break;
 				case 0:
 					System.out.println("MT parsing tank move");
