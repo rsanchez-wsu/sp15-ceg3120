@@ -137,6 +137,7 @@ public class driverClient {
 
 					Scanner scanner = new Scanner(System.in);
 					int numMsg=in.readInt();
+					if(numMsg!=0)
 					System.out.println("debug number of message to expect "+numMsg);
 					for (int i = 0 ; i < numMsg; i++) {
 						System.out.println("loop");
@@ -185,37 +186,51 @@ public class driverClient {
 						
 						// TODO end make each if a method call
 					}// end for that parses x number of messages
-
-					System.out
-							.println("Enter a 0 to move , 1 to attack, 2 to chat , or -1 to do nothing(do this alot)");
-					int userInput = scanner.nextInt();
+					//
+					///////user input section
+					//
+					//System.out.println("Enter a 0 to move , 1 to attack, 2 to chat , or -1 to do nothing(do this alot)");
+					int userInput = -1;
 					out.writeInt(userInput);
-
+					//temp user interface code
+					int xCoord=controls.getInputX();
+					int yCoord=controls.getInputY();
+					System.out.println("looping fine");
+					
+					if (!(xCoord==0 && yCoord==0)){
+						userInput=0;
+					}
+					
+					//
 					// TODO make each if a method call
 					if (userInput == -1) {
 						out.writeInt(-1);
 						// System.out.println("You have chosen to do nothing.");
 					} else if (userInput == 2) {
 						// System.out.println("chat type sent, enter message");
+						out.writeInt(userInput);
 						System.out.print("Enter the message: ");
 						scanner.next();
 						String message = scanner.nextLine();
 						out.writeUTF(message);
 					} else if (userInput == 0 || userInput == 1) {
-						// System.out.println("move or attack type sent, enter two coords");
-						System.out.print("Enter the coordinates: ");
-						userInput = scanner.nextInt();
-						out.writeInt(userInput);
-						userInput = scanner.nextInt();
-						out.writeInt(userInput);
+											
+						out.write(userInput);
+						out.writeInt(xCoord+clientGame.tanks.get(playerID).xCoord);
+						out.writeInt(yCoord+clientGame.tanks.get(playerID).yCoord);
+						System.out.println(userInput);
+						System.out.println(xCoord+clientGame.tanks.get(playerID).xCoord);
+						System.out.println(xCoord+clientGame.tanks.get(playerID).xCoord);
+						System.out.println("if complete");
+					
 					}// end else if
 					else {
 						System.out.print("invalid choice, sending -1");
 						out.writeInt(-1);
 					}
 					// TODO end make each if a method call
-					renderer.repaint();
-					updateTable(table, clientGame);
+					//renderer.repaint();
+					//updateTable(table, clientGame);
 				}// end while
 			}
 

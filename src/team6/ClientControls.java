@@ -8,8 +8,8 @@ import javax.swing.*;
 public class ClientControls extends JPanel{
 
 	private JPanel panel;
-	private int xOffset=0;
-	private int yOffset=0;
+	private static int xOffset=0;
+	private static int yOffset=0;
 	private boolean attack=false;
 	ActionListener press = new Press();
 	
@@ -21,12 +21,12 @@ public class ClientControls extends JPanel{
 		
 		panel.add(new offsetButton("\\",-1,1));
 		panel.add(new offsetButton("|",0,1));
-		panel.add(new offsetButton("/",-1,1));
+		panel.add(new offsetButton("/",1,1));
 		panel.add(new offsetButton("<-",-1,0));
 		panel.add(new offsetButton(":D",0,0));
 		panel.add(new offsetButton("->",1,0));
 		panel.add(new offsetButton("/",-1,-1));
-		panel.add(new offsetButton("|",0,1));
+		panel.add(new offsetButton("|",0,-1));
 		panel.add(new offsetButton("\\",1,-1));
 		this.add(panel);
 		
@@ -34,12 +34,17 @@ public class ClientControls extends JPanel{
 	public int getInputX(){	
 		int temp=xOffset;
 		xOffset=0;
-		return temp;			
+		
+		//if (temp!=0)
+			System.out.println(temp);
+		return temp;
 	}
 	
 	public int getInputY(){		
 		int temp=yOffset;
 		yOffset=0;
+		//if (temp!=0)
+			System.out.println(temp);
 		return temp;		
 		
 	}
@@ -47,19 +52,19 @@ public class ClientControls extends JPanel{
 	
 	
 	private class offsetButton extends JButton{
-		private int xOffset;
-		private int yOffset;		
+		private int xOffset2;
+		private int yOffset2;		
 		private offsetButton(String text,int x, int y){
 		super(text);
-		xOffset=x+1;//makes parsing easier, -1 later in actionlistener
-		yOffset=y+1;//makes parsing easier, -1 later in actionlistener
+		xOffset2=x+1;//makes parsing easier, -1 later in actionlistener
+		yOffset2=y+1;//makes parsing easier, -1 later in actionlistener
 		this.addActionListener(press);
 		}		
 		
 		@Override
 		public String getActionCommand(){
 			
-			return String.valueOf(xOffset)+String.valueOf(yOffset);
+			return String.valueOf(xOffset2)+String.valueOf(yOffset2);
 		}
 	}//end button class
 	
@@ -68,8 +73,12 @@ public class ClientControls extends JPanel{
 public void actionPerformed(ActionEvent event)
 {
 
-xOffset=Integer.parseInt(event.getActionCommand().substring(0, 1))-1;	
-yOffset=Integer.parseInt(event.getActionCommand().substring(1, 2))-1;
+ClientControls.xOffset=Integer.parseInt(event.getActionCommand().substring(0, 1))-1;	
+ClientControls.yOffset=Integer.parseInt(event.getActionCommand().substring(1, 2))-1;
+System.out.println(event.getActionCommand());
+System.out.println(Integer.parseInt(event.getActionCommand().substring(0, 1))-1);
+System.out.println(Integer.parseInt(event.getActionCommand().substring(1, 2))-1);
+System.out.println("button pressed");
 
 }
 }//end listener
