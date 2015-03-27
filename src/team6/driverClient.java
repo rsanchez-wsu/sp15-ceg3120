@@ -172,10 +172,10 @@ public class driverClient {
 							char top = in.readChar();
 							char style = in.readChar();
 							char corner = in.readChar();
-							clientGame.gameMap.baseLayer[y][x] = base;
-							clientGame.gameMap.topLayer[y][x] = top;
-							clientGame.gameMap.spriteStyle[y][x] = style;
-							clientGame.gameMap.corners[y][x] = corner;
+							clientGame.gameMap.baseLayer[x][y] = base;
+							clientGame.gameMap.topLayer[x][y] = top;
+							clientGame.gameMap.spriteStyle[x][y] = style;
+							clientGame.gameMap.corners[x][y] = corner;
 							renderer.repaint();
 							System.out.println("debug tile " + x + " , " + y
 									+ " btsc " + base + top + style + corner);
