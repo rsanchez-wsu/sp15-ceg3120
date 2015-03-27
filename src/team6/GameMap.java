@@ -58,7 +58,8 @@ public class GameMap {
 	private Image tank = null;
 	private Image grass = null;
 	private Image mud = null;
-
+	private Image hill = null;
+	
 	private Image treeTL = null;
 	private Image treeTM = null;
 	private Image treeTR = null;
@@ -168,7 +169,8 @@ public class GameMap {
 			tank = ImageIO.read(new File("./src/team6/images/tank.png"));
 			grass = ImageIO.read(new File("./src/team6/images/grass.jpg"));
 			mud = ImageIO.read(new File("./src/team6/images/mud.jpg"));
-
+			hill = ImageIO.read(new File("./src/team6/images/hill.png"));
+			
 			treeTL = ImageIO.read(new File("./src/team6/images/tree_tl.png"));
 			treeTM = ImageIO.read(new File("./src/team6/images/tree_tm.png"));
 			treeTR = ImageIO.read(new File("./src/team6/images/tree_tr.png"));
@@ -314,6 +316,8 @@ public class GameMap {
 					topLayer[i][j] = 'm';
 				else if (rand > 200 && rand < 204) // water
 					topLayer[i][j] = 'w';
+				else if (rand > 300 && rand < 304) // hill
+					topLayer[i][j] = 'h';
 				else
 					topLayer[i][j] = baseLayer[i][j];
 			}
@@ -322,6 +326,7 @@ public class GameMap {
 		expandFeature('m', topLayer, 80, 5);
 		expandFeature('w', topLayer, 75, 5);
 		expandFeature('t', topLayer, 70, 5);
+		expandFeature('h', topLayer, 80, 5);
 	}// end buildTopLayer()
 
 	/*
@@ -841,6 +846,8 @@ public class GameMap {
 				default:
 					result = mountainAA;
 				}
+			} else if (terrain == 'h') {// terrain is hill
+				result = hill;
 			} else if (terrain == 'g') {// terrain is grass
 				result = grass;
 			} else if (terrain == 'u') {// terrain is mud
