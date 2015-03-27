@@ -66,27 +66,28 @@ public class GameRenderer extends JPanel {
 				tile = gameInstance.gameMap.getTerrain(gameInstance.gameMap.baseLayer[i][j], ' ');
 				
 				if(tile != null)
-					g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
+					g.drawImage(tile, j * tileSize, i * tileSize, tileSize, tileSize, null);
 				else{//bad color
 					g.setColor(Color.BLACK);
-					g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
+					g.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
 				}
 				
 				// Draw TopLayer
 				tile = gameInstance.gameMap.getTerrain(gameInstance.gameMap.topLayer[i][j], 
 						gameInstance.gameMap.spriteStyle[i][j]);
 				if(tile != null)
-					g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
+					g.drawImage(tile, j * tileSize, i * tileSize, tileSize, tileSize, null);
 				else{//bad color
 					g.setColor(Color.BLACK);
-					g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
+					g.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
 				}
 				
 				// Draw Corners
 				tile = gameInstance.gameMap.getCorner(i, j);
 				
 				if(tile != null)
-					g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
+					g.drawImage(tile, j * tileSize, i * tileSize, tileSize, tileSize, null);
+					
 			}
 		}// end for loop
 		

@@ -284,7 +284,6 @@ public class GameMap {
 		}
 
 		expandFeature('u', baseLayer, 70, 5);
-
 	}// end buildBaseLayer()
 
 	/*
@@ -352,10 +351,10 @@ public class GameMap {
 			for (int j = 0; j < mapYSize; j++) {
 
 				// check each cardinal direction to determine what kind of tile it is
-				isT = (j == 0 || topLayer[i][j] != topLayer[i][j - 1]);
-				isR = (i == mapXSize - 1 || topLayer[i][j] != topLayer[i + 1][j]);
-				isB = (j == mapYSize - 1 || topLayer[i][j] != topLayer[i][j + 1]);
-				isL = (i == 0 || topLayer[i][j] != topLayer[i - 1][j]);
+				isT = (i == 0 || topLayer[i][j] != topLayer[i - 1][j]);
+				isR = (j == mapXSize - 1 || topLayer[i][j] != topLayer[i][j + 1]);
+				isB = (i == mapYSize - 1 || topLayer[i][j] != topLayer[i + 1][j]);
+				isL = (j == 0 || topLayer[i][j] != topLayer[i][j - 1]);
 
 				// very basic logic that assigns the tile a style depending on its cardinal directions
 				if (isT)
@@ -458,44 +457,44 @@ public class GameMap {
 					edgeLT = (currSpriteStyle == 'a' || currSpriteStyle == 'z' || currSpriteStyle == 'u' || currSpriteStyle == 'g');
 
 					if(edgeTL){
-						neighbor = spriteStyle[i - 1][j];
+						neighbor = spriteStyle[i][j - 1];
 						if(neighbor == 's' || neighbor == 'x' || neighbor == 'a' || neighbor == 'z')
-							combineCorners(i - 1, j, 'p');
+							combineCorners(i, j - 1, 'p');
 					}
 					if(edgeTR){
-						neighbor = spriteStyle[i + 1][j];
+						neighbor = spriteStyle[i][j + 1];
 						if(neighbor == 's' || neighbor == 'x' || neighbor == 'd' || neighbor == 'c')
-							combineCorners(i + 1, j, 'q');
-					}
-					if(edgeRT){
-						neighbor = spriteStyle[i][j - 1];
-						if(neighbor == 's' || neighbor == 'w' || neighbor == 'q' || neighbor == 'a')
-							combineCorners(i, j - 1, 'm');
-					}
-					if(edgeRB){
-						neighbor = spriteStyle[i][j + 1];
-						if(neighbor == 's' || neighbor == 'x' || neighbor == 'a' || neighbor == 'z')
-							combineCorners(i, j + 1, 'p');
-					}
-					if(edgeBR){
-						neighbor = spriteStyle[i + 1][j];
-						if(neighbor == 's' || neighbor == 'w' || neighbor == 'd' || neighbor == 'e')
-							combineCorners(i + 1, j, 'z');
-					}
-					if(edgeBL){
-						neighbor = spriteStyle[i - 1][j];
-						if(neighbor == 's' || neighbor == 'w' || neighbor == 'a' || neighbor == 'q')
-							combineCorners(i - 1, j, 'm');
-					}
-					if(edgeLB){
-						neighbor = spriteStyle[i][j + 1];
-						if(neighbor == 's' || neighbor == 'w' || neighbor == 'd' || neighbor == 'c')
 							combineCorners(i, j + 1, 'q');
 					}
-					if(edgeLT){
+					if(edgeRT){
+						neighbor = spriteStyle[i - 1][j];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'q' || neighbor == 'a')
+							combineCorners(i - 1, j, 'm');
+					}
+					if(edgeRB){
+						neighbor = spriteStyle[i + 1][j];
+						if(neighbor == 's' || neighbor == 'x' || neighbor == 'a' || neighbor == 'z')
+							combineCorners(i + 1, j, 'p');
+					}
+					if(edgeBR){
+						neighbor = spriteStyle[i][j + 1];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'd' || neighbor == 'e')
+							combineCorners(i, j + 1, 'z');
+					}
+					if(edgeBL){
 						neighbor = spriteStyle[i][j - 1];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'a' || neighbor == 'q')
+							combineCorners(i, j - 1, 'm');
+					}
+					if(edgeLB){
+						neighbor = spriteStyle[i + 1][j];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'd' || neighbor == 'c')
+							combineCorners(i + 1, j, 'q');
+					}
+					if(edgeLT){
+						neighbor = spriteStyle[i - 1][j];
 						if(neighbor == 's' || neighbor == 'w' || neighbor == 'e' || neighbor == 'd')
-							combineCorners(i, j - 1, 'z');
+							combineCorners(i - 1, j, 'z');
 					}
 				}
 			}
