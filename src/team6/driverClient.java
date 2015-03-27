@@ -46,7 +46,7 @@ public class driverClient {
 	 *            the command line arguments
 	 */
 	public static void main(String[] args) throws InterruptedException {
-		String ip = "localhost";
+		String ip = "104.231.9.131";
 		/*
 		 * GameMap currentMap = new GameMap();//test to ensure client can
 		 * function off gameInstance currentMap.generateMap(); GameInstance

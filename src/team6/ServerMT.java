@@ -108,7 +108,7 @@ public class ServerMT {
 		for (int i = -2; i <= 2; i++) {
 			for (int j = -2; j <= 2; j++) {
 				// TODO if lineOfSite=true
-				if (x + j >= 0 && y + i >= 0) {
+				if (y + j >= 0 && x + i >= 0) {
 					outInstruction = new OutBufferInstruction(3,y + j ,x + i ,
 							currentGame.gameMap.baseLayer[y + i][x + j],
 							currentGame.gameMap.topLayer[y + i][x + j],
