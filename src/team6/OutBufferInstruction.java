@@ -72,7 +72,7 @@ public class OutBufferInstruction {
 		this.top=top;
 		this.style=style;
 		this.corner=corner;
-		System.out.println("debug out instruction created. type= "+ type + "base-top-style-corner"+base+top+style+corner );
+		System.out.println("debug out instruction created. type= "+ type +"x="+x+" y="+y+ " base-top-style-corner"+base+top+style+corner );
 	}
 	
 

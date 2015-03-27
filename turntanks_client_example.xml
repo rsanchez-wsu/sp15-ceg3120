@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE turntanks SYSTEM "turntanks.dtd">
+
+<!-- 
+	This is the turntanks configuration file.
+
+	The example configuration given here is for operating a game client.
+
+	All configuration options are required, except as noted.
+
+	Available configuration options are:
+
+	- <server>: Contains the <address> and <port> elements
+		- <address>: The address of the remote game server.
+		- <port>: The port on which the remote game server is listening.
+
+ -->
+
+<turntanks mode="client">
+	<server>
+		<address>10.4.53.217</address>
+		<port>9786</port>
+	</server>
+</turntanks>

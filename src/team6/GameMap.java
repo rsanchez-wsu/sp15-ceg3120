@@ -32,6 +32,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+
+
+
+// TODO Catch File not found exceptions
+
+
+
+
 public class GameMap {
 
 	int mapXSize = 64;
@@ -41,9 +49,11 @@ public class GameMap {
 	char[][] spriteStyle = new char[mapXSize][mapYSize];
 	char[][] corners = new char[mapXSize][mapYSize];
 	
-	int timesExpanded = 0;// used to limit recursive terrain feature growth
-	boolean[][] expanded = new boolean[mapXSize][mapYSize];// used for recursive
-															// growth limiting
+	// used to limit recursive terrain feature growth
+	int timesExpanded = 0;
+	
+	// used for recursive growth limiting
+	boolean[][] expanded = new boolean[mapXSize][mapYSize];
 
 	private Image tank = null;
 	private Image grass = null;
@@ -117,11 +127,14 @@ public class GameMap {
 	private Image mountainLRT = null;
 	
 	public GameMap() {
+		
 		findFiles();
 		generateBlankLayers();
-		
 	}// end GameMap()
 
+	/*
+	 * Creates a randomized map.
+	 */
 	public void generateMap(){		
 		
 		buildBaseLayer();
@@ -130,6 +143,10 @@ public class GameMap {
 		buildCorners();
 	}// end generateMap()
 	
+	/*
+	 * Creates a completely unknown map. All arrays are initiated
+	 * to '?', this char is never used
+	 */
 	private void generateBlankLayers(){
 		
 		for(int i = 0; i < mapXSize; i++){
@@ -142,6 +159,9 @@ public class GameMap {
 		}
 	}// end generateBlankLayers()
 	
+	/*
+	 * Connects the Image Objects with the files.
+	 */
 	private void findFiles() {
 
 		try {
@@ -238,6 +258,12 @@ public class GameMap {
 		}
 	}// end findFiles()
 
+	/*
+	 * Generates the bottom layer of the game map. This layer is only
+	 * cosmetic, since in buildTopLayer() the actual features of the
+	 * map are created and expanded. Through the alpha colors in topLayer
+	 * you will see the baseLayer terrain.
+	 */
 	private void buildBaseLayer(){
 		/*
 		 * This conditional tree picks the probability for a 'seed' of each
@@ -261,6 +287,10 @@ public class GameMap {
 
 	}// end buildBaseLayer()
 
+	/*
+	 * Generates the features that make the map interesting. This layer is
+	 * held in the topLayer array and contains the type of each terrain piece 
+	 */
 	private void buildTopLayer() {
 		/*
 		 * TERRAIN TYPE TABLE -char- -type- t tree m mountain u mud w water g
@@ -295,6 +325,12 @@ public class GameMap {
 		expandFeature('t', topLayer, 70, 5);
 	}// end buildTopLayer()
 
+	/*
+	 * To make the map look more realistic, there are different 'styles' for
+	 * each tile piece, depending on the neighboring tiles. These styles include
+	 * a basic 3x3 assortment and also singleton pieces and tunnel-like pieces.
+	 * Each piece has it's own style char, included in a table below.
+	 */
 	private void buildSpriteStyle() {
 		/*
 		 * TERRAIN STYLE TABLE: -char- -MEANING- 
@@ -315,11 +351,13 @@ public class GameMap {
 		for (int i = 0; i < mapXSize; i++) {
 			for (int j = 0; j < mapYSize; j++) {
 
+				// check each cardinal direction to determine what kind of tile it is
 				isT = (j == 0 || topLayer[i][j] != topLayer[i][j - 1]);
 				isR = (i == mapXSize - 1 || topLayer[i][j] != topLayer[i + 1][j]);
 				isB = (j == mapYSize - 1 || topLayer[i][j] != topLayer[i][j + 1]);
 				isL = (i == 0 || topLayer[i][j] != topLayer[i - 1][j]);
 
+				// very basic logic that assigns the tile a style depending on its cardinal directions
 				if (isT)
 					if (isR)
 						if (isB)
@@ -377,132 +415,89 @@ public class GameMap {
 		}// end for loop
 	}// end buildSpriteStyle()
 
-	@SuppressWarnings({"incomplete-switch"})
+	/*
+	 * To make the map even more realistic, corners have been implemented.
+	 * These pieces are necessary for when there is a change in 'direction'
+	 * between neighboring tiles.
+	 */
 	private void buildCorners(){
 		
 		char currTopLayer;
-		char up = '\0';
-		char right = '\0';
-		char down = '\0';
-		char left = '\0';
+		char currSpriteStyle;
+		char neighbor = '?';
 		
+		boolean edgeTL = false;
+		boolean edgeTR = false;
+		boolean edgeRT = false;
+		boolean edgeRB = false;
+		boolean edgeBR = false;
+		boolean edgeBL = false;
+		boolean edgeLB = false;
+		boolean edgeLT = false;
+		
+		/*
+		 *	step through the map array checking the style of neighboring tiles
+		 *	to decide if a corner is necessary
+		 */
 		for(int i = 0; i < mapXSize; i++){
 			for(int j = 0; j < mapYSize; j++){
 			
 				currTopLayer = topLayer[i][j];
 				if(currTopLayer == 'w'){// current terrain is water
 					
-					// retrieve the next top, right, down, and left tiles
-					if(j > 0 && topLayer[i][j - 1] == currTopLayer)
-						up = spriteStyle[i][j - 1];
-					if(i < mapXSize - 1 && topLayer[i + 1][j] == currTopLayer)
-						right = spriteStyle[i + 1][j];
-					if(j < mapYSize - 1 && topLayer[i][j + 1] == currTopLayer)
-						down = spriteStyle[i][j + 1];
-					if(i > 0 && topLayer[i - 1][j] == currTopLayer)
-						left = spriteStyle[i - 1][j];
-				
-					switch(spriteStyle[i][j]){
-						case 'q' :	// TL
-							if(right == 's' || right == 'd'){
-								combineCorners(i + 1, j, 'q');
-							}else if(right == 'f' || right == 'y'){
-								combineCorners(i, j, 'm');
-							}else if(right == 'x' || right == 'c'){
-								combineCorners(i + 1, j, 'q');
-								combineCorners(i, j, 'm');
-							}
-							
-							if(down == 's' || down == 'x'){
-								combineCorners(i, j + 1, 'q');
-							}else if(down == 'u' || down == 'g'){
-								combineCorners(i, j, 'm');
-							}else if(down == 'd' || down == 'c'){
-								combineCorners(i, j + 1, 'q');
-								combineCorners(i, j, 'm');
-							}
-							break;
-						case 'w' :	// TM
-							if(left == 'a' || left == 's'){
-								combineCorners(i - 1, j, 'p');
-							}else if(left == 'f' || left == 't'){
-								combineCorners(i, j, 'z');
-							}else if(left == 'z' || left == 'x'){
-								combineCorners(i - 1, j, 'p');
-								combineCorners(i, j, 'z');
-							}
-							
-							if(right == 's' || right == 'd'){
-								combineCorners(i + 1, j, 'q');
-							}else if(right == 'y' || right == 'f'){
-								combineCorners(i, j, 'm');
-							}else if(right == 'x' || right == 'c'){
-								combineCorners(i + 1, j, 'q'); 	
-								combineCorners(i, j, 'm');
-							}
-							break;
-						case 'e' :	// TR
-							if(down == 's' || down == 'x'){
-								combineCorners(i, j + 1, 'p');
-							}else if(down == 'u' || down == 'g'){
-								combineCorners(i, j, 'z');
-							}else if(down == 'a' || down == 'z'){
-								combineCorners(i, j + 1, 'p');
-								combineCorners(i, j, 'z');
-							}
-							
-							if(left == 'a' || left == 's'){
-								combineCorners(i - 1, j, 'p');
-							}else if(left == 't' || left == 'f'){
-								combineCorners(i, j, 'z');
-							}else if(left == 'z' || left == 'x'){
-								combineCorners(i - 1, j, 'p');
-								combineCorners(i, j, 'z');
-							}
-							break;
-						case 'a' : // ML
-							if(up == 'w' || up == 's'){
-								combineCorners(i, j - 1, 'z');
-							}else if(up == 'r' || up == 'g'){
-								combineCorners(i, j, 'p');
-							}else if(up == 'e' || up == 'd'){
-								combineCorners(i, j - 1, 'z');
-								combineCorners(i, j, 'p');
-							}
-							
-							if(down == 's' || down == 'w'){
-								combineCorners(i, j + 1, 'q');
-							}else if(down == 'u' || down == 'g'){
-								combineCorners(i, j, 'm');
-							}else if(down == 'd' || down == 'c'){
-								combineCorners(i, j + 1, 'q');
-								combineCorners(i, j, 'm');
-							}
-							break;
-						case 'd' : // MR
-							if(up == 'w' || up == 's'){
-								combineCorners(i, j - 1, 'm');
-							}else if(up == 'r' || up == 'g'){
-								combineCorners(i, j, 'q');
-							}else if(up == 'q' || up == 'a'){
-								combineCorners(i, j - 1, 'm');
-								combineCorners(i, j, 'q');
-							}
-							
-							if(down == 's' || down == 'x'){
-								combineCorners(i, j + 1, 'p');
-							}else if(down == 'u' || down == 'g'){
-								combineCorners(i, j, 'z');
-							}else if(down == 'a' || down == 'z'){
-								combineCorners(i, j + 1, 'p');
-								combineCorners(i, j, 'z');
-							}
+					currSpriteStyle = spriteStyle[i][j];
+					
+					// depending on the tile type, decide which directions need to be checked
+					edgeTL = (currSpriteStyle == 'w' || currSpriteStyle == 'e' || currSpriteStyle == 'y' || currSpriteStyle == 'f');
+					edgeTR = (currSpriteStyle == 'q' || currSpriteStyle == 'w' || currSpriteStyle == 't' || currSpriteStyle == 'f');
+					edgeRT = (currSpriteStyle == 'd' || currSpriteStyle == 'c' || currSpriteStyle == 'u' || currSpriteStyle == 'g');
+					edgeRB = (currSpriteStyle == 'e' || currSpriteStyle == 'd' || currSpriteStyle == 'r' || currSpriteStyle == 'g');
+					edgeBR = (currSpriteStyle == 'z' || currSpriteStyle == 'x' || currSpriteStyle == 't' || currSpriteStyle == 'f');
+					edgeBL = (currSpriteStyle == 'x' || currSpriteStyle == 'c' || currSpriteStyle == 'y' || currSpriteStyle == 'f');
+					edgeLB = (currSpriteStyle == 'q' || currSpriteStyle == 'a' || currSpriteStyle == 'r' || currSpriteStyle == 'g');
+					edgeLT = (currSpriteStyle == 'a' || currSpriteStyle == 'z' || currSpriteStyle == 'u' || currSpriteStyle == 'g');
+
+					if(edgeTL){
+						neighbor = spriteStyle[i - 1][j];
+						if(neighbor == 's' || neighbor == 'x' || neighbor == 'a' || neighbor == 'z')
+							combineCorners(i - 1, j, 'p');
+					}
+					if(edgeTR){
+						neighbor = spriteStyle[i + 1][j];
+						if(neighbor == 's' || neighbor == 'x' || neighbor == 'd' || neighbor == 'c')
+							combineCorners(i + 1, j, 'q');
+					}
+					if(edgeRT){
+						neighbor = spriteStyle[i][j - 1];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'q' || neighbor == 'a')
+							combineCorners(i, j - 1, 'm');
+					}
+					if(edgeRB){
+						neighbor = spriteStyle[i][j + 1];
+						if(neighbor == 's' || neighbor == 'x' || neighbor == 'a' || neighbor == 'z')
+							combineCorners(i, j + 1, 'p');
+					}
+					if(edgeBR){
+						neighbor = spriteStyle[i + 1][j];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'd' || neighbor == 'e')
+							combineCorners(i + 1, j, 'z');
+					}
+					if(edgeBL){
+						neighbor = spriteStyle[i - 1][j];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'a' || neighbor == 'q')
+							combineCorners(i - 1, j, 'm');
+					}
+					if(edgeLB){
+						neighbor = spriteStyle[i][j + 1];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'd' || neighbor == 'c')
+							combineCorners(i, j + 1, 'q');
+					}
+					if(edgeLT){
+						neighbor = spriteStyle[i][j - 1];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'e' || neighbor == 'd')
+							combineCorners(i, j - 1, 'z');
 					}
 				}
-				up = '\0';
-				right = '\0';
-				down = '\0';
-				left = '\0';
 			}
 		}// end for loop
 	}// end buildCorners()
@@ -529,7 +524,7 @@ public class GameMap {
 		
 		char curChar = corners[i][j];
 		
-		if(curChar == '?')
+		if(curChar == '?' || curChar == newChar)
 			corners[i][j] = newChar;
 		else{
 			if(newChar == 'q'){// adding TL
@@ -677,7 +672,7 @@ public class GameMap {
 	}// zeroRecursiveVars()
 	
 	/*
-	 * Image look-up for rendering.
+	 * Image look-up for rendering a tile.
 	 * 
 	 * @param terrain : the type of terrain at a given tile from TopLayer[][]
 	 * @param style : the variation of the terrain tile from spriteStyle[][]
@@ -739,7 +734,7 @@ public class GameMap {
 					result = treeUDT;
 					break;
 				default:
-					result = treeMM;
+					result = treeAA;
 				}
 			} else if (terrain == 'w') {// terrain is water
 				switch (style) {
@@ -792,7 +787,7 @@ public class GameMap {
 					result = waterUDT;
 					break;
 				default:
-					result = waterMM;
+					result = waterAA;
 				}
 			} else if (terrain == 'm') {// terrain is mountain
 				switch (style) {
@@ -845,7 +840,7 @@ public class GameMap {
 					result = mountainUDT;
 					break;
 				default:
-					result = mountainMM;
+					result = mountainAA;
 				}
 			} else if (terrain == 'g') {// terrain is grass
 				result = grass;
@@ -856,6 +851,12 @@ public class GameMap {
 		return result;
 	}// end getTerrain()
 
+	/*
+	 * Image look-up for rendering a corner.
+	 * 
+	 * @param i : x coordinate in the array
+	 * @param j : y coordinate in the array
+	 */
 	@SuppressWarnings("incomplete-switch")
 	public Image getCorner(int i, int j){
 		

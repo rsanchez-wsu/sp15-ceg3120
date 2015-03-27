@@ -56,7 +56,7 @@ public class driverServer {
 				BorderLayout.CENTER);
 		gameFrame.setVisible(true);
 		// end renderer section
-
+		
 		// server gui section
 		// /create Jframe, create tree, create table, and gameInstance add tree
 		// and table to jframe using borerlayouts
