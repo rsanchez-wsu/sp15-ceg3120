@@ -110,10 +110,10 @@ public class ServerMT {
 				// TODO if lineOfSite=true
 				if (y + i >= 0 && x + j >= 0) {
 					outInstruction = new OutBufferInstruction(3,x + j ,y + i ,
-							currentGame.gameMap.baseLayer[x + j][y + i],
-							currentGame.gameMap.topLayer[x + j][y + i],
-							currentGame.gameMap.spriteStyle[x + j][y + i],
-							currentGame.gameMap.corners[x + j][y + i]);
+							currentGame.gameMap.baseLayer[y + i][x + j],
+							currentGame.gameMap.topLayer[y + i][x + j],
+							currentGame.gameMap.spriteStyle[y + i][x + j],
+							currentGame.gameMap.corners[y + i][x + j]);
 					outBuffers.get(playerNumber).add(outInstruction);
 				}// end if
 			}// end for
