@@ -110,10 +110,10 @@ public class ServerMT {
 				// TODO if lineOfSite=true
 				if (y + i >= 0 && x + j >= 0) {
 					outInstruction = new OutBufferInstruction(3,x + j ,y + i ,
-							currentGame.gameMap.baseLayer[x + j][y + i],
-							currentGame.gameMap.topLayer[x + j][y + i],
-							currentGame.gameMap.spriteStyle[x + j][y + i],
-							currentGame.gameMap.corners[x + j][y + i]);
+							currentGame.gameMap.baseLayer[y + i][x + j],
+							currentGame.gameMap.topLayer[y + i][x + j],
+							currentGame.gameMap.spriteStyle[y + i][x + j],
+							currentGame.gameMap.corners[y + i][x + j]);
 					outBuffers.get(playerNumber).add(outInstruction);
 				}// end if
 			}// end for
@@ -126,55 +126,18 @@ public class ServerMT {
 
 		switch (instruction.type) {
 		case 0:
-			System.out.println("MT processing tank move");
-			// check to see if tank is only moving 1 sq
-			if (validateMove(instruction)) {
-				currentGame.tanks.get(instruction.sourceID).yCoord = instruction.y;
-				currentGame.tanks.get(instruction.sourceID).xCoord = instruction.x;
-				needViewUpdate = true;
-				playerUpdate[instruction.sourceID] = true;
-				System.out.println("tank " + instruction.sourceID
-						+ " moved to x=" + instruction.x + " y="
-						+ instruction.y);
-				ServerGUI.getInstance().updateTable(currentGame);
-				// call send map info to moved tank
-			}
-
+			processTankMove(instruction);
 			break;
 		case 1:
-			System.out.println("MT processing tank attack");
-			if (validateAttack(instruction)) {
-				conductAttack(instruction);
-				ServerGUI.getInstance().updateTable(currentGame);
-			}
-
+			processTankAttack(instruction);
 			break;
 		case 2:
-			System.out.println("MT processing chat");
-			System.out.println("debug: Chat is: " + instruction.message);
+			processChat(instruction);
 			// add outbufferinstruction for chat sending message to each client
 			break;
 
 		case 3:
-			System.out.println("MT processing handshake");
-			currentGame.tanks.get(instruction.sourceID).Name = instruction.message;
-			playerUpdate[instruction.sourceID]=true;
-			needViewUpdate=true;
-			ServerGUI.getInstance().updateTable(currentGame);
-			// generate messages to update player names to everyone
-			for (int i = 0; i < listener.socketList.size(); i++) {
-				// sent a message to each socket, the name of the player
-				// associated with the outer loop
-				for (int j = 0; j < listener.socketList.size(); j++) {
-
-					outBuffers.get(j).add(
-							new OutBufferInstruction(1, i, currentGame.tanks
-									.get(i).Name));
-					System.out.println("debug: player name");
-				}// end inner loop
-
-			}// end outer loop
-
+			processHandshake(instruction);
 			break;
 
 		default:
@@ -307,4 +270,50 @@ public class ServerMT {
 
 	}// end conduct attack
 
+	private void processTankMove(InBufferInstruction instruction){
+		System.out.println("MT processing tank move");
+		// check to see if tank is only moving 1 sq
+		if (validateMove(instruction)) {
+			currentGame.tanks.get(instruction.sourceID).yCoord = instruction.y;
+			currentGame.tanks.get(instruction.sourceID).xCoord = instruction.x;
+			needViewUpdate = true;
+			playerUpdate[instruction.sourceID] = true;
+			System.out.println("tank " + instruction.sourceID
+					+ " moved to x=" + instruction.x + " y="
+					+ instruction.y);
+			ServerGUI.getInstance().updateTable(currentGame);
+			// call send map info to moved tank
+		}
+	}//end processTankMove
+	
+	private void processTankAttack(InBufferInstruction instruction) {
+		System.out.println("MT processing tank attack");
+		if (validateAttack(instruction)) {
+			conductAttack(instruction);
+			ServerGUI.getInstance().updateTable(currentGame);
+		}
+	}//end of processTankAttack
+	
+	private void processChat(InBufferInstruction instruction) {
+		System.out.println("MT processing chat");
+		System.out.println("debug: Chat is: " + instruction.message);
+	}//end of processChat
+	
+	private void processHandshake(InBufferInstruction instruction) {
+		System.out.println("MT processing handshake");
+		currentGame.tanks.get(instruction.sourceID).Name = instruction.message;
+		playerUpdate[instruction.sourceID]=true;
+		needViewUpdate=true;
+		ServerGUI.getInstance().updateTable(currentGame);
+		// generate messages to update player names to everyone
+		for (int i = 0; i < listener.socketList.size(); i++) {
+			// sent a message to each socket, the name of the player
+			// associated with the outer loop
+			for (int j = 0; j < listener.socketList.size(); j++) {
+				outBuffers.get(j).add(new OutBufferInstruction(1, i, currentGame.tanks.get(i).Name));
+				System.out.println("debug: player name");
+			}// end inner loop
+		}// end outer loop		
+	}//end of processHanshake
+	
 }// end class

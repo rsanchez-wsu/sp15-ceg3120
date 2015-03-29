@@ -143,47 +143,22 @@ public class driverClient {
 						System.out.println("loop");
 						int msgType = in.readInt();
 						// TODO make each if a single method call
+						
 						if (msgType == 1) {// player name message
-							System.out.println("debug inbound name message");
-							int nameMsgPlayerID = in.readInt();
-							String nameMsgPlayerName = in.readUTF();
-							clientGame.tanks.get(nameMsgPlayerID).Name = nameMsgPlayerName;
-							System.out.println("debug player number"
-									+ nameMsgPlayerID + " is "
-									+ nameMsgPlayerName);
+							inboundNameMessage(in, clientGame);
 						}// end 1
+						
 						else if (msgType == 2) {
-							System.out.println("debug inbound move message");
-							int moveMsgPlayerID = in.readInt();
-							int x = in.readInt();
-							int y = in.readInt();
-							clientGame.tanks.get(moveMsgPlayerID).xCoord = x;
-							clientGame.tanks.get(moveMsgPlayerID).yCoord = y;
-							renderer.repaint();
-							System.out.println("debug " + moveMsgPlayerID
-									+ " tank moved to " + x + ", " + y);
+							inboundMoveMessage(in, clientGame, renderer);
 						}// end 2
 
 						else if (msgType == 3) {
-							System.out.println("debug inbound terrain message");
-							int x = in.readInt();
-							int y = in.readInt();
-							char base = in.readChar();
-							char top = in.readChar();
-							char style = in.readChar();
-							char corner = in.readChar();
-							clientGame.gameMap.baseLayer[x][y] = base;
-							clientGame.gameMap.topLayer[x][y] = top;
-							clientGame.gameMap.spriteStyle[x][y] = style;
-							clientGame.gameMap.corners[x][y] = corner;
-							renderer.repaint();
-							System.out.println("debug tile " + x + " , " + y
-									+ " btsc " + base + top + style + corner);
-						} else
-							System.out
-									.println("debug the inbound messagetype was"
-											+ msgType);// should only ever be -1
+							inboundTerrainMessage(in, clientGame, renderer);
+						}//end 3
 						
+						else {
+							System.out.println("debug the inbound messagetype was" + msgType);// should only ever be -1
+						} // end else
 						// TODO end make each if a method call
 					}// end for that parses x number of messages
 					//
@@ -202,26 +177,11 @@ public class driverClient {
 					//
 					// TODO make each if a method call
 					if (userInput == -1) {
-						out.writeInt(-1);
-						// System.out.println("You have chosen to do nothing.");
+						doNothing(out);
 					} else if (userInput == 2) {
-						// System.out.println("chat type sent, enter message");
-						out.writeInt(userInput);
-						System.out.print("Enter the message: ");
-						scanner.next();
-						String message = scanner.nextLine();
-						out.writeUTF(message);
+						chat(out, scanner, userInput);
 					} else if (userInput == 0 || userInput == 1) {
-											
-						out.writeInt(userInput);
-						int temp1=(xCoord+clientGame.tanks.get(playerID).xCoord);
-						int temp2=(yCoord+clientGame.tanks.get(playerID).yCoord);
-						out.writeInt(temp1);
-						out.writeInt(temp2);
-						System.out.println(userInput);
-						System.out.println(temp1);
-						System.out.println(temp2);
-						System.out.println("if complete");					
+						action(out, userInput, xCoord, yCoord, playerID, clientGame);
 					}// end else if
 					else {
 						System.out.print("invalid choice, sending -1");
@@ -263,5 +223,94 @@ public class driverClient {
 		// removed debugging info
 		table.setModel(new DefaultTableModel(data, colnames));
 	}// updateTable
+	
+	static private void inboundNameMessage(DataInputStream in, GameInstance clientGame){
+		try {
+		System.out.println("debug inbound name message");
+		int nameMsgPlayerID = in.readInt();
+		String nameMsgPlayerName = in.readUTF();
+		clientGame.tanks.get(nameMsgPlayerID).Name = nameMsgPlayerName;
+		System.out.println("debug player number"
+				+ nameMsgPlayerID + " is "
+				+ nameMsgPlayerName);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}//end try catch
+	}//end inboundNameMessage
+	
+	static private void inboundMoveMessage(DataInputStream in, GameInstance clientGame, GameRenderer renderer){
+		try {
+			System.out.println("debug inbound move message");
+			int moveMsgPlayerID = in.readInt();
+			int x = in.readInt();
+			int y = in.readInt();
+			clientGame.tanks.get(moveMsgPlayerID).xCoord = x;
+			clientGame.tanks.get(moveMsgPlayerID).yCoord = y;
+			renderer.repaint();
+			System.out.println("debug " + moveMsgPlayerID
+					+ " tank moved to " + x + ", " + y);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}//end try catch
+	}//end inboundMoveMessage
+	
+	static private void inboundTerrainMessage(DataInputStream in, GameInstance clientGame, GameRenderer renderer){
+		try {
+			System.out.println("debug inbound terrain message");
+			int x = in.readInt();
+			int y = in.readInt();
+			char base = in.readChar();
+			char top = in.readChar();
+			char style = in.readChar();
+			char corner = in.readChar();
+			clientGame.gameMap.baseLayer[y][x] = base;
+			clientGame.gameMap.topLayer[y][x] = top;
+			clientGame.gameMap.spriteStyle[y][x] = style;
+			clientGame.gameMap.corners[y][x] = corner;
+			renderer.repaint();
+			System.out.println("debug tile " + x + " , " + y
+					+ " btsc " + base + top + style + corner);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}//end try catch
+	}//end inboundTerrainMessage
+	
+	static private void doNothing(DataOutputStream out) {
+		try {
+			out.writeInt(-1);
+			// System.out.println("You have chosen to do nothing.");
+		} catch(IOException e) {
+			e.printStackTrace();
+		}//end of try-catch
+	}//end of doNothing
+	
+	static private void chat(DataOutputStream out, Scanner scanner, int userInput) {
+		try {
+			// System.out.println("chat type sent, enter message");
+			out.writeInt(userInput);
+			System.out.print("Enter the message: ");
+			scanner.next();
+			String message = scanner.nextLine();
+			out.writeUTF(message);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}//end of try-catch
+	}//end of chat
+	
+	static private void action(DataOutputStream out, int userInput, int xCoord, int yCoord, int playerID, GameInstance clientGame) {
+		try {
+			out.writeInt(userInput);
+			int temp1=(xCoord+clientGame.tanks.get(playerID).xCoord);
+			int temp2=(yCoord+clientGame.tanks.get(playerID).yCoord);
+			out.writeInt(temp1);
+			out.writeInt(temp2);
+			System.out.println(userInput);
+			System.out.println(temp1);
+			System.out.println(temp2);
+			System.out.println("if complete");		
+		} catch(IOException e) {
+			e.printStackTrace();
+		}//end of try-catch
+	}//end of action
 
 }

@@ -57,8 +57,25 @@ public class GameMap {
 
 	private Image tank = null;
 	private Image grass = null;
-	private Image mud = null;
-
+	private Image hill = null;
+	
+	private Image mudTL = null;
+	private Image mudTM = null;
+	private Image mudTR = null;
+	private Image mudML = null;
+	private Image mudMM = null;
+	private Image mudMR = null;
+	private Image mudBL = null;
+	private Image mudBM = null;
+	private Image mudBR = null;
+	private Image mudAA = null;
+	private Image mudAT = null;
+	private Image mudAR = null;
+	private Image mudAB = null;
+	private Image mudAL = null;
+	private Image mudUDT = null;
+	private Image mudLRT = null;
+	
 	private Image treeTL = null;
 	private Image treeTM = null;
 	private Image treeTR = null;
@@ -138,8 +155,9 @@ public class GameMap {
 	public void generateMap(){		
 		
 		buildBaseLayer();
+		buildSpriteStyle('a');
 		buildTopLayer();
-		buildSpriteStyle();
+		buildSpriteStyle('b');
 		buildCorners();
 	}// end generateMap()
 	
@@ -167,8 +185,25 @@ public class GameMap {
 		try {
 			tank = ImageIO.read(new File("./src/team6/images/tank.png"));
 			grass = ImageIO.read(new File("./src/team6/images/grass.jpg"));
-			mud = ImageIO.read(new File("./src/team6/images/mud.jpg"));
-
+			hill = ImageIO.read(new File("./src/team6/images/hill.png"));
+			
+			mudTL = ImageIO.read(new File("./src/team6/images/mud_tl.jpg"));
+			mudTM = ImageIO.read(new File("./src/team6/images/mud_tm.jpg"));
+			mudTR = ImageIO.read(new File("./src/team6/images/mud_tr.jpg"));
+			mudML = ImageIO.read(new File("./src/team6/images/mud_ml.jpg"));
+			mudMM = ImageIO.read(new File("./src/team6/images/mud_mm.jpg"));
+			mudMR = ImageIO.read(new File("./src/team6/images/mud_mr.jpg"));
+			mudBL = ImageIO.read(new File("./src/team6/images/mud_bl.jpg"));
+			mudBM = ImageIO.read(new File("./src/team6/images/mud_bm.jpg"));
+			mudBR = ImageIO.read(new File("./src/team6/images/mud_br.jpg"));
+			mudAA = ImageIO.read(new File("./src/team6/images/mud_aa.jpg"));
+			mudAT = ImageIO.read(new File("./src/team6/images/mud_at.jpg"));
+			mudAR = ImageIO.read(new File("./src/team6/images/mud_ar.jpg"));
+			mudAB = ImageIO.read(new File("./src/team6/images/mud_ab.jpg"));
+			mudAL = ImageIO.read(new File("./src/team6/images/mud_al.jpg"));
+			mudUDT = ImageIO.read(new File("./src/team6/images/mud_udt.jpg"));
+			mudLRT = ImageIO.read(new File("./src/team6/images/mud_lrt.jpg"));
+			
 			treeTL = ImageIO.read(new File("./src/team6/images/tree_tl.png"));
 			treeTM = ImageIO.read(new File("./src/team6/images/tree_tm.png"));
 			treeTR = ImageIO.read(new File("./src/team6/images/tree_tr.png"));
@@ -284,7 +319,6 @@ public class GameMap {
 		}
 
 		expandFeature('u', baseLayer, 70, 5);
-
 	}// end buildBaseLayer()
 
 	/*
@@ -315,14 +349,20 @@ public class GameMap {
 					topLayer[i][j] = 'm';
 				else if (rand > 200 && rand < 204) // water
 					topLayer[i][j] = 'w';
+				else if (rand > 300 && rand < 304) // hill
+					topLayer[i][j] = 'h';
 				else
-					topLayer[i][j] = baseLayer[i][j];
+					if(baseLayer[i][j] == 'g')
+						topLayer[i][j] = 'g';
+					else
+						topLayer[i][j] = 'u';
 			}
 		}// end for loop
 
 		expandFeature('m', topLayer, 80, 5);
 		expandFeature('w', topLayer, 75, 5);
 		expandFeature('t', topLayer, 70, 5);
+		expandFeature('h', topLayer, 80, 5);
 	}// end buildTopLayer()
 
 	/*
@@ -331,14 +371,14 @@ public class GameMap {
 	 * a basic 3x3 assortment and also singleton pieces and tunnel-like pieces.
 	 * Each piece has it's own style char, included in a table below.
 	 */
-	private void buildSpriteStyle() {
+	private void buildSpriteStyle(char mode) {
 		/*
 		 * TERRAIN STYLE TABLE: -char- -MEANING- 
 		 * q Top-Left w Top-Middle e Top-Right 
 		 * a Middle-Left s Middle-Middle d Middle-Right 
 		 * z Bottom-Left x Bottom-Middle c Bottom-Right 
 		 * v Alone-Alone r Alone-Top t Alone-Left
-		 * y Alone-Right u Alone-Bottom f Left-Right Tunnel g Up-Down Tunnel
+		 * y Alone-Right u Alone-Bottom f Left-Right Tunnel h Up-Down Tunnel
 		 */
 
 		boolean isT = false;
@@ -346,71 +386,85 @@ public class GameMap {
 		boolean isB = false;
 		boolean isL = false;
 
+		char style = '\0';
+		
 		// step through map array checking if neighboring terrain matches
 		// current terrain
 		for (int i = 0; i < mapXSize; i++) {
 			for (int j = 0; j < mapYSize; j++) {
 
-				// check each cardinal direction to determine what kind of tile it is
-				isT = (j == 0 || topLayer[i][j] != topLayer[i][j - 1]);
-				isR = (i == mapXSize - 1 || topLayer[i][j] != topLayer[i + 1][j]);
-				isB = (j == mapYSize - 1 || topLayer[i][j] != topLayer[i][j + 1]);
-				isL = (i == 0 || topLayer[i][j] != topLayer[i - 1][j]);
-
+				if(mode == 'a'){// building baseLayer
+					// check each cardinal direction to determine what kind of tile it is
+					isT = (i == 0 || baseLayer[i - 1][j] == 'g');
+					isR = (j == mapXSize - 1 || baseLayer[i][j + 1] == 'g');
+					isB = (i == mapYSize - 1 || baseLayer[i + 1][j] == 'g');
+					isL = (j == 0 || baseLayer[i][j - 1] == 'g');
+				}
+				else if(mode == 'b'){
+					// check each cardinal direction to determine what kind of tile it is
+					isT = (i == 0 || topLayer[i][j] != topLayer[i - 1][j]);
+					isR = (j == mapXSize - 1 || topLayer[i][j] != topLayer[i][j + 1]);
+					isB = (i == mapYSize - 1 || topLayer[i][j] != topLayer[i + 1][j]);
+					isL = (j == 0 || topLayer[i][j] != topLayer[i][j - 1]);
+				}
 				// very basic logic that assigns the tile a style depending on its cardinal directions
 				if (isT)
 					if (isR)
 						if (isB)
 							if (isL)// AA
-								spriteStyle[i][j] = 'v';
+								style = 'v';
 							else
 								// AR
-								spriteStyle[i][j] = 'y';
+								style = 'y';
 						else if (isL)// AT
-							spriteStyle[i][j] = 'r';
+							style = 'r';
 						else
 							// TR
-							spriteStyle[i][j] = 'e';
+							style = 'e';
 					else if (isB)
 						if (isL)// AL
-							spriteStyle[i][j] = 't';
+							style = 't';
 						else
 							// LRT
-							spriteStyle[i][j] = 'f';
+							style = 'f';
 					else if (isL)// TL
-						spriteStyle[i][j] = 'q';
+						style = 'q';
 					else
 						// TM
-						spriteStyle[i][j] = 'w';
+						style = 'w';
 				else if (isR)
 					if (isB)
 						if (isL)// AB
-							spriteStyle[i][j] = 'u';
+							style = 'u';
 						else
 							// BR
-							spriteStyle[i][j] = 'c';
+							style = 'c';
 					else if (isL)// UDT
-						spriteStyle[i][j] = 'g';
+						style = 'h';
 					else
 						// MR
-						spriteStyle[i][j] = 'd';
+						style = 'd';
 				else if (isB)
 					if (isL)// BL
-						spriteStyle[i][j] = 'z';
+						style = 'z';
 					else
 						// BM
-						spriteStyle[i][j] = 'x';
+						style = 'x';
 				else if (isL)// ML
-					spriteStyle[i][j] = 'a';
+					style = 'a';
 				else
 					// MM
-					spriteStyle[i][j] = 's';
+					style = 's';
 
 				isT = false;
 				isR = false;
 				isB = false;
 				isL = false;
 
+				if(mode == 'a' && baseLayer[i][j] != 'g')
+					baseLayer[i][j] = style;
+				else if(mode == 'b')
+					spriteStyle[i][j] = style;
 			}
 		}// end for loop
 	}// end buildSpriteStyle()
@@ -450,52 +504,52 @@ public class GameMap {
 					// depending on the tile type, decide which directions need to be checked
 					edgeTL = (currSpriteStyle == 'w' || currSpriteStyle == 'e' || currSpriteStyle == 'y' || currSpriteStyle == 'f');
 					edgeTR = (currSpriteStyle == 'q' || currSpriteStyle == 'w' || currSpriteStyle == 't' || currSpriteStyle == 'f');
-					edgeRT = (currSpriteStyle == 'd' || currSpriteStyle == 'c' || currSpriteStyle == 'u' || currSpriteStyle == 'g');
-					edgeRB = (currSpriteStyle == 'e' || currSpriteStyle == 'd' || currSpriteStyle == 'r' || currSpriteStyle == 'g');
+					edgeRT = (currSpriteStyle == 'd' || currSpriteStyle == 'c' || currSpriteStyle == 'u' || currSpriteStyle == 'h');
+					edgeRB = (currSpriteStyle == 'e' || currSpriteStyle == 'd' || currSpriteStyle == 'r' || currSpriteStyle == 'h');
 					edgeBR = (currSpriteStyle == 'z' || currSpriteStyle == 'x' || currSpriteStyle == 't' || currSpriteStyle == 'f');
 					edgeBL = (currSpriteStyle == 'x' || currSpriteStyle == 'c' || currSpriteStyle == 'y' || currSpriteStyle == 'f');
-					edgeLB = (currSpriteStyle == 'q' || currSpriteStyle == 'a' || currSpriteStyle == 'r' || currSpriteStyle == 'g');
-					edgeLT = (currSpriteStyle == 'a' || currSpriteStyle == 'z' || currSpriteStyle == 'u' || currSpriteStyle == 'g');
+					edgeLB = (currSpriteStyle == 'q' || currSpriteStyle == 'a' || currSpriteStyle == 'r' || currSpriteStyle == 'h');
+					edgeLT = (currSpriteStyle == 'a' || currSpriteStyle == 'z' || currSpriteStyle == 'u' || currSpriteStyle == 'h');
 
 					if(edgeTL){
-						neighbor = spriteStyle[i - 1][j];
+						neighbor = spriteStyle[i][j - 1];
 						if(neighbor == 's' || neighbor == 'x' || neighbor == 'a' || neighbor == 'z')
-							combineCorners(i - 1, j, 'p');
+							combineCorners(i, j - 1, 'p');
 					}
 					if(edgeTR){
-						neighbor = spriteStyle[i + 1][j];
+						neighbor = spriteStyle[i][j + 1];
 						if(neighbor == 's' || neighbor == 'x' || neighbor == 'd' || neighbor == 'c')
-							combineCorners(i + 1, j, 'q');
-					}
-					if(edgeRT){
-						neighbor = spriteStyle[i][j - 1];
-						if(neighbor == 's' || neighbor == 'w' || neighbor == 'q' || neighbor == 'a')
-							combineCorners(i, j - 1, 'm');
-					}
-					if(edgeRB){
-						neighbor = spriteStyle[i][j + 1];
-						if(neighbor == 's' || neighbor == 'x' || neighbor == 'a' || neighbor == 'z')
-							combineCorners(i, j + 1, 'p');
-					}
-					if(edgeBR){
-						neighbor = spriteStyle[i + 1][j];
-						if(neighbor == 's' || neighbor == 'w' || neighbor == 'd' || neighbor == 'e')
-							combineCorners(i + 1, j, 'z');
-					}
-					if(edgeBL){
-						neighbor = spriteStyle[i - 1][j];
-						if(neighbor == 's' || neighbor == 'w' || neighbor == 'a' || neighbor == 'q')
-							combineCorners(i - 1, j, 'm');
-					}
-					if(edgeLB){
-						neighbor = spriteStyle[i][j + 1];
-						if(neighbor == 's' || neighbor == 'w' || neighbor == 'd' || neighbor == 'c')
 							combineCorners(i, j + 1, 'q');
 					}
-					if(edgeLT){
+					if(edgeRT){
+						neighbor = spriteStyle[i - 1][j];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'q' || neighbor == 'a')
+							combineCorners(i - 1, j, 'm');
+					}
+					if(edgeRB){
+						neighbor = spriteStyle[i + 1][j];
+						if(neighbor == 's' || neighbor == 'x' || neighbor == 'a' || neighbor == 'z')
+							combineCorners(i + 1, j, 'p');
+					}
+					if(edgeBR){
+						neighbor = spriteStyle[i][j + 1];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'd' || neighbor == 'e')
+							combineCorners(i, j + 1, 'z');
+					}
+					if(edgeBL){
 						neighbor = spriteStyle[i][j - 1];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'a' || neighbor == 'q')
+							combineCorners(i, j - 1, 'm');
+					}
+					if(edgeLB){
+						neighbor = spriteStyle[i + 1][j];
+						if(neighbor == 's' || neighbor == 'w' || neighbor == 'd' || neighbor == 'c')
+							combineCorners(i + 1, j, 'q');
+					}
+					if(edgeLT){
+						neighbor = spriteStyle[i - 1][j];
 						if(neighbor == 's' || neighbor == 'w' || neighbor == 'e' || neighbor == 'd')
-							combineCorners(i, j - 1, 'z');
+							combineCorners(i - 1, j, 'z');
 					}
 				}
 			}
@@ -674,178 +728,240 @@ public class GameMap {
 	/*
 	 * Image look-up for rendering a tile.
 	 * 
-	 * @param terrain : the type of terrain at a given tile from TopLayer[][]
+	 * @param mode == 'a' : baseLayer is being drawn
+	 * @param mode == 'b' : topLayer is being drawn
+	 * @param terrain : the type of terrain at a given tile from 
+	 * 				topLayer[][] or baseLayer[][]
 	 * @param style : the variation of the terrain tile from spriteStyle[][]
 	 * @return : the Image to be drawn
 	 */
-	public Image getTerrain(char terrain, char style) {
+	public Image getTerrain(char mode, char terrain, char style) {
 
 		Image result = null;
 
-		if(terrain != '?'){
-			if (terrain == 't') {// terrain is trees
-				switch (style) {
+		if(mode == 'a'){// drawing base-layer
+			if(terrain != '?'){
+				switch(terrain){
+				case 'g':
+					result = grass;
+					break;
 				case 'q':
-					result = treeTL;
+					result = mudTL;
 					break;
 				case 'w':
-					result = treeTM;
+					result = mudTM;
 					break;
 				case 'e':
-					result = treeTR;
+					result = mudTR;
 					break;
 				case 'a':
-					result = treeML;
+					result = mudML;
 					break;
 				case 's':
-					result = treeMM;
+					result = mudMM;
 					break;
 				case 'd':
-					result = treeMR;
+					result = mudMR;
 					break;
 				case 'z':
-					result = treeBL;
+					result = mudBL;
 					break;
 				case 'x':
-					result = treeBM;
+					result = mudBM;
 					break;
 				case 'c':
-					result = treeBR;
+					result = mudBR;
 					break;
 				case 'v':
-					result = treeAA;
+					result = mudAA;
 					break;
 				case 'r':
-					result = treeAT;
+					result = mudAT;
 					break;
 				case 't':
-					result = treeAL;
+					result = mudAL;
 					break;
 				case 'y':
-					result = treeAR;
+					result = mudAR;
 					break;
 				case 'u':
-					result = treeAB;
+					result = mudAB;
 					break;
 				case 'f':
-					result = treeLRT;
+					result = mudLRT;
 					break;
-				case 'g':
-					result = treeUDT;
-					break;
-				default:
-					result = treeAA;
-				}
-			} else if (terrain == 'w') {// terrain is water
-				switch (style) {
-				case 'q':
-					result = waterTL;
-					break;
-				case 'w':
-					result = waterTM;
-					break;
-				case 'e':
-					result = waterTR;
-					break;
-				case 'a':
-					result = waterML;
-					break;
-				case 's':
-					result = waterMM;
-					break;
-				case 'd':
-					result = waterMR;
-					break;
-				case 'z':
-					result = waterBL;
-					break;
-				case 'x':
-					result = waterBM;
-					break;
-				case 'c':
-					result = waterBR;
-					break;
-				case 'v':
-					result = waterAA;
-					break;
-				case 'r':
-					result = waterAT;
-					break;
-				case 't':
-					result = waterAL;
-					break;
-				case 'y':
-					result = waterAR;
-					break;
-				case 'u':
-					result = waterAB;
-					break;
-				case 'f':
-					result = waterLRT;
-					break;
-				case 'g':
-					result = waterUDT;
+				case 'h':
+					result = mudUDT;
 					break;
 				default:
-					result = waterAA;
+					result = mudAA;
 				}
-			} else if (terrain == 'm') {// terrain is mountain
-				switch (style) {
-				case 'q':
-					result = mountainTL;
-					break;
-				case 'w':
-					result = mountainTM;
-					break;
-				case 'e':
-					result = mountainTR;
-					break;
-				case 'a':
-					result = mountainML;
-					break;
-				case 's':
-					result = mountainMM;
-					break;
-				case 'd':
-					result = mountainMR;
-					break;
-				case 'z':
-					result = mountainBL;
-					break;
-				case 'x':
-					result = mountainBM;
-					break;
-				case 'c':
-					result = mountainBR;
-					break;	
-				case 'v':
-					result = mountainAA;
-					break;
-				case 'r':
-					result = mountainAT;
-					break;
-				case 't':
-					result = mountainAL;
-					break;
-				case 'y':
-					result = mountainAR;
-					break;
-				case 'u':
-					result = mountainAB;
-					break;
-				case 'f':
-					result = mountainLRT;
-					break;
-				case 'g':
-					result = mountainUDT;
-					break;
-				default:
-					result = mountainAA;
+			}
+		}
+		else if(mode == 'b'){// drawing top-layer
+			if(terrain != '?'){
+				if (terrain == 't') {// terrain is trees
+					switch (style) {
+					case 'q':
+						result = treeTL;
+						break;
+					case 'w':
+						result = treeTM;
+						break;
+					case 'e':
+						result = treeTR;
+						break;
+					case 'a':
+						result = treeML;
+						break;
+					case 's':
+						result = treeMM;
+						break;
+					case 'd':
+						result = treeMR;
+						break;
+					case 'z':
+						result = treeBL;
+						break;
+					case 'x':
+						result = treeBM;
+						break;
+					case 'c':
+						result = treeBR;
+						break;
+					case 'v':
+						result = treeAA;
+						break;
+					case 'r':
+						result = treeAT;
+						break;
+					case 't':
+						result = treeAL;
+						break;
+					case 'y':
+						result = treeAR;
+						break;
+					case 'u':
+						result = treeAB;
+						break;
+					case 'f':
+						result = treeLRT;
+						break;
+					case 'h':
+						result = treeUDT;
+						break;
+					default:
+						result = treeAA;
+					}
+				} else if (terrain == 'w') {// terrain is water
+					switch (style) {
+					case 'q':
+						result = waterTL;
+						break;
+					case 'w':
+						result = waterTM;
+						break;
+					case 'e':
+						result = waterTR;
+						break;
+					case 'a':
+						result = waterML;
+						break;
+					case 's':
+						result = waterMM;
+						break;
+					case 'd':
+						result = waterMR;
+						break;
+					case 'z':
+						result = waterBL;
+						break;
+					case 'x':
+						result = waterBM;
+						break;
+					case 'c':
+						result = waterBR;
+						break;
+					case 'v':
+						result = waterAA;
+						break;
+					case 'r':
+						result = waterAT;
+						break;
+					case 't':
+						result = waterAL;
+						break;
+					case 'y':
+						result = waterAR;
+						break;
+					case 'u':
+						result = waterAB;
+						break;
+					case 'f':
+						result = waterLRT;
+						break;
+					case 'h':
+						result = waterUDT;
+						break;
+					default:
+						result = waterAA;
+					}
+				} else if (terrain == 'm') {// terrain is mountain
+					switch (style) {
+					case 'q':
+						result = mountainTL;
+						break;
+					case 'w':
+						result = mountainTM;
+						break;
+					case 'e':
+						result = mountainTR;
+						break;
+					case 'a':
+						result = mountainML;
+						break;
+					case 's':
+						result = mountainMM;
+						break;
+					case 'd':
+						result = mountainMR;
+						break;
+					case 'z':
+						result = mountainBL;
+						break;
+					case 'x':
+						result = mountainBM;
+						break;
+					case 'c':
+						result = mountainBR;
+						break;	
+					case 'v':
+						result = mountainAA;
+						break;
+					case 'r':
+						result = mountainAT;
+						break;
+					case 't':
+						result = mountainAL;
+						break;
+					case 'y':
+						result = mountainAR;
+						break;
+					case 'u':
+						result = mountainAB;
+						break;
+					case 'f':
+						result = mountainLRT;
+						break;
+					case 'h':
+						result = mountainUDT;
+						break;
+					default:
+						result = mountainAA;
+					}
+				} else if (terrain == 'h') {// terrain is hill
+					result = hill;
 				}
-			} else if (terrain == 'g') {// terrain is grass
-				result = grass;
-			} else if (terrain == 'u') {// terrain is mud
-				result = mud;
 			}
 		}
 		return result;

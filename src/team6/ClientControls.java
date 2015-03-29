@@ -27,7 +27,7 @@ public class ClientControls extends JPanel{
 		panel.add(new offsetButton("->",1,0));
 		panel.add(new offsetButton("/",-1,1));
 		panel.add(new offsetButton("|",0,1));
-		panel.add(new offsetButton("\\",1,11));
+		panel.add(new offsetButton("\\",1,1));
 		this.add(panel);
 		
 	}	

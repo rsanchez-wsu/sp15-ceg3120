@@ -63,30 +63,28 @@ public class GameRenderer extends JPanel {
 			for (int j = 0; j < mapYSize; j++){
 		
 				// Draw baseLayer
-				tile = gameInstance.gameMap.getTerrain(gameInstance.gameMap.baseLayer[i][j], ' ');
+				tile = gameInstance.gameMap.getTerrain('a', gameInstance.gameMap.baseLayer[i][j], '\0');
 				
 				if(tile != null)
-					g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
+					g.drawImage(tile, j * tileSize, i * tileSize, tileSize, tileSize, null);
 				else{//bad color
 					g.setColor(Color.BLACK);
-					g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
+					g.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
 				}
 				
 				// Draw TopLayer
-				tile = gameInstance.gameMap.getTerrain(gameInstance.gameMap.topLayer[i][j], 
+				tile = gameInstance.gameMap.getTerrain('b', gameInstance.gameMap.topLayer[i][j], 
 						gameInstance.gameMap.spriteStyle[i][j]);
-				if(tile != null)
-					g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
-				else{//bad color
-					g.setColor(Color.BLACK);
-					g.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
-				}
+				
+				g.drawImage(tile, j * tileSize, i * tileSize, tileSize, tileSize, null);
+				
 				
 				// Draw Corners
 				tile = gameInstance.gameMap.getCorner(i, j);
 				
 				if(tile != null)
-					g.drawImage(tile, i * tileSize, j * tileSize, tileSize, tileSize, null);
+					g.drawImage(tile, j * tileSize, i * tileSize, tileSize, tileSize, null);
+				
 			}
 		}// end for loop
 		
