@@ -45,9 +45,11 @@ public class ServerGUI extends JPanel {
     String[] columnNames = {"Tank Image", "Name", "IP",
             "x coord", "y coord", "Health","Status"};
    
-    Object[][] data = new Object[8][]; //will be at most 8 tanks in the game, but tank object structure isnt finalized
+    //will be at most 8 tanks in the game, but tank object structure isnt finalized
+    Object[][] data = new Object[8][]; 
+    
     //when ever updating gameInstance, make sure to reparse the data into the array; untill the data object is factored out.
-    public GameInstance game=new GameInstance();  //having the gameInstance, and data 2d array object is two representations of the same data, should move the 2d array aspect into gameInstance
+    public GameInstance game=new GameInstance();
     
     public ServerGUI() {
     	
