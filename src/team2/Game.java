@@ -23,6 +23,8 @@ package team2;
 */
 import javax.swing.JFrame;
 
+import edu.wright.cs.sp15.ceg3120.turntanks.ServerGUI;
+
 public class Game {
 
 	private static void createAndShowGUI() {

@@ -1,4 +1,4 @@
-package team2;
+package edu.wright.cs.sp15.ceg3120.turntanks;
 
 /*
  * Copyright (C) <2015> <Team 2>
@@ -29,6 +29,8 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
+
+import team2.Player;
 
 public class ServerGUI extends JPanel implements TreeSelectionListener {
 
