@@ -33,12 +33,16 @@ import java.util.*;
 //
 public class GameInstance {
 
-	public Calendar time;	
+	
+	public Calendar timeGameStarted;
+	public Calendar timeTurnStarted;
+	public int activePlayer=0;
 	public ArrayList<TankObject> tanks = new ArrayList<TankObject>();
 	public GameMap gameMap = new GameMap();
+	
 
 	public GameInstance() {
-		time = Calendar.getInstance();
+		timeGameStarted = Calendar.getInstance();
 		for (int i = 0; i < 8; i++) {
 			tanks.add(new TankObject("red.jpg", "noName", "noIP", 0, 0, 50,
 					"waiting"));
@@ -55,7 +59,7 @@ public class GameInstance {
 					"waiting"));
 		}// end for
 		
-		this.time = time;
+		this.timeGameStarted = time;
 		this.gameMap = gameMap;
 	}
 
