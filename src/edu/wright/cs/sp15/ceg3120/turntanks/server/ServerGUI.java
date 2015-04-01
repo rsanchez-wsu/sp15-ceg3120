@@ -1,4 +1,4 @@
-package edu.wright.cs.sp15.ceg3120.turntanks;
+package edu.wright.cs.sp15.ceg3120.turntanks.server;
 
 /*
  * Copyright (C) <2015> <Team 2>
