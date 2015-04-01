@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package combinedplayerobject;
+package edu.wright.cs.sp15.ceg3120.turntanks.client;
 
 /**
  * Set up the Object for each player and their stats
