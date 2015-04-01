@@ -42,12 +42,12 @@ import javax.imageio.ImageIO;
 
 public class GameMap {
 
-	int mapXSize = 64;
-	int mapYSize = 64;
-	char[][] baseLayer = new char[mapXSize][mapYSize];
-	char[][] topLayer = new char[mapXSize][mapYSize];
-	char[][] spriteStyle = new char[mapXSize][mapYSize];
-	char[][] corners = new char[mapXSize][mapYSize];
+	public int mapXSize = 64;
+	public int mapYSize = 64;
+	public char[][] baseLayer = new char[mapXSize][mapYSize];
+	public char[][] topLayer = new char[mapXSize][mapYSize];
+	public char[][] spriteStyle = new char[mapXSize][mapYSize];
+	public char[][] corners = new char[mapXSize][mapYSize];
 	
 	// used to limit recursive terrain feature growth
 	int timesExpanded = 0;
