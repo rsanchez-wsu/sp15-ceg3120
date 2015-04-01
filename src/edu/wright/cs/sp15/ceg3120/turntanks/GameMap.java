@@ -24,7 +24,7 @@
  *
  */
 
-package team6;
+package edu.wright.cs.sp15.ceg3120.turntanks;
 
 import java.awt.Image;
 import java.io.File;
