@@ -27,7 +27,14 @@ public class Player {
 
 	public enum Status {
 
-		ALIVE, DEAD, WAITING
+		ALIVE, DEAD, WAITING;
+		
+		@Override 
+		public String toString () {
+	        String result = super.toString();
+	        result = result.substring (0, 1).toUpperCase() + result.substring(1).toLowerCase();
+	        return result;
+	    }
 	}
 
 	private Status status;
@@ -113,23 +120,10 @@ public class Player {
 	public Pair getLastSeenPlayerLocation() {
 		return lastSeenLocation;
 	}
-	@SuppressWarnings("incomplete-switch") // Warning suppressed due to the fact that Status must be one of these 3 items.
+	
 	@Override
 	public String toString() {
-		String state = "";
-
-		switch (getPlayerStatus()) {
-		case DEAD:
-			state = "Dead";
-			break;
-		case ALIVE:
-			state = "Alive";
-			break;
-		case WAITING:
-			state = "Waiting";
-			break;
-		}
 		return "My info - #: " + getPlayerNumber() + " | Health: " + getPlayerHealth() + "/50 | Position "
-			+ getPlayerLocation() + " | State: " + state;
+			+ getPlayerLocation() + " | State: " + getPlayerStatus().toString();
 	}
 }
