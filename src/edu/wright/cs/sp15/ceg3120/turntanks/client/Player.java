@@ -18,120 +18,118 @@
 package edu.wright.cs.sp15.ceg3120.turntanks.client;
 
 /**
- * Set up the Object for each player and their stats
+ * Set up the Object for each player
  */
 public class Player {
 
-    //Variable declarations
-    private int number;
+	// Variable declarations
+	private int number;
 
-    public enum Status {
+	public enum Status {
 
-        ALIVE, DEAD, WAITING
-    };
-    private Status status;
-    private int health;
-    private Point location;
-    private [] Point lastSeenLocation;
-}
+		ALIVE, DEAD, WAITING
+	}
 
-/**
- * Default constructor
- *
- */
-public player (int number) {
-this.number = number;
-this.health = 50;
-}
+	private Status status;
+	private int health;
+	private Pair location;
+	private Pair lastSeenLocation;
 
-/**
- * Sets player number
- */
-public void setPlayerNumber (int number) {
-this.number = number;
-}
+	/**
+	 * Default constructor
+	 *
+	 */
+	public Player(int number) {
+		this.number = number;
+		this.health = 50;
+	}
 
-/**
- * Gets player number
- */
-public int getPlayerNumber () {
-return number;
-}
+	/**
+	 * Sets player number
+	 */
+	public void setPlayerNumber(int number) {
+		this.number = number;
+	}
 
-/**
- * Sets player status
- */
-public void setPlayerStatus (Status status) {
-this.status = status;
-}
+	/**
+	 * Gets player number
+	 */
+	public int getPlayerNumber() {
+		return number;
+	}
 
-/**
- * Gets player status
- */
-public Status getPlayerStatus () {
-return status;
-}
+	/**
+	 * Sets player status
+	 */
+	public void setPlayerStatus(Status status) {
+		this.status = status;
+	}
 
-/**
- * Sets player health
- */
-public void setPlayerHealth (int health) {
-this.health = health;
-}
+	/**
+	 * Gets player status
+	 */
+	public Status getPlayerStatus() {
+		return status;
+	}
 
-/**
- * Gets player health
- */
-public int getPlayerHealth () {
-return health;
-}
+	/**
+	 * Sets player health
+	 */
+	public void setPlayerHealth(int health) {
+		this.health = health;
+	}
 
-/**
- * Sets player location
- */
-public void setPlayerLocation(Point location) {
-this.location = location;
-}
+	/**
+	 * Gets player health
+	 */
+	public int getPlayerHealth() {
+		return health;
+	}
 
-/**
- * Gets player location
- */
-public Point getPlayerLocation () {
-return location;
-}
+	/**
+	 * Sets player location
+	 */
+	public void setPlayerLocation(Pair location) {
+		this.location = location;
+	}
 
-/**
- * Sets last seen player location
- */
-public void setLastSeenPlayerLocation (Point[] lastSeenLocation) {
-this.lastSeenLocation = lastSeenLocation;
-}
+	/**
+	 * Gets player location
+	 */
+	public Pair getPlayerLocation() {
+		return location;
+	}
 
-/**
- * Gets last seen player location
- */
-public Point [] getLastSeenPlayerLocation () {
-return lastSeenLocation;
-}
+	/**
+	 * Sets last seen player location
+	 */
+	public void setLastSeenPlayerLocation(Pair lastSeenLocation) {
+		this.lastSeenLocation = lastSeenLocation;
+	}
 
-/**
- * Finds appropriate player status & formats player(s) information
- */
-@Override
-        public String toString() {
-String status = "";
+	/**
+	 * Gets last seen player location
+	 */
+	public Pair getLastSeenPlayerLocation() {
+		return lastSeenLocation;
+	}
+	@SuppressWarnings("incomplete-switch") // Warning suppressed due to the fact that Status must be one of these 3 items.
+	@Override
+	public String toString() {
+		String state = "";
 
-switch(getPlayerStatus()) {
-case ALIVE:
-    status = "Alive";
-    break;
-case DEAD:
-    status = "Dead";
-    break;
-case WAITING:
-    status = "Waiting";
-    break;
-    }
-return "My info - Player # " + getPlayerNumber() + " | Status: " + status + "Health: " + getPlayerHealth() + "/50 | Position "
-			+ getPlayerLocation() + " | Last Seen Location: " + getLastSeenPlayerLocation();
+		switch (getPlayerStatus()) {
+		case DEAD:
+			state = "Dead";
+			break;
+		case ALIVE:
+			state = "Alive";
+			break;
+		case WAITING:
+			state = "Waiting";
+			break;
+		}
+		return "My info - #: " + getPlayerNumber() + " | Health: " + getPlayerHealth() + "/50 | Position "
+			+ getPlayerLocation() + " | State: " + state;
+	}
 }
