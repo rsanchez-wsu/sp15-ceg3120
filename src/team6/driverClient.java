@@ -140,7 +140,7 @@ public class driverClient {
 					if(numMsg!=0)
 					System.out.println("debug number of message to expect "+numMsg);
 					for (int i = 0 ; i < numMsg; i++) {
-						System.out.println("loop");
+						//System.out.println("loop");
 						int msgType = in.readInt();
 						// TODO make each if a single method call
 						
@@ -256,7 +256,7 @@ public class driverClient {
 	
 	static private void inboundTerrainMessage(DataInputStream in, GameInstance clientGame, GameRenderer renderer){
 		try {
-			System.out.println("debug inbound terrain message");
+			//System.out.println("debug inbound terrain message");
 			int x = in.readInt();
 			int y = in.readInt();
 			char base = in.readChar();
@@ -268,8 +268,8 @@ public class driverClient {
 			clientGame.gameMap.spriteStyle[y][x] = style;
 			clientGame.gameMap.corners[y][x] = corner;
 			renderer.repaint();
-			System.out.println("debug tile " + x + " , " + y
-					+ " btsc " + base + top + style + corner);
+			//System.out.println("debug tile " + x + " , " + y
+			//		+ " btsc " + base + top + style + corner);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}//end try catch

@@ -29,6 +29,9 @@ package edu.wright.cs.sp15.ceg3120.turntanks.server;
 import java.util.concurrent.*;
 import java.util.*;
 import java.math.*;
+
+import team6.OutBufferInstruction;
+import team6.ServerMTSockListen;
 import edu.wright.cs.sp15.ceg3120.turntanks.*;
 
 
@@ -84,8 +87,8 @@ public class Engine {
 	}
 	
 	private void generateViews() {
-		for (int i = 0; i < ServerListener.socketList.size(); i++) {
-			if (playerUpdate[i])
+		for (int i = 0; i <ServerListener.socketList.size(); i++) {
+			if (true)//TODO change to playerUpdate[i] once vision checks set 
 				processVision(i);
 			playerUpdate[i] = false;
 		}
@@ -100,19 +103,22 @@ public class Engine {
 		int y = currentGame.tanks.get(playerNumber).yCoord;
 
 		OutBufferInstruction outInstruction;
-		//creates instructions for tank positions to be updated on client
+		// creates instructions for tank positions to be updated on client
 		for (int i = 0; i < ServerListener.socketList.size(); i++) {
 			// TODO if lineOfSite=true
-			outInstruction = new OutBufferInstruction(2, playerNumber, x, y);
+
+			outInstruction = new OutBufferInstruction(2, i,
+					currentGame.tanks.get(i).xCoord,
+					currentGame.tanks.get(i).yCoord);
 			outBuffers.get(playerNumber).add(outInstruction);
 		}// end for
-		
-	// gets tiles around tank
+
+		// gets tiles around tank
 		for (int i = -2; i <= 2; i++) {
 			for (int j = -2; j <= 2; j++) {
 				// TODO if lineOfSite=true
 				if (y + i >= 0 && x + j >= 0) {
-					outInstruction = new OutBufferInstruction(3,x + j ,y + i ,
+					outInstruction = new OutBufferInstruction(3, x + j, y + i,
 							currentGame.gameMap.baseLayer[y + i][x + j],
 							currentGame.gameMap.topLayer[y + i][x + j],
 							currentGame.gameMap.spriteStyle[y + i][x + j],
