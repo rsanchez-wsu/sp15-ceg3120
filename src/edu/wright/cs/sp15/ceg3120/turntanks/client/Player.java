@@ -17,6 +17,8 @@
  */
 package edu.wright.cs.sp15.ceg3120.turntanks.client;
 
+import java.awt.Point;
+
 /**
  * Set up the Object for each player
  */
@@ -27,13 +29,20 @@ public class Player {
 
 	public enum Status {
 
-		ALIVE, DEAD, WAITING
+		ACTIVE, DEAD, WAITING;
+		
+		@Override 
+		public String toString () {
+	        String result = super.toString();
+	        result = result.substring (0, 1).toUpperCase() + result.substring(1).toLowerCase();
+	        return result;
+	    }
 	}
 
 	private Status status;
 	private int health;
-	private Pair location;
-	private Pair lastSeenLocation;
+	private Point location;
+	private Point lastSeenLocation;
 
 	/**
 	 * Default constructor
@@ -89,47 +98,34 @@ public class Player {
 	/**
 	 * Sets player location
 	 */
-	public void setPlayerLocation(Pair location) {
+	public void setPlayerLocation(Point location) {
 		this.location = location;
 	}
 
 	/**
 	 * Gets player location
 	 */
-	public Pair getPlayerLocation() {
+	public Point getPlayerLocation() {
 		return location;
 	}
 
 	/**
 	 * Sets last seen player location
 	 */
-	public void setLastSeenPlayerLocation(Pair lastSeenLocation) {
+	public void setLastSeenPlayerLocation(Point lastSeenLocation) {
 		this.lastSeenLocation = lastSeenLocation;
 	}
 
 	/**
 	 * Gets last seen player location
 	 */
-	public Pair getLastSeenPlayerLocation() {
+	public Point getLastSeenPlayerLocation() {
 		return lastSeenLocation;
 	}
-	@SuppressWarnings("incomplete-switch") // Warning suppressed due to the fact that Status must be one of these 3 items.
+	
 	@Override
 	public String toString() {
-		String state = "";
-
-		switch (getPlayerStatus()) {
-		case DEAD:
-			state = "Dead";
-			break;
-		case ALIVE:
-			state = "Alive";
-			break;
-		case WAITING:
-			state = "Waiting";
-			break;
-		}
 		return "My info - #: " + getPlayerNumber() + " | Health: " + getPlayerHealth() + "/50 | Position "
-			+ getPlayerLocation() + " | State: " + state;
+			+ getPlayerLocation() + " | State: " + getPlayerStatus().toString();
 	}
 }
