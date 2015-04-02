@@ -17,6 +17,8 @@
  */
 package edu.wright.cs.sp15.ceg3120.turntanks.client;
 
+import java.awt.Point;
+
 /**
  * Set up the Object for each player
  */
@@ -27,7 +29,7 @@ public class Player {
 
 	public enum Status {
 
-		ALIVE, DEAD, WAITING;
+		ACTIVE, DEAD, WAITING;
 		
 		@Override 
 		public String toString () {
@@ -39,8 +41,8 @@ public class Player {
 
 	private Status status;
 	private int health;
-	private Pair location;
-	private Pair lastSeenLocation;
+	private Point location;
+	private Point lastSeenLocation;
 
 	/**
 	 * Default constructor
@@ -96,28 +98,28 @@ public class Player {
 	/**
 	 * Sets player location
 	 */
-	public void setPlayerLocation(Pair location) {
+	public void setPlayerLocation(Point location) {
 		this.location = location;
 	}
 
 	/**
 	 * Gets player location
 	 */
-	public Pair getPlayerLocation() {
+	public Point getPlayerLocation() {
 		return location;
 	}
 
 	/**
 	 * Sets last seen player location
 	 */
-	public void setLastSeenPlayerLocation(Pair lastSeenLocation) {
+	public void setLastSeenPlayerLocation(Point lastSeenLocation) {
 		this.lastSeenLocation = lastSeenLocation;
 	}
 
 	/**
 	 * Gets last seen player location
 	 */
-	public Pair getLastSeenPlayerLocation() {
+	public Point getLastSeenPlayerLocation() {
 		return lastSeenLocation;
 	}
 	
