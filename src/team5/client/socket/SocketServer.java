@@ -18,6 +18,9 @@
 package team5.client.socket;
 
 import java.net.*;
+/**
+ * start of server side
+ */
 import java.io.*;
 public class SocketServer extends Thread
 {

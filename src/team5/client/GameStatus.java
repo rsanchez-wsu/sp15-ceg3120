@@ -37,6 +37,12 @@ public class GameStatus {
 
 	}
 
+	/**
+	 * sets game status per player
+	 * @param serverIP
+	 * @param playersLeft
+	 * @param status
+	 */
 	public GameStatus(String serverIP, int playersLeft, StatusEnum status) {
 
 		this.serverIP = serverIP;

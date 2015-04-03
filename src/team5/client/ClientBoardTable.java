@@ -94,7 +94,7 @@ public class ClientBoardTable extends JPanel{
 	class GameTable extends AbstractTableModel {
 
 		/**
-		 * 
+		 * This method sets up the GameTable
 		 */
 		private static final long serialVersionUID = 1L;
 
@@ -105,6 +105,11 @@ public class ClientBoardTable extends JPanel{
 
 		}
 
+		/**
+		 * This creates the GameTable for each player
+		 * @param playerList
+		 * @param actualPlayer
+		 */
 		public GameTable(Vector<Player> playerList, Player actualPlayer) {
 			Pair position = new Pair();
 			columnNames = new String[64];
