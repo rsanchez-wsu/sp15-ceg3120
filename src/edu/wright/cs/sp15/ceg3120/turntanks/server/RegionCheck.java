@@ -13,10 +13,10 @@ public class RegionCheck {
      * PreConditions: none
      * PostConditions: a Grid is created
      */
-    public RegionCheck(byte[][] map) {
+    public RegionCheck(char[][] map) {
     	for(int i = 0; i < 64; i++) {
     		for(int j = 0; j < 64; j++) {
-    			if(map[i][j] == '3' || map[i][j] == '2') {
+    			if(map[i][j] == 'm' || map[i][j] == 'w') {
     				grid[i][j] = 0;
     			}//end of if
     			else {

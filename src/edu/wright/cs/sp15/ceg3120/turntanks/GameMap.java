@@ -32,6 +32,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import edu.wright.cs.sp15.ceg3120.turntanks.server.RegionCheck;
+
 
 
 
@@ -154,12 +156,26 @@ public class GameMap {
 	 */
 	public void generateMap(){		
 		
+		do {
 		buildBaseLayer();
 		buildSpriteStyle('a');
 		buildTopLayer();
+		}while(!checkMap());
 		buildSpriteStyle('b');
 		buildCorners();
 	}// end generateMap()
+	
+	/*
+	 * creates a regioncheck and sees that each tank will be able to access each other tank
+	 * returns if each tank can get to each other tank
+	 */
+	private boolean checkMap() {
+		RegionCheck r = new RegionCheck(topLayer);
+		if(r.findRegions() > 3) {
+			return false;
+		}//end of if
+		return true;
+	}//end checkMap()
 	
 	/*
 	 * Creates a completely unknown map. All arrays are initiated
