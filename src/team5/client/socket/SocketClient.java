@@ -31,7 +31,11 @@ public class SocketClient extends Thread{
     /**
      * @param args the command line arguments
      */
-    
+    /**
+     * Starts connection to server
+     * @param sName
+     * @param port
+     */
     public void run(String sName, int port){
     	sName = "localhost";
         port = 8080;
@@ -66,9 +70,16 @@ public class SocketClient extends Thread{
         connected = false;
     }
     
+    /**
+     * @return name of server connected to
+     */
 	public String getServerName() {
 		return serverName;
 	}
+	/**
+	 * sets name of server connected to
+	 * @param serverName
+	 */
 	public void setServerName(String serverName) {
 		this.serverName = serverName;
 	}
@@ -82,6 +93,10 @@ public class SocketClient extends Thread{
 	public String chat(String chat){
 		return "CHAT " + chat;
 	}
+	/**
+	 * @param reason why player left
+	 * @return reasion
+	 */
 	public String quit(String reason){
 		connected = false;
 		if(reason == null){

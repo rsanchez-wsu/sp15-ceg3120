@@ -41,6 +41,7 @@ import team5.playerobject.Player;
 
 /**
  * @author Joshua Hitchens, Lori Simmons, Ryan Lane, Tyler Parker
+ * This starts it all and creates the frame and map as well as the different panels
  */
 public class MainThread implements Runnable{
 
@@ -171,6 +172,10 @@ public class MainThread implements Runnable{
 		frame.pack();
 		frame.setVisible(true);
 		
+		
+		/**
+		 * trys to connest to server and retrys 8 times to reconnect before quiting.
+		 */
 //		connection = new SocketClient();
 //		//connect to chat thing
 //		
@@ -190,6 +195,7 @@ public class MainThread implements Runnable{
 //			
 //		}
 	}
+	
 	
 	/**
 	 * creates players
