@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 - Jason Gonzalez, Josh Crank, Marie Hucke, Kristen Schwaiger, Kyle Wintermute, Kyle Wood, Joshua Hitchens, Lori Simmons, Ryan Lane, Tyler Parker, and Matthew J Lents. 
+ * Copyright (C) 2015 - Matthew Nelson, Jason Gonzalez, Josh Crank, Marie Hucke, Kristen Schwaiger, Kyle Wintermute, Kyle Wood, Joshua Hitchens, Lori Simmons, Ryan Lane, Tyler Parker, and Matthew J Lents. 
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,20 +25,20 @@ import java.awt.Point;
 public class Player {
 
 	// Variable declarations
-	private int number;
-
 	public enum Status {
 
 		ACTIVE, DEAD, WAITING;
-		
-		@Override 
-		public String toString () {
-	        String result = super.toString();
-	        result = result.substring (0, 1).toUpperCase() + result.substring(1).toLowerCase();
-	        return result;
-	    }
+
+		@Override
+		public String toString() {
+			String result = super.toString();
+			result = result.substring(0, 1).toUpperCase()
+					+ result.substring(1).toLowerCase();
+			return result;
+		}
 	}
 
+	private int number;
 	private Status status;
 	private int health;
 	private Point location;
@@ -80,11 +80,22 @@ public class Player {
 	public Status getPlayerStatus() {
 		return status;
 	}
+	
+	/**
+	 * Displays Status as a string
+	 */
+	public String displayStatus(){
+		return status.toString();
+	}
 
 	/**
-	 * Sets player health
+	 * Sets player health, if less than or equal to 0 sets status to dead
 	 */
 	public void setPlayerHealth(int health) {
+		if (health <= 0) {
+			this.health = 0;
+			this.status = Status.DEAD;
+		}
 		this.health = health;
 	}
 
@@ -122,10 +133,11 @@ public class Player {
 	public Point getLastSeenPlayerLocation() {
 		return lastSeenLocation;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "My info - #: " + getPlayerNumber() + " | Health: " + getPlayerHealth() + "/50 | Position "
-			+ getPlayerLocation() + " | State: " + getPlayerStatus().toString();
+		return "My info - #: " + getPlayerNumber() + " | Health: "
+				+ getPlayerHealth() + "/50 | Position " + getPlayerLocation()
+				+ " | State: " + displayStatus();
 	}
 }
