@@ -1036,5 +1036,65 @@ public class GameMap {
 
 		return tank;
 	}
+ 	
+ 	
+ 	//team 3 create player positions-------------------------------------------------------
+ 	
+ 	int playerPosition[][] = new int[2][8];//create array to hold generated player positions
+ 	
+ 	
+ 	void generateRandomPositions(){
+ 		//initialize starting position to (-5,-5), will not render and allows a player to be positioned at (0,0)
+ 		for(int i = 0; i <8; i++){
+ 	 		playerPosition[0][i] = -5;
+ 	 		playerPosition[i][0] = -5;
+ 	 	}
+ 		
+ 		int x;//player x position
+ 		int y;//player y position
+ 		boolean valid = false;//loop boolean
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		//loop 8 times to place each player
+ 		for(int i = 0; i <8; i++){
+ 			valid = true;
+ 			
+ 			while(valid){
+ 				
+ 				valid = false;
+ 				x = (int)Math.random()*63;//generate x
+ 				y = (int)Math.random()*63;//generate y
+ 				
+ 				//cant be on a mountain or map
+ 				if(topLayer[x][y] != 'm' && topLayer[x][y] != 'w' ){//is tile a mountain or water
+ 					//check for players close by
+ 					for(int j = 0; j<8 ; j++){
+ 						
+ 						if(playerPosition[0][j] != -5){//check to see if it 
+ 							//cant be withing 5 tiles of another player in x direction
+ 						}
+ 						
+ 						
+ 						
+ 					}
+ 				}
+ 			}
+ 			
+ 			
+ 		}
+ 		
+ 		//create a player
+ 		//check for water and mountain tile
+ 		//
+ 	}
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
 
 }// end GameMap Class
