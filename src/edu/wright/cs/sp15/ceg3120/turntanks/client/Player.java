@@ -37,7 +37,7 @@ public class Player {
 			return result;
 		}
 	}
-
+	String name;
 	private int number;
 	private Status status;
 	private int health;
@@ -48,8 +48,9 @@ public class Player {
 	 * Default constructor
 	 *
 	 */
-	public Player(int number) {
+	public Player(int number, String name) {
 		this.number = number;
+		this.name = name;
 		this.health = 50;
 	}
 
@@ -68,6 +69,20 @@ public class Player {
 	}
 
 	/**
+	 * @return player name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the player name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
 	 * Sets player status
 	 */
 	public void setPlayerStatus(Status status) {
@@ -81,12 +96,6 @@ public class Player {
 		return status;
 	}
 	
-	/**
-	 * Displays Status as a string
-	 */
-	public String displayStatus(){
-		return status.toString();
-	}
 
 	/**
 	 * Sets player health, if less than or equal to 0 sets status to dead
@@ -138,6 +147,6 @@ public class Player {
 	public String toString() {
 		return "My info - #: " + getPlayerNumber() + " | Health: "
 				+ getPlayerHealth() + "/50 | Position " + getPlayerLocation()
-				+ " | State: " + displayStatus();
+				+ " | State: " + status.toString();
 	}
 }
