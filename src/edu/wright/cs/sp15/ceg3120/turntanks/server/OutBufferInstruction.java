@@ -27,56 +27,62 @@
 package edu.wright.cs.sp15.ceg3120.turntanks.server;
 
 public class OutBufferInstruction {
-	//TODO this class should be changed so that the constructor type sets the type value, instead of being passed.
-	
+	// TODO this class should be changed so that the constructor type sets the
+	// type value, instead of being passed.
 
-	int type =-1; //0 is welcome, 1 is players present, 2 is tank move, 3 is terrain message
-	int playerNumber=-1;
+	int type = -1; // 0 is welcome, 1 is players present, 2 is tank move, 3 is
+					// terrain message
+	int playerNumber = -1;
 	int x;
 	int y;
-	//current used map type+ renderer requires these 4 values
+	// current used map type+ renderer requires these 4 values
 	char base;
 	char top;
 	char style;
 	char corner;
-	
-	String playerName="none";
 
-	public OutBufferInstruction(int type, int playerNumber, String playerName) {//should be type 1
+	String playerName = "none";
+
+	public OutBufferInstruction(int type, int playerNumber, String playerName) {
+		// should be type 1
+
 		super();
 		this.type = type;
 		this.playerNumber = playerNumber;
 		this.playerName = playerName;
-		System.out.println("debug out instruction created. type= "+ type +" playerNumber= "+playerNumber+ " playername= "+ playerName );
+		System.out.println("debug out instruction created. type= " + type
+				+ " playerNumber= " + playerNumber + " playername= "
+				+ playerName);
 	}
-	
-	public OutBufferInstruction(int type, int playerNumber, int x, int y) {//should be type 2 tank move message constructor
-		
+
+	public OutBufferInstruction(int type, int playerNumber, int x, int y) {
+		// should be type 2 tank move message constructor
+
 		this.type = type;
-		this.playerNumber=playerNumber;
-		this.x=x;
-		this.y=y;				
-		
-		System.out.println("debug out instruction created. type= "+ type +" playerNumber= "+playerNumber+ " cords "+ x+", "+y );
-		
+		this.playerNumber = playerNumber;
+		this.x = x;
+		this.y = y;
+
+		System.out.println("debug out instruction created. type= " + type
+				+ " playerNumber= " + playerNumber + " cords " + x + ", " + y);
+
 	}
-	
-	public OutBufferInstruction(int type,int x, int y,  char base, char top, char style, char corner) {//should be type 3 terrain message constructor
+
+	public OutBufferInstruction(int type, int x, int y, char base, char top,
+			char style, char corner) {// should be type 3 terrain message constructor
 		super();
 		this.type = type;
 		this.playerNumber = -1;
 		this.playerName = "";
-		this.x=x;
-		this.y=y;
-		this.base=base;
-		this.top=top;
-		this.style=style;
-		this.corner=corner;
-		System.out.println("debug out instruction created. type= "+ type +"x="+x+" y="+y+ " base-top-style-corner"+base+top+style+corner );
+		this.x = x;
+		this.y = y;
+		this.base = base;
+		this.top = top;
+		this.style = style;
+		this.corner = corner;
+		System.out.println("debug out instruction created. type= " + type
+				+ "x=" + x + " y=" + y + " base-top-style-corner" + base + top
+				+ style + corner);
 	}
-	
-
-	
 
 }
-

@@ -37,12 +37,15 @@ public class Player {
 			return result;
 		}
 	}
-	String name;
+	
+	private String name;
 	private int number;
 	private Status status;
 	private int health;
 	private Point location;
 	private Point lastSeenLocation;
+	
+	// TODO: Consider how to get the IP address into here
 
 	/**
 	 * Default constructor

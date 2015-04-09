@@ -35,12 +35,13 @@ import java.util.*;
 
 public class ServerListener implements Runnable {
 	
-	static ArrayList<ServerNetcode> socketList = new ArrayList<ServerNetcode>();
+	static ArrayList<ServerNetcode> socketList = new ArrayList<>();
 
 	public ServerListener() {
 
 	}// end constructor
 
+	@Override
 	public void run() {
 		try { // run interface doesnt allow for throwable exceptions
 			process();
@@ -51,13 +52,12 @@ public class ServerListener implements Runnable {
 
 	private void process() {
 
+		// TODO: Get the port from the XML configuration (use Configuration class)
 		int port = 6666;
 
-		try {
+		// Establish the listen socket.
+		try (ServerSocket serverSocket = new ServerSocket(port)) {
 
-			ServerSocket serverSocket;
-			// Establish the listen socket.
-			serverSocket = new ServerSocket(port);
 			boolean listenLoop = true;
 			while (listenLoop) {
 				// Listen
@@ -66,7 +66,7 @@ public class ServerListener implements Runnable {
 				// Construct an object to process the socket connection
 				ServerNetcode connection = new ServerNetcode(socket);
 				socketList.add(connection);//keeps references to each thread
-				Engine.outBuffers.add(new ConcurrentLinkedQueue());
+				Engine.outBuffers.add(new ConcurrentLinkedQueue<OutBufferInstruction>());
 				Thread thread = new Thread(connection);
 				// Start the thread.
 				thread.start();

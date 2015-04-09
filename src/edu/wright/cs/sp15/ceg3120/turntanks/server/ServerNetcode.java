@@ -49,10 +49,8 @@ public class ServerNetcode implements Runnable {
 							// utf
 		System.out.println("debug client connected with name of " + name);
 		out.writeInt(playerID);
-		InBufferInstruction instruction = new InBufferInstruction(3, -1, -1, name, playerID, -1);// makes
-																									// the
-																									// playername
-																									// inBufferInstructions
+		InBufferInstruction instruction = new InBufferInstruction(3, -1, -1, name, playerID, -1);
+		// makes the playername inBufferInstructions
 		Engine.inBuffer.add(instruction);
 
 		// debug nothing should be in the socket buffers
@@ -60,6 +58,7 @@ public class ServerNetcode implements Runnable {
 
 	}// end const
 
+	@Override
 	public void run() {
 		try { // run interface doesnt allow for throwable exceptions
 			while (true) {
@@ -78,15 +77,13 @@ public class ServerNetcode implements Runnable {
 
 			try {
 
-				if (!Engine.outBuffers.get(playerID).isEmpty()) { // if queue
-																	// isnt
-																	// empty
+				if (!Engine.outBuffers.get(playerID).isEmpty()) {
+					// if queue isn't empty
 					int size = Engine.outBuffers.get(playerID).size();
 					out.writeInt(size);
 					for (int i = 0; i < size; i++) {// thread safety by not just
 													// emptying
-						OutBufferInstruction instruction = (OutBufferInstruction) Engine.outBuffers.get(playerID)
-								.remove();
+						OutBufferInstruction instruction = Engine.outBuffers.get(playerID).remove();
 						// TODO make ifs method calls
 						if (instruction.type == 1) {
 							nameMessage(instruction);

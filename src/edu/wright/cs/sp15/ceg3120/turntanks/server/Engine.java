@@ -26,13 +26,12 @@
 
 package edu.wright.cs.sp15.ceg3120.turntanks.server;
 
-import java.util.concurrent.*;
-import java.util.*;
-import java.math.*;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
-import team6.OutBufferInstruction;
-import team6.ServerMTSockListen;
-import edu.wright.cs.sp15.ceg3120.turntanks.*;
+import edu.wright.cs.sp15.ceg3120.turntanks.GameInstance;
+import edu.wright.cs.sp15.ceg3120.turntanks.TankObject;
 
 
 
@@ -45,8 +44,8 @@ import edu.wright.cs.sp15.ceg3120.turntanks.*;
 // For now, exceptions will just be printed
 public class Engine {
 
-	static ConcurrentLinkedQueue inBuffer = new ConcurrentLinkedQueue<InBufferInstruction>();
-	static ArrayList<ConcurrentLinkedQueue> outBuffers = new ArrayList();
+	static ConcurrentLinkedQueue<InBufferInstruction> inBuffer = new ConcurrentLinkedQueue<>();
+	static ArrayList<ConcurrentLinkedQueue<OutBufferInstruction>> outBuffers = new ArrayList<>();
 
 	ServerListener listener = new ServerListener();
 	GameInstance currentGame;
@@ -63,7 +62,7 @@ public class Engine {
 	}// end constructor
 
 	public boolean lobby() {
-		if (listener.socketList.size() > 7)
+		if (ServerListener.socketList.size() > 7)
 			return false;
 		else
 
@@ -74,7 +73,7 @@ public class Engine {
 	public void step() {
 
 		if (!inBuffer.isEmpty())
-			inProcess((InBufferInstruction) inBuffer.remove());
+			inProcess(inBuffer.remove());
 
 		if (needViewUpdate)
 			generateViews();
@@ -318,10 +317,10 @@ public class Engine {
 		//TODO INTERGRATION FIX
 		//ServerGUI.getInstance().updateTable(currentGame);
 		// generate messages to update player names to everyone
-		for (int i = 0; i < listener.socketList.size(); i++) {
+		for (int i = 0; i < ServerListener.socketList.size(); i++) {
 			// sent a message to each socket, the name of the player
 			// associated with the outer loop
-			for (int j = 0; j < listener.socketList.size(); j++) {
+			for (int j = 0; j < ServerListener.socketList.size(); j++) {
 				outBuffers.get(j).add(new OutBufferInstruction(1, i, currentGame.tanks.get(i).Name));
 				System.out.println("debug: player name");
 			}// end inner loop
