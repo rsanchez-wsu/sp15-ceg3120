@@ -24,13 +24,17 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
-import javax.swing.event.*;
 
 // (JTC)  This will be the JSplitPane that will pop up when a player is clicked.
 // More than likely we will want a JTabbed pane/JSplit Pane hybrid with the focussed
 // tab being the player that was clicked.
 
 public class PlayersView extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8754354875447521537L;
+	
 	private static final int DEFAULT_WIDTH = 800;
 	private static final int DEFAULT_HEIGHT = 300;
 	
@@ -104,7 +108,7 @@ public class PlayersView extends JFrame{
 	{
 		JPanel panel = new JPanel(false);
         JLabel filler = new JLabel(p);
-        filler.setHorizontalAlignment(JLabel.CENTER);
+        filler.setHorizontalAlignment(SwingConstants.CENTER);
         panel.setLayout(new GridLayout(1, 1));
         panel.add(filler);
         return panel;

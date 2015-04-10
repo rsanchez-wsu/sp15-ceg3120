@@ -20,10 +20,6 @@
 
 package edu.wright.cs.sp15.ceg3120.turntanks.client;
 
-import java.util.ArrayList;
-import javax.swing.JFrame;
-
-
 public class GameController {
 	
 	//(JTC) This is the main function that keeps the game going.  In here is where we will spawn clients and views.

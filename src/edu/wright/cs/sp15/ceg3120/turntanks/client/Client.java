@@ -46,17 +46,21 @@ public class Client {
 			// (JTC) Creates a socket on localhost through port 1500
 			s = new Socket("127.0.0.1", 1500);
 			
+			// (JTC) Establish I/O Stream
+			is = s.getInputStream();
+			din = new DataInputStream(is);
+			os = s.getOutputStream();
+			dout = new DataOutputStream(os);
+			
+			//(kwood) After socket is opened, send connect message with player name.
+			dout.writeUTF("CONNECT " + ClientView.getPlayer().getName());
+			
+			
 			// This will continue while the socket is open
 			while(true)
-			{
-				// (JTC) Establish I/O Stream
-				is = s.getInputStream();
-				din = new DataInputStream(is);
-				os = s.getOutputStream();
-				dout = new DataOutputStream(os);
-				
+			{				
 				smsg = din.readUTF();
-				
+							
 				
 				//COMMAND PROCESSOR 
 				switch(smsg) { 
