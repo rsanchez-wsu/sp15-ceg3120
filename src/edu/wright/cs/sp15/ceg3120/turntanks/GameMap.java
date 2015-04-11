@@ -149,10 +149,10 @@ public class GameMap {
 	public void generateMap(){		
 		
 		do {
-		buildBaseLayer();
-		buildSpriteStyle('a');
-		buildTopLayer();
-		}while(!checkMap());
+			buildBaseLayer();
+			buildSpriteStyle('a');
+			buildTopLayer();
+		} while (!checkMap());
 		buildSpriteStyle('b');
 		buildCorners();
 	}
@@ -163,7 +163,7 @@ public class GameMap {
 	 */
 	private boolean checkMap() {
 		RegionCheck r = new RegionCheck(topLayer);
-		if(r.findRegions() > 3) {
+		if (r.findRegions() > 3) {
 			return false;
 		}//end of if
 		return true;
@@ -175,8 +175,8 @@ public class GameMap {
 	 */
 	private void generateBlankLayers(){
 		
-		for(int i = 0; i < mapXSize; i++){
-			for(int j = 0; j < mapYSize; j++){
+		for (int i = 0; i < mapXSize; i++) {
+			for (int j = 0; j < mapYSize; j++) {
 				baseLayer[i][j] = '?';
 				topLayer[i][j] = '?';
 				spriteStyle[i][j] = '?';
@@ -295,7 +295,7 @@ public class GameMap {
 			mountainLRT = ImageIO.read(new File(
 					"./src/team6/images/mountain_lrt.png"));
 
-		} catch (IOException ex){
+		} catch (IOException ex) {
 			System.out.println(ex);
 			// FIXME: handle exception...
 		}
@@ -744,8 +744,8 @@ public class GameMap {
 		Image result = null;
 
 		if(mode == 'a'){// drawing base-layer
-			if(terrain != '?'){
-				switch(terrain){
+			if (terrain != '?') {
+				switch (terrain) {
 				case 'g':
 					result = grass;
 					break;
@@ -801,8 +801,8 @@ public class GameMap {
 					result = mudAA;
 				}
 			}
-		} else if(mode == 'b'){// drawing top-layer
-			if(terrain != '?'){
+		} else if (mode == 'b') {// drawing top-layer
+			if (terrain != '?') {
 				if (terrain == 't') {// terrain is trees
 					switch (style) {
 					case 'q':
@@ -1055,7 +1055,7 @@ public class GameMap {
  				y = (int)Math.random() * 63;
  				
  				// can't be on a mountain or water
- 				if (topLayer[x][y] != 'm' && topLayer[x][y] != 'w' ){
+ 				if (topLayer[x][y] != 'm' && topLayer[x][y] != 'w' ) {
  					//check for players close by
  					for (int j = 0; j< 8 ; j++) {
  						
