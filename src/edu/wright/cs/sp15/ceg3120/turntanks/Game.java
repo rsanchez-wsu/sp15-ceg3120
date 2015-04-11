@@ -20,7 +20,7 @@
 package edu.wright.cs.sp15.ceg3120.turntanks;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import edu.wright.cs.sp15.ceg3120.turntanks.client.Player;
@@ -128,14 +128,9 @@ public class Game implements Serializable {
 	 * Might be useful for serverside representation
 	 */
 	public String datePlayed() {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(dateEnd);
-		int year = cal.get(Calendar.YEAR);
-		int month = cal.get(Calendar.MONTH);
-		int day = cal.get(Calendar.DAY_OF_MONTH);
-
-		return "[" + gameStatus + "][" + day + "/" + month + "/" + year
+		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+		return "[" + gameStatus + "][" + df.format(dateEnd)
 				+ "][Game " + gameNumber + "]";
 	}
-
+	
 }
