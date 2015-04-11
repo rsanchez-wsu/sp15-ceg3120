@@ -173,7 +173,7 @@ public class GameMap {
 	 * Creates a completely unknown map. All arrays are initiated
 	 * to '?', this char is never used
 	 */
-	private void generateBlankLayers(){
+	private void generateBlankLayers() {
 		
 		for (int i = 0; i < mapXSize; i++) {
 			for (int j = 0; j < mapYSize; j++) {
@@ -501,8 +501,8 @@ public class GameMap {
 		 *	step through the map array checking the style of neighboring tiles
 		 *	to decide if a corner is necessary
 		 */
-		for(int i = 0; i < mapXSize; i++){
-			for(int j = 0; j < mapYSize; j++){
+		for (int i = 0; i < mapXSize; i++) {
+			for (int j = 0; j < mapYSize; j++) {
 			
 				currTopLayer = topLayer[i][j];
 				if(currTopLayer == 'w'){// current terrain is water
@@ -570,7 +570,7 @@ public class GameMap {
 	 *	corner tile.
 	 */
 	@SuppressWarnings("incomplete-switch")
-	private void combineCorners(int i, int j, char newChar){
+	private void combineCorners(int i, int j, char newChar) {
 		/*
 		 * CORNER STYLE TABLE -char- -MEANING-
 		 * q Top-Left p Top-Right z Bottom-Left m Bottom-Right
@@ -588,8 +588,8 @@ public class GameMap {
 		
 		if(curChar == '?' || curChar == newChar)
 			corners[i][j] = newChar;
-		else{
-			if(newChar == 'q'){// adding TL
+		else {
+			if (newChar == 'q') { // adding TL
 				switch(curChar){
 				case 'p' : corners[i][j] = 't';
 							break;
@@ -606,8 +606,7 @@ public class GameMap {
 				case 'b' : corners[i][j] = 'y';
 							break;
 				}
-			}
-			else if(newChar == 'p'){// adding TR
+			} else if (newChar == 'p') { // adding TR
 				switch(curChar){
 				case 'q' : corners[i][j] = 't';
 							break;
@@ -624,8 +623,7 @@ public class GameMap {
 				case 'c' : corners[i][j] = 'y';
 							break;
 				}
-			}
-			else if(newChar == 'z'){// adding BL
+			} else if (newChar == 'z') { // adding BL
 				switch(curChar){
 				case 'q' : corners[i][j] = 'a';
 							break;
@@ -642,8 +640,7 @@ public class GameMap {
 				case 'j' : corners[i][j] = 'y';
 							break;
 				}
-			}
-			else if(newChar == 'm'){// adding BR
+			} else if (newChar == 'm') { // adding BR
 				switch(curChar){
 				case 'q' : corners[i][j] = 'g';
 							break;
@@ -743,7 +740,7 @@ public class GameMap {
 
 		Image result = null;
 
-		if(mode == 'a'){// drawing base-layer
+		if (mode == 'a') { // drawing base-layer
 			if (terrain != '?') {
 				switch (terrain) {
 				case 'g':
