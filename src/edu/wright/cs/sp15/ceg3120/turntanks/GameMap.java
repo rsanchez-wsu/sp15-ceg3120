@@ -34,14 +34,6 @@ import javax.imageio.ImageIO;
 
 import edu.wright.cs.sp15.ceg3120.turntanks.server.RegionCheck;
 
-
-
-
-// TODO Catch File not found exceptions
-
-
-
-
 public class GameMap {
 
 	public int mapXSize = 64;
@@ -52,10 +44,10 @@ public class GameMap {
 	public char[][] corners = new char[mapXSize][mapYSize];
 	
 	// used to limit recursive terrain feature growth
-	int timesExpanded = 0;
+	private int timesExpanded = 0;
 	
 	// used for recursive growth limiting
-	boolean[][] expanded = new boolean[mapXSize][mapYSize];
+	private boolean[][] expanded = new boolean[mapXSize][mapYSize];
 
 	private Image tank = null;
 	private Image grass = null;
@@ -149,7 +141,7 @@ public class GameMap {
 		
 		findFiles();
 		generateBlankLayers();
-	}// end GameMap()
+	}
 
 	/*
 	 * Creates a randomized map.
@@ -163,7 +155,7 @@ public class GameMap {
 		}while(!checkMap());
 		buildSpriteStyle('b');
 		buildCorners();
-	}// end generateMap()
+	}
 	
 	/*
 	 * creates a regioncheck and sees that each tank will be able to access each other tank
@@ -175,7 +167,7 @@ public class GameMap {
 			return false;
 		}//end of if
 		return true;
-	}//end checkMap()
+	}
 	
 	/*
 	 * Creates a completely unknown map. All arrays are initiated
@@ -191,7 +183,7 @@ public class GameMap {
 				corners[i][j] = '?';
 			}
 		}
-	}// end generateBlankLayers()
+	}
 	
 	/*
 	 * Connects the Image Objects with the files.
@@ -305,9 +297,9 @@ public class GameMap {
 
 		} catch (IOException ex){
 			System.out.println(ex);
-			// handle exception...
+			// FIXME: handle exception...
 		}
-	}// end findFiles()
+	}
 
 	/*
 	 * Generates the bottom layer of the game map. This layer is only
@@ -315,7 +307,7 @@ public class GameMap {
 	 * map are created and expanded. Through the alpha colors in topLayer
 	 * you will see the baseLayer terrain.
 	 */
-	private void buildBaseLayer(){
+	private void buildBaseLayer() {
 		/*
 		 * This conditional tree picks the probability for a 'seed' of each
 		 * terrain type. Each 'seed' will be expanded into a cluster of terrain
@@ -335,7 +327,7 @@ public class GameMap {
 		}
 
 		expandFeature('u', baseLayer, 70, 5);
-	}// end buildBaseLayer()
+	}
 
 	/*
 	 * Generates the features that make the map interesting. This layer is
@@ -373,13 +365,13 @@ public class GameMap {
 					else
 						topLayer[i][j] = 'u';
 			}
-		}// end for loop
+		}
 
 		expandFeature('m', topLayer, 80, 5);
 		expandFeature('w', topLayer, 75, 5);
 		expandFeature('t', topLayer, 70, 5);
 		expandFeature('h', topLayer, 80, 5);
-	}// end buildTopLayer()
+	}
 
 	/*
 	 * To make the map look more realistic, there are different 'styles' for
@@ -482,8 +474,8 @@ public class GameMap {
 				else if(mode == 'b')
 					spriteStyle[i][j] = style;
 			}
-		}// end for loop
-	}// end buildSpriteStyle()
+		}
+	}
 
 	/*
 	 * To make the map even more realistic, corners have been implemented.
@@ -569,8 +561,8 @@ public class GameMap {
 					}
 				}
 			}
-		}// end for loop
-	}// end buildCorners()
+		}
+	}
 	
 	/*
 	 *	Used when a corner is needed. This checks if the tile currently has a
@@ -670,7 +662,7 @@ public class GameMap {
 				}
 			}
 		}
-	}// end combineCorners()
+	}
 	
 	/*
 	 * This method ensures that every tile possibly gets expanded upon, so that
@@ -695,15 +687,15 @@ public class GameMap {
 					recursiveExpand(i, j, 0, type, layer, randomBase,
 							randomIncrease);
 				}
-			}// end
-		}// end
-	}// end expandFeature()
+			}
+		}
+	}
 
 	/*	
 	 *  called from expand features, read it's comments for more information
 	 *	count is the number of times this recursive function has sucessfully
 	 *	made more terrain
-	*/
+	 */
 	private void recursiveExpand(int y, int x, int count, char type,
 			char[][] layer, int randomBase, int randomIncrease) {
 
@@ -713,24 +705,20 @@ public class GameMap {
 			layer[y][x] = type;
 			for (int k = -1; k <= 1; k++) {
 				for (int l = -1; l <= 1; l++) {
-					int rand = (int) (Math.random() * 100); // 1-100
-															// probability
+					int rand = (int) (Math.random() * 100); // 1-100 probability
 					if (rand > randomBase + (randomIncrease * count)) {
-						// start probability slowly gets bigger, so less chance
-						// to grow
+						// start probability slowly gets bigger, so less chance to grow
+						// increments count on each successful recursive call
 						recursiveExpand(k + y, l + x, count++, type, layer,
-								randomBase, randomIncrease);// increments count
-															// on each
-															// successful
-															// recursive call
+								randomBase, randomIncrease);
 						if (!(k + y < 0 || l + x < 0 || k + y > mapYSize - 1 || l
 								+ x > mapXSize - 1))
 							expanded[k + y][l + x] = true;//this 2d array used to stop recursion from going backwards up the map
-					}// end if
-				}// end inner for
-			}// end outer for
-		}// end if
-	}// end recursiveExpand()
+					}
+				}
+			}
+		}
+	}
 
 	private void zeroRecursiveVars() {
 		timesExpanded = 0;
@@ -738,8 +726,8 @@ public class GameMap {
 			for (int j = 0; j < mapXSize; j++) {
 				expanded[i][j] = false;
 			}
-		}// end for loop
-	}// zeroRecursiveVars()
+		}
+	}
 	
 	/*
 	 * Image look-up for rendering a tile.
@@ -813,8 +801,7 @@ public class GameMap {
 					result = mudAA;
 				}
 			}
-		}
-		else if(mode == 'b'){// drawing top-layer
+		} else if(mode == 'b'){// drawing top-layer
 			if(terrain != '?'){
 				if (terrain == 't') {// terrain is trees
 					switch (style) {
@@ -981,7 +968,7 @@ public class GameMap {
 			}
 		}
 		return result;
-	}// end getTerrain()
+	}
 
 	/*
 	 * Image look-up for rendering a corner.
@@ -990,12 +977,12 @@ public class GameMap {
 	 * @param j : y coordinate in the array
 	 */
 	@SuppressWarnings("incomplete-switch")
-	public Image getCorner(int i, int j){
+	public Image getCorner(int i, int j) {
 		
 		Image result = null;
 		
-		if(topLayer[i][j] == 'w'){// terrain is water
-			switch(corners[i][j]){
+		if (topLayer[i][j] == 'w') {// terrain is water
+			switch (corners[i][j]) {
 			case 'q' : result = waterCTL;
 						break;
 			case 'p' : result = waterCTR;
@@ -1030,54 +1017,51 @@ public class GameMap {
 		}
 		
 		return result;
-	}// end getCorner()
+	}
 	
  	public Image getTank(int playerNum) {
 
+ 		// TODO: Figure out what to do with playerNum here
 		return tank;
 	}
  	
  	
- 	//team 3 create player positions-------------------------------------------------------
+ 	// team 3 create player positions
  	
- 	int playerPosition[][] = new int[2][8];//create array to hold generated player positions
+ 	//create array to hold generated player positions
+ 	int playerPosition[][] = new int[2][8];
  	
- 	
- 	void generateRandomPositions(){
- 		//initialize starting position to (-5,-5), will not render and allows a player to be positioned at (0,0)
- 		for(int i = 0; i <8; i++){
+ 	 
+ 	void generateRandomPositions() {
+ 		// initialize starting position to (-5,-5), will not render and allows
+ 		// a player to be positioned at (0,0)
+ 		for (int i = 0; i < 8; i++) {
  	 		playerPosition[0][i] = -5;
  	 		playerPosition[i][0] = -5;
  	 	}
  		
- 		int x;//player x position
- 		int y;//player y position
- 		boolean valid = false;//loop boolean
+ 		int x;
+ 		int y;
+ 		boolean valid = false;
  		
- 		
- 		
- 		
- 		
- 		//loop 8 times to place each player
- 		for(int i = 0; i <8; i++){
+ 		// loop 8 times to place each player
+ 		for (int i = 0; i < 8; i++) {
  			valid = true;
  			
  			while(valid){
  				
  				valid = false;
- 				x = (int)Math.random()*63;//generate x
- 				y = (int)Math.random()*63;//generate y
+ 				x = (int)Math.random() * 63;
+ 				y = (int)Math.random() * 63;
  				
- 				//cant be on a mountain or map
- 				if(topLayer[x][y] != 'm' && topLayer[x][y] != 'w' ){//is tile a mountain or water
+ 				// can't be on a mountain or water
+ 				if (topLayer[x][y] != 'm' && topLayer[x][y] != 'w' ){
  					//check for players close by
- 					for(int j = 0; j<8 ; j++){
+ 					for (int j = 0; j< 8 ; j++) {
  						
- 						if(playerPosition[0][j] != -5){//check to see if it 
+ 						if (playerPosition[0][j] != -5){//check to see if it 
  							//cant be withing 5 tiles of another player in x direction
  						}
- 						
- 						
  						
  					}
  				}
@@ -1088,13 +1072,6 @@ public class GameMap {
  		
  		//create a player
  		//check for water and mountain tile
- 		//
  	}
- 	
- 	
- 	
- 	
- 	
- 	
 
-}// end GameMap Class
+}

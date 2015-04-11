@@ -26,7 +26,8 @@
 
 package edu.wright.cs.sp15.ceg3120.turntanks;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 //This class represents the state of 8 tanks in a game. It could
 //represent the history of a past game, or a on going game.
@@ -37,7 +38,7 @@ public class GameInstance {
 	public Calendar timeGameStarted;
 	public Calendar timeTurnStarted;
 	public int activePlayer=0;
-	public ArrayList<TankObject> tanks = new ArrayList<TankObject>();
+	public ArrayList<TankObject> tanks = new ArrayList<>();
 	public GameMap gameMap = new GameMap();
 	
 
@@ -46,18 +47,18 @@ public class GameInstance {
 		for (int i = 0; i < 8; i++) {
 			tanks.add(new TankObject("red.jpg", "noName", "noIP", 0, 0, 50,
 					"waiting"));
-		}// end for
+		}
 		
 		gameMap = new GameMap();
 	}
 	
-	// creates a gameinstance from a arraylist of tanks
+	// creates a gameinstance from an arraylist of tanks
 	public GameInstance(Calendar time, GameMap gameMap) {
 		
 		for (int i = 0; i < 8; i++) {
 			tanks.add(new TankObject("red.jpg", "noName", "noIP", 2, 2, 50,
 					"waiting"));
-		}// end for
+		}
 		
 		this.timeGameStarted = time;
 		this.gameMap = gameMap;

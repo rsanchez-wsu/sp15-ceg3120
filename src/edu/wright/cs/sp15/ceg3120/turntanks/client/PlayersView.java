@@ -38,8 +38,6 @@ public class PlayersView extends JFrame{
 	private static final int DEFAULT_WIDTH = 800;
 	private static final int DEFAULT_HEIGHT = 300;
 	
-	private PlayersView self = this;
-	
 	private JTabbedPane tabbedPane;
 	
 	public PlayersView(String player, final ClientView cv)
@@ -47,7 +45,7 @@ public class PlayersView extends JFrame{
 		this.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		        cv.removePlayersView();// Adjusted cv to be final to get rid of error message.
+		        ClientView.removePlayersView();// Adjusted cv to be final to get rid of error message.
 		    }
 		});
 		

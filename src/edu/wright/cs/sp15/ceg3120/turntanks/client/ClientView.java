@@ -38,8 +38,6 @@ import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
-
-
 //(JTC) This is the client view, the main game panel.
 
 public class ClientView extends JFrame {

@@ -33,8 +33,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import edu.wright.cs.sp15.ceg3120.turntanks.GameInstance;
 import edu.wright.cs.sp15.ceg3120.turntanks.TankObject;
 
-
-
 // This class isnt complete yet; eventually, you will pass it a Game Instance object and it will: 
 // run a thread of a socket server, that creates threads out of socket connections
 // keep references to all socket threads
@@ -44,14 +42,15 @@ import edu.wright.cs.sp15.ceg3120.turntanks.TankObject;
 // For now, exceptions will just be printed
 public class Engine {
 
+	// FIXME: Is it intentional that these are package visible instead of private?
 	static ConcurrentLinkedQueue<InBufferInstruction> inBuffer = new ConcurrentLinkedQueue<>();
 	static ArrayList<ConcurrentLinkedQueue<OutBufferInstruction>> outBuffers = new ArrayList<>();
 
-	ServerListener listener = new ServerListener();
-	GameInstance currentGame;
-	boolean needViewUpdate = false; // gets flagged when playerUpdate array
+	private ServerListener listener = new ServerListener();
+	private GameInstance currentGame;
+	private boolean needViewUpdate = false; // gets flagged when playerUpdate array
 									// contains a true
-	boolean playerUpdate[] = { false, false, false, false, false, false, false,
+	private boolean playerUpdate[] = { false, false, false, false, false, false, false,
 			false };// means that corrisponding player number needs a new vision
 					// update
 
@@ -59,13 +58,12 @@ public class Engine {
 		Thread thread = new Thread(listener);
 		thread.start();
 		currentGame = game;
-	}// end constructor
+	}
 
 	public boolean lobby() {
 		if (ServerListener.socketList.size() > 7)
 			return false;
 		else
-
 			return true;
 
 	}
@@ -93,7 +91,7 @@ public class Engine {
 		}
 		needViewUpdate = false;
 
-	}// end generateViews()
+	}
 
 	// this method will calculate vision based on terrian view modifiers, but
 	// for now just shows tile tank is in
@@ -110,7 +108,7 @@ public class Engine {
 					currentGame.tanks.get(i).xCoord,
 					currentGame.tanks.get(i).yCoord);
 			outBuffers.get(playerNumber).add(outInstruction);
-		}// end for
+		}
 
 		// gets tiles around tank
 		for (int i = -2; i <= 2; i++) {
@@ -123,9 +121,9 @@ public class Engine {
 							currentGame.gameMap.spriteStyle[y + i][x + j],
 							currentGame.gameMap.corners[y + i][x + j]);
 					outBuffers.get(playerNumber).add(outInstruction);
-				}// end if
-			}// end for
-		}// end for
+				}
+			}
+		}
 
 	}
 
@@ -173,7 +171,7 @@ public class Engine {
 		}
 
 		return true;
-	}// end validate move
+	}
 
 	private boolean validateAttack(InBufferInstruction instruction) {
 
@@ -185,7 +183,7 @@ public class Engine {
 		// TODO add check to make sure attack position is on same x, or y coord
 		// as attacker
 		return test;
-	}// end validate attack
+	}
 
 	private void conductAttack(InBufferInstruction instruction) {
 
@@ -222,13 +220,13 @@ public class Engine {
 		default:
 			System.out.println("mason messed up the distance formula");
 
-		}// end switch
+		}
 
 		// if the shot hit, perform attack
 		Random rand = new Random();
 		if (attack) {
-			int attackVal = rand.nextInt((10 - 4) + 1) + 4; // 4-10 random
-															// number
+			// 4-10 random number
+			int attackVal = rand.nextInt((10 - 4) + 1) + 4;
 
 			for (int i = 0; i < 8; i++) {
 				if (currentGame.tanks.get(i).xCoord == instruction.x
@@ -236,11 +234,12 @@ public class Engine {
 					currentGame.tanks.get(i).health -= attackVal;
 					System.out.println("shot hit for " + attackVal);
 
-				}// end if tank matches
-			}// end for
-		}// end if attack
-		else
+				}
+			}
+		} else {
 			System.out.println("miss attack");
+		}
+
 		// counter attack
 		boolean counterAttack = false;
 		switch (temp) {
@@ -263,20 +262,20 @@ public class Engine {
 		default:
 			System.out.println("mason messed up the distance formula");
 
-		}// end switch
-			// if counter attack hits
+		}
 
-		if (counterAttack && attack) { // ensures counter attack only happens if
-										// attack happen
+		// if counter attack hits
+		// ensures counter attack only happens if attack happens
+		if (counterAttack && attack) { 
 			rand = new Random();
 			int counterAttackVal = rand.nextInt((5 - 2) + 1) + 5; // 2-5 random
 			currentGame.tanks.get(instruction.sourceID).health -= counterAttackVal;
 			System.out.println("counter shot hit for " + counterAttackVal);
-		}// end counter attack
-		else
+		} else {
 			System.out.println("miss counter attack");
+		}
 
-	}// end conduct attack
+	}
 
 	private void processTankMove(InBufferInstruction instruction){
 		System.out.println("MT processing tank move");
@@ -293,7 +292,7 @@ public class Engine {
 			//ServerGUI.getInstance().updateTable(currentGame);
 			// call send map info to moved tank
 		}
-	}//end processTankMove
+	}
 	
 	private void processTankAttack(InBufferInstruction instruction) {
 		System.out.println("MT processing tank attack");
@@ -302,12 +301,12 @@ public class Engine {
 			//TODO INTERGRATION FIX
 			//ServerGUI.getInstance().updateTable(currentGame);
 		}
-	}//end of processTankAttack
+	}
 	
 	private void processChat(InBufferInstruction instruction) {
 		System.out.println("MT processing chat");
 		System.out.println("debug: Chat is: " + instruction.message);
-	}//end of processChat
+	}
 	
 	private void processHandshake(InBufferInstruction instruction) {
 		System.out.println("MT processing handshake");
@@ -323,8 +322,8 @@ public class Engine {
 			for (int j = 0; j < ServerListener.socketList.size(); j++) {
 				outBuffers.get(j).add(new OutBufferInstruction(1, i, currentGame.tanks.get(i).Name));
 				System.out.println("debug: player name");
-			}// end inner loop
-		}// end outer loop		
-	}//end of processHanshake
+			}
+		}		
+	}
 	
-}// end class
+}

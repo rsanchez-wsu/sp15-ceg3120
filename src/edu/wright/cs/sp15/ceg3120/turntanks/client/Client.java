@@ -25,26 +25,26 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
+import edu.wright.cs.sp15.ceg3120.turntanks.Configuration;
+
 // (JTC) This will be the client object which maintains the socket and communicates to the views and models.
 
 public class Client {
 	
 	//Create Client Variables
-	Socket s;
-	DataInputStream din = null;
-	DataOutputStream dout = null;
-	InputStream is = null;
-	OutputStream os = null;
+	private Socket s;
+	private DataInputStream din = null;
+	private DataOutputStream dout = null;
+	private InputStream is = null;
+	private OutputStream os = null;
 	
 	// Incoming Message
-	String smsg;
+	private String smsg;
 	
-	public Client()
-	{
-		try
-		{
-			// (JTC) Creates a socket on localhost through port 1500
-			s = new Socket("127.0.0.1", 1500);
+	public Client() {
+		try {
+			// (JTC) Opens a socket on to the configured game server
+			s = new Socket(Configuration.getServerAddress(), Configuration.getServerPort());
 			
 			// (JTC) Establish I/O Stream
 			is = s.getInputStream();
@@ -64,61 +64,55 @@ public class Client {
 				
 				//COMMAND PROCESSOR 
 				switch(smsg) { 
-				case "WELCOME": //TODO
-				
-				  break; 
-				  case "PLAYERS PRESENT": //TODO 
-					  break; 
-				  case
-				  "SORRY - GAME IN PROGRESS": //TODO 
-					  break; 
-				  case "GAME STARTED": //TODO
-					  break; 
-				  case "GAME ENDED": 
-					  //TODO
-					  break; 
-				  case "MAP INFO": //?EMPTY? 
-					  //TODO 
-					  break; 
-				  case "HEALTH": 
-				  	  //TODO 
-					  break; 
-				  case "GO": //TODO 
-					  break; 
-				  case "TIME":
-				  //TODO 
-					  break; 
-				  case "CHAT FROM": //TODO 
-					  break; 
-				  case
-				  "ILLEGAL ACTION": //TODO 
-					  break; 
-				  case "PLAYER MOVED": //TODO
-					  break;  
-				  case "PLAYER ATTACKING": //TODO 
-					  break; 
-				  case "ATTACK HIT":
-				      break;
-				  case "ATTACK MISS":
-				  	  break;
-				  case "INVALID MESSAGE":
-				  System.out.println("Your command was unrecognized by the server. Please re-enter.");
-				  	  break;
-				  default:
-					  //DEFAULT CASE
-					  break;
-				  		  
-			}
-				
+				case "WELCOME": // TODO
+					break;
+				case "PLAYERS PRESENT": // TODO
+					break;
+				case "SORRY - GAME IN PROGRESS": // TODO
+					break;
+				case "GAME STARTED": // TODO
+					break;
+				case "GAME ENDED": // TODO
+					break;
+				case "MAP INFO": // ?EMPTY?
+					// TODO
+					break;
+				case "HEALTH": // TODO
+					break;
+				case "GO": // TODO
+					break;
+				case "TIME": // TODO
+					break;
+				case "CHAT FROM": // TODO
+					break;
+				case "ILLEGAL ACTION": // TODO
+					break;
+				case "PLAYER MOVED": // TODO
+					break;
+				case "PLAYER ATTACKING": // TODO
+					break;
+				case "ATTACK HIT": // TODO
+					break;
+				case "ATTACK MISS": // TODO
+					break;
+				case "INVALID MESSAGE":
+					System.out.println("Your command was unrecognized by the server. Please re-enter.");
+					break;
+				default:
+					// DEFAULT CASE
+					break;
+				}				
 				
 				
 			}
-		}catch(Exception e){
+		} catch(Exception e) {
 			System.out.println("Error in connection...");
+			e.printStackTrace();
 			try {
 				s.close();
 			} catch (IOException e1) {
 				System.out.println("Failed to close socket properly.");
+				e1.printStackTrace();
 			}
 		}
 	}

@@ -62,9 +62,9 @@ public class ServerGUI extends JPanel implements TreeSelectionListener {
 		JLabel detailsFooter = new JLabel(
 				"Game Status: [Waiting/In Progress/Complete]");
 
-		playerList = new JList<Player>();
+		playerList = new JList<>();
 		JScrollPane playerListScroll = new JScrollPane(playerList);
-		model = new DefaultListModel<Player>();
+		model = new DefaultListModel<>();
 		playerList.setModel(model);
 
 		addRandomPlayers();

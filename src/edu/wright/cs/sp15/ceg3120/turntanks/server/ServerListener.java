@@ -33,27 +33,30 @@ import java.util.*;
 //This class will act like a traditional multithreaded server socket class
 //it will maintain references to all threads it makes
 
+import edu.wright.cs.sp15.ceg3120.turntanks.Configuration;
+
 public class ServerListener implements Runnable {
 	
 	static ArrayList<ServerNetcode> socketList = new ArrayList<>();
 
 	public ServerListener() {
 
-	}// end constructor
+	}
 
 	@Override
 	public void run() {
-		try { // run interface doesnt allow for throwable exceptions
+		try {
 			process();
 		} catch (Exception e) {
-			System.out.println(e);
+			// Exceptions cannot be thrown from within run()
+			// TODO: Handle exception
+			e.printStackTrace();
 		}
-	}// end run
+	}
 
 	private void process() {
 
-		// TODO: Get the port from the XML configuration (use Configuration class)
-		int port = 6666;
+		int port = Configuration.getListenPort();
 
 		// Establish the listen socket.
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
@@ -70,12 +73,13 @@ public class ServerListener implements Runnable {
 				Thread thread = new Thread(connection);
 				// Start the thread.
 				thread.start();
-			}// end while
+			}
 			serverSocket.close();
-		}// end try
+		}
 		catch (Exception e) {
-			System.out.println(e);
-		}//end catch
+			// TODO: Handle exception
+			e.printStackTrace();
+		}
 	}
 
-}// end ServerMultithreadedSocketCreator
+}

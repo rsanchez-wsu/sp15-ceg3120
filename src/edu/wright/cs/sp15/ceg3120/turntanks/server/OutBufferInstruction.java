@@ -69,7 +69,9 @@ public class OutBufferInstruction {
 	}
 
 	public OutBufferInstruction(int type, int x, int y, char base, char top,
-			char style, char corner) {// should be type 3 terrain message constructor
+			char style, char corner) {
+		
+		// should be type 3 terrain message constructor
 		super();
 		this.type = type;
 		this.playerNumber = -1;

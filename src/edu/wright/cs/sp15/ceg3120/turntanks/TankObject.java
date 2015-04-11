@@ -27,8 +27,7 @@
 package edu.wright.cs.sp15.ceg3120.turntanks;
 
 public class TankObject {
-    //
-	//
+
     public String TankImage;
     public String Name;
     public String IP;    
@@ -39,7 +38,7 @@ public class TankObject {
     public String state;
 
     public TankObject() {
-    }// end empty constructor
+    }
     
     //full constructor
     public TankObject(String TankImage, String Name, String IP,
@@ -52,11 +51,14 @@ public class TankObject {
         this.yCoord = yCoord;
         this.health = health;
         this.state = state;
-    }//end empty constructor    
+    }
     
     
      public String[] toStringArray() {
-        String[] stringArray = {TankImage,Name,IP,String.valueOf(xCoord),String.valueOf(yCoord) ,String.valueOf(health) ,state }; 
+        String[] stringArray = {
+        		TankImage, Name, IP, String.valueOf(xCoord),
+        		String.valueOf(yCoord), String.valueOf(health), state
+        		}; 
          
         return stringArray ;
     }   
@@ -66,5 +68,5 @@ public class TankObject {
         return "TankObject{" + "TankImage=" + TankImage + ", Name=" + Name + ", IP=" + IP + ", xCoord=" + xCoord + ", yCoord=" + yCoord + ", health=" + health + ", state=" + state + '}';
     }
      
-}//end tank class
+}
 

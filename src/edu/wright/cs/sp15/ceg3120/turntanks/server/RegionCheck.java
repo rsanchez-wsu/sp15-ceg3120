@@ -18,13 +18,12 @@ public class RegionCheck {
     		for(int j = 0; j < 64; j++) {
     			if(map[i][j] == 'm' || map[i][j] == 'w') {
     				grid[i][j] = 0;
-    			}//end of if
-    			else {
+    			} else {
     				grid[i][j] = 1;
-    			}//end of else
-    		}//end of for
-    	}//end of for
-    }//end of RegionCheck Constructor
+    			}
+    		}
+    	}
+    }
 
     /**
      * finds the regions in the array
@@ -38,7 +37,7 @@ public class RegionCheck {
         Point p = findNextOne();
         regions(p.x, p.y);
         return counter;
-    }//end of findRegions
+    }
 
     /**
      * finds and labels the regions in the array
@@ -53,7 +52,7 @@ public class RegionCheck {
         //base case
         if (!anyUncounted()) {
             return;
-        }//end of if
+        }
 
         //if the number is 1, add counter to it and check all adjacent squares,
         //if the square has a 1, call regions recursively for that poiont
@@ -71,15 +70,15 @@ public class RegionCheck {
             if (yCoord > 0 && grid[yCoord - 1][xCoord] == 1) {
                 regions(yCoord - 1, xCoord);
             }
-        }//end of if
+        }
         
         //if the group has finished, add one to counter and call findRegions
         if (groupDone()) {
             counter++;
             Point p = findNextOne();
             regions(p.x,p.y);
-        }//end of if
-    }//end of regions
+        }
+    }
 
     /**
      * checks if there are any numbers in the array that have been uncounted
@@ -96,15 +95,16 @@ public class RegionCheck {
                 if (grid[i][j] == 1) {
                     uncounted = true;
                     break;
-                }//end of if
-            }//end of j for
+                }
+            }
+
             if (uncounted) {
                 break;
-            }//end of if
-        }//end of i for
+            }
+        }
         //System.out.println(uncounted);
         return uncounted;
-    }//end of anyUncounted
+    }
 
     /**
      * finds the next one
@@ -123,11 +123,11 @@ public class RegionCheck {
                 if (grid[i][j] == 1) {
                     pointA = i;
                     pointB = j;
-                }//end of if
-            }//end of j for
-        }//end of i for
+                }
+            }
+        }
         return new Point(pointA, pointB);
-    }//end of findNextOne
+    }
 
     /**
      * tests if a group is done
@@ -163,9 +163,9 @@ public class RegionCheck {
                     } /*else if (i > 0 && j < width - 1 && grid[i - 1][j + 1] == 1) {
                         done = false;
                     }*/
-                }//end of if
-            }//end of j for
-        }//end of i for
+                }
+            }
+        }
         return done;
-    }//end of groupDone
+    }
 }

@@ -37,14 +37,14 @@ import edu.wright.cs.sp15.ceg3120.turntanks.GameInstance;
 @SuppressWarnings("serial")
 public class GameRenderer extends JPanel {
 	
-	GameInstance gameInstance;
+	private GameInstance gameInstance;
 	
-	int mapXSize = 64;
-	int mapYSize = 64;
-	int xFov = 24;  //not used yet
-	int yFov = 16; //not used yet
-	int tileSize = 50;  //must be updated here and in driver
-	double[][] gradient;
+	private int mapXSize = 64;
+	private int mapYSize = 64;
+	private int xFov = 24;  //not used yet
+	private int yFov = 16; //not used yet
+	private int tileSize = 50;  //must be updated here and in driver
+	private double[][] gradient;
 	
 	//temp fake constuctor
 	public GameRenderer() {
@@ -60,34 +60,31 @@ public class GameRenderer extends JPanel {
 		double value = 0;
 		//if(gradient[x][y] < .5) {
 			char terrainType = gameInstance.gameMap.topLayer[x][y];
-			if(terrainType == 't' || terrainType == 'h') {
+			if (terrainType == 't' || terrainType == 'h') {
 				value = .2;
-			}
-			else if(terrainType == 'w' || terrainType == 'g' || terrainType == 'u') {
+			} else if (terrainType == 'w' || terrainType == 'g' || terrainType == 'u') {
 				value = .1;
-			}
-			else {
+			} else {
 				value = 1;
 			}
 			System.out.println(value + " ");
 			System.out.println(value + grad);
-			if(grad + value < gradient[x][y] && grad + value < .5) {
+			if (grad + value < gradient[x][y] && grad + value < .5) {
 				gradient[x][y] = grad + value;
-				if(x > 0) {
+				if (x > 0) {
 					fieldOfView(x - 1, y, gradient[x][y]);
 				}
-				if(y > 0) {
+				if (y > 0) {
 					fieldOfView(x, y - 1, gradient[x][y]);
 				}
-				if(x < mapXSize - 1) {
+				if (x < mapXSize - 1) {
 					fieldOfView(x + 1, y, gradient[x][y]);
 				}
-				if(y < mapYSize - 1) {
+				if (y < mapYSize - 1) {
 					fieldOfView(x, y + 1, gradient[x][y]);
 				}
 				
-			}
-			else {
+			} else {
 				gradient[x][y] = grad + value;
 			}
 				
@@ -102,37 +99,37 @@ public class GameRenderer extends JPanel {
 		Image tile = null;
 		gradient = new double[mapXSize][mapYSize];
 		
-		for (int i = 0; i < mapXSize; i++){
-			for (int j = 0; j < mapYSize; j++){
+		for (int i = 0; i < mapXSize; i++) {
+			for (int j = 0; j < mapYSize; j++) {
 				gradient[i][j] = 1;
-				}//end j for
-			}//end i for
+				}
+			}
 		
 		//create the FOV, will need to get what tank number the player is, currently just using tank 0
 		gradient[gameInstance.tanks.get(0).xCoord][gameInstance.tanks.get(0).yCoord] = 0;
 		int x = gameInstance.tanks.get(0).xCoord;
 		int y = gameInstance.tanks.get(0).yCoord;
-		if(x > 0) {
+		if (x > 0) {
 			fieldOfView(x - 1, y, 0);
 		}
-		if(y > 0) {
+		if (y > 0) {
 			fieldOfView(x, y - 1, 0);
 		}
-		if(x < mapXSize - 1) {
+		if (x < mapXSize - 1) {
 			fieldOfView(x + 1, y, 0);
 		}
-		if(y < mapYSize - 1) {
+		if (y < mapYSize - 1) {
 			fieldOfView(x, y + 1, 0);
 		}
 		
 		// Draw terrain
-		for (int i = 0; i < mapXSize; i++){
-			for (int j = 0; j < mapYSize; j++){
+		for (int i = 0; i < mapXSize; i++) {
+			for (int j = 0; j < mapYSize; j++) {
 				// Draw baseLayer
 				tile = gameInstance.gameMap.getTerrain('a', gameInstance.gameMap.baseLayer[i][j], '\0');
-				if(tile != null)
+				if(tile != null) {
 					g2d.drawImage(tile, j * tileSize, i * tileSize, tileSize, tileSize, null);
-				else{//bad color
+				} else {//bad color
 					g2d.setColor(Color.BLACK);
 					g2d.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
 				}
@@ -154,10 +151,10 @@ public class GameRenderer extends JPanel {
 				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float)gradient[i][j]));
 				g2d.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
 			}
-		}// end for loop
+		}
 		
 		// Draw Tanks
-		for (int i = 0; i < 7; i++){
+		for (int i = 0; i < 7; i++) {
 			//int x = 0;
 			//int y = 0;
 			x = gameInstance.tanks.get(i).xCoord;
@@ -165,6 +162,6 @@ public class GameRenderer extends JPanel {
 			g.drawImage(gameInstance.gameMap.getTank(i), x * tileSize, y * tileSize, tileSize, tileSize, null);
 		}
 		
-	}// end paint()
+	}
 
-}// end GameRenderer Class
+}

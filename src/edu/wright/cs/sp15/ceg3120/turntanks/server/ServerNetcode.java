@@ -45,8 +45,8 @@ public class ServerNetcode implements Runnable {
 		in = new DataInputStream(socket.getInputStream());
 		out = new DataOutputStream(socket.getOutputStream());
 		playerID = ServerListener.socketList.size();
-		name = in.readUTF();// first thing client does is send a string name in
-							// utf
+		// first thing client does is send a string name in UTF
+		name = in.readUTF();
 		System.out.println("debug client connected with name of " + name);
 		out.writeInt(playerID);
 		InBufferInstruction instruction = new InBufferInstruction(3, -1, -1, name, playerID, -1);
@@ -56,19 +56,20 @@ public class ServerNetcode implements Runnable {
 		// debug nothing should be in the socket buffers
 		System.out.println("debug nothing should be in the socket buffers");
 
-	}// end const
+	}
 
 	@Override
 	public void run() {
-		try { // run interface doesnt allow for throwable exceptions
+		try {
 			while (true) {
 				process();
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+			// Exceptions cannot be thrown from within run()
+			// TODO: Handle exception
+			e.printStackTrace();
 		}
-
-	}// end run
+	}
 
 	// reads from socket, places parsed instructions in inbound buffer then
 	// reads from outbound buffer, sends instructions to client
@@ -102,10 +103,8 @@ public class ServerNetcode implements Runnable {
 						}// end else
 
 						// TODO end
-					}// end for
-				}// end if server not empty
-
-				else {
+					}
+				} else {
 					out.writeInt(0);// number of messages
 
 				}// end
@@ -144,9 +143,9 @@ public class ServerNetcode implements Runnable {
 				e.printStackTrace();
 			}
 
-		}// end while
+		}
 
-	} // end process
+	}
 
 	private InBufferInstruction parseAsMove() {
 		int type = 0; // move
@@ -209,10 +208,11 @@ public class ServerNetcode implements Runnable {
 			System.out.println("debug writing to socket: " + instruction.playerName);
 			out.writeUTF(instruction.playerName);
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}//End try catch
+		}
 
-	}//end instructionTypeOne
+	}
 	
 	private void tankMoveMessage(OutBufferInstruction instruction) {
 		try {
@@ -222,10 +222,11 @@ public class ServerNetcode implements Runnable {
 			out.writeInt(instruction.x);
 			out.writeInt(instruction.y);
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}//End try catch
+		}
 
-	}//end instructionTypeTwo
+	}
 	
 	private void terrainMessage(OutBufferInstruction instruction) {
 		try {
@@ -238,9 +239,10 @@ public class ServerNetcode implements Runnable {
 			out.writeChar(instruction.style);
 			out.writeChar(instruction.corner);
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}//End try catch
+		}
 
-	}//end instructionTypeThree
+	}
 
 }
