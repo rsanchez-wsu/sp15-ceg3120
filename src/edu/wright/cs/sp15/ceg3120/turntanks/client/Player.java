@@ -145,6 +145,34 @@ public class Player {
 	public Point getLastSeenPlayerLocation() {
 		return lastSeenLocation;
 	}
+	
+	/**
+	 * Gets the players x coordinate
+	 */
+	public int getxPosition(){
+		return location.x;
+	}
+	
+	/**
+	 * Sets the players x coordinate
+	 */
+	public void setxPosition(int xPosition){
+		location.x = xPosition;
+	}
+	
+	/**
+	 * Gets the players y coordinate
+	 */
+	public int getyPosition(){
+		return location.y;
+	}
+	
+	/**
+	 * Sets the players y coordinate
+	 */
+	public void setyPosition(int yPosition){
+		location.y = yPosition;
+	}
 
 	@Override
 	public String toString() {
