@@ -30,8 +30,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import edu.wright.cs.sp15.ceg3120.turntanks.GameInstance;
-import edu.wright.cs.sp15.ceg3120.turntanks.TankObject;
+import edu.wright.cs.sp15.ceg3120.turntanks.Game;
+import edu.wright.cs.sp15.ceg3120.turntanks.Player;
 
 // This class isnt complete yet; eventually, you will pass it a Game Instance object and it will: 
 // run a thread of a socket server, that creates threads out of socket connections
@@ -42,19 +42,22 @@ import edu.wright.cs.sp15.ceg3120.turntanks.TankObject;
 // For now, exceptions will just be printed
 public class Engine {
 
-	// FIXME: Is it intentional that these are package visible instead of private?
+	// FIXME: Is it intentional that these are package visible instead of
+	// private?
 	static ConcurrentLinkedQueue<InBufferInstruction> inBuffer = new ConcurrentLinkedQueue<>();
 	static ArrayList<ConcurrentLinkedQueue<OutBufferInstruction>> outBuffers = new ArrayList<>();
 
 	private ServerListener listener = new ServerListener();
-	private GameInstance currentGame;
-	private boolean needViewUpdate = false; // gets flagged when playerUpdate array
-									// contains a true
-	private boolean playerUpdate[] = { false, false, false, false, false, false, false,
-			false };// means that corrisponding player number needs a new vision
-					// update
+	private Game currentGame;
+	private boolean needViewUpdate = false; // gets flagged when playerUpdate
+											// array
+	// contains a true
+	private boolean playerUpdate[] = { false, false, false, false, false,
+			false, false, false };// means that corrisponding player number
+									// needs a new vision
+									// update
 
-	public Engine(GameInstance game) {
+	public Engine(Game game) {
 		Thread thread = new Thread(listener);
 		thread.start();
 		currentGame = game;
@@ -78,14 +81,14 @@ public class Engine {
 
 		// -parse inBuffer, take action on gameInstance
 		// //-detect new terrain to send to tank that moved
-		// //-check and see if anytanks can see moved tank
-		// //generate tank position messages to send to those tanks
+		// //-check and see if anygetPlayerList() can see moved tank
+		// //generate tank position messages to send to those getPlayerList()
 
 	}
-	
+
 	private void generateViews() {
-		for (int i = 0; i <ServerListener.socketList.size(); i++) {
-			if (true)//TODO change to playerUpdate[i] once vision checks set 
+		for (int i = 0; i < ServerListener.socketList.size(); i++) {
+			if (true)// TODO change to playerUpdate[i] once vision checks set
 				processVision(i);
 			playerUpdate[i] = false;
 		}
@@ -96,17 +99,17 @@ public class Engine {
 	// this method will calculate vision based on terrian view modifiers, but
 	// for now just shows tile tank is in
 	private void processVision(int playerNumber) {
-		int x = currentGame.tanks.get(playerNumber).xCoord;
-		int y = currentGame.tanks.get(playerNumber).yCoord;
+		int x = currentGame.getPlayerList().get(playerNumber).getPlayerLocation().x;
+		int y = currentGame.getPlayerList().get(playerNumber).getPlayerLocation().y;
 
 		OutBufferInstruction outInstruction;
 		// creates instructions for tank positions to be updated on client
 		for (int i = 0; i < ServerListener.socketList.size(); i++) {
 			// TODO if lineOfSite=true
 
-			outInstruction = new OutBufferInstruction(2, i,
-					currentGame.tanks.get(i).xCoord,
-					currentGame.tanks.get(i).yCoord);
+			outInstruction = new OutBufferInstruction(2, i, currentGame.getPlayerList()
+					.get(i).getPlayerLocation().x, currentGame.getPlayerList().get(i)
+					.getPlayerLocation().y);
 			outBuffers.get(playerNumber).add(outInstruction);
 		}
 
@@ -116,10 +119,10 @@ public class Engine {
 				// TODO if lineOfSite=true
 				if (y + i >= 0 && x + j >= 0) {
 					outInstruction = new OutBufferInstruction(3, x + j, y + i,
-							currentGame.gameMap.baseLayer[y + i][x + j],
-							currentGame.gameMap.topLayer[y + i][x + j],
-							currentGame.gameMap.spriteStyle[y + i][x + j],
-							currentGame.gameMap.corners[y + i][x + j]);
+							currentGame.getGameMap().baseLayer[y + i][x + j],
+							currentGame.getGameMap().topLayer[y + i][x + j],
+							currentGame.getGameMap().spriteStyle[y + i][x + j],
+							currentGame.getGameMap().corners[y + i][x + j]);
 					outBuffers.get(playerNumber).add(outInstruction);
 				}
 			}
@@ -157,14 +160,14 @@ public class Engine {
 	// need to add check to make sure terrain
 	private boolean validateMove(InBufferInstruction instruction) {
 		int temp = 0;
-		temp = Math.abs(currentGame.tanks.get(instruction.sourceID).yCoord
-				- instruction.y);
+		temp = Math.abs(currentGame.getPlayerList().get(instruction.sourceID)
+				.getPlayerLocation().y - instruction.y);
 		if (temp > 1) {
 			System.out.println("invalid move, Y axis");
 			return false;
 		}
-		temp = Math.abs(currentGame.tanks.get(instruction.sourceID).xCoord
-				- instruction.x);
+		temp = Math.abs(currentGame.getPlayerList().get(instruction.sourceID)
+				.getPlayerLocation().x - instruction.x);
 		if (temp > 1) {
 			System.out.println("invalid move, X axis");
 			return false;
@@ -176,8 +179,9 @@ public class Engine {
 	private boolean validateAttack(InBufferInstruction instruction) {
 
 		boolean test = false;
-		for (TankObject tank : currentGame.tanks) {
-			if (tank.xCoord == instruction.x && tank.yCoord == instruction.y)
+		for (Player tank : currentGame.getPlayerList()) {
+			if (tank.getPlayerLocation().x == instruction.x
+					&& tank.getPlayerLocation().y == instruction.y)
 				test = true;
 		}
 		// TODO add check to make sure attack position is on same x, or y coord
@@ -188,13 +192,11 @@ public class Engine {
 	private void conductAttack(InBufferInstruction instruction) {
 
 		int temp = -1;
-		temp = (int) Math.pow(
-				currentGame.tanks.get(instruction.sourceID).xCoord
-						- instruction.x, 2);
+		temp = (int) Math.pow(currentGame.getPlayerList().get(instruction.sourceID)
+				.getPlayerLocation().x - instruction.x, 2);
 
-		temp += (int) (Math.pow(
-				currentGame.tanks.get(instruction.sourceID).yCoord
-						- instruction.y, 2));
+		temp += (int) (Math.pow(currentGame.getPlayerList().get(instruction.sourceID)
+				.getPlayerLocation().y - instruction.y, 2));
 
 		temp = (int) Math.sqrt(temp);
 
@@ -229,9 +231,11 @@ public class Engine {
 			int attackVal = rand.nextInt((10 - 4) + 1) + 4;
 
 			for (int i = 0; i < 8; i++) {
-				if (currentGame.tanks.get(i).xCoord == instruction.x
-						&& currentGame.tanks.get(i).yCoord == instruction.y) {
-					currentGame.tanks.get(i).health -= attackVal;
+				if (currentGame.getPlayerList().get(i).getPlayerLocation().x == instruction.x
+						&& currentGame.getPlayerList().get(i).getPlayerLocation().y == instruction.y) {
+					currentGame.getPlayerList().get(i).setPlayerHealth(
+							currentGame.getPlayerList().get(i).getPlayerHealth()
+									- attackVal);
 					System.out.println("shot hit for " + attackVal);
 
 				}
@@ -266,10 +270,12 @@ public class Engine {
 
 		// if counter attack hits
 		// ensures counter attack only happens if attack happens
-		if (counterAttack && attack) { 
+		if (counterAttack && attack) {
 			rand = new Random();
 			int counterAttackVal = rand.nextInt((5 - 2) + 1) + 5; // 2-5 random
-			currentGame.tanks.get(instruction.sourceID).health -= counterAttackVal;
+			currentGame.getPlayerList().get(instruction.sourceID).setPlayerHealth(
+					currentGame.getPlayerList().get(instruction.sourceID)
+							.getPlayerHealth() - counterAttackVal);
 			System.out.println("counter shot hit for " + counterAttackVal);
 		} else {
 			System.out.println("miss counter attack");
@@ -277,53 +283,58 @@ public class Engine {
 
 	}
 
-	private void processTankMove(InBufferInstruction instruction){
+	private void processTankMove(InBufferInstruction instruction) {
 		System.out.println("MT processing tank move");
 		// check to see if tank is only moving 1 sq
 		if (validateMove(instruction)) {
-			currentGame.tanks.get(instruction.sourceID).yCoord = instruction.y;
-			currentGame.tanks.get(instruction.sourceID).xCoord = instruction.x;
+			currentGame.getPlayerList().get(instruction.sourceID).getPlayerLocation().y = instruction.y;
+			currentGame.getPlayerList().get(instruction.sourceID).getPlayerLocation().x = instruction.x;
 			needViewUpdate = true;
 			playerUpdate[instruction.sourceID] = true;
-			System.out.println("tank " + instruction.sourceID
-					+ " moved to x=" + instruction.x + " y="
-					+ instruction.y);
-			//TODO INTEGRATION FIX
-			//ServerGUI.getInstance().updateTable(currentGame);
+			System.out.println("tank " + instruction.sourceID + " moved to x="
+					+ instruction.x + " y=" + instruction.y);
+			// TODO INTEGRATION FIX
+			// ServerGUI.getInstance().updateTable(currentGame);
 			// call send map info to moved tank
 		}
 	}
-	
+
 	private void processTankAttack(InBufferInstruction instruction) {
 		System.out.println("MT processing tank attack");
 		if (validateAttack(instruction)) {
 			conductAttack(instruction);
-			//TODO INTERGRATION FIX
-			//ServerGUI.getInstance().updateTable(currentGame);
+			// TODO INTERGRATION FIX
+			// ServerGUI.getInstance().updateTable(currentGame);
 		}
 	}
-	
+
 	private void processChat(InBufferInstruction instruction) {
 		System.out.println("MT processing chat");
 		System.out.println("debug: Chat is: " + instruction.message);
 	}
-	
+
 	private void processHandshake(InBufferInstruction instruction) {
 		System.out.println("MT processing handshake");
-		currentGame.tanks.get(instruction.sourceID).Name = instruction.message;
-		playerUpdate[instruction.sourceID]=true;
-		needViewUpdate=true;
-		//TODO INTERGRATION FIX
-		//ServerGUI.getInstance().updateTable(currentGame);
+		currentGame.getPlayerList().get(instruction.sourceID).setName(instruction.message);
+		playerUpdate[instruction.sourceID] = true;
+		needViewUpdate = true;
+		// TODO INTERGRATION FIX
+		// ServerGUI.getInstance().updateTable(currentGame);
 		// generate messages to update player names to everyone
 		for (int i = 0; i < ServerListener.socketList.size(); i++) {
 			// sent a message to each socket, the name of the player
 			// associated with the outer loop
 			for (int j = 0; j < ServerListener.socketList.size(); j++) {
-				outBuffers.get(j).add(new OutBufferInstruction(1, i, currentGame.tanks.get(i).Name));
+				outBuffers.get(j).add(
+						new OutBufferInstruction(1, i,
+								currentGame.getPlayerList().get(i).getName()));
 				System.out.println("debug: player name");
 			}
-		}		
+		}
 	}
 	
+	public Game getGame(){
+		return this.currentGame;
+	}
+
 }

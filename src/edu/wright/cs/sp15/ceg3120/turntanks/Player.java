@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package edu.wright.cs.sp15.ceg3120.turntanks.client;
+package edu.wright.cs.sp15.ceg3120.turntanks;
 
 import java.awt.Point;
 
@@ -24,9 +24,7 @@ import java.awt.Point;
  */
 public class Player {
 
-	// Variable declarations
 	public enum Status {
-
 		ACTIVE, DEAD, WAITING;
 
 		@Override
@@ -40,10 +38,9 @@ public class Player {
 	
 	private String name;
 	private int number;
-	private Status status;
 	private int health;
 	private Point location;
-	private Point lastSeenLocation;
+	private Status status;
 	
 	// TODO: Consider how to get the IP address into here
 
@@ -132,51 +129,9 @@ public class Player {
 		return location;
 	}
 
-	/**
-	 * Sets last seen player location
-	 */
-	public void setLastSeenPlayerLocation(Point lastSeenLocation) {
-		this.lastSeenLocation = lastSeenLocation;
-	}
-
-	/**
-	 * Gets last seen player location
-	 */
-	public Point getLastSeenPlayerLocation() {
-		return lastSeenLocation;
-	}
-	
-	/**
-	 * Gets the players x coordinate
-	 */
-	public int getxPosition(){
-		return location.x;
-	}
-	
-	/**
-	 * Sets the players x coordinate
-	 */
-	public void setxPosition(int xPosition){
-		location.x = xPosition;
-	}
-	
-	/**
-	 * Gets the players y coordinate
-	 */
-	public int getyPosition(){
-		return location.y;
-	}
-	
-	/**
-	 * Sets the players y coordinate
-	 */
-	public void setyPosition(int yPosition){
-		location.y = yPosition;
-	}
-
 	@Override
 	public String toString() {
-		return "My info - #: " + getPlayerNumber() + " | Health: "
+		return "Player #: " + getPlayerNumber() + " | Health: "
 				+ getPlayerHealth() + "/50 | Position " + getPlayerLocation()
 				+ " | State: " + status.toString();
 	}

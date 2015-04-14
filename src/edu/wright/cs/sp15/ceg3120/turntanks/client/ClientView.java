@@ -20,14 +20,13 @@
 
 package edu.wright.cs.sp15.ceg3120.turntanks.client;
 
-import java.util.ArrayList;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -37,6 +36,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+
+import edu.wright.cs.sp15.ceg3120.turntanks.Player;
 
 //(JTC) This is the client view, the main game panel.
 
