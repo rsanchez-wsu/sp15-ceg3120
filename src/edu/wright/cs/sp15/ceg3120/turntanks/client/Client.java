@@ -21,11 +21,16 @@
 package edu.wright.cs.sp15.ceg3120.turntanks.client;
 
 import java.awt.Point;
-import java.io.*;
-import java.net.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
 import java.util.ArrayList;
 
 import edu.wright.cs.sp15.ceg3120.turntanks.Configuration;
+import edu.wright.cs.sp15.ceg3120.turntanks.Player;
 
 // (JTC) This will be the client object which maintains the socket and communicates to the views and models.
 

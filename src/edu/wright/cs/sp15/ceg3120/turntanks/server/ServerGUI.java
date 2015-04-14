@@ -30,20 +30,19 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
-import team2.Player;
+import edu.wright.cs.sp15.ceg3120.turntanks.Player;
 
 public class ServerGUI extends JPanel implements TreeSelectionListener {
 
 	private static final long serialVersionUID = 1L;
 
+	private Engine engine;
 	private JSplitPane serverSplitPane;
 	private JPanel gameDetailsPanel;
 	private JPanel gameHistoryPanel;
-
 	// details vars
 	private JList<Player> playerList;
 	private DefaultListModel<Player> model;
-
 	// history vars
 	private JTree gameTree;
 	private DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
@@ -52,8 +51,9 @@ public class ServerGUI extends JPanel implements TreeSelectionListener {
 	private DefaultMutableTreeNode previous = new DefaultMutableTreeNode(
 			"Previous");
 
-	public ServerGUI() {
-
+	public ServerGUI(Engine engine) {
+		this.engine = engine;
+		
 		// Create Game Details Pane
 		// <--
 		gameDetailsPanel = new JPanel(new BorderLayout());
@@ -66,8 +66,7 @@ public class ServerGUI extends JPanel implements TreeSelectionListener {
 		JScrollPane playerListScroll = new JScrollPane(playerList);
 		model = new DefaultListModel<>();
 		playerList.setModel(model);
-
-		addRandomPlayers();
+		updatePlayers();
 
 		gameDetailsPanel.add(detailsHeader, BorderLayout.NORTH);
 		gameDetailsPanel.add(playerListScroll, BorderLayout.CENTER);
@@ -92,7 +91,7 @@ public class ServerGUI extends JPanel implements TreeSelectionListener {
 		gameTree.setRootVisible(false);
 		gameTree.setShowsRootHandles(true);
 		gameTree.addTreeSelectionListener(this);
-		gameTree.expandRow(1);//expand previous
+		gameTree.expandRow(1);// expand previous
 
 		gameHistoryPanel.add(historyHeader, BorderLayout.NORTH);
 		gameHistoryPanel.add(gameTreeScroll, BorderLayout.CENTER);
@@ -114,10 +113,9 @@ public class ServerGUI extends JPanel implements TreeSelectionListener {
 		return this.serverSplitPane;
 	}
 
-	public void addRandomPlayers() {
-		// make 8 dummy players
-		for (int i = 0; i < 7; i++) {
-			model.addElement(new Player());
+	public void updatePlayers() {
+		for (Player p : engine.getGame().getPlayerList()) {
+			model.addElement(p);
 		}
 	}
 
@@ -138,12 +136,12 @@ public class ServerGUI extends JPanel implements TreeSelectionListener {
 	@Override
 	public void valueChanged(TreeSelectionEvent e) {
 		//
-		if (e.getNewLeadSelectionPath().getLastPathComponent().equals(previous)){
+		if (e.getNewLeadSelectionPath().getLastPathComponent().equals(previous)) {
 			return;
 		}
 		clearListModel();
-		addRandomPlayers();
+		updatePlayers();
 		playerList.setModel(model);
-		
+
 	}
 }

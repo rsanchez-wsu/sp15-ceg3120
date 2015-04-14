@@ -21,9 +21,8 @@ package edu.wright.cs.sp15.ceg3120.turntanks;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-
-import edu.wright.cs.sp15.ceg3120.turntanks.client.Player;
 
 /**
  * Generic class for game. Modified to work with Player and GameMap.
@@ -43,7 +42,7 @@ public class Game implements Serializable {
 	}
 
 	private State gameStatus;
-	private Player[] playerList;
+	private ArrayList<Player> playerList;
 	private Date dateStart;
 	private Date dateEnd;
 	private Player winningPlayer;
@@ -55,7 +54,7 @@ public class Game implements Serializable {
 		super();
 	}
 
-	public Game(int gameNumber, State gameStatus, Player[] playerList,
+	public Game(int gameNumber, State gameStatus, ArrayList<Player> playerList,
 			Date dateStart, Date dateEnd, Player winningPlayer, GameMap gameMap) {
 		super();
 		this.gameNumber = gameNumber;
@@ -91,11 +90,11 @@ public class Game implements Serializable {
 		this.gameStatus = gameStatus;
 	}
 
-	public Player[] getPlayerList() {
+	public ArrayList<Player> getPlayerList() {
 		return playerList;
 	}
 
-	public void setPlayerList(Player[] playerList) {
+	public void setPlayerList(ArrayList<Player> playerList) {
 		this.playerList = playerList;
 	}
 
