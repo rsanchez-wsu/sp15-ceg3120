@@ -1,0 +1,47 @@
+--Basic SQL for Team 2 Schema, Not Finished, Needs Constraints, Needs Wrappers to Put Into Java
+
+--Tier 1 Database
+CREATE TABLE Game
+(
+	game_uuid int NOT NULL AUTO_INCREMENT,
+	start_time TIMESTAMP,
+	end_time TIMESTAMP,
+	serv_addr CHARACTER(10), --needs to change to match address length
+	serv_port CHARACTER(10), --needs to change to match port length
+	CONSTRAINT pk_game_uuid PRIMARY KEY (game_uuid)
+);
+
+CREATE TABLE PlayerStatus
+(
+	github_name VARCHAR(20) NOT NULL,
+	player_pos_x int(2), --match max x of map, 2 if in tens, 3 if in hundreds
+	player_pos_y int(2), --match max y of map, 2 if in tens, 3 if in hundreds
+	player_health int(2), --max 50
+	player_status VARCHAR(10), --or enum
+	CONSTRAINT pk_github_name PRIMARY KEY (github_name)
+);
+
+--Tier 2 Database
+CREATE TABLE Client
+(
+	github_name VARCHAR(20), --or whatever max is in github
+	game_uuid TIMESTAMP NOT NULL,
+	player_num int(1),
+	client_ip_addr CHARACTER (10),--needs to change to match ip length
+	client_conn_time TIMESTAMP, 
+	cient_disc_time TIMESTAMP,
+	CONSTRAINT pk_game_uuid_github_name PRIMARY KEY (game_uuid,github_name),
+	CONSTRAINT fk_game_uuid FOREIGN KEY (game_uuid) REFERENCES Game(game_uuid),
+	CONSTRAINT fk_github_name FOREIGN KEY (github_name) REFERENCES PlayerStatus(github_name)
+);
+
+CREATE TABLE Command
+(
+	command_id int NOT NULL AUTO_INCREMENT,
+	github_name VARCHAR(20), 
+	command_seq_num int AUTO_INCREMENT, 
+	command_cont VARCHAR(250), --didn't know how long commands would be
+	comm_recv_time TIMESTAMP, 
+	CONSTRAINT pk_command_id PRIMARY KEY (command_id),
+	CONSTRAINT fk_github_name FOREIGN KEY (github_name) REFERENCES Game(github_name),
+);
