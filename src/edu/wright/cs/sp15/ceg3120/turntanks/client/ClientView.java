@@ -54,7 +54,7 @@ public class ClientView extends JFrame {
 	private static ClientView self = null;
 
 	private ArrayList<Player> players = Client.genPlayers();
-	private static Player myPlayer = new Player(-1, null);
+	private static Player myPlayer = new Player(-1, null, null);
 
 	public ClientView() {
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);

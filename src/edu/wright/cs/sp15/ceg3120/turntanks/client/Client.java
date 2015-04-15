@@ -127,28 +127,28 @@ public class Client {
 	{
 		ArrayList<Player> players = new ArrayList<>();
 
-		players.add(new Player(1, "Player 1"));
+		players.add(new Player(1, "Player 1", null));
 		players.get(0).setPlayerLocation(new Point(3,5));
 		
-		players.add(new Player(2, "Player 2"));
+		players.add(new Player(2, "Player 2", null));
 		players.get(1).setPlayerLocation(new Point(8,7));
 		
-		players.add(new Player(3, "Player 3"));
+		players.add(new Player(3, "Player 3", null));
 		players.get(2).setPlayerLocation(new Point(2,5));
 		
-		players.add(new Player(4, "Player 4"));
+		players.add(new Player(4, "Player 4", null));
 		players.get(3).setPlayerLocation(new Point(4,6));
 		
-		players.add(new Player(5, "Player 5"));
+		players.add(new Player(5, "Player 5", null));
 		players.get(4).setPlayerLocation(new Point(1,9));
 		
-		players.add(new Player(6, "Player 6"));
+		players.add(new Player(6, "Player 6", null));
 		players.get(5).setPlayerLocation(new Point(0,0));
 		
-		players.add(new Player(7, "Player 7"));
+		players.add(new Player(7, "Player 7", null));
 		players.get(6).setPlayerLocation(new Point(0,1));
 		
-		players.add(new Player(8, "Player 8"));
+		players.add(new Player(8, "Player 8", null));
 		players.get(7).setPlayerLocation(new Point(6,6));
 		
 		return players;
