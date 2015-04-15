@@ -30,13 +30,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
-//This class will act like a traditional multithreaded server socket class
-//it will maintain references to all threads it makes
-
 import edu.wright.cs.sp15.ceg3120.turntanks.Configuration;
 
+/**
+ * This class will act like a traditional multithreaded server socket class it
+ * will maintain references to all threads it makes
+ */
+
 public class ServerListener implements Runnable {
-	
+
 	protected static ArrayList<ServerNetcode> socketList = new ArrayList<>();
 	private static boolean listenLoop = true;
 
@@ -64,15 +66,15 @@ public class ServerListener implements Runnable {
 				Socket socket = serverSocket.accept();
 				// Construct an object to process the socket connection
 				ServerNetcode connection = new ServerNetcode(socket);
-				socketList.add(connection);//keeps references to each thread
-				Engine.outBuffers.add(new ConcurrentLinkedQueue<OutBufferInstruction>());
+				socketList.add(connection);// keeps references to each thread
+				Engine.outBuffers
+						.add(new ConcurrentLinkedQueue<OutBufferInstruction>());
 				Thread thread = new Thread(connection);
 				// Start the thread.
 				thread.start();
 			}
 			serverSocket.close();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: Handle exception
 			e.printStackTrace();
 		}

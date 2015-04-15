@@ -37,20 +37,20 @@ public class Player {
 	}
 	
 	private String name;
+	private String ipAddr;
+	private String tankPic;
 	private int number;
 	private int health;
 	private Point location;
 	private Status status;
-	
-	// TODO: Consider how to get the IP address into here
 
 	/**
 	 * Default constructor
-	 *
 	 */
-	public Player(int number, String name) {
+	public Player(int number, String name, String ipAddr) {
 		this.number = number;
 		this.name = name;
+		this.ipAddr = ipAddr;
 		this.health = 50;
 	}
 
@@ -67,19 +67,18 @@ public class Player {
 	public int getPlayerNumber() {
 		return number;
 	}
-
+	
 	/**
-	 * @return player name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * @param name the player name to set
+	 * Sets player name
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+	/**
+	 * Gets player name
+	 */
+	public String getName() {
+		return name;
 	}
 
 	/**
@@ -128,11 +127,39 @@ public class Player {
 	public Point getPlayerLocation() {
 		return location;
 	}
+	
+	/**
+	 * Sets player IP address
+	 */
+	public void setPlayerIpAddr(String ipAddr) {
+		this.ipAddr = ipAddr;
+	}
+
+	/**
+	 * Gets player IP address
+	 */
+	public String getPlayerIpAddr() {
+		return ipAddr;
+	}
+	
+	/**
+	 * Sets player's tank image location
+	 */
+	public void setPlayerTankPic(String tankPic) {
+		this.tankPic = tankPic;
+	}
+	
+	/**
+	 * Gets player's tank image location
+	 */
+	public String getPlayerTankPic() {
+		return tankPic;
+	}
 
 	@Override
 	public String toString() {
-		return "Player #: " + getPlayerNumber() + " | Health: "
-				+ getPlayerHealth() + "/50 | Position " + getPlayerLocation()
-				+ " | State: " + status.toString();
+		return ("<html>Player" + name + " (IP: " + ipAddr + ") | State: " + status.toString()
+				+ " <br> Health: " + (health / 50) + "%" + " | Position: " + location.toString() 
+				+ "<br><br><html>");
 	}
 }

@@ -31,8 +31,7 @@ public class RegionCheck {
      * PostConditions: the regions have been found
      * @throws FileNotFoundException 
      */
-    public int findRegions() {
-        
+    public int findRegions() {        
         //finds the point of the next '1'
         Point p = findNextOne();
         regions(p.x, p.y);
@@ -47,8 +46,7 @@ public class RegionCheck {
      * @param xCoord: the x coord of the item to check
      * @throws FileNotFoundException 
      */
-    private void regions(int yCoord, int xCoord){
-        
+    private void regions(int yCoord, int xCoord){        
         //base case
         if (!anyUncounted()) {
             return;

@@ -31,8 +31,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-//This class implements run, and will be the primary worker parsing messages
-//and sending instructions to the thread safe queue
+/**
+ * This class implements run, and will be the primary worker parsing messages
+ * and sending instructions to the thread safe queue
+ */
 
 public class ServerNetcode implements Runnable {
 	Socket socket;
@@ -121,7 +123,8 @@ public class ServerNetcode implements Runnable {
 					break;
 
 				default:
-					System.out.println("not a valid message parsed: serverMTSock");
+					System.out
+							.println("not a valid message parsed: serverMTSock");
 					break;
 				}
 				// check to see if next outbuffer message is for this thread

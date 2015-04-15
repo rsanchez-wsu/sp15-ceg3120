@@ -32,13 +32,15 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import edu.wright.cs.sp15.ceg3120.turntanks.Game;
 import edu.wright.cs.sp15.ceg3120.turntanks.Player;
 
-// This class isnt complete yet; eventually, you will pass it a Game Instance object and it will: 
-// run a thread of a socket server, that creates threads out of socket connections
-// keep references to all socket threads
-// keep a thread safe data structure buffer, which will contain actions from parsed inbound messages
-// keep a buffer of messages that need to be sent outbound to specific sockets
-// have a main loop which completes the next tasks waiting in the inbound and outbound buffers
-// For now, exceptions will just be printed
+/**
+ * This class isnt complete yet; eventually, you will pass it a Game Instance
+ * object and it will: -run a thread of a socket server, that creates threads
+ * out of socket connections -keep references to all socket threads -keep a
+ * thread safe data structure buffer, which will contain actions from parsed
+ * inbound messages -keep a buffer of messages that need to be sent outbound to
+ * specific sockets -have a main loop which completes the next tasks waiting in
+ * the inbound and outbound buffers -For now, exceptions will just be printed
+ */
 
 public class Engine {
 
@@ -312,8 +314,40 @@ public class Engine {
 
 	private void processHandshake(InBufferInstruction instruction) {
 		System.out.println("MT processing handshake");
-		currentGame.getPlayerList().get(instruction.sourceID)
-				.setName(instruction.message);
+		// add new player
+		currentGame
+				.getPlayerList()
+				.add(new Player(
+						instruction.sourceID,
+						instruction.message,
+						ServerListener.socketList.get(instruction.sourceID).socket
+								.getInetAddress().getHostAddress()));
+		// TODO: Set Player Tank Images
+		// currentGame.getPlayerList().get(instruction.sourceID)
+		// .setPlayerTankPic(**Randomly picked image??**);
+
+		// set location, check for player isolation (5 tiles)
+		boolean validLocation;
+		do {
+			validLocation = true;
+			currentGame
+					.getPlayerList()
+					.get(instruction.sourceID)
+					.setPlayerLocation(
+							currentGame.getGameMap().generateSpawnLocation());
+			for (Player p : currentGame.getPlayerList()) {
+				if (p != currentGame.getPlayerList().get(instruction.sourceID)) {
+					if (p.getPlayerLocation().distance(
+							currentGame.getPlayerList()
+									.get(instruction.sourceID)
+									.getPlayerLocation()) < 5.0) {
+						validLocation = false;
+						break;
+					}
+				}
+			}
+		} while (!validLocation);
+
 		playerUpdate[instruction.sourceID] = true;
 		needViewUpdate = true;
 		// TODO INTERGRATION FIX

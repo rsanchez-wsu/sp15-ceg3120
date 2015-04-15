@@ -26,8 +26,11 @@
 
 package edu.wright.cs.sp15.ceg3120.turntanks.server;
 
-//this class represents instructions that will sit in the concurrent queue, to be processed by
-//Engine.  Likely created by a MTSock parsing a network message that was parsed.
+/**
+ * this class represents instructions that will sit in the concurrent queue, to be processed by
+ * Engine.  Likely created by a MTSock parsing a network message that was parsed.
+ */
+
 public class InBufferInstruction {
 
 	/*

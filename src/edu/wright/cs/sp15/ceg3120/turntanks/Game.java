@@ -41,6 +41,7 @@ public class Game implements Serializable {
 		Active, Inactive
 	}
 
+	private final static int MAX_PLAYERS = 8;
 	private State gameStatus;
 	private ArrayList<Player> playerList;
 	private Date dateStart;
@@ -52,6 +53,7 @@ public class Game implements Serializable {
 	
 	public Game() {
 		super();
+		gameMap = new GameMap();
 	}
 
 	public Game(int gameNumber, State gameStatus, ArrayList<Player> playerList,
