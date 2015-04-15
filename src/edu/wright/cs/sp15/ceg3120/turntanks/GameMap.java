@@ -188,126 +188,126 @@ public class GameMap {
 	 */
 	private void findFiles() {
 		try {
-			tank = ImageIO.read(new File("./src/team6/images/tank.png"));
-			grass = ImageIO.read(new File("./src/team6/images/grass.jpg"));
-			hill = ImageIO.read(new File("./src/team6/images/hill.png"));
+			tank = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tank.jpg"));
+			grass = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/grass.jpg"));
+			hill = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/hill.png"));
 
-			mudTL = ImageIO.read(new File("./src/team6/images/mud_tl.jpg"));
-			mudTM = ImageIO.read(new File("./src/team6/images/mud_tm.jpg"));
-			mudTR = ImageIO.read(new File("./src/team6/images/mud_tr.jpg"));
-			mudML = ImageIO.read(new File("./src/team6/images/mud_ml.jpg"));
-			mudMM = ImageIO.read(new File("./src/team6/images/mud_mm.jpg"));
-			mudMR = ImageIO.read(new File("./src/team6/images/mud_mr.jpg"));
-			mudBL = ImageIO.read(new File("./src/team6/images/mud_bl.jpg"));
-			mudBM = ImageIO.read(new File("./src/team6/images/mud_bm.jpg"));
-			mudBR = ImageIO.read(new File("./src/team6/images/mud_br.jpg"));
-			mudAA = ImageIO.read(new File("./src/team6/images/mud_aa.jpg"));
-			mudAT = ImageIO.read(new File("./src/team6/images/mud_at.jpg"));
-			mudAR = ImageIO.read(new File("./src/team6/images/mud_ar.jpg"));
-			mudAB = ImageIO.read(new File("./src/team6/images/mud_ab.jpg"));
-			mudAL = ImageIO.read(new File("./src/team6/images/mud_al.jpg"));
-			mudUDT = ImageIO.read(new File("./src/team6/images/mud_udt.jpg"));
-			mudLRT = ImageIO.read(new File("./src/team6/images/mud_lrt.jpg"));
+			mudTL = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mud_tl.jpg"));
+			mudTM = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mud_tm.jpg"));
+			mudTR = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mud_tr.jpg"));
+			mudML = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mud_ml.jpg"));
+			mudMM = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mud_mm.jpg"));
+			mudMR = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mud_mr.jpg"));
+			mudBL = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mud_bl.jpg"));
+			mudBM = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mud_bm.jpg"));
+			mudBR = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mud_br.jpg"));
+			mudAA = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mud_aa.jpg"));
+			mudAT = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mud_at.jpg"));
+			mudAR = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mud_ar.jpg"));
+			mudAB = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mud_ab.jpg"));
+			mudAL = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mud_al.jpg"));
+			mudUDT = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mud_udt.jpg"));
+			mudLRT = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mud_lrt.jpg"));
 
-			treeTL = ImageIO.read(new File("./src/team6/images/tree_tl.png"));
-			treeTM = ImageIO.read(new File("./src/team6/images/tree_tm.png"));
-			treeTR = ImageIO.read(new File("./src/team6/images/tree_tr.png"));
-			treeML = ImageIO.read(new File("./src/team6/images/tree_ml.png"));
-			treeMM = ImageIO.read(new File("./src/team6/images/tree_mm.png"));
-			treeMR = ImageIO.read(new File("./src/team6/images/tree_mr.png"));
-			treeBL = ImageIO.read(new File("./src/team6/images/tree_bl.png"));
-			treeBM = ImageIO.read(new File("./src/team6/images/tree_bm.png"));
-			treeBR = ImageIO.read(new File("./src/team6/images/tree_br.png"));
-			treeAA = ImageIO.read(new File("./src/team6/images/tree_aa.png"));
-			treeAT = ImageIO.read(new File("./src/team6/images/tree_at.png"));
-			treeAL = ImageIO.read(new File("./src/team6/images/tree_al.png"));
-			treeAR = ImageIO.read(new File("./src/team6/images/tree_ar.png"));
-			treeAB = ImageIO.read(new File("./src/team6/images/tree_ab.png"));
-			treeUDT = ImageIO.read(new File("./src/team6/images/tree_udt.png"));
-			treeLRT = ImageIO.read(new File("./src/team6/images/tree_lrt.png"));
+			treeTL = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tree_tl.png"));
+			treeTM = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tree_tm.png"));
+			treeTR = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tree_tr.png"));
+			treeML = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tree_ml.png"));
+			treeMM = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tree_mm.png"));
+			treeMR = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tree_mr.png"));
+			treeBL = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tree_bl.png"));
+			treeBM = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tree_bm.png"));
+			treeBR = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tree_br.png"));
+			treeAA = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tree_aa.png"));
+			treeAT = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tree_at.png"));
+			treeAL = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tree_al.png"));
+			treeAR = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tree_ar.png"));
+			treeAB = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tree_ab.png"));
+			treeUDT = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tree_udt.png"));
+			treeLRT = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tree_lrt.png"));
 
-			waterTL = ImageIO.read(new File("./src/team6/images/water_tl.png"));
-			waterTM = ImageIO.read(new File("./src/team6/images/water_tm.png"));
-			waterTR = ImageIO.read(new File("./src/team6/images/water_tr.png"));
-			waterML = ImageIO.read(new File("./src/team6/images/water_ml.png"));
-			waterMM = ImageIO.read(new File("./src/team6/images/water_mm.png"));
-			waterMR = ImageIO.read(new File("./src/team6/images/water_mr.png"));
-			waterBL = ImageIO.read(new File("./src/team6/images/water_bl.png"));
-			waterBM = ImageIO.read(new File("./src/team6/images/water_bm.png"));
-			waterBR = ImageIO.read(new File("./src/team6/images/water_br.png"));
-			waterAA = ImageIO.read(new File("./src/team6/images/water_aa.png"));
-			waterAT = ImageIO.read(new File("./src/team6/images/water_at.png"));
-			waterAL = ImageIO.read(new File("./src/team6/images/water_al.png"));
-			waterAR = ImageIO.read(new File("./src/team6/images/water_ar.png"));
-			waterAB = ImageIO.read(new File("./src/team6/images/water_ab.png"));
+			waterTL = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_tl.png"));
+			waterTM = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_tm.png"));
+			waterTR = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_tr.png"));
+			waterML = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_ml.png"));
+			waterMM = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_mm.png"));
+			waterMR = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_mr.png"));
+			waterBL = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_bl.png"));
+			waterBM = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_bm.png"));
+			waterBR = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_br.png"));
+			waterAA = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_aa.png"));
+			waterAT = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_at.png"));
+			waterAL = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_al.png"));
+			waterAR = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_ar.png"));
+			waterAB = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_ab.png"));
 			waterLRT = ImageIO
-					.read(new File("./src/team6/images/water_lrt.png"));
+					.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_lrt.png"));
 			waterUDT = ImageIO
-					.read(new File("./src/team6/images/water_udt.png"));
+					.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_udt.png"));
 
 			waterCTL = ImageIO
-					.read(new File("./src/team6/images/water_ctl.png"));
+					.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_ctl.png"));
 			waterCTR = ImageIO
-					.read(new File("./src/team6/images/water_ctr.png"));
+					.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_ctr.png"));
 			waterCBL = ImageIO
-					.read(new File("./src/team6/images/water_cbl.png"));
+					.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_cbl.png"));
 			waterCBR = ImageIO
-					.read(new File("./src/team6/images/water_cbr.png"));
+					.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_cbr.png"));
 			waterCTLTR = ImageIO.read(new File(
-					"./src/team6/images/water_ctl_tr.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_ctl_tr.png"));
 			waterCTLBL = ImageIO.read(new File(
-					"./src/team6/images/water_ctl_bl.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_ctl_bl.png"));
 			waterCTLBR = ImageIO.read(new File(
-					"./src/team6/images/water_ctl_br.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_ctl_br.png"));
 			waterCTRBL = ImageIO.read(new File(
-					"./src/team6/images/water_ctr_bl.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_ctr_bl.png"));
 			waterCTRBR = ImageIO.read(new File(
-					"./src/team6/images/water_ctr_br.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_ctr_br.png"));
 			waterCBLBR = ImageIO.read(new File(
-					"./src/team6/images/water_cbl_br.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_cbl_br.png"));
 			waterCTLTRBL = ImageIO.read(new File(
-					"./src/team6/images/water_ctl_tr_bl.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_ctl_tr_bl.png"));
 			waterCTLTRBR = ImageIO.read(new File(
 					"./src/team6/images/water_ctl_tr_br.png"));
 			waterCTLBLBR = ImageIO.read(new File(
-					"./src/team6/images/water_ctl_bl_br.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_ctl_bl_br.png"));
 			waterCBLBR = ImageIO.read(new File(
-					"./src/team6/images/water_cbl_br.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_cbl_br.png"));
 			waterCTLTRBLBR = ImageIO.read(new File(
-					"./src/team6/images/water_ctl_tr_bl_br.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/water_ctl_tr_bl_br.png"));
 
 			mountainTL = ImageIO.read(new File(
-					"./src/team6/images/mountain_tl.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mountain_tl.png"));
 			mountainTM = ImageIO.read(new File(
-					"./src/team6/images/mountain_tm.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mountain_tm.png"));
 			mountainTR = ImageIO.read(new File(
-					"./src/team6/images/mountain_tr.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mountain_tr.png"));
 			mountainML = ImageIO.read(new File(
-					"./src/team6/images/mountain_ml.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mountain_ml.png"));
 			mountainMM = ImageIO.read(new File(
-					"./src/team6/images/mountain_mm.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mountain_mm.png"));
 			mountainMR = ImageIO.read(new File(
-					"./src/team6/images/mountain_mr.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mountain_mr.png"));
 			mountainBL = ImageIO.read(new File(
-					"./src/team6/images/mountain_bl.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mountain_bl.png"));
 			mountainBM = ImageIO.read(new File(
-					"./src/team6/images/mountain_bm.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mountain_bm.png"));
 			mountainBR = ImageIO.read(new File(
-					"./src/team6/images/mountain_br.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mountain_br.png"));
 			mountainAA = ImageIO.read(new File(
-					"./src/team6/images/mountain_aa.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mountain_aa.png"));
 			mountainAT = ImageIO.read(new File(
-					"./src/team6/images/mountain_at.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mountain_at.png"));
 			mountainAR = ImageIO.read(new File(
-					"./src/team6/images/mountain_ar.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mountain_ar.png"));
 			mountainAB = ImageIO.read(new File(
-					"./src/team6/images/mountain_ab.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mountain_ab.png"));
 			mountainAL = ImageIO.read(new File(
-					"./src/team6/images/mountain_al.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mountain_al.png"));
 			mountainUDT = ImageIO.read(new File(
-					"./src/team6/images/mountain_udt.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mountain_udt.png"));
 			mountainLRT = ImageIO.read(new File(
-					"./src/team6/images/mountain_lrt.png"));
+					"./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/mountain_lrt.png"));
 
 		} catch (IOException ex) {
 			System.out.println(ex);
