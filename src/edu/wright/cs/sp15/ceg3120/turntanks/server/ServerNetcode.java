@@ -26,10 +26,11 @@
 
 package edu.wright.cs.sp15.ceg3120.turntanks.server;
 
-import java.io.*;
-//import java.io.*;
-import java.net.*;
-//import java.util.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+
 //This class implements run, and will be the primary worker parsing messages
 //and sending instructions to the thread safe queue
 
@@ -49,13 +50,12 @@ public class ServerNetcode implements Runnable {
 		name = in.readUTF();
 		System.out.println("debug client connected with name of " + name);
 		out.writeInt(playerID);
-		InBufferInstruction instruction = new InBufferInstruction(3, -1, -1, name, playerID, -1);
+		InBufferInstruction instruction = new InBufferInstruction(3, -1, -1,
+				name, playerID, -1);
 		// makes the playername inBufferInstructions
 		Engine.inBuffer.add(instruction);
-
 		// debug nothing should be in the socket buffers
 		System.out.println("debug nothing should be in the socket buffers");
-
 	}
 
 	@Override
@@ -75,44 +75,34 @@ public class ServerNetcode implements Runnable {
 	// reads from outbound buffer, sends instructions to client
 	private void process() {
 		while (true) {
-
 			try {
-
 				if (!Engine.outBuffers.get(playerID).isEmpty()) {
 					// if queue isn't empty
 					int size = Engine.outBuffers.get(playerID).size();
 					out.writeInt(size);
 					for (int i = 0; i < size; i++) {// thread safety by not just
 													// emptying
-						OutBufferInstruction instruction = Engine.outBuffers.get(playerID).remove();
+						OutBufferInstruction instruction = Engine.outBuffers
+								.get(playerID).remove();
 						// TODO make ifs method calls
 						if (instruction.type == 1) {
 							nameMessage(instruction);
-						}// end 1 name msg
-
-						else if (instruction.type == 2) {
+						} else if (instruction.type == 2) {
 							tankMoveMessage(instruction);
-						}// end 2 tank move msg
-						
-						else if (instruction.type == 3) {
+						} else if (instruction.type == 3) {
 							terrainMessage(instruction);
-						}// end 3 terrain msg
-
-						else {
+						} else {
 							System.out.println("mtsock error!");
-						}// end else
-
-						// TODO end
+						}
 					}
 				} else {
 					out.writeInt(0);// number of messages
-
-				}// end
+				}
 
 				int type = in.readInt();
-				if (type != -1)
+				if (type != -1) {
 					System.out.println("debug read from socket: " + type);
-
+				}
 				switch (type) {
 				case -1:
 					// System.out.println("MT parsing(not really) nothing message");
@@ -142,9 +132,7 @@ public class ServerNetcode implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
-
 	}
 
 	private InBufferInstruction parseAsMove() {
@@ -160,9 +148,8 @@ public class ServerNetcode implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		InBufferInstruction temp = new InBufferInstruction(type, x, y, "none", playerID, -1);
-
+		InBufferInstruction temp = new InBufferInstruction(type, x, y, "none",
+				playerID, -1);
 		return temp;
 	}
 
@@ -177,46 +164,48 @@ public class ServerNetcode implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		InBufferInstruction temp = new InBufferInstruction(type, x, y, "none", playerID, -1);
-
+		InBufferInstruction temp = new InBufferInstruction(type, x, y, "none",
+				playerID, -1);
 		return temp;
 	}
 
 	private InBufferInstruction parseAsChat() {
 		int type = 2;
 		String message = "default text:error";
-
 		try {
 			message = in.readUTF();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		InBufferInstruction temp = new InBufferInstruction(type, -1, -1, message, playerID, -1);
+		InBufferInstruction temp = new InBufferInstruction(type, -1, -1,
+				message, playerID, -1);
 		return temp;
 	}
 
 	// if, else-if logic in methods
 	private void nameMessage(OutBufferInstruction instruction) {
 		try {
-			System.out.println("debug in serverMTSock sending Type= " + instruction.type);// displaying this instead of debug
+			System.out.println("debug in serverMTSock sending Type= "
+					+ instruction.type);// displaying this instead of debug
 			System.out.println("debug writing to socket: " + instruction.type);
 			out.writeInt(instruction.type);
-			System.out.println("debug writing to socket: " + instruction.playerNumber);
+			System.out.println("debug writing to socket: "
+					+ instruction.playerNumber);
 			out.writeInt(instruction.playerNumber);
-			System.out.println("debug writing to socket: " + instruction.playerName);
+			System.out.println("debug writing to socket: "
+					+ instruction.playerName);
 			out.writeUTF(instruction.playerName);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
-	
+
 	private void tankMoveMessage(OutBufferInstruction instruction) {
 		try {
-			System.out.println("debug in serverMTSock sending move, msgType= " + instruction.type);
+			System.out.println("debug in serverMTSock sending move, msgType= "
+					+ instruction.type);
 			out.writeInt(instruction.type);
 			out.writeInt(instruction.playerNumber);// of moving tank
 			out.writeInt(instruction.x);
@@ -225,12 +214,13 @@ public class ServerNetcode implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
-	
+
 	private void terrainMessage(OutBufferInstruction instruction) {
 		try {
-			System.out.println("debug in serverMTSock sending terrain, msgType= " + instruction.type);
+			System.out
+					.println("debug in serverMTSock sending terrain, msgType= "
+							+ instruction.type);
 			out.writeInt(instruction.type);
 			out.writeInt(instruction.x);
 			out.writeInt(instruction.y);
@@ -242,7 +232,5 @@ public class ServerNetcode implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
-
 }

@@ -26,10 +26,10 @@
 
 package edu.wright.cs.sp15.ceg3120.turntanks.server;
 
-//import java.io.*;
-import java.net.*;
-import java.util.concurrent.*;
-import java.util.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 //This class will act like a traditional multithreaded server socket class
 //it will maintain references to all threads it makes
 
@@ -37,10 +37,10 @@ import edu.wright.cs.sp15.ceg3120.turntanks.Configuration;
 
 public class ServerListener implements Runnable {
 	
-	static ArrayList<ServerNetcode> socketList = new ArrayList<>();
+	protected static ArrayList<ServerNetcode> socketList = new ArrayList<>();
+	private static boolean listenLoop = true;
 
 	public ServerListener() {
-
 	}
 
 	@Override
@@ -55,13 +55,9 @@ public class ServerListener implements Runnable {
 	}
 
 	private void process() {
-
 		int port = Configuration.getListenPort();
-
 		// Establish the listen socket.
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
-
-			boolean listenLoop = true;
 			while (listenLoop) {
 				// Listen
 				System.out.println("listening");
