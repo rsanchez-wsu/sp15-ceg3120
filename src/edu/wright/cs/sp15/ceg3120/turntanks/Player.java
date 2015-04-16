@@ -54,6 +54,14 @@ public class Player {
 		this.health = 50;
 		tankPic = "./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tank.png";
 	}
+	
+	public Player(int number, String name) {
+		this.number = number;
+		this.name = name;
+		this.ipAddr = null;
+		this.health = 50;
+		tankPic = "./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tank.png";
+	}
 
 	/**
 	 * Sets player number

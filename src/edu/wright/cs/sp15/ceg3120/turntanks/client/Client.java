@@ -20,14 +20,16 @@
 
 package edu.wright.cs.sp15.ceg3120.turntanks.client;
 
-import java.awt.Point;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 import edu.wright.cs.sp15.ceg3120.turntanks.Configuration;
 import edu.wright.cs.sp15.ceg3120.turntanks.Player;
@@ -43,11 +45,16 @@ public class Client {
 	private InputStream is = null;
 	private OutputStream os = null;
 	
+	private ClientView cv = null;
+	private HashMap<String,Player> players = new HashMap<>();
+	
 	// Incoming Message
 	private String smsg;
 	
 	public Client() {
 		try {
+			cv = new ClientView();
+			
 			// (JTC) Opens a socket on to the configured game server
 			s = new Socket(Configuration.getServerAddress(), Configuration.getServerPort());
 			
@@ -58,47 +65,61 @@ public class Client {
 			dout = new DataOutputStream(os);
 			
 			//(kwood) After socket is opened, send connect message with player name.
-			dout.writeUTF("CONNECT " + ClientView.getPlayer().getName());
+			// FIXME: Figure out how to get the current player's name
+			//dout.writeUTF("CONNECT " + ClientView.getPlayer().getName());
 			
 			
 			// This will continue while the socket is open
 			while(true)
 			{				
 				smsg = din.readUTF();
-							
+				
+				String[] msg = smsg.split("$");
+				String cmd = msg[0].trim();
+				String payload = msg[1].trim();
 				
 				//COMMAND PROCESSOR 
-				switch(smsg) { 
-				case "WELCOME": // TODO
+				switch(cmd) { 
+				case "WELCOME":
+					// Nothing to do
 					break;
-				case "PLAYERS PRESENT": // TODO
+				case "PLAYERS PRESENT":
+					// Add players as listed by the server
+					populatePlayers(payload);
 					break;
-				case "SORRY - GAME IN PROGRESS": // TODO
+				case "SORRY - GAME IN PROGRESS":
+					// TODO: Pop-up dialog to inform user.  Close socket.  Maybe exit application.
 					break;
-				case "GAME STARTED": // TODO
+				case "GAME STARTED":
+					// TODO: Update GUI to reflect that game has started
 					break;
-				case "GAME ENDED": // TODO
+				case "GAME ENDED":
+					// TODO: Update GUI to reflect that game has ended
 					break;
-				case "MAP INFO": // ?EMPTY?
-					// TODO
+				case "MAP INFO":
+					// TODO: Parse and pass info/messages to renderer
 					break;
-				case "HEALTH": // TODO
+				case "GO":
+					// TODO: Alert the user it is his/her turn and handle any user
+					// interactions for the turn, including keeping the clock synced
 					break;
-				case "GO": // TODO
+				case "CHAT FROM":
+					// TODO: Display the chat message
 					break;
-				case "TIME": // TODO
+				case "ILLEGAL ACTION":
+					// TODO: Alert the user and revert to state just prior to last command
 					break;
-				case "CHAT FROM": // TODO
+				case "PLAYER MOVED":
+					// TODO: Update the map view to show the tank in its new location
 					break;
-				case "ILLEGAL ACTION": // TODO
+				case "PLAYER ATTACKING":
+					// TODO: Update status area to reflect the player who is attacking
 					break;
-				case "PLAYER MOVED": // TODO
+				case "ATTACK HIT":
+					// TODO: Update affected player status and GUI
 					break;
-				case "PLAYER ATTACKING": // TODO
-					break;
-				case "ATTACK HIT": // TODO
-					break;
-				case "ATTACK MISS": // TODO
+				case "ATTACK MISS":
+					// TODO: There might be nothing to do here
 					break;
 				case "INVALID MESSAGE":
 					System.out.println("Your command was unrecognized by the server. Please re-enter.");
@@ -122,35 +143,23 @@ public class Client {
 		}
 	}
 	
-	// (JTC) This is just for testing.  The retrieving of players will normally be handles in the command processor.
-	public static ArrayList<Player> genPlayers()
-	{
-		ArrayList<Player> players = new ArrayList<>();
+	@SuppressWarnings("boxing")
+	private void populatePlayers(String payload) {
+		List<String> playerParts = Arrays.asList(payload.split(" "));
+		for (int i = 0; i < playerParts.size(); i += 2) {
+			if (!players.containsKey(playerParts.get(i))) {
+				players.put(playerParts.get(i),
+						new Player(
+								Integer.valueOf(playerParts.get(i+1)),
+								playerParts.get(i))
+						);
+			}
+		}
+		cv.setPlayers(Collections.unmodifiableMap(players));
+	}
 
-		players.add(new Player(1, "Player 1", null));
-		players.get(0).setPlayerLocation(new Point(3,5));
-		
-		players.add(new Player(2, "Player 2", null));
-		players.get(1).setPlayerLocation(new Point(8,7));
-		
-		players.add(new Player(3, "Player 3", null));
-		players.get(2).setPlayerLocation(new Point(2,5));
-		
-		players.add(new Player(4, "Player 4", null));
-		players.get(3).setPlayerLocation(new Point(4,6));
-		
-		players.add(new Player(5, "Player 5", null));
-		players.get(4).setPlayerLocation(new Point(1,9));
-		
-		players.add(new Player(6, "Player 6", null));
-		players.get(5).setPlayerLocation(new Point(0,0));
-		
-		players.add(new Player(7, "Player 7", null));
-		players.get(6).setPlayerLocation(new Point(0,1));
-		
-		players.add(new Player(8, "Player 8", null));
-		players.get(7).setPlayerLocation(new Point(6,6));
-		
+	public HashMap<String,Player> getPlayers()
+	{
 		return players;
 	}
 

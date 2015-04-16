@@ -26,7 +26,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -53,22 +53,12 @@ public class ClientView extends JFrame {
 	private static PlayersView currentPlayersView;
 	private static ClientView self = null;
 
-	private ArrayList<Player> players = Client.genPlayers();
-	private static Player myPlayer = new Player(-1, null, null);
+	private Map<String,Player> players;
 
 	public ClientView() {
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
 		setTitle("Turn Tanks: Ultimate Destruction!!!!11!!111!ONE!1!!");
-
-		// (kwood) When the program starts, Open a dialog to ask the player for
-		// their name.
-		myPlayer.setName(JOptionPane.showInputDialog(null,
-				"Please enter your Player name", "Player Name",
-				JOptionPane.PLAIN_MESSAGE));
-		if (myPlayer.getName() == null) {
-			System.exit(0);
-		}
 
 		// Exit the program if the window is closed
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -358,12 +348,8 @@ public class ClientView extends JFrame {
 		currentPlayersView = null;
 	}
 	
-	//FIXME: Need to turn this into getCommand or similar to reflect every 
-	//		command, not just this client's player.
-	
-	//(kwood) method to return the player at this Client
-	public static Player getPlayer() {
-		return myPlayer;
+	void setPlayers(Map<String,Player> playerList) {
+		this.players = playerList;
 	}
 	
 }
