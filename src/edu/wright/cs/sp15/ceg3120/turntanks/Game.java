@@ -31,17 +31,36 @@ import java.util.Date;
  *
  */
 public class Game implements Serializable {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	public enum State {
-		Active, Inactive
+		WAITING, IN_PROGRESS, COMPLETE;
+
+		/**
+		 * Capitol first letter and capitol letter after an underscore
+		 */
+		@Override
+		public String toString() {
+			String result = super.toString();
+			// convert to character array to step through
+			char[] charArray = result.toCharArray();
+			for (int i = 0; i < charArray.length; i++) {
+				if (i != 0) {
+					if (!(charArray[i] == '_')) {
+						charArray[i] = Character.toLowerCase(charArray[i]);
+					} else {
+						charArray[i] = ' '; // '_' becomes a ' '
+						i++; // skip to the next letter to be lowercase,
+								// after the capitol letter after the space
+					}
+				}
+			}
+			result = new String(charArray);
+			return result;
+		}
 	}
 
-	private final static int MAX_PLAYERS = 8;
 	private State gameStatus;
 	private ArrayList<Player> playerList;
 	private Date dateStart;
@@ -50,10 +69,11 @@ public class Game implements Serializable {
 	private int gameNumber;
 	private GameMap gameMap;
 
-	
 	public Game() {
 		super();
 		gameMap = new GameMap();
+		playerList = new ArrayList<>();
+		gameStatus = State.WAITING;
 	}
 
 	public Game(int gameNumber, State gameStatus, ArrayList<Player> playerList,
@@ -125,13 +145,13 @@ public class Game implements Serializable {
 	}
 
 	/**
-	 * Print Data about game time and day
-	 * Might be useful for serverside representation
+	 * Print Data about game time and day Might be useful for serverside
+	 * representation
 	 */
 	public String datePlayed() {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-		return "[" + gameStatus + "][" + df.format(dateEnd)
-				+ "][Game " + gameNumber + "]";
+		return "[" + gameStatus + "][" + df.format(dateEnd) + "][Game "
+				+ gameNumber + "]";
 	}
-	
+
 }

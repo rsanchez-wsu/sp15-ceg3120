@@ -52,6 +52,7 @@ public class Player {
 		this.name = name;
 		this.ipAddr = ipAddr;
 		this.health = 50;
+		tankPic = "./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tank.png";
 	}
 
 	/**

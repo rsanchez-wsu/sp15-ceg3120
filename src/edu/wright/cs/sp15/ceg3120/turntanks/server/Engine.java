@@ -29,6 +29,7 @@ package edu.wright.cs.sp15.ceg3120.turntanks.server;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import javax.swing.JFrame;
 import edu.wright.cs.sp15.ceg3120.turntanks.Game;
 import edu.wright.cs.sp15.ceg3120.turntanks.Player;
 
@@ -44,9 +45,14 @@ import edu.wright.cs.sp15.ceg3120.turntanks.Player;
 
 public class Engine {
 
+	public static void main(String[] args) {
+		engine = new Engine();
+	}
+
+	protected static Engine engine;
 	protected static ConcurrentLinkedQueue<InBufferInstruction> inBuffer = new ConcurrentLinkedQueue<>();
 	protected static ArrayList<ConcurrentLinkedQueue<OutBufferInstruction>> outBuffers = new ArrayList<>();
-
+	private ServerGUI gui;
 	private ServerListener listener = new ServerListener();
 	private Game currentGame;
 	private boolean needViewUpdate = false; // gets flagged when playerUpdate
@@ -55,10 +61,21 @@ public class Engine {
 			false, false, false };// means that corresponding player number
 									// needs a new vision update
 
-	public Engine(Game game) {
+	public Engine() {
 		Thread thread = new Thread(listener);
 		thread.start();
-		currentGame = game;
+		currentGame = new Game();
+		gui = new ServerGUI(this);
+		showGUI();
+	}
+
+	public void showGUI() {
+		JFrame frame = new JFrame("Turn Tanks: Ultimate Destruction!!!");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().add(gui.getGUI());
+		frame.pack();
+		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
 	}
 
 	public boolean lobby() {
@@ -278,6 +295,8 @@ public class Engine {
 		} else {
 			System.out.println("miss counter attack");
 		}
+
+		gui.updateCurrentPlayers();
 	}
 
 	private void processTankMove(InBufferInstruction instruction) {
@@ -292,8 +311,9 @@ public class Engine {
 			playerUpdate[instruction.sourceID] = true;
 			System.out.println("tank " + instruction.sourceID + " moved to x="
 					+ instruction.x + " y=" + instruction.y);
-			// TODO INTEGRATION FIX
-			// ServerGUI.getInstance().updateTable(currentGame);
+
+			gui.updateCurrentPlayers();
+
 			// call send map info to moved tank
 		}
 	}
@@ -302,8 +322,8 @@ public class Engine {
 		System.out.println("MT processing tank attack");
 		if (validateAttack(instruction)) {
 			conductAttack(instruction);
-			// TODO INTERGRATION FIX
-			// ServerGUI.getInstance().updateTable(currentGame);
+
+			gui.updateCurrentPlayers();
 		}
 	}
 
@@ -322,9 +342,6 @@ public class Engine {
 						instruction.message,
 						ServerListener.socketList.get(instruction.sourceID).socket
 								.getInetAddress().getHostAddress()));
-		// TODO: Set Player Tank Images
-		// currentGame.getPlayerList().get(instruction.sourceID)
-		// .setPlayerTankPic(**Randomly picked image??**);
 
 		// set location, check for player isolation (5 tiles)
 		boolean validLocation;
@@ -350,8 +367,7 @@ public class Engine {
 
 		playerUpdate[instruction.sourceID] = true;
 		needViewUpdate = true;
-		// TODO INTERGRATION FIX
-		// ServerGUI.getInstance().updateTable(currentGame);
+
 		// generate messages to update player names to everyone
 		for (int i = 0; i < ServerListener.socketList.size(); i++) {
 			// sent a message to each socket, the name of the player
@@ -363,10 +379,11 @@ public class Engine {
 				System.out.println("debug: player name");
 			}
 		}
+
+		gui.updateCurrentPlayers();
 	}
 
 	public Game getGame() {
 		return this.currentGame;
 	}
-
 }
