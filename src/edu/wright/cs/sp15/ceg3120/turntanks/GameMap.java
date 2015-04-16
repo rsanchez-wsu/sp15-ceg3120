@@ -188,7 +188,7 @@ public class GameMap {
 	 */
 	private void findFiles() {
 		try {
-			tank = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tank.jpg"));
+			tank = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/tank.png"));
 			grass = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/grass.jpg"));
 			hill = ImageIO.read(new File("./src/edu/wright/cs/sp15/ceg3120/turntanks/resources/hill.png"));
 
