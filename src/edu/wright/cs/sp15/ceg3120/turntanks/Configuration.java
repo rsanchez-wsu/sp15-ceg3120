@@ -63,7 +63,7 @@ public class Configuration {
 		SECONDS, MINUTES, HOURS, INVALID
 	}
 
-	private static final String CONF_FILE = "turntanks.xml";
+	private static final String CONF_FILE = System.getProperty("turntanks.conf", "turntanks.xml");
 
 	private static boolean valid = false;
 	
