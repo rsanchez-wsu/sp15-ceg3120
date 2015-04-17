@@ -53,6 +53,7 @@ public class ClientView extends JFrame {
 	private static PlayersView currentPlayersView;
 	private static ClientView self = null;
 
+	private String localName = null;
 	private Map<String,Player> players;
 
 	public ClientView() {
@@ -60,6 +61,15 @@ public class ClientView extends JFrame {
 
 		setTitle("Turn Tanks: Ultimate Destruction!!!!11!!111!ONE!1!!");
 
+		// (kwood) When the program starts, Open a dialog to ask the player for
+		// their name.
+		localName = JOptionPane.showInputDialog(null,
+				"Please enter your Player name", "Player Name",
+				JOptionPane.PLAIN_MESSAGE);
+		if (localName == null) {
+			System.exit(0);
+		}
+		
 		// Exit the program if the window is closed
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -350,6 +360,10 @@ public class ClientView extends JFrame {
 	
 	void setPlayers(Map<String,Player> playerList) {
 		this.players = playerList;
+	}
+	
+	public String getLocalName () {
+		return this.localName;
 	}
 	
 }

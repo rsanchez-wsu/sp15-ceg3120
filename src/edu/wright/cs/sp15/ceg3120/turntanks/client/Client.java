@@ -65,8 +65,7 @@ public class Client {
 			dout = new DataOutputStream(os);
 			
 			//(kwood) After socket is opened, send connect message with player name.
-			// FIXME: Figure out how to get the current player's name
-			//dout.writeUTF("CONNECT " + ClientView.getPlayer().getName());
+			dout.writeUTF("CONNECT " + cv.getLocalName());
 			
 			
 			// This will continue while the socket is open
