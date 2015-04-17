@@ -88,6 +88,7 @@ public class Client {
 					break;
 				case "SORRY - GAME IN PROGRESS":
 					// TODO: Pop-up dialog to inform user.  Close socket.  Maybe exit application.
+					// JOptionPane.showMessageDialog(null, "Sorry, there is already a game in progress!", "Game In Progress", JOptionPane.WARNING_MESSAGE);
 					break;
 				case "GAME STARTED":
 					// TODO: Update GUI to reflect that game has started
