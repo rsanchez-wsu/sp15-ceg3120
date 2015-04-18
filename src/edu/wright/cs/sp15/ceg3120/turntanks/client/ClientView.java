@@ -24,16 +24,22 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Map;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
@@ -55,6 +61,7 @@ public class ClientView extends JFrame {
 
 	private String localName = null;
 	private Map<String,Player> players;
+	private String nextCmd = null;
 
 	public ClientView() {
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -83,13 +90,58 @@ public class ClientView extends JFrame {
 				}
 			}
 		});
-
+		
+		
+		GameRenderer test = new GameRenderer();
+		test.setSize(new Dimension(2048, 2048));
+		test.repaint();
+		
 		// (JTC) Setup map area and title
 		final JLabel mapTitle = new JLabel("Game Map", SwingConstants.CENTER);
-		final JLabel map = new JLabel();
-		map.setBackground(Color.BLACK);
-		map.setOpaque(true);
+		final JScrollPane map = new JScrollPane(test, 
+				ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		map.setMinimumSize(new Dimension(1024, 500));
+		
+		//(kwood) Map mouse listener
+		map.addMouseListener(new MouseListener(){ 
+			
+			@Override			
+			public void mouseClicked(MouseEvent e){
+				Point p = new Point(e.getX()/32, e.getY()/32);
+				
+				//USED FOR DEBUGGING. REMOVE LATER
+				System.out.println(p);
+				if(players == null){}
+				else{
+					boolean playerClick = false;
+					for(int i = 0; i < players.size(); i++){
+						if(p == players.get(i).getPlayerLocation()){
+							playerClick = true;
+						}
+					}
+					
+					if(p == players.get(localName).getPlayerLocation()){
+						nextCmd = "ACTION PASS $ (" + p.getX() + ", " + p.getY() + ")";
+					}
+					else if(playerClick){
+						nextCmd = "ACTION ATTACK $ (" + p.getX() + ", " + p.getY() + ")";
+					}
+					else{
+						nextCmd = "ACTION MOVE $ (" + p.getX() + ", " + p.getY() + ")";
+					}
+				}				
+			}
+
+			//MouseClicked will be the only used MouseListener method. Others implemented to resolve errors.
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			@Override
+			public void mouseExited(MouseEvent e) {}
+			@Override
+			public void mousePressed(MouseEvent e) {}
+			@Override
+			public void mouseReleased(MouseEvent e) {}			
+		});
 
 		// (JTC) Setup player status area
 		final JLabel statusLabel = new JLabel("Status", SwingConstants.CENTER);
@@ -106,170 +158,51 @@ public class ClientView extends JFrame {
 		tankIcon.setImage(image);
 
 		// (JTC) Set up player buttons
-
 		// create button
-		final JButton p1 = new JButton("<html>" + players.get(0).getName()
-				+ "<br>Last Seen:<br>(never)</html>", tankIcon);
-		p1.setVerticalTextPosition(SwingConstants.BOTTOM);
-		p1.setHorizontalTextPosition(SwingConstants.CENTER);
-		// (JTC) add button listener to open the player status panel for that
-		// player. PlayersView takes
-		// in "Player #" where # is the player number.
-		p1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (currentPlayersView == null) {
-					PlayersView playersWindow = new PlayersView("Player 1",
-							self);
-					currentPlayersView = playersWindow;
-					playersWindow.setVisible(true);
-					playersWindow.setResizable(false);
-				} else {
-					currentPlayersView.changeTab(0);
-					currentPlayersView.toFront();
-				}
-			}
-		});
+		JButton p1 = null, p2 = null, p3 = null, p4 = null, p5 = null, p6 = null, p7 = null, p8 = null;
 
-		final JButton p2 = new JButton("<html>" + players.get(1).getName()
-				+ "<br>Last Seen:<br>(30, 29)</html>", tankIcon);
-		p2.setVerticalTextPosition(SwingConstants.BOTTOM);
-		p2.setHorizontalTextPosition(SwingConstants.CENTER);
-		p2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (currentPlayersView == null) {
-					PlayersView playersWindow = new PlayersView("Player 2",
-							self);
-					currentPlayersView = playersWindow;
-					playersWindow.setVisible(true);
-					playersWindow.setResizable(false);
-				} else {
-					currentPlayersView.changeTab(1);
-					currentPlayersView.toFront();
-				}
-			}
-		});
-
-		final JButton p3 = new JButton("<html>" + players.get(2).getName()
-				+ "<br>Last Seen:<br>(12, 33)</html>", tankIcon);
-		p3.setVerticalTextPosition(SwingConstants.BOTTOM);
-		p3.setHorizontalTextPosition(SwingConstants.CENTER);
-		p3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (currentPlayersView == null) {
-					PlayersView playersWindow = new PlayersView("Player 3",
-							self);
-					currentPlayersView = playersWindow;
-					playersWindow.setVisible(true);
-					playersWindow.setResizable(false);
-				} else {
-					currentPlayersView.changeTab(2);
-					currentPlayersView.toFront();
-				}
-			}
-		});
-
-		final JButton p4 = new JButton("<html>" + players.get(3).getName()
-				+ "<br>Last Seen:<br>(never)</html>", tankIcon);
-		p4.setVerticalTextPosition(SwingConstants.BOTTOM);
-		p4.setHorizontalTextPosition(SwingConstants.CENTER);
-		p4.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (currentPlayersView == null) {
-					PlayersView playersWindow = new PlayersView("Player 4",
-							self);
-					currentPlayersView = playersWindow;
-					playersWindow.setVisible(true);
-					playersWindow.setResizable(false);
-				} else {
-					currentPlayersView.changeTab(3);
-					currentPlayersView.toFront();
-				}
-			}
-		});
-
-		final JButton p5 = new JButton("<html>" + players.get(4).getName()
-				+ "<br>Last Seen:<br>(22, 34)</html>", tankIcon);
-		p5.setVerticalTextPosition(SwingConstants.BOTTOM);
-		p5.setHorizontalTextPosition(SwingConstants.CENTER);
-		p5.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (currentPlayersView == null) {
-					PlayersView playersWindow = new PlayersView("Player 5",
-							self);
-					currentPlayersView = playersWindow;
-					playersWindow.setVisible(true);
-					playersWindow.setResizable(false);
-				} else {
-					currentPlayersView.changeTab(4);
-					currentPlayersView.toFront();
-				}
-			}
-		});
-
-		final JButton p6 = new JButton("<html>" + players.get(5).getName()
-				+ "<br>Last Seen:<br>(never)</html>", tankIcon);
-		p6.setVerticalTextPosition(SwingConstants.BOTTOM);
-		p6.setHorizontalTextPosition(SwingConstants.CENTER);
-		p6.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (currentPlayersView == null) {
-					PlayersView playersWindow = new PlayersView("Player 6",
-							self);
-					currentPlayersView = playersWindow;
-					playersWindow.setVisible(true);
-					playersWindow.setResizable(false);
-				} else {
-					currentPlayersView.changeTab(5);
-					currentPlayersView.toFront();
-				}
-			}
-		});
-
-		final JButton p7 = new JButton("<html>" + players.get(6).getName()
-				+ "<br>Last Seen:<br>(never)</html>", tankIcon);
-		p7.setVerticalTextPosition(SwingConstants.BOTTOM);
-		p7.setHorizontalTextPosition(SwingConstants.CENTER);
-		p7.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (currentPlayersView == null) {
-					PlayersView playersWindow = new PlayersView("Player 7",
-							self);
-					currentPlayersView = playersWindow;
-					playersWindow.setVisible(true);
-					playersWindow.setResizable(false);
-				} else {
-					currentPlayersView.changeTab(6);
-					currentPlayersView.toFront();
-				}
-			}
-		});
-
-		final JButton p8 = new JButton("<html>" + players.get(7).getName()
-				+ "<br>Last Seen:<br>(never)</html>", tankIcon);
-		p8.setVerticalTextPosition(SwingConstants.BOTTOM);
-		p8.setHorizontalTextPosition(SwingConstants.CENTER);
-		p8.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (currentPlayersView == null) {
-					PlayersView playersWindow = new PlayersView("Player 8",
-							self);
-					currentPlayersView = playersWindow;
-					playersWindow.setVisible(true);
-					playersWindow.setResizable(false);
-				} else {
-					currentPlayersView.changeTab(7);
-					currentPlayersView.toFront();
-				}
-			}
-		});
+		try{
+			p1 = this.createPlayerButton(players.get(0)); 
+		} catch(NullPointerException e){
+			p1 = this.createPlayerButton(new Player(0, "NO PLAYER"));
+		}
+		
+		try{
+			p2 = this.createPlayerButton(players.get(1)); 
+		} catch(NullPointerException e){
+			p2 = this.createPlayerButton(new Player(0, "NO PLAYER"));
+		}
+		try{
+			p3 = this.createPlayerButton(players.get(2)); 
+		} catch(NullPointerException e){
+			p3 = this.createPlayerButton(new Player(0, "NO PLAYER"));
+		}
+		try{
+			p4 = this.createPlayerButton(players.get(3)); 
+		} catch(NullPointerException e){
+			p4 = this.createPlayerButton(new Player(0, "NO PLAYER"));
+		}
+		try{
+			p5 = this.createPlayerButton(players.get(4)); 
+		} catch(NullPointerException e){
+			p5 = this.createPlayerButton(new Player(0, "NO PLAYER"));
+		}
+		try{
+			p6 = this.createPlayerButton(players.get(5)); 
+		} catch(NullPointerException e){
+			p6 = this.createPlayerButton(new Player(0, "NO PLAYER"));
+		}
+		try{
+			p7 = this.createPlayerButton(players.get(6)); 
+		} catch(NullPointerException e){
+			p7 = this.createPlayerButton(new Player(0, "NO PLAYER"));
+		}
+		try{
+			p8 = this.createPlayerButton(players.get(7)); 
+		} catch(NullPointerException e){
+			p8 = this.createPlayerButton(new Player(0, "NO PLAYER"));
+		}
+		
 
 		// (JTC) Create the panes for a nested JSplitPane
 		// (JTC) Status Pane (label and player status)
@@ -353,6 +286,32 @@ public class ClientView extends JFrame {
 		add(fullView, BorderLayout.CENTER);
 
 	}
+	
+	private JButton createPlayerButton(Player player){
+		JButton button = new JButton("<html>" + player.getName()
+				+ "<br>Last Seen:<br>(never)</html>", new ImageIcon(player.getPlayerTankPic()));
+		button.setVerticalTextPosition(SwingConstants.BOTTOM);
+		button.setHorizontalTextPosition(SwingConstants.CENTER);
+		// (JTC) add button listener to open the player status panel for that
+		// player. PlayersView takes
+		// in "Player #" where # is the player number.
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (currentPlayersView == null) {
+					PlayersView playersWindow = new PlayersView("Player " + player.getPlayerNumber(),
+							self);
+					currentPlayersView = playersWindow;
+					playersWindow.setVisible(true);
+					playersWindow.setResizable(false);
+				} else {
+					currentPlayersView.changeTab(0);
+					currentPlayersView.toFront();
+				}
+			}
+		});
+		return button;
+	}
 
 	public static void removePlayersView() {
 		currentPlayersView = null;
@@ -364,6 +323,14 @@ public class ClientView extends JFrame {
 	
 	public String getLocalName () {
 		return this.localName;
+	}
+	
+	public String getNextCmd(){
+		return this.nextCmd;
+	}
+	
+	public void clearCmd(){
+		this.nextCmd = null;
 	}
 	
 }

@@ -39,7 +39,14 @@ import edu.wright.cs.sp15.ceg3120.turntanks.Player;
 
 public class Client {
 	
+	public static void main(String[] args) {
+		client = new Client();
+	}
+	
 	//Create Client Variables
+	protected static Client client;
+	
+	
 	private Socket s;
 	private DataInputStream din = null;
 	private DataOutputStream dout = null;
@@ -55,6 +62,8 @@ public class Client {
 	public Client() {
 		try {
 			cv = new ClientView();
+			cv.setVisible(true);
+			cv.setResizable(false);
 			
 			// (JTC) Opens a socket on to the configured game server
 			s = new Socket(Configuration.getServerAddress(), Configuration.getServerPort());
@@ -103,6 +112,9 @@ public class Client {
 				case "GO":
 					// TODO: Alert the user it is his/her turn and handle any user
 					// interactions for the turn, including keeping the clock synced
+					
+					dout.writeUTF(cv.getNextCmd());
+					cv.clearCmd();
 					break;
 				case "CHAT FROM":
 					// TODO: Display the chat message
