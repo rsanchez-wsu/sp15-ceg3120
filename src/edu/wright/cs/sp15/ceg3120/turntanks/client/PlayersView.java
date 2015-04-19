@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) <2015>  
  *  Josh Crank - crank.5@wright.edu
- *  // Aditional People
+ *  // Additional People
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
