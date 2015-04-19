@@ -21,7 +21,6 @@
 package edu.wright.cs.sp15.ceg3120.turntanks.client;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Point;
@@ -31,7 +30,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Map;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -115,7 +113,7 @@ public class ClientView extends JFrame {
 				else{
 					boolean playerClick = false;
 					for(int i = 0; i < players.size(); i++){
-						if(p == players.get(i).getPlayerLocation()){
+						if(p == players.get(Integer.valueOf(i)).getPlayerLocation()){
 							playerClick = true;
 						}
 					}
@@ -160,45 +158,45 @@ public class ClientView extends JFrame {
 		// (JTC) Set up player buttons
 		// create button
 		JButton p1 = null, p2 = null, p3 = null, p4 = null, p5 = null, p6 = null, p7 = null, p8 = null;
-
+		//changed all players.get(int) to players.get(Integer.valueOf(int)) to remove warnings
 		try{
-			p1 = this.createPlayerButton(players.get(0)); 
+			p1 = this.createPlayerButton(players.get(Integer.valueOf(0))); 
 		} catch(NullPointerException e){
 			p1 = this.createPlayerButton(new Player(0, "NO PLAYER"));
 		}
 		
 		try{
-			p2 = this.createPlayerButton(players.get(1)); 
+			p2 = this.createPlayerButton(players.get(Integer.valueOf(1))); 
 		} catch(NullPointerException e){
 			p2 = this.createPlayerButton(new Player(0, "NO PLAYER"));
 		}
 		try{
-			p3 = this.createPlayerButton(players.get(2)); 
+			p3 = this.createPlayerButton(players.get(Integer.valueOf(2))); 
 		} catch(NullPointerException e){
 			p3 = this.createPlayerButton(new Player(0, "NO PLAYER"));
 		}
 		try{
-			p4 = this.createPlayerButton(players.get(3)); 
+			p4 = this.createPlayerButton(players.get(Integer.valueOf(3))); 
 		} catch(NullPointerException e){
 			p4 = this.createPlayerButton(new Player(0, "NO PLAYER"));
 		}
 		try{
-			p5 = this.createPlayerButton(players.get(4)); 
+			p5 = this.createPlayerButton(players.get(Integer.valueOf(4))); 
 		} catch(NullPointerException e){
 			p5 = this.createPlayerButton(new Player(0, "NO PLAYER"));
 		}
 		try{
-			p6 = this.createPlayerButton(players.get(5)); 
+			p6 = this.createPlayerButton(players.get(Integer.valueOf(5))); 
 		} catch(NullPointerException e){
 			p6 = this.createPlayerButton(new Player(0, "NO PLAYER"));
 		}
 		try{
-			p7 = this.createPlayerButton(players.get(6)); 
+			p7 = this.createPlayerButton(players.get(Integer.valueOf(6))); 
 		} catch(NullPointerException e){
 			p7 = this.createPlayerButton(new Player(0, "NO PLAYER"));
 		}
 		try{
-			p8 = this.createPlayerButton(players.get(7)); 
+			p8 = this.createPlayerButton(players.get(Integer.valueOf(7))); 
 		} catch(NullPointerException e){
 			p8 = this.createPlayerButton(new Player(0, "NO PLAYER"));
 		}
@@ -287,7 +285,7 @@ public class ClientView extends JFrame {
 
 	}
 	
-	private JButton createPlayerButton(Player player){
+	private JButton createPlayerButton(final Player player){
 		JButton button = new JButton("<html>" + player.getName()
 				+ "<br>Last Seen:<br>(never)</html>", new ImageIcon(player.getPlayerTankPic()));
 		button.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -298,7 +296,7 @@ public class ClientView extends JFrame {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (currentPlayersView == null) {
+				if (currentPlayersView == null) {//made player final to get rid of error on player.getPlayerNumber()
 					PlayersView playersWindow = new PlayersView("Player " + player.getPlayerNumber(),
 							self);
 					currentPlayersView = playersWindow;
